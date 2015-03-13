@@ -109,17 +109,17 @@ if __name__ == '__main__':
         sys.exit(1)
 
     total_p = 0.0
-    expected_v = 0.0
+    expected_attempts = 0.0
     for reward_count in xrange(min_rewards, max_rewards + 1):
         p = _reward_count_p(reward_count, min_rewards, max_rewards,
                             extend_percent)
-        expected_v += p * reward_count
+        expected_attempts += p * reward_count
         # probability of getting @reward_count rewards that could be the
         # desired item
         print "P(C = %d) = %0.4f" % (reward_count, p)
         total_p += p
     # expected value for number of rewards that could be the desired item
-    print "E(C) = %0.2f" % expected_v
+    print "E(C)     = %0.2f" % expected_attempts
 
     # math check, make sure all possibilities add up to 1, allowing for
     # some floating point precision loss.
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
     p_at_least_one = quest_reward_p(reward_percent, min_rewards, max_rewards,
                                     extend_percent)
-    expected = expected_v * reward_percent / 100.0
+    expected = expected_attempts * reward_percent / 100.0
 
-    print "P(N > 0) =", p_at_least_one
-    print "E(N)     =", expected
+    print "P(N > 0) = %0.2f%%" % p_at_least_one
+    print "E(N)     = %0.4f" % expected
