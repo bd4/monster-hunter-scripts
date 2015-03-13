@@ -1,0 +1,4 @@
+= Monster Hunter scripts
+
+This repository contains scripts for calculating probalities and expected
+values for rewards and carves in Monster Hunter games.
