@@ -2,3 +2,32 @@
 
 This repository contains scripts for calculating probalities and expected
 values for rewards and carves in Monster Hunter games.
+
+== Dependencies
+
+Tested using Python 2.7, might work with 2.6. Uses sqlite3, which is part of
+the standard library now but I'm not sure it's always compiled in by default
+in all Python distributions (e.g. for Windows or Mac OS X).
+
+== Example usage
+
+For a list of quests providing the specified monster part:
+
+ ./mhrewards.py "Zinogre Jasper"
+
+This gives expected values for the item from different sources, including
+quest rewards, carves, capture, and shiny drops. An expected value of
+8% means that on average, you would get 8 of the item from 100 quests. Note
+that this is different from the probability of getting at least one, which
+will be lower and is a pain to calculate when there can be different number
+of rewards.
+
+For more manual calculations, mhprob.py can be used directly. The quest
+"Plain Dangerous" in 3U has 2 fixed rewards in A, one in B. Diablos hardhorns
+have a 5% chance:
+
+ ./mhprop.py 5 2 3 69
+ ./mhprop.py 5 1 1 69
+
+For great luck, you would replace 69 with 90. The output includes both expected
+value and probability of getting at least one.

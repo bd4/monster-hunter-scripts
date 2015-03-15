@@ -106,6 +106,11 @@ def quest_reward_p(reward_percent, min_rewards, max_rewards, extend_percent=69):
 
 
 def reward_expected_c(min_rewards, max_rewards, extend_percent):
+    """
+    Expected value for number of rewards, if @min_rewards are gauranteed
+    and there is an @extend_percent chance of getting one more each time
+    with at most @max_rewards.
+    """
     total_p = 0.0
     expected_attempts = 0.0
     for reward_count in xrange(min_rewards, max_rewards + 1):
@@ -185,6 +190,7 @@ def carve_delta_expected_c(carve_skill):
         return 1
     elif carve_skill == CARVING_SKILL_GOD:
         # Description: Increases the number of carving chances by one (maybe more) and prevents knockbacks while carving.
+        # TODO: max 2 and 50% extend is a guess, find the actual values
         min_c = 1
         max_c = 2
         extend_p = 50

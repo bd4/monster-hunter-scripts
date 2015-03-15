@@ -18,30 +18,29 @@ def _format_range(min_v, max_v):
         return "%5.2f%% to %5.2f%%" % (min_v, max_v)
 
 
-def find_item(db, item_name, out):
+def find_item(db, item_name, err_out):
     item_row = db.get_item_by_name(item_name)
     if item_row is None:
         print("Item '%s' not found. Listing partial matches:" % item_name,
-              file=out)
+              file=err_out)
         terms = item_name.split()
         for term in terms:
             if len(term) < 2:
                 # single char terms aren't very useful, too many results
                 continue
-            print("= Matching term '%s'" % term, file=out)
+            print("= Matching term '%s'" % term, file=err_out)
             rows = db.search_item_name(term, "Flesh")
             for row in rows:
-                print(" ", row["name"], file=out)
+                print(" ", row["name"], file=err_out)
         return None
     return item_row
 
 
-def print_quests_and_rewards(db, item_name, out):
+def print_quests_and_rewards(db, item_row, out):
     """
     Get a list of the quests for acquiring a given item and the probability
     of getting the item, depending on cap or kill and luck skills.
     """
-    item_row = db.get_item_by_name(item_name)
     item_id = item_row["_id"]
     quests = db.get_item_quest_objects(item_id)
     for q in quests:
@@ -168,21 +167,24 @@ def print_quests_and_rewards(db, item_name, out):
 
 if __name__ == '__main__':
     import sys
+    import os
     import os.path
 
     if len(sys.argv) != 2:
         print("Usage: %s 'item name'" % sys.argv[0])
-        sys.exit(1)
+        sys.exit(os.EX_USAGE)
 
     item_name = sys.argv[1]
 
     out = get_utf8_writer(sys.stdout)
+    err_out = get_utf8_writer(sys.stderr)
 
     # TODO: doesn't work if script is symlinked
     db_path = os.path.dirname(sys.argv[0])
     db_path = os.path.join(db_path, "db", "mh4u.db")
     db = mhdb.MHDB(db_path)
 
-    item_row = find_item(db, item_name, out)
-    if item_row is not None:
-        print_quests_and_rewards(db, item_name, out)
+    item_row = find_item(db, item_name, err_out)
+    if item_row is None:
+        sys.exit(os.EX_DATAERR)
+    print_quests_and_rewards(db, item_row, out)
