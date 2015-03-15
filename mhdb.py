@@ -1,3 +1,9 @@
+"""
+Module for accessing the sqlite monster hunter db from
+"""
+
+import string
+
 import sqlite3
 
 
@@ -6,15 +12,22 @@ class Quest(object):
         self._row = quest_row
         self._rewards = quest_rewards
 
+        self._template = string.Template(
+           "$name ($hub $stars* $rank)"
+         + "\n Goal: $goal"
+         + "\n Sub : $sub_goal"
+        )
+
         self.id = quest_row["_id"]
         self.name = quest_row["name"]
         self.stars = quest_row["stars"]
         self.hub = quest_row["hub"]
         self.goal = quest_row["goal"]
+        self.sub_goal = quest_row["sub_goal"]
         self.rank = get_rank(self.hub, self.stars)
 
-    def __str__(self):
-        return "%s (%s %s* %s)" % (self.name, self.hub, self.stars, self.rank)
+    def __unicode__(self):
+        return self._template.substitute(self.__dict__)
 
 
 def get_rank(hub, stars):
@@ -54,35 +67,49 @@ class MHDB(object):
             SELECT * FROM items
             WHERE _id=?
         """, item_id)
-        return v[0]
+        return v[0] if v else None
 
     def get_item_by_name(self, name):
         v = self._get_memoized("item", """
             SELECT * FROM items
             WHERE name=?
         """, name)
-        return v[0]
+        return v[0] if v else None
+
+    def search_item_name(self, term, item_type):
+        """
+        Search for items containing @term somewhere in the name. Returns
+        list of matching items.
+
+        Not memoized.
+        """
+        cursor = self.conn.execute("""
+            SELECT * FROM items
+            WHERE name LIKE ?
+            AND type = ?
+        """, ("%%%s%%" % term, item_type))
+        return cursor.fetchall()
 
     def get_monster_by_name(self, name):
         v = self._get_memoized("monster", """
             SELECT * FROM monsters
             WHERE name=?
         """, name)
-        return v[0]
+        return v[0] if v else None
 
     def get_monster(self, monster_id):
         v = self._get_memoized("monster", """
             SELECT * FROM monsters
             WHERE _id=?
         """, monster_id)
-        return v[0]
+        return v[0] if v else None
 
     def get_quest(self, quest_id):
         v = self._get_memoized("quest", """
             SELECT * FROM quests
             WHERE _id=?
         """, quest_id)
-        return v[0]
+        return v[0] if v else None
 
     def get_quest_rewards(self, quest_id):
         v = self._get_memoized("quest_rewards", """
@@ -105,7 +132,12 @@ class MHDB(object):
         """, quest_id)
         return v
 
-    def get_item_quests(self, item_id):
+    def get_item_quest_objects(self, item_id):
+        """
+        Get a list of quests that provide the specified item in quest
+        reqards. Returns a list of quest objects, which encapsulate the
+        quest details and the list of rewards.
+        """
         cursor = self.conn.execute("""
             SELECT DISTINCT quest_id FROM quest_rewards
             WHERE item_id=?

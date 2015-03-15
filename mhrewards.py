@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+import codecs
+
 import mhdb
 import mhprob
 
-db = mhdb.MHDB("mh4u.db")
+
+def get_utf8_writer(writer):
+    return codecs.getwriter("utf8")(writer)
 
 
 def _format_range(min_v, max_v):
@@ -13,17 +18,35 @@ def _format_range(min_v, max_v):
         return "%5.2f%% to %5.2f%%" % (min_v, max_v)
 
 
-def get_quests(item_name):
+def find_item(db, item_name, out):
+    item_row = db.get_item_by_name(item_name)
+    if item_row is None:
+        print("Item '%s' not found. Listing partial matches:" % item_name,
+              file=out)
+        terms = item_name.split()
+        for term in terms:
+            if len(term) < 2:
+                # single char terms aren't very useful, too many results
+                continue
+            print("= Matching term '%s'" % term, file=out)
+            rows = db.search_item_name(term, "Flesh")
+            for row in rows:
+                print(" ", row["name"], file=out)
+        return None
+    return item_row
+
+
+def print_quests_and_rewards(db, item_name, out):
     """
     Get a list of the quests for acquiring a given item and the probability
     of getting the item, depending on cap or kill and luck skills.
     """
     item_row = db.get_item_by_name(item_name)
     item_id = item_row["_id"]
-    quests = db.get_item_quests(item_id)
+    quests = db.get_item_quest_objects(item_id)
     for q in quests:
-        print q
-        print "  %20s" % "= Quest"
+        out.write(unicode(q) + "\n")
+        out.write("  %20s" % "= Quest\n")
         quest_ev = 0
         sub_used = False
 
@@ -42,8 +65,8 @@ def get_quests(item_name):
         # sanity check values from the db
         for slot in total_reward_p.keys():
             if total_reward_p[slot] not in (0, 100):
-                print "WARNING: bad total p for %s = %d" \
-                        % (slot, total_reward_p[slot])
+                print("WARNING: bad total p for %s = %d"
+                      % (slot, total_reward_p[slot]), file=sys.stderr)
 
         for reward in q._rewards:
             slot = reward["reward_slot"]
@@ -59,13 +82,13 @@ def get_quests(item_name):
                         *  reward["stack_size"] * reward["percentage"])
                        for i in totals]
 
-                print "  %20s %d %5.2f%%" % (reward["reward_slot"],
-                                             reward["stack_size"],
-                                             evs[0]),
-                print " (%2d%% each)" % reward["percentage"],
+                out.write("  %20s %d %5.2f%%" % (reward["reward_slot"],
+                                                 reward["stack_size"],
+                                                 evs[0]))
+                out.write(" (%2d%% each)" % reward["percentage"])
                 if len(totals) > 1:
-                    print " %s" % " ".join("%0.2f" % i for i in evs[1:]),
-                print
+                    out.write(" %s" % " ".join("%0.2f" % i for i in evs[1:]))
+                out.write("\n")
 
                 quest_ev += evs[0]
                 if reward["reward_slot"] == "Sub":
@@ -78,7 +101,7 @@ def get_quests(item_name):
         for m in monsters:
             mid = m["monster_id"]
             monster = db.get_monster(mid)
-            print "  %20s" % ("= " + monster["name"] + " " + q.rank)
+            out.write("  %20s\n" % ("= " + monster["name"] + " " + q.rank))
             rewards = db.get_monster_rewards(mid, q.rank)
             for reward in rewards:
                 cap = kill = shiny = False
@@ -129,23 +152,37 @@ def get_quests(item_name):
                     if shiny:
                         shiny_ev += evs[0]
 
-                    print "  %20s %d %5.2f%%" % (reward["condition"],
-                                                 reward["stack_size"],
-                                                 evs[0]),
-                    print " (%2d%% each)" % reward["percentage"],
+                    out.write("  %20s %d %5.2f%%" % (reward["condition"],
+                                                     reward["stack_size"],
+                                                     evs[0]))
+                    out.write(" (%2d%% each)" % reward["percentage"])
                     if len(totals) > 1:
-                        print " %s" % " ".join("%0.2f" % i for i in evs[1:]),
-                    print
-            print "  %20s" % "= Totals"
-            print "  %20s %s" % \
-                ("Kill", _format_range(*kill_ev))
-            print "  %20s %s" % \
-                ("Cap", _format_range(*cap_ev))
-            print "  %20s %5.2f%%" % ("Shiny", shiny_ev)
-            print
+                        out.write(" " + " ".join("%0.2f" % i for i in evs[1:]))
+                    out.write("\n")
+            out.write("  %20s\n" % "= Totals")
+            out.write("  %20s %s\n" % ("Kill", _format_range(*kill_ev)))
+            out.write("  %20s %s\n" % ("Cap", _format_range(*cap_ev)))
+            out.write("  %20s %5.2f%%\n" % ("Shiny", shiny_ev))
+            out.write("\n")
 
 
 if __name__ == '__main__':
     import sys
+    import os.path
 
-    get_quests(sys.argv[1])
+    if len(sys.argv) != 2:
+        print("Usage: %s 'item name'" % sys.argv[0])
+        sys.exit(1)
+
+    item_name = sys.argv[1]
+
+    out = get_utf8_writer(sys.stdout)
+
+    # TODO: doesn't work if script is symlinked
+    db_path = os.path.dirname(sys.argv[0])
+    db_path = os.path.join(db_path, "db", "mh4u.db")
+    db = mhdb.MHDB(db_path)
+
+    item_row = find_item(db, item_name, out)
+    if item_row is not None:
+        print_quests_and_rewards(db, item_name, out)
