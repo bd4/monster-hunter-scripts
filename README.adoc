@@ -25,7 +25,9 @@ value shown assumes no food or armor skills. For Carves the extra values
 listed on the right are for felyne skills Carver Lo, Carver Hi, then armor
 skills Carving Master and Carving God. For quest rewards the extra values
 are for food/armor skills Lucky Cat/Good Luck and Ultra Lucky Cat/Great Luck.
-The totals at the end list the range from no skills to the best skill.
+The totals at the end list the range from no skills to the best skill. For
+capture rewards the extra values are for armor skills Capture Expect, Master,
+and God.
 
 For more manual calculations, mhprob.py can be used directly. The quest
 "Plain Dangerous" in 3U has 2 fixed rewards in A, one in B. Diablos hardhorns
