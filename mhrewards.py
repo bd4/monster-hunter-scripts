@@ -13,9 +13,9 @@ def get_utf8_writer(writer):
 
 def _format_range(min_v, max_v):
     if min_v == max_v:
-        return "%5.2f%%" % min_v
+        return "%5.2f" % min_v
     else:
-        return "%5.2f%% to %5.2f%%" % (min_v, max_v)
+        return "%5.2f to %5.2f" % (min_v, max_v)
 
 
 def find_item(db, item_name, err_out):
@@ -81,10 +81,10 @@ def print_quests_and_rewards(db, item_row, out):
                         *  reward["stack_size"] * reward["percentage"])
                        for i in totals]
 
-                out.write("  %20s %d %5.2f%%" % (reward["reward_slot"],
+                out.write("  %20s %d %5.2f / 100" % (reward["reward_slot"],
                                                  reward["stack_size"],
                                                  evs[0]))
-                out.write(" (%2d%% each)" % reward["percentage"])
+                out.write(" (%2d each)" % reward["percentage"])
                 if len(totals) > 1:
                     out.write(" %s" % " ".join("%0.2f" % i for i in evs[1:]))
                 out.write("\n")
@@ -151,17 +151,17 @@ def print_quests_and_rewards(db, item_row, out):
                     if shiny:
                         shiny_ev += evs[0]
 
-                    out.write("  %20s %d %5.2f%%" % (reward["condition"],
-                                                     reward["stack_size"],
-                                                     evs[0]))
-                    out.write(" (%2d%% each)" % reward["percentage"])
+                    out.write("  %20s %d %5.2f / 100" % (reward["condition"],
+                                                         reward["stack_size"],
+                                                         evs[0]))
+                    out.write(" (%2d each)" % reward["percentage"])
                     if len(totals) > 1:
                         out.write(" " + " ".join("%0.2f" % i for i in evs[1:]))
                     out.write("\n")
             out.write("  %20s\n" % "= Totals")
-            out.write("  %20s %s\n" % ("Kill", _format_range(*kill_ev)))
-            out.write("  %20s %s\n" % ("Cap", _format_range(*cap_ev)))
-            out.write("  %20s %5.2f%%\n" % ("Shiny", shiny_ev))
+            out.write("  %20s %s / 100\n" % ("Kill", _format_range(*kill_ev)))
+            out.write("  %20s %s / 100\n" % ("Cap", _format_range(*cap_ev)))
+            out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
             out.write("\n")
 
 
