@@ -118,11 +118,16 @@ class MHDB(object):
         """, quest_id)
         return v
 
-    def get_monster_rewards(self, monster_id, rank):
-        v = self._get_memoized("monster_rewards", """
+    def get_monster_rewards(self, monster_id, rank=None):
+        q = """
             SELECT * FROM hunting_rewards
-            WHERE monster_id=? AND rank=?
-        """, monster_id, rank)
+            WHERE monster_id=?
+        """
+        if rank is not None:
+            q += "AND rank=?"
+            v = self._get_memoized("monster_rewards", q, monster_id, rank)
+        else:
+            v = self._get_memoized("monster_rewards", q, monster_id)
         return v
 
     def get_quest_monsters(self, quest_id):
@@ -152,3 +157,11 @@ class MHDB(object):
             quests.append(Quest(quest_row, rewards_rows))
 
         return quests
+
+    def get_item_monsters(self, item_id):
+        v = self._get_memoized("item_monsters", """
+            SELECT DISTINCT monster_id, rank FROM hunting_rewards
+            WHERE item_id=?
+        """, item_id)
+
+        return v
