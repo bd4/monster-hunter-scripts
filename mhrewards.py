@@ -136,15 +136,14 @@ def print_quests_and_rewards(db, item_row, out):
         quest_ev = 0
         sub_used = False
 
-        fixed_other_rewards = dict(A=0, B=0, Sub=0)
+        fixed_rewards = dict(A=0, B=0, Sub=0)
         total_reward_p = dict(A=0, B=0, Sub=0)
         for reward in q._rewards:
             slot = reward["reward_slot"]
             #reward_item_row = db.get_item(reward["item_id"])
             #print slot, reward_item_row["name"], reward["percentage"]
             if reward["percentage"] == 100:
-                if reward["item_id"] != item_id:
-                    fixed_other_rewards[slot] += 1
+                fixed_rewards[slot] += 1
             else:
                 total_reward_p[slot] += reward["percentage"]
 
@@ -159,14 +158,18 @@ def print_quests_and_rewards(db, item_row, out):
             #reward_item_row = db.get_item(reward["item_id"])
             #print slot, reward_item_row["name"], reward["percentage"]
             if reward["item_id"] == item_id:
-                totals = [mhprob.quest_reward_expected_c(slot, skill)
-                          for skill in xrange(mhprob.LUCK_SKILL_NONE,
-                                              mhprob.LUCK_SKILL_GREAT+1)]
+                if reward["percentage"] == 100:
+                    totals = [100]
+                    evs = [100 * reward["stack_size"]]
+                else:
+                    totals = [mhprob.quest_reward_expected_c(slot, skill)
+                              for skill in xrange(mhprob.LUCK_SKILL_NONE,
+                                                  mhprob.LUCK_SKILL_GREAT+1)]
 
 
-                evs = [((i - fixed_other_rewards[slot])
-                        *  reward["stack_size"] * reward["percentage"])
-                       for i in totals]
+                    evs = [((i - fixed_rewards[slot])
+                            *  reward["stack_size"] * reward["percentage"])
+                           for i in totals]
 
                 out.write("  %20s %d %5.2f / 100" % (reward["reward_slot"],
                                                  reward["stack_size"],
