@@ -2,17 +2,27 @@
 
 import os
 import logging
+import threading
 
 from webob import Request, Response, exc
 
 import mhdb
 import mhrewards
 
-# TODO: etag based on db version + manual code version
 DB_VERSION = "20150313"
 PREFIX = "/mhapi/"
 
 logging.basicConfig(filename="/tmp/reward_webapp.log", level=logging.INFO)
+
+
+class ThreadLocalDB(threading.local):
+    def __init__(self, path):
+        threading.local.__init__(self)
+        self._db = mhdb.MHDB(path)
+
+    def __getattr__(self, name):
+        return getattr(self._db, name)
+
 
 class App(object):
     def __init__(self):
@@ -20,7 +30,7 @@ class App(object):
         self.project_path = os.path.abspath(os.path.join(self.web_path, ".."))
 
         db_path = os.path.join(self.project_path, "db", "mh4u.db")
-        self.db = mhdb.MHDB(db_path)
+        self.db = ThreadLocalDB(db_path)
 
         log_path = os.path.join(self.project_path, "web.log")
 
@@ -32,11 +42,11 @@ class App(object):
         resp = Response()
         resp.charset = "utf8"
 
-        if req.path in ("", "/", "/index.html"):
+        if req.path_info in ("", "/", "/index.html"):
             resp = self.index(req, resp)
-        elif req.path == PREFIX + "rewards":
+        elif req.path_info == PREFIX + "rewards":
             resp = self.find_item_rewards(req, resp)
-        elif req.path == PREFIX + "item_name_list":
+        elif req.path_info == PREFIX + "item_name_list":
             resp = self.get_all_names(req, resp)
         else:
             resp = exc.HTTPNotFound()

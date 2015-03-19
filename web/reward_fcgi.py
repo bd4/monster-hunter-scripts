@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from flup.server.fcgi import WSGIServer
 
 import reward_webapp
