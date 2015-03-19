@@ -254,7 +254,7 @@ def print_quests_and_rewards(db, item_row, out):
             out.write("  %20s %s / 100\n" % ("Cap", _format_range(*cap_ev)))
             if shiny_ev:
                 out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
-            out.write("\n")
+        out.write("\n")
 
 
 if __name__ == '__main__':

@@ -62,6 +62,13 @@ class MHDB(object):
         v = self.cache[key][args] = cursor.fetchall()
         return v
 
+    def get_item_names(self):
+        v = self._get_memoized("item_names", """
+            SELECT name FROM items
+            WHERE type IN ('Bone', 'Flesh', 'Sac/Fluid')
+        """)
+        return v
+
     def get_item(self, item_id):
         v = self._get_memoized("item", """
             SELECT * FROM items
