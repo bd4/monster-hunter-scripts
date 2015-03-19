@@ -140,11 +140,13 @@ def quest_reward_expected_c(line=QUEST_A, luck_skill=LUCK_SKILL_NONE):
     else:
         raise ValueError()
 
+    # TODO: not sure if these are correct for 4U, but I've
+    # heard that 3U had 4/2 gaurenteed for A/B.
     if line == QUEST_A:
-        min_c = 3
+        min_c = 4
         max_c = 8
     elif line == QUEST_B:
-        min_c = 1
+        min_c = 2
         max_c = 8
     elif line == QUEST_SUB:
         min_c = 1
