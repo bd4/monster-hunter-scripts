@@ -72,7 +72,7 @@ class App(object):
         if etag in req.if_none_match:
             return exc.HTTPNotModified()
 
-        resp.content_type = "text/plan"
+        resp.content_type = "text/plain"
 
         item_name = req.params.get("item_name", "").strip()
         if not item_name:
