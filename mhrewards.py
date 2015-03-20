@@ -63,6 +63,11 @@ def print_monsters_and_rewards(db, item_row, out):
                 ]
                 cap = False
                 kill = True
+            elif reward["condition"] == "Body Carve (Apparent Death)":
+                # assume one carve, is dangerous to try for two
+                totals = [1]
+                cap = True
+                kill = True
             elif reward["condition"] == "Tail Carve":
                 totals = [
                     1 + mhprob.carve_delta_expected_c(skill)
@@ -87,8 +92,8 @@ def print_monsters_and_rewards(db, item_row, out):
                 elif reward["condition"].startswith("Break"):
                     cap = kill = True
                 else:
-                    raise ValueError("Unknown condition: "
-                                     + reward["condition"])
+                    raise ValueError("Unknown condition: '%s'"
+                                     % reward["condition"])
 
             evs = [i *  reward["stack_size"] * reward["percentage"]
                    for i in totals]
@@ -207,6 +212,11 @@ def print_quests_and_rewards(db, item_row, out):
                         ]
                         cap = False
                         kill = True
+                    elif reward["condition"] == "Body Carve (Apparent Death)":
+                        # assume one carve, is dangerous to try for two
+                        totals = [1]
+                        cap = True
+                        kill = True
                     elif reward["condition"] == "Tail Carve":
                         totals = [
                             1 + mhprob.carve_delta_expected_c(skill)
@@ -231,8 +241,9 @@ def print_quests_and_rewards(db, item_row, out):
                         elif reward["condition"].startswith("Break"):
                             cap = kill = True
                         else:
-                            raise ValueError("Unknown condition: "
-                                             + reward["condition"])
+
+                            raise ValueError("Unknown condition: '%s'"
+                                             % reward["condition"])
 
                     evs = [i *  reward["stack_size"] * reward["percentage"]
                            for i in totals]
