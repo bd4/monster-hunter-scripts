@@ -2,7 +2,7 @@
 
 from flup.server.fcgi import WSGIServer
 
-import reward_webapp
+from mhapi_wsgi import application
 
 if __name__ == '__main__':
-    WSGIServer(reward_webapp.application).run()
+    WSGIServer(application).run()

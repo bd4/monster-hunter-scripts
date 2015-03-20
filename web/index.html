@@ -15,6 +15,11 @@
           flex-direction: column;
       }
 
+      label {
+          font-weight: bold;
+          font-family: sans, sans-serif;
+      }
+
       #output { flex: 99 1 auto; }
   </style>
 
@@ -47,11 +52,13 @@
 </head>
 <body>
 <div class="flex">
-<label for="item">Item:</label>
-<input id="item" type="text" size="20" />
-<br />
-<button id="search">Find Quests and Monsters</button>
-<br />
-<textarea readonly="true" rows="10" cols="80" id="output"></textarea>
+  <div>
+    <label for="item">Item:</label>
+    <input id="item" type="text" size="20" />
+    <button id="search">Find quests!</button>
+    <a href="http://www.reddit.com/r/MonsterHunter/comments/2z4pz3/finding_the_best_quest_to_farm_an_item_python/">(output explanation)</a>
+  </div>
+  <br />
+  <textarea readonly="true" rows="10" cols="80" id="output"></textarea>
 </div>
 </body>

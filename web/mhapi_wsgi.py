@@ -12,6 +12,9 @@ import mhrewards
 DB_VERSION = "20150313"
 PREFIX = "/mhapi/"
 
+# good for testing, use 1 hour = 3600 for deployment
+MAX_AGE = "60"
+
 logging.basicConfig(filename="/tmp/reward_webapp.log", level=logging.INFO)
 
 
@@ -62,12 +65,12 @@ class App(object):
 
     def find_item_rewards(self, req, resp):
         version = "1"
-        resp.cache_control = "max-age=60"
-        resp.etag = DB_VERSION + version
+        etag = DB_VERSION + version
+        resp.cache_control = "public, max-age=" + MAX_AGE
+        resp.etag = etag
 
-        self.log.info("etag = %s", resp.etag)
-        if req.if_match == resp.etag:
-            return HTTPNotModified()
+        if etag in req.if_none_match:
+            return exc.HTTPNotModified()
 
         resp.content_type = "text/plan"
 
@@ -83,12 +86,12 @@ class App(object):
 
     def get_all_names(self, req, resp):
         version = "2"
-        resp.cache_control = "max-age=60"
-        resp.etag = DB_VERSION + version
+        etag = DB_VERSION + version
+        resp.cache_control = "public, max-age=" + MAX_AGE
+        resp.etag = etag
 
-        self.log.info("get all names etag = %s", resp.etag)
-        if req.if_match == resp.etag:
-            return HTTPNotModified()
+        if etag in req.if_none_match:
+            return exc.HTTPNotModified()
 
         resp.content_type = "application/json"
         resp.body_file.write("[")
@@ -111,7 +114,7 @@ application = App()
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
-    httpd = make_server("localhost", 8080, application)
+    httpd = make_server("", 8080, application)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
