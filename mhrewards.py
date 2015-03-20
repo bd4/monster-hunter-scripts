@@ -99,7 +99,15 @@ def print_monsters_and_rewards(db, item_row, out):
                    for i in totals]
             if cap:
                 cap_ev[0] += evs[0]
-                cap_ev[1] += evs[-1]
+                if reward["condition"] == "Capture":
+                    # It's very hard to get both cap skills and carve skills,
+                    # assume only the capture rewards will get boosted.
+                    cap_ev[1] += evs[-1]
+                else:
+                    # can carve a tail when capping, but very hard to
+                    # get cap skills and carve skills, so use the
+                    # unboosted amount in the total with-skill expected value.
+                    cap_ev[1] += evs[0]
             if kill:
                 kill_ev[0] += evs[0]
                 kill_ev[1] += evs[-1]
