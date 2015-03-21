@@ -263,6 +263,16 @@ class HuntReward(object):
                 for skill in xrange(stats.CAP_SKILL_NONE,
                                     stats.CAP_SKILL_GOD+1)
             ]
+        elif self.condition == "Virus Reward":
+            # TODO: not sure how these work
+            # Assume 1 always for easy comparison. My guess is that you
+            # always get 1 from frenzied monsters and have a chance at 2+.
+            # The question is do the cances of getting more than one
+            # change depending on the monster, e.g. do Apex monsters
+            # give more rewards or just higher rarity crystals?
+            self.cap = True
+            self.kill = True
+            counts = [1]
         else:
             counts = [1]
             if self.condition.startswith("Shiny"):
