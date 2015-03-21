@@ -46,20 +46,24 @@ def get_rank(hub, stars):
 
 
 class MHDB(object):
-    def __init__(self, path):
+    def __init__(self, path, use_cache=True):
         self.conn = sqlite3.connect(path)
         self.conn.row_factory = sqlite3.Row
+        self.use_cache = use_cache
         self.cache = {}
 
     def _get_memoized(self, key, query, *args):
-        if key in self.cache:
-            v = self.cache[key].get(args)
-            if v is not None:
-                return v
-        else:
-            self.cache[key] = {}
+        if self.use_cache:
+            if key in self.cache:
+                v = self.cache[key].get(args)
+                if v is not None:
+                    return v
+            else:
+                self.cache[key] = {}
         cursor = self.conn.execute(query, args)
-        v = self.cache[key][args] = cursor.fetchall()
+        v = cursor.fetchall()
+        if self.use_cache:
+            self.cache[key][args] = v
         return v
 
     def get_item_names(self):
