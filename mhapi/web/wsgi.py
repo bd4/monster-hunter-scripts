@@ -6,8 +6,8 @@ import threading
 
 from webob import Request, Response, exc
 
-import mhdb
-import mhrewards
+from mhapi.db import MHDB
+from mhapi import rewards
 
 DB_VERSION = "20150313"
 PREFIX = "/mhapi/"
@@ -21,7 +21,7 @@ logging.basicConfig(filename="/tmp/reward_webapp.log", level=logging.INFO)
 class ThreadLocalDB(threading.local):
     def __init__(self, path):
         threading.local.__init__(self)
-        self._db = mhdb.MHDB(path)
+        self._db = MHDB(path)
 
     def __getattr__(self, name):
         return getattr(self._db, name)
@@ -30,7 +30,8 @@ class ThreadLocalDB(threading.local):
 class App(object):
     def __init__(self):
         self.web_path = os.path.dirname(__file__)
-        self.project_path = os.path.abspath(os.path.join(self.web_path, ".."))
+        self.project_path = os.path.abspath(os.path.join(self.web_path,
+                                                         "..", ".."))
 
         db_path = os.path.join(self.project_path, "db", "mh4u.db")
         self.db = ThreadLocalDB(db_path)
@@ -78,9 +79,9 @@ class App(object):
         if not item_name:
             resp.body = "Please enter an item name"
         else:
-            item_row = mhrewards.find_item(self.db, item_name, resp.body_file)
+            item_row = rewards.find_item(self.db, item_name, resp.body_file)
             if item_row is not None:
-                mhrewards.print_quests_and_rewards(self.db, item_row,
+                rewards.print_quests_and_rewards(self.db, item_row,
                                                    resp.body_file)
         return resp
 

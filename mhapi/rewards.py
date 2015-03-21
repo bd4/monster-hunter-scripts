@@ -3,8 +3,8 @@
 from __future__ import print_function
 import codecs
 
-import mhdb
-import mhprob
+from mhapi.db import MHDB
+from mhapi import stats
 
 SKILL_CARVING = "carving"
 SKILL_CAP = "cap"
@@ -56,7 +56,7 @@ class QuestReward(object):
         self.skill_delta = 0
         self.evs = self._calculate_ev()
 
-    def expected_value(self, luck_skill=mhprob.LUCK_SKILL_NONE,
+    def expected_value(self, luck_skill=stats.LUCK_SKILL_NONE,
                        cap_skill=None, carving_skill=None):
         return self.evs[luck_skill]
 
@@ -70,9 +70,9 @@ class QuestReward(object):
             self.skill_delta = 0
         else:
             # variable reward, expected number of draws depends on luck skill
-            counts = [mhprob.quest_reward_expected_c(self.slot, skill)
-                      for skill in xrange(mhprob.LUCK_SKILL_NONE,
-                                          mhprob.LUCK_SKILL_GREAT+1)]
+            counts = [stats.quest_reward_expected_c(self.slot, skill)
+                      for skill in xrange(stats.LUCK_SKILL_NONE,
+                                          stats.LUCK_SKILL_GREAT+1)]
 
 
             evs = [((count - self.fixed_rewards)
@@ -121,7 +121,7 @@ class QuestItemExpectedValue(object):
         return (len(self.slot_rewards["A"]) > 0
                 or len(self.slot_rewards["B"]) > 0)
 
-    def expected_value(self, luck_skill=mhprob.LUCK_SKILL_NONE,
+    def expected_value(self, luck_skill=stats.LUCK_SKILL_NONE,
                        cap_skill=None, carving_skill=None):
         return self.total_expected_values[luck_skill]
 
@@ -177,8 +177,8 @@ class HuntReward(object):
         self.evs = self._calculate_evs()
 
     def expected_value(self, strategy, luck_skill=None,
-                       cap_skill=mhprob.CAP_SKILL_NONE,
-                       carving_skill=mhprob.CARVING_SKILL_NONE):
+                       cap_skill=stats.CAP_SKILL_NONE,
+                       carving_skill=stats.CARVING_SKILL_NONE):
         if strategy == STRAT_CAP:
             if not self.cap:
                 return 0
@@ -213,9 +213,9 @@ class HuntReward(object):
             self.cap = False
             self.kill = True
             counts = [
-                3 + mhprob.carve_delta_expected_c(skill)
-                for skill in xrange(mhprob.CARVING_SKILL_PRO,
-                                    mhprob.CARVING_SKILL_GOD+1)
+                3 + stats.carve_delta_expected_c(skill)
+                for skill in xrange(stats.CARVING_SKILL_PRO,
+                                    stats.CARVING_SKILL_GOD+1)
             ]
         elif self.condition == "Body Carve (Apparent Death)":
             # assume one carve, it's dangerous to try for two
@@ -227,18 +227,18 @@ class HuntReward(object):
             self.cap = True
             self.kill = True
             counts = [
-                1 + mhprob.carve_delta_expected_c(skill)
-                for skill in xrange(mhprob.CARVING_SKILL_PRO,
-                                    mhprob.CARVING_SKILL_GOD+1)
+                1 + stats.carve_delta_expected_c(skill)
+                for skill in xrange(stats.CARVING_SKILL_PRO,
+                                    stats.CARVING_SKILL_GOD+1)
             ]
         elif self.condition == "Capture":
             self.skill = SKILL_CAP
             self.cap = True
             self.kill = False
             counts = [
-                mhprob.capture_reward_expected_c(skill)
-                for skill in xrange(mhprob.CAP_SKILL_NONE,
-                                    mhprob.CAP_SKILL_GOD+1)
+                stats.capture_reward_expected_c(skill)
+                for skill in xrange(stats.CAP_SKILL_NONE,
+                                    stats.CAP_SKILL_GOD+1)
             ]
         else:
             counts = [1]
@@ -276,8 +276,8 @@ class HuntItemExpectedValue(object):
         self._set_rewards(hunt_rewards)
 
     def expected_value(self, strategy, luck_skill=None,
-                       cap_skill=mhprob.CAP_SKILL_NONE,
-                       carving_skill=mhprob.CARVING_SKILL_NONE):
+                       cap_skill=stats.CAP_SKILL_NONE,
+                       carving_skill=stats.CARVING_SKILL_NONE):
         ev = 0
         for reward in self.matching_rewards:
             ev += reward.expected_value(strategy,
@@ -317,11 +317,11 @@ def print_monsters_and_rewards(db, item_row, out):
         kill_ev = [0, 0]
         kill_ev[0] = hunt_item.expected_value(STRAT_KILL)
         kill_ev[1] = hunt_item.expected_value(STRAT_KILL,
-                                      carving_skill=mhprob.CARVING_SKILL_GOD)
+                                      carving_skill=stats.CARVING_SKILL_GOD)
         cap_ev = [0, 0]
         cap_ev[0] = hunt_item.expected_value(STRAT_CAP)
         cap_ev[1] = hunt_item.expected_value(STRAT_CAP,
-                                      cap_skill=mhprob.CAP_SKILL_GOD)
+                                      cap_skill=stats.CAP_SKILL_GOD)
         shiny_ev = hunt_item.expected_value(STRAT_SHINY)
         out.write("  %20s\n" % "= Totals")
         out.write("  %20s %s / 100\n"
@@ -367,10 +367,10 @@ def print_quests_and_rewards(db, item_row, out):
 
             kill_ev[0] += hunt_item.expected_value(STRAT_KILL)
             kill_ev[1] += hunt_item.expected_value(STRAT_KILL,
-                                      carving_skill=mhprob.CARVING_SKILL_GOD)
+                                      carving_skill=stats.CARVING_SKILL_GOD)
             cap_ev[0] += hunt_item.expected_value(STRAT_CAP)
             cap_ev[1] += hunt_item.expected_value(STRAT_CAP,
-                                          cap_skill=mhprob.CAP_SKILL_GOD)
+                                          cap_skill=stats.CAP_SKILL_GOD)
             shiny_ev = hunt_item.expected_value(STRAT_SHINY)
 
             if kill_ev[0] == 0 and cap_ev[0] == 0 and shiny_ev == 0:
@@ -406,8 +406,8 @@ if __name__ == '__main__':
 
     # TODO: doesn't work if script is symlinked
     db_path = os.path.dirname(sys.argv[0])
-    db_path = os.path.join(db_path, "db", "mh4u.db")
-    db = mhdb.MHDB(db_path)
+    db_path = os.path.join(db_path, "..", "db", "mh4u.db")
+    db = MHDB(db_path)
 
     item_row = find_item(db, item_name, err_out)
     if item_row is None:
