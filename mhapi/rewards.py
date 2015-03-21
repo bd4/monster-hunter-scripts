@@ -5,7 +5,6 @@ and hunts for getting an item with specified skills.
 
 from __future__ import print_function
 
-from mhapi.db import MHDB
 from mhapi import stats
 
 SKILL_CARVING = "carving"
@@ -206,7 +205,22 @@ class HuntReward(object):
         out.write("\n")
 
     def _calculate_evs(self):
-        if self.condition == "Body Carve":
+        if self.condition == "Tail Carve":
+            self.skill = SKILL_CARVING
+            self.cap = True
+            self.kill = True
+            counts = [
+                1 + stats.carve_delta_expected_c(skill)
+                for skill in xrange(stats.CARVING_SKILL_PRO,
+                                    stats.CARVING_SKILL_GOD+1)
+            ]
+        elif self.condition == "Body Carve (Apparent Death)":
+            # Gypceros fake death. Assume one carve, it's dangerous to try
+            # for two.
+            counts = [1]
+            self.cap = True
+            self.kill = True
+        elif self.condition == "Body Carve":
             self.skill = SKILL_CARVING
             self.cap = False
             self.kill = True
@@ -215,17 +229,28 @@ class HuntReward(object):
                 for skill in xrange(stats.CARVING_SKILL_PRO,
                                     stats.CARVING_SKILL_GOD+1)
             ]
-        elif self.condition == "Body Carve (Apparent Death)":
-            # assume one carve, it's dangerous to try for two
-            counts = [1]
-            self.cap = True
-            self.kill = True
-        elif self.condition == "Tail Carve":
+        elif self.condition.startswith("Body Carve (KO"):
+            # Kelbi
             self.skill = SKILL_CARVING
             self.cap = True
             self.kill = True
             counts = [
                 1 + stats.carve_delta_expected_c(skill)
+                for skill in xrange(stats.CARVING_SKILL_PRO,
+                                    stats.CARVING_SKILL_GOD+1)
+            ]
+        elif "Carve" in self.condition:
+            # Mouth Carve: Dah'ren Mohran
+            # Upper Body Carve: Dalamadur
+            # Lower Body Carve: Dalamadur
+            # Head Carve: Dalamadur
+            # TODO: separate these out, some have >3 carves, not sure
+            # about others
+            self.skill = SKILL_CARVING
+            self.cap = False
+            self.kill = True
+            counts = [
+                3 + stats.carve_delta_expected_c(skill)
                 for skill in xrange(stats.CARVING_SKILL_PRO,
                                     stats.CARVING_SKILL_GOD+1)
             ]
@@ -248,6 +273,12 @@ class HuntReward(object):
                 self.kill = False
                 self.shiny = True
             elif self.condition.startswith("Break"):
+                self.cap = True
+                self.kill = True
+            elif self.condition in ("Bug-Catching Back", "Mining Back",
+                                    "Mining Ore", "Mining Scale"):
+                # TODO: it's easy to get more than one here, would be nice
+                # to separate these out like shinys.
                 self.cap = True
                 self.kill = True
             else:
@@ -359,7 +390,6 @@ def print_quests_and_rewards(db, item_row, out):
         for m in monsters:
             mid = m["monster_id"]
             monster = db.get_monster(mid)
-            has_item = False
             reward_rows = db.get_monster_rewards(mid, q.rank)
             hunt_item = HuntItemExpectedValue(item_id, reward_rows)
 
