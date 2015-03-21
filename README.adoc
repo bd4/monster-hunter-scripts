@@ -13,7 +13,7 @@ in all Python distributions (e.g. for Windows or Mac OS X).
 
 For a list of quests providing the specified monster part:
 
- ./mhrewards.py "Zinogre Jasper"
+ bin/mhrewards.py "Zinogre Jasper"
 
 This gives expected values for the item from different sources, including
 quest rewards, carves, capture, and shiny drops. An expected value of
@@ -33,8 +33,8 @@ For more manual calculations, mhprob.py can be used directly. The quest
 "Plain Dangerous" in 3U has 2 fixed rewards in A, one in B. Diablos hardhorns
 have a 5% chance:
 
- ./mhprop.py 5 2 3 69
- ./mhprop.py 5 1 1 69
+ bin/mhprop.py 5 2 3 69
+ bin/mhprop.py 5 1 1 69
 
 For great luck, you would replace 69 with 90. The output includes both expected
 value and probability of getting at least one.
