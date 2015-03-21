@@ -1,7 +1,9 @@
-#!/usr/bin/env python
+"""
+Calculate expected values for monster hunter items and find the best quests
+and hunts for getting an item with specified skills.
+"""
 
 from __future__ import print_function
-import codecs
 
 from mhapi.db import MHDB
 from mhapi import stats
@@ -13,10 +15,6 @@ SKILL_NONE = None
 STRAT_KILL = "kill"
 STRAT_CAP = "cap"
 STRAT_SHINY = "shiny"
-
-
-def get_utf8_writer(writer):
-    return codecs.getwriter("utf8")(writer)
 
 
 def _format_range(min_v, max_v):
@@ -389,27 +387,3 @@ def print_quests_and_rewards(db, item_row, out):
                 out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
             out.write("\n")
 
-
-if __name__ == '__main__':
-    import sys
-    import os
-    import os.path
-
-    if len(sys.argv) != 2:
-        print("Usage: %s 'item name'" % sys.argv[0])
-        sys.exit(os.EX_USAGE)
-
-    item_name = sys.argv[1]
-
-    out = get_utf8_writer(sys.stdout)
-    err_out = get_utf8_writer(sys.stderr)
-
-    # TODO: doesn't work if script is symlinked
-    db_path = os.path.dirname(sys.argv[0])
-    db_path = os.path.join(db_path, "..", "db", "mh4u.db")
-    db = MHDB(db_path)
-
-    item_row = find_item(db, item_name, err_out)
-    if item_row is None:
-        sys.exit(os.EX_DATAERR)
-    print_quests_and_rewards(db, item_row, out)

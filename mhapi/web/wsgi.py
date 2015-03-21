@@ -112,11 +112,3 @@ class App(object):
 
 application = App()
 
-
-if __name__ == '__main__':
-    from wsgiref.simple_server import make_server
-    httpd = make_server("", 8080, application)
-    try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        print "^C"
