@@ -47,6 +47,8 @@ For great luck, replace 69 with 90
 
 import sys
 
+import _pathfix
+
 from mhapi import stats
 
 if __name__ == '__main__':

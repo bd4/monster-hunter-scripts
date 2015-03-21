@@ -2,6 +2,8 @@
 
 import codecs
 
+import _pathfix
+
 from mhapi.db import MHDB
 from mhapi import rewards
 

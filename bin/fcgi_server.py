@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Set PYTHONPATH in lighttpd or other server config.
+
 from flup.server.fcgi import WSGIServer
 
 from mhapi.web.wsgi import application

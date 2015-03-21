@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import _pathfix
+
 from mhapi.web.wsgi import application
 
 LISTEN_HOST = ""
