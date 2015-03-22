@@ -10,7 +10,7 @@ import sqlite3
 class Quest(object):
     def __init__(self, quest_row, quest_rewards):
         self._row = quest_row
-        self._rewards = quest_rewards
+        self.rewards = quest_rewards
 
         self._template = string.Template(
            "$name ($hub $stars* $rank)"

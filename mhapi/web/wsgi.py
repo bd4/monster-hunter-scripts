@@ -81,8 +81,10 @@ class App(object):
         else:
             item_row = rewards.find_item(self.db, item_name, resp.body_file)
             if item_row is not None:
-                rewards.print_quests_and_rewards(self.db, item_row,
-                                                   resp.body_file)
+                ir = rewards.ItemRewards(self.db, item_row)
+                ir.print_recommended_hunts(resp.body_file)
+                ir.print_monsters(resp.body_file)
+                ir.print_quests(resp.body_file)
         return resp
 
     def get_all_names(self, req, resp):

@@ -97,8 +97,9 @@ class QuestItemExpectedValue(object):
     @param quest_rewards: list of rows from quest_rewards table for a single
                           quest
     """
-    def __init__(self, item_id, quest_rewards):
+    def __init__(self, item_id, quest):
         self.item_id = item_id
+        self.quest = quest
 
         self.fixed_rewards = dict(A=0, B=0, Sub=0)
         self.total_reward_p = dict(A=0, B=0, Sub=0)
@@ -108,7 +109,7 @@ class QuestItemExpectedValue(object):
         self.slot_rewards = dict(A=[], B=[], Sub=[])
         self.total_expected_values = [0, 0, 0]
 
-        self._set_rewards(quest_rewards)
+        self._set_rewards(quest.rewards)
 
     def is_sub(self):
         """Item is available from sub quest"""
@@ -305,9 +306,12 @@ class RankAndSkills(object):
     Helper to track the best strategy with a given set of skills and hunter
     rank.
     """
-    def __init__(self, rank, cap_skill=stats.CAP_SKILL_NONE,
+    def __init__(self, rank="G",
+                 luck_skill=stats.LUCK_SKILL_NONE,
+                 cap_skill=stats.CAP_SKILL_NONE,
                  carving_skill=stats.CARVING_SKILL_NONE):
         self.rank = rank
+        self.luck_skill = luck_skill
         self.cap_skill = cap_skill
         self.carving_skill = carving_skill
         self.best = None
@@ -328,6 +332,12 @@ class RankAndSkills(object):
             return True
         return False
 
+    def add_quest_item(self, quest_item):
+        if self.rank == "LR" and quest_item.rank != "LR":
+            return False
+        if self.rank == "HR" and quest_item.monster_rank == "G":
+            return False
+
 
 class HuntItemStrategy(object):
     """
@@ -345,10 +355,10 @@ class HuntItemStrategy(object):
                                                 cap_skill=cap_skill)
 
     def print(self, out):
-        out.write("%s %s %s (%5.2f)\n"
-                  % (self.hunt_item.monster_name,
-                     self.hunt_item.monster_rank,
-                     self.strat, self.ev))
+        out.write("%s %s %s (%5.2f)\n" %
+                  (self.hunt_item.monster_name,
+                   self.hunt_item.monster_rank,
+                   self.strat, self.ev))
 
     def is_same_strat(self, other):
         return (self.hunt_item.monster_name == other.hunt_item.monster_name
@@ -369,7 +379,6 @@ class HuntItemExpectedValue(object):
     @param hunt_rewards: list of rows from hunt_rewards table for a single
                          monster and rank
     """
-
     def __init__(self, item_id, monster_name, monster_rank, hunt_rewards):
         self.item_id = item_id
         self.monster_name = monster_name
@@ -416,111 +425,76 @@ class HuntItemExpectedValue(object):
         self.matching_rewards.append(reward)
 
 
-def print_monsters_and_rewards(db, item_row, out):
-    item_id = item_row["_id"]
-    monsters = db.get_item_monsters(item_id)
+class ItemRewards(object):
+    def __init__(self, db, item_row):
+        self.db = db
+        self.item_row = item_row
+        self.item_id = item_row["_id"]
 
-    skill_sets = OrderedDict([
-        ("No skills"     , RankAndSkills("G")),
-        ("Capture God"   , RankAndSkills("G", cap_skill=stats.CAP_SKILL_GOD)),
-        ("Carving God"   , RankAndSkills("G",
-                                        carving_skill=stats.CARVING_SKILL_GOD)),
-        ("Low  Rank"     , RankAndSkills("LR")),
-        ("High Rank"     , RankAndSkills("HR")),
-    ])
-    for m in monsters:
-        mid = m["monster_id"]
-        rank = m["rank"]
-        monster = db.get_monster(mid)
-        reward_rows = db.get_monster_rewards(mid, rank)
-        hunt_item = HuntItemExpectedValue(item_id, monster["name"], rank,
-                                          reward_rows)
+        self. skill_sets = OrderedDict([
+            ("No skills", RankAndSkills("G")),
+            ("Capture God", RankAndSkills("G", cap_skill=stats.CAP_SKILL_GOD)),
+            ("Carving God",
+               RankAndSkills("G", carving_skill=stats.CARVING_SKILL_GOD)),
+            ("Great Luck",
+               RankAndSkills("G", luck_skill=stats.LUCK_SKILL_GREAT)),
+            ("Low  Rank", RankAndSkills("LR")),
+            ("High Rank", RankAndSkills("HR")),
+        ])
 
-        out.write("%s %s\n" % (monster["name"], rank))
-        hunt_item.print(out, indent=2)
+        self._hunt_items = OrderedDict()
+        self._quest_items = OrderedDict()
 
-        kill_ev = [0, 0]
-        kill_ev[0] = hunt_item.expected_value(STRAT_KILL)
-        kill_ev[1] = hunt_item.expected_value(STRAT_KILL,
-                                      carving_skill=stats.CARVING_SKILL_GOD)
-        cap_ev = [0, 0]
-        cap_ev[0] = hunt_item.expected_value(STRAT_CAP)
-        cap_ev[1] = hunt_item.expected_value(STRAT_CAP,
-                                      cap_skill=stats.CAP_SKILL_GOD)
-        shiny_ev = hunt_item.expected_value(STRAT_SHINY)
-        out.write("  %20s\n" % "= Totals")
-        out.write("  %20s %s / 100\n"
-                  % ("Kill", _format_range(*kill_ev)))
-        out.write("  %20s %s / 100\n"
-                  % ("Cap", _format_range(*cap_ev)))
-        if shiny_ev:
-            out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
-        out.write("\n")
+        self._find_hunt_items()
+        self._find_quest_items()
 
-        for s in skill_sets.values():
-            s.add_hunt_item(hunt_item)
+    def _find_hunt_items(self):
+        monsters = self.db.get_item_monsters(self.item_id)
 
-
-    print("*** Poogie Recommends ***", file=out)
-    no_skill_best = skill_sets["No skills"].best
-    for name, skill_set in skill_sets.iteritems():
-        if skill_set.best is None:
-            continue
-        if name != "No skills" and skill_set.best.is_same_strat(no_skill_best):
-            continue
-        out.write("[%-11s] " % name)
-        skill_set.best.print(out)
-
-    print(file=out)
-
-
-def print_quests_and_rewards(db, item_row, out):
-    """
-    Get a list of the quests for acquiring a given item and the probability
-    of getting the item, depending on cap or kill and luck skills.
-    """
-    item_id = item_row["_id"]
-    quests = db.get_item_quest_objects(item_id)
-    print_monsters_and_rewards(db, item_row, out)
-    if not quests:
-        return
-    for q in quests:
-        out.write(unicode(q) + "\n")
-        out.write("  %20s" % "= Quest\n")
-
-        quest = QuestItemExpectedValue(item_id, q._rewards)
-        quest.check_totals(out)
-        quest.print(out, indent=2)
-
-        monsters = db.get_quest_monsters(q.id)
-
-        quest_ev = quest.expected_value()
-
-        cap_ev = [quest_ev, quest_ev]
-        kill_ev = [quest_ev, quest_ev]
-        shiny_ev = 0
         for m in monsters:
             mid = m["monster_id"]
-            monster = db.get_monster(mid)
-            reward_rows = db.get_monster_rewards(mid, q.rank)
-            hunt_item = HuntItemExpectedValue(item_id, monster["name"],
-                                              q.rank, reward_rows)
+            rank = m["rank"]
+            monster = self.db.get_monster(mid)
+            reward_rows = self.db.get_monster_rewards(mid, rank)
+            hunt_item = HuntItemExpectedValue(self.item_id, monster["name"],
+                                              rank, reward_rows)
+            key = (mid, rank)
+            self._hunt_items[key] = hunt_item
 
-            kill_ev[0] += hunt_item.expected_value(STRAT_KILL)
-            kill_ev[1] += hunt_item.expected_value(STRAT_KILL,
-                                      carving_skill=stats.CARVING_SKILL_GOD)
-            cap_ev[0] += hunt_item.expected_value(STRAT_CAP)
-            cap_ev[1] += hunt_item.expected_value(STRAT_CAP,
-                                          cap_skill=stats.CAP_SKILL_GOD)
-            shiny_ev = hunt_item.expected_value(STRAT_SHINY)
+            for s in self.skill_sets.values():
+                s.add_hunt_item(hunt_item)
 
-            if kill_ev[0] == 0 and cap_ev[0] == 0 and shiny_ev == 0:
-                continue
+    def get_hunt_item(self, monster_id, monster_rank):
+        key = (monster_id, monster_rank)
+        return self._hunt_items.get(key)
 
-            out.write("  %20s\n" % ("= " + monster["name"] + " " + q.rank))
+    def _find_quest_items(self):
+        """
+        Get a list of the quests for acquiring a given item and the probability
+        of getting the item, depending on cap or kill and luck skills.
+        """
+        quests = self.db.get_item_quest_objects(self.item_id)
+        if not quests:
+            return
+        for q in quests:
+            quest_item = QuestItemExpectedValue(self.item_id, q)
+            self._quest_items[q.id] = quest_item
 
+    def print_monsters(self, out):
+        for hunt_item in self._hunt_items.itervalues():
+            out.write("%s %s\n"
+                      % (hunt_item.monster_name, hunt_item.monster_rank))
             hunt_item.print(out, indent=2)
 
+            kill_ev = [0, 0]
+            kill_ev[0] = hunt_item.expected_value(STRAT_KILL)
+            kill_ev[1] = hunt_item.expected_value(STRAT_KILL,
+                                          carving_skill=stats.CARVING_SKILL_GOD)
+            cap_ev = [0, 0]
+            cap_ev[0] = hunt_item.expected_value(STRAT_CAP)
+            cap_ev[1] = hunt_item.expected_value(STRAT_CAP,
+                                          cap_skill=stats.CAP_SKILL_GOD)
+            shiny_ev = hunt_item.expected_value(STRAT_SHINY)
             out.write("  %20s\n" % "= Totals")
             out.write("  %20s %s / 100\n"
                       % ("Kill", _format_range(*kill_ev)))
@@ -530,3 +504,67 @@ def print_quests_and_rewards(db, item_row, out):
                 out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
             out.write("\n")
 
+    def print_recommended_hunts(self, out):
+        out.write("*** Poogie Recommends ***\n")
+        no_skill_best = self.skill_sets["No skills"].best
+        for name, skill_set in self.skill_sets.iteritems():
+            if skill_set.best is None:
+                # Don't print out a rank with no options
+                continue
+            if (name != "No skills"
+            and skill_set.best.is_same_strat(no_skill_best)):
+                # Don't print out a skill set/rank that doesn't differ from
+                # no skills any rank
+                continue
+            out.write("[%-11s] " % name)
+            skill_set.best.print(out)
+        out.write("\n")
+
+    def print_quests(self, out):
+        """
+        Get a list of the quests for acquiring a given item and the probability
+        of getting the item, depending on cap or kill and luck skills.
+        """
+        for quest_item in self._quest_items.itervalues():
+            out.write(unicode(quest_item.quest) + "\n")
+            out.write("  %20s" % "= Quest\n")
+
+            quest_item.check_totals(out)
+            quest_item.print(out, indent=2)
+
+            quest_monsters = self.db.get_quest_monsters(quest_item.quest.id)
+
+            quest_ev = quest_item.expected_value()
+
+            cap_ev = [quest_ev, quest_ev]
+            kill_ev = [quest_ev, quest_ev]
+            shiny_ev = 0
+            for m in quest_monsters:
+                mid = m["monster_id"]
+                hunt_item = self.get_hunt_item(mid, quest_item.quest.rank)
+
+                kill_ev[0] += hunt_item.expected_value(STRAT_KILL)
+                kill_ev[1] += hunt_item.expected_value(STRAT_KILL,
+                                          carving_skill=stats.CARVING_SKILL_GOD)
+                cap_ev[0] += hunt_item.expected_value(STRAT_CAP)
+                cap_ev[1] += hunt_item.expected_value(STRAT_CAP,
+                                              cap_skill=stats.CAP_SKILL_GOD)
+                shiny_ev = hunt_item.expected_value(STRAT_SHINY)
+
+                if kill_ev[0] == 0 and cap_ev[0] == 0 and shiny_ev == 0:
+                    continue
+
+                out.write("  %20s\n"
+                          % ("= " + hunt_item.monster_name
+                             + " " + hunt_item.monster_rank))
+
+                hunt_item.print(out, indent=2)
+
+                out.write("  %20s\n" % "= Totals")
+                out.write("  %20s %s / 100\n"
+                          % ("Kill", _format_range(*kill_ev)))
+                out.write("  %20s %s / 100\n"
+                          % ("Cap", _format_range(*cap_ev)))
+                if shiny_ev:
+                    out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
+                out.write("\n")
