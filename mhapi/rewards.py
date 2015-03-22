@@ -4,6 +4,7 @@ and hunts for getting an item with specified skills.
 """
 
 from __future__ import print_function
+from collections import OrderedDict
 
 from mhapi import stats
 
@@ -299,6 +300,66 @@ class HuntReward(object):
         return evs
 
 
+class RankAndSkills(object):
+    """
+    Helper to track the best strategy with a given set of skills and hunter
+    rank.
+    """
+    def __init__(self, rank, cap_skill=stats.CAP_SKILL_NONE,
+                 carving_skill=stats.CARVING_SKILL_NONE):
+        self.rank = rank
+        self.cap_skill = cap_skill
+        self.carving_skill = carving_skill
+        self.best = None
+
+    def add_hunt_item(self, hunt_item):
+        if self.rank == "LR" and hunt_item.monster_rank != "LR":
+            return False
+        if self.rank == "HR" and hunt_item.monster_rank == "G":
+            return False
+
+        strat = hunt_item.get_best_strategy(cap_skill=self.cap_skill,
+                                            carving_skill=self.carving_skill)
+        if self.best is None:
+            self.best = strat
+            return True
+        elif strat > self.best:
+            self.best = strat
+            return True
+        return False
+
+
+class HuntItemStrategy(object):
+    """
+    Encapsulate a specific strategy for getting an item, including kill vs
+    cap and skills.
+    """
+    def __init__(self, hunt_item, strat, cap_skill=None, carving_skill=None):
+        self.hunt_item = hunt_item
+        self.strat = strat
+        self.cap_skill = cap_skill
+        self.carving_skill = carving_skill
+
+        self.ev = self.hunt_item.expected_value(strat,
+                                                carving_skill=carving_skill,
+                                                cap_skill=cap_skill)
+
+    def print(self, out):
+        out.write("%s %s %s (%5.2f)\n"
+                  % (self.hunt_item.monster_name,
+                     self.hunt_item.monster_rank,
+                     self.strat, self.ev))
+
+    def is_same_strat(self, other):
+        return (self.hunt_item.monster_name == other.hunt_item.monster_name
+            and self.hunt_item.monster_rank == other.hunt_item.monster_rank
+            and self.strat == other.strat
+            and self.ev == other.ev)
+
+    def __cmp__(self, other):
+        return cmp(self.ev, other.ev)
+
+
 class HuntItemExpectedValue(object):
     """
     Calculate the expected value for an item from hunting a monster, including
@@ -309,8 +370,10 @@ class HuntItemExpectedValue(object):
                          monster and rank
     """
 
-    def __init__(self, item_id, hunt_rewards):
+    def __init__(self, item_id, monster_name, monster_rank, hunt_rewards):
         self.item_id = item_id
+        self.monster_name = monster_name
+        self.monster_rank = monster_rank
         self.matching_rewards = []
         self._set_rewards(hunt_rewards)
 
@@ -324,6 +387,19 @@ class HuntItemExpectedValue(object):
                                         cap_skill=cap_skill,
                                         carving_skill=carving_skill)
         return ev
+
+    def get_best_strategy(self, cap_skill=stats.CAP_SKILL_NONE,
+                          carving_skill=stats.CARVING_SKILL_NONE):
+        kill = HuntItemStrategy(self, STRAT_KILL,
+                                cap_skill=cap_skill,
+                                carving_skill=carving_skill)
+        cap =  HuntItemStrategy(self, STRAT_CAP,
+                                cap_skill=cap_skill,
+                                carving_skill=carving_skill)
+        if kill > cap:
+            return kill
+        else:
+            return cap
 
     def print(self, out, indent=2):
         for hr in self.matching_rewards:
@@ -343,12 +419,22 @@ class HuntItemExpectedValue(object):
 def print_monsters_and_rewards(db, item_row, out):
     item_id = item_row["_id"]
     monsters = db.get_item_monsters(item_id)
+
+    skill_sets = OrderedDict([
+        ("No skills"     , RankAndSkills("G")),
+        ("Capture God"   , RankAndSkills("G", cap_skill=stats.CAP_SKILL_GOD)),
+        ("Carving God"   , RankAndSkills("G",
+                                        carving_skill=stats.CARVING_SKILL_GOD)),
+        ("Low  Rank"     , RankAndSkills("LR")),
+        ("High Rank"     , RankAndSkills("HR")),
+    ])
     for m in monsters:
         mid = m["monster_id"]
         rank = m["rank"]
         monster = db.get_monster(mid)
         reward_rows = db.get_monster_rewards(mid, rank)
-        hunt_item = HuntItemExpectedValue(item_id, reward_rows)
+        hunt_item = HuntItemExpectedValue(item_id, monster["name"], rank,
+                                          reward_rows)
 
         out.write("%s %s\n" % (monster["name"], rank))
         hunt_item.print(out, indent=2)
@@ -370,6 +456,22 @@ def print_monsters_and_rewards(db, item_row, out):
         if shiny_ev:
             out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
         out.write("\n")
+
+        for s in skill_sets.values():
+            s.add_hunt_item(hunt_item)
+
+
+    print("*** Poogie Recommends ***", file=out)
+    no_skill_best = skill_sets["No skills"].best
+    for name, skill_set in skill_sets.iteritems():
+        if skill_set.best is None:
+            continue
+        if name != "No skills" and skill_set.best.is_same_strat(no_skill_best):
+            continue
+        out.write("[%-11s] " % name)
+        skill_set.best.print(out)
+
+    print(file=out)
 
 
 def print_quests_and_rewards(db, item_row, out):
@@ -401,7 +503,8 @@ def print_quests_and_rewards(db, item_row, out):
             mid = m["monster_id"]
             monster = db.get_monster(mid)
             reward_rows = db.get_monster_rewards(mid, q.rank)
-            hunt_item = HuntItemExpectedValue(item_id, reward_rows)
+            hunt_item = HuntItemExpectedValue(item_id, monster["name"],
+                                              q.rank, reward_rows)
 
             kill_ev[0] += hunt_item.expected_value(STRAT_KILL)
             kill_ev[1] += hunt_item.expected_value(STRAT_KILL,
