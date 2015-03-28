@@ -64,6 +64,4 @@ if __name__ == '__main__':
             if item_row is None:
                 sys.exit(os.EX_DATAERR)
             ir = rewards.ItemRewards(db, item_row)
-            ir.print_recommended_hunts(out)
-            ir.print_monsters(out)
-            ir.print_quests(out)
+            ir.print_all(out)

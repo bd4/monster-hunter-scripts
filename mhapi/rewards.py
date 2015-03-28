@@ -519,6 +519,9 @@ class ItemRewards(object):
         self._find_hunt_items()
         self._find_quest_items()
 
+    def is_empty(self):
+        return (not self._hunt_items and not self._quest_items)
+
     def _find_hunt_items(self):
         monsters = self.db.get_item_monsters(self.item_id)
 
@@ -658,3 +661,12 @@ class ItemRewards(object):
                 if shiny_ev:
                     out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
             out.write("\n")
+
+    def print_all(self, out):
+        if self.is_empty():
+            # TODO: this happens for Wymporium tradeable monster parts.
+            out.write("ERROR: data for this item is not yet available\n")
+            return
+        self.print_recommended_hunts(out)
+        self.print_monsters(out)
+        self.print_quests(out)
