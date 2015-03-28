@@ -7,6 +7,7 @@ from __future__ import print_function
 from collections import OrderedDict
 
 from mhapi import stats
+from mhapi.db import Quest
 
 SKILL_CARVING = "carving"
 SKILL_CAP = "cap"
@@ -497,6 +498,19 @@ class ItemRewards(object):
         self.item_row = item_row
         self.item_id = item_row["_id"]
 
+        wyp_row = db.get_wyporium_trade(self.item_id)
+        if wyp_row is not None:
+            self.trade_unlock_quest = Quest(
+                                db.get_quest(wyp_row["unlock_quest_id"]))
+            self.trade_item_row = self.item_row
+            self.trade_item_id = self.item_id
+            self.item_id = wyp_row["item_out_id"]
+            self.item_row = db.get_item(wyp_row["item_out_id"])
+        else:
+            self.trade_item_row = None
+            self.trade_item_id = None
+            self.trade_unlock_quest = None
+
         self.rank_skill_sets = OrderedDict()
         for rank in "G HR LR".split():
             self.rank_skill_sets[rank] = OrderedDict([
@@ -664,9 +678,16 @@ class ItemRewards(object):
 
     def print_all(self, out):
         if self.is_empty():
-            # TODO: this happens for Wymporium tradeable monster parts.
             out.write("ERROR: data for this item is not yet available\n")
             return
+
+        if self.trade_unlock_quest:
+            item_name = self.item_row["name"]
+            out.write("*** Wyporium trade for '%s'\n" % item_name)
+            out.write("    Unlocked by quest '%s'\n"
+                      % unicode(self.trade_unlock_quest).split("\n")[0])
+            out.write("\n")
+
         self.print_recommended_hunts(out)
         self.print_monsters(out)
         self.print_quests(out)

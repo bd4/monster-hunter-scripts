@@ -8,7 +8,7 @@ import sqlite3
 
 
 class Quest(object):
-    def __init__(self, quest_row, quest_rewards):
+    def __init__(self, quest_row, quest_rewards=None):
         self._row = quest_row
         self.rewards = quest_rewards
 
@@ -85,6 +85,13 @@ class MHDB(object):
             SELECT * FROM items
             WHERE name=?
         """, name)
+        return v[0] if v else None
+
+    def get_wyporium_trade(self, item_id):
+        v = self._get_memoized("wyporium", """
+            SELECT * FROM wyporium
+            WHERE item_in_id=?
+        """, item_id)
         return v[0] if v else None
 
     def search_item_name(self, term, item_type):
