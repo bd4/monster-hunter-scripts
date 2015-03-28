@@ -24,6 +24,8 @@
   </style>
 
   <script type="text/javascript">
+      var STATIC_BASE = "/rewards/";
+
       $(document).ready(function(){
           $("#search").click(update_search);
           $("#item").keypress(function(e) {
@@ -32,8 +34,12 @@
           setup_autocomplete();
       });
 
+      function encode_utf8(s) {
+          return unescape(encodeURIComponent(s));
+      }
+
       function setup_autocomplete() {
-          $.getJSON("/mhapi/item_name_list",
+          $.getJSON(STATIC_BASE + "items.json",
                     function(data) {
                         $("#item").autocomplete({ source: data });
                     });
@@ -42,8 +48,7 @@
       function update_search() {
           var item_name = $.trim($("#item").val());
 
-          $.get("/mhapi/rewards",
-                { "item_name": item_name },
+          $.get(STATIC_BASE + encode_utf8(item_name) + ".txt",
                 function(data) {
                     $("#output").text(data);
                 });
