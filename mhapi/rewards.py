@@ -168,6 +168,11 @@ class HuntReward(object):
         self.percentage = reward["percentage"]
         self.item_id = reward["item_id"]
 
+        if not self.percentage:
+            # TODO: this is an error in the db, print warning in higher
+            # level code
+            self.percentage = 0
+
         self.cap = False
         self.kill = False
         self.shiny = False

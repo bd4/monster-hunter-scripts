@@ -68,7 +68,7 @@ class MHDB(object):
 
     def get_item_names(self):
         v = self._get_memoized("item_names", """
-            SELECT name FROM items
+            SELECT _id, name FROM items
             WHERE type IN ('Bone', 'Flesh', 'Sac/Fluid')
         """)
         return v
