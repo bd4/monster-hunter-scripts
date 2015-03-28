@@ -10,6 +10,7 @@ CAP_SKILL_GOD = 3
 LUCK_SKILL_NONE = 0
 LUCK_SKILL_GOOD = 1
 LUCK_SKILL_GREAT = 2
+LUCK_SKILL_AMAZING = 3
 
 QUEST_A = "A"
 QUEST_B = "B"
@@ -89,11 +90,13 @@ def quest_reward_expected_c(line=QUEST_A, luck_skill=LUCK_SKILL_NONE):
     of fixed items from the output to get the actual value.
     """
     if luck_skill == LUCK_SKILL_NONE:
-        extend_p = 69
+        extend_p = 22 * 100.0 / 32
     elif luck_skill == LUCK_SKILL_GOOD:
-        extend_p = 81
+        extend_p = 25 * 100.0 / 32
     elif luck_skill == LUCK_SKILL_GREAT:
-        extend_p = 90
+        extend_p = 28 * 100.0 / 32
+    elif luck_skill == LUCK_SKILL_AMAZING:
+        extend_p = 31 * 100.0 / 32
     else:
         raise ValueError()
 
@@ -122,13 +125,13 @@ def capture_reward_expected_c(cap_skill=CAP_SKILL_NONE):
     if cap_skill == CAP_SKILL_NONE:
         min_c = 2
         max_c = 3
-        extend_p = 69
+        extend_p = 22 * 100.0 / 32
     elif cap_skill == CAP_SKILL_EXPERT:
         return 3
     elif cap_skill == CAP_SKILL_MASTER:
         min_c = 3
         max_c = 4
-        extend_p = 69
+        extend_p = 22 * 100.0 / 32
     elif cap_skill == CAP_SKILL_GOD:
         return 4
     else:
@@ -149,10 +152,10 @@ def carve_delta_expected_c(carve_skill):
         return 1
     elif carve_skill == CARVING_SKILL_GOD:
         # Description: Increases the number of carving chances by one (maybe more) and prevents knockbacks while carving.
-        # TODO: max 2 and 50% extend is a guess, find the actual values
+        # From ShadyFigure on reddit, extend chance is 25 / 32
         min_c = 1
         max_c = 2
-        extend_p = 50
+        extend_p = 25 * 100.0 / 32
     elif carve_skill == CARVING_SKILL_FELYNE_LOW:
         min_c = 0
         max_c = 1
