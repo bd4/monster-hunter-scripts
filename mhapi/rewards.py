@@ -64,7 +64,7 @@ class QuestReward(object):
     def _calculate_ev(self):
         if self.percentage == 100:
             # fixed reward, always one draw regardless of luck skill
-            evs = [1 * self.percentage * self.stack_size] * 3
+            evs = [1 * self.percentage * self.stack_size] * 4
             self.skill_delta = 0
         else:
             # variable reward, expected number of draws depends on luck skill
@@ -321,55 +321,129 @@ class RankAndSkills(object):
         self.carving_skill = carving_skill
         self.best = None
 
-    def add_hunt_item(self, hunt_item):
-        if self.rank == "LR" and hunt_item.monster_rank != "LR":
+    def _rank_available(self, rank):
+        if self.rank == "LR" and rank != "LR":
             return False
-        if self.rank == "HR" and hunt_item.monster_rank == "G":
+        if self.rank == "HR" and rank == "G":
             return False
+        return True
 
-        strat = hunt_item.get_best_strategy(cap_skill=self.cap_skill,
-                                            carving_skill=self.carving_skill)
+    def _compare_strat(self, new_strat):
         if self.best is None:
-            self.best = strat
+            self.best = new_strat
             return True
-        elif strat > self.best:
-            self.best = strat
+        elif new_strat > self.best:
+            self.best = new_strat
             return True
         return False
 
-    def add_quest_item(self, quest_item):
-        if self.rank == "LR" and quest_item.rank != "LR":
-            return False
-        if self.rank == "HR" and quest_item.monster_rank == "G":
+    def add_hunt_option(self, hunt_item):
+        if not self._rank_available(hunt_item.monster_rank):
             return False
 
+        kill = ItemStrategy(STRAT_KILL,
+                            cap_skill=self.cap_skill,
+                            carving_skill=self.carving_skill)
+        cap =  ItemStrategy(STRAT_CAP,
+                            cap_skill=self.cap_skill,
+                            carving_skill=self.carving_skill)
+        for strat in (kill, cap):
+            strat.add_hunt_item(hunt_item)
+            self._compare_strat(strat)
 
-class HuntItemStrategy(object):
+    def add_quest_option(self, quest_item, hunt_items):
+        if not self._rank_available(quest_item.quest.rank):
+            return False
+
+        cap_strat = ItemStrategy(STRAT_CAP,
+                                 luck_skill=self.luck_skill,
+                                 cap_skill=self.cap_skill,
+                                 carving_skill=self.carving_skill)
+        kill_strat = ItemStrategy(STRAT_KILL,
+                                 luck_skill=self.luck_skill,
+                                 cap_skill=self.cap_skill,
+                                 carving_skill=self.carving_skill)
+        for strat in (cap_strat, kill_strat):
+            strat.set_quest_item(quest_item)
+            for hi in hunt_items:
+                strat.add_hunt_item(hi)
+            self._compare_strat(strat)
+
+
+class ItemStrategy(object):
     """
     Encapsulate a specific strategy for getting an item, including kill vs
     cap and skills.
     """
-    def __init__(self, hunt_item, strat, cap_skill=None, carving_skill=None):
-        self.hunt_item = hunt_item
+    def __init__(self, strat,
+                 luck_skill=None, cap_skill=None, carving_skill=None):
         self.strat = strat
+        self.luck_skill = luck_skill
         self.cap_skill = cap_skill
         self.carving_skill = carving_skill
 
-        self.ev = self.hunt_item.expected_value(strat,
-                                                carving_skill=carving_skill,
-                                                cap_skill=cap_skill)
+        self.hunt_items = []
+        self.quest_item = None
+        self.hunt_ev = 0
+        self.quest_ev = 0
+        self.ev = 0
+
+    def add_hunt_item(self, hunt_item):
+        self.hunt_items.append(hunt_item)
+        ev = self.hunt_item.expected_value(self.strat,
+                                           carving_skill=self.carving_skill,
+                                           cap_skill=self.cap_skill)
+        self.hunt_ev += ev
+        self.ev += ev
+
+    def set_quest_item(self, quest_item):
+        """
+        Allow adding a quest and luck skill after create, e.g. to an
+        existing hunt only strategy returned by get_best_strategy.
+        """
+        assert self.quest_item is None
+        self.quest_item = quest_item
+        ev = self.quest_item.expected_value(luck_skill=self.luck_skill)
+
+        self.quest_ev = ev
+        self.ev += ev
+
+    @property
+    def hunt_item(self):
+        assert len(self.hunt_items) == 1
+        return self.hunt_items[0]
 
     def print(self, out):
-        out.write("%s %s %s (%5.2f)\n" %
-                  (self.hunt_item.monster_name,
-                   self.hunt_item.monster_rank,
-                   self.strat, self.ev))
+        if self.quest_item:
+            out.write("(QUEST) %s %s %s (%5.2f)\n" %
+                      (self.quest_item.quest.name,
+                       self.quest_item.quest.rank,
+                       self.strat, self.ev))
+        else:
+            out.write("(HUNT)  %s %s %s (%5.2f)\n" %
+                      (self.hunt_item.monster_name,
+                       self.hunt_item.monster_rank,
+                       self.strat, self.ev))
 
     def is_same_strat(self, other):
-        return (self.hunt_item.monster_name == other.hunt_item.monster_name
-            and self.hunt_item.monster_rank == other.hunt_item.monster_rank
-            and self.strat == other.strat
-            and self.ev == other.ev)
+        if self.strat != other.strat:
+            return False
+        if self.quest_item != other.quest_item:
+            return False
+        if len(self.hunt_items) != len(other.hunt_items):
+            return False
+        if self.hunt_ev != other.hunt_ev:
+            return False
+        if self.quest_ev != other.quest_ev:
+            return False
+
+        for self_hi, other_hi in zip(self.hunt_items, other.hunt_items):
+            if self_hi.monster_name != other_hi.monster_name:
+                return False
+            if self_hi.monster_rank != other_hi.monster_rank:
+                return False
+
+        return True
 
     def __cmp__(self, other):
         return cmp(self.ev, other.ev)
@@ -402,19 +476,6 @@ class HuntItemExpectedValue(object):
                                         carving_skill=carving_skill)
         return ev
 
-    def get_best_strategy(self, cap_skill=stats.CAP_SKILL_NONE,
-                          carving_skill=stats.CARVING_SKILL_NONE):
-        kill = HuntItemStrategy(self, STRAT_KILL,
-                                cap_skill=cap_skill,
-                                carving_skill=carving_skill)
-        cap =  HuntItemStrategy(self, STRAT_CAP,
-                                cap_skill=cap_skill,
-                                carving_skill=carving_skill)
-        if kill > cap:
-            return kill
-        else:
-            return cap
-
     def print(self, out, indent=2):
         for hr in self.matching_rewards:
             hr.print(out, indent)
@@ -436,16 +497,21 @@ class ItemRewards(object):
         self.item_row = item_row
         self.item_id = item_row["_id"]
 
-        self. skill_sets = OrderedDict([
-            ("No skills", RankAndSkills("G")),
-            ("Capture God", RankAndSkills("G", cap_skill=stats.CAP_SKILL_GOD)),
-            ("Carving God",
-               RankAndSkills("G", carving_skill=stats.CARVING_SKILL_GOD)),
-            ("Great Luck",
-               RankAndSkills("G", luck_skill=stats.LUCK_SKILL_AMAZING)),
-            ("Low  Rank", RankAndSkills("LR")),
-            ("High Rank", RankAndSkills("HR")),
-        ])
+        self.rank_skill_sets = OrderedDict()
+        for rank in "G HR LR".split():
+            self.rank_skill_sets[rank] = OrderedDict([
+                ("No skills",
+                 RankAndSkills(rank)),
+
+                ("Capture God",
+                 RankAndSkills(rank, cap_skill=stats.CAP_SKILL_GOD)),
+
+                ("Carving God",
+                 RankAndSkills(rank, carving_skill=stats.CARVING_SKILL_GOD)),
+
+                ("Amazing Luck",
+                 RankAndSkills(rank, luck_skill=stats.LUCK_SKILL_AMAZING)),
+            ])
 
         self._hunt_items = OrderedDict()
         self._quest_items = OrderedDict()
@@ -466,8 +532,9 @@ class ItemRewards(object):
             key = (mid, rank)
             self._hunt_items[key] = hunt_item
 
-            for s in self.skill_sets.values():
-                s.add_hunt_item(hunt_item)
+            for rank, skill_sets in self.rank_skill_sets.iteritems():
+                for s in skill_sets.itervalues():
+                    s.add_hunt_option(hunt_item)
 
     def get_hunt_item(self, monster_id, monster_rank):
         key = (monster_id, monster_rank)
@@ -484,10 +551,21 @@ class ItemRewards(object):
         for q in quests:
             quest_item = QuestItemExpectedValue(self.item_id, q)
             self._quest_items[q.id] = quest_item
+            quest_monsters = self.db.get_quest_monsters(quest_item.quest.id)
+            hunt_items = []
+            for m in quest_monsters:
+                mid = m["monster_id"]
+                hunt_item = self.get_hunt_item(mid, quest_item.quest.rank)
+                if hunt_item:
+                    hunt_items.append(hunt_item)
+
+            for rank, skill_sets in self.rank_skill_sets.iteritems():
+                for s in skill_sets.itervalues():
+                    s.add_quest_option(quest_item, hunt_items)
 
     def print_monsters(self, out):
         for hunt_item in self._hunt_items.itervalues():
-            out.write("%s %s\n"
+            out.write("(HUNT)  %s %s\n"
                       % (hunt_item.monster_name, hunt_item.monster_rank))
             hunt_item.print(out, indent=2)
 
@@ -511,19 +589,24 @@ class ItemRewards(object):
 
     def print_recommended_hunts(self, out):
         out.write("*** Poogie Recommends ***\n")
-        no_skill_best = self.skill_sets["No skills"].best
-        for name, skill_set in self.skill_sets.iteritems():
-            if skill_set.best is None:
-                # Don't print out a rank with no options
+        for rank, skill_sets in self.rank_skill_sets.iteritems():
+            no_skill_best = skill_sets["No skills"].best
+            if no_skill_best is None:
+                # not available at this rank
                 continue
-            if (name != "No skills"
-            and skill_set.best.is_same_strat(no_skill_best)):
-                # Don't print out a skill set/rank that doesn't differ from
-                # no skills any rank
-                continue
-            out.write("[%-11s] " % name)
-            skill_set.best.print(out)
-        out.write("\n")
+            out.write("> " + rank + "\n")
+            for name, skill_set in skill_sets.iteritems():
+                if skill_set.best is None:
+                    # Don't print out a rank with no options
+                    continue
+                if (name != "No skills"
+                and skill_set.best.is_same_strat(no_skill_best)):
+                    # Don't print out a skill set that doesn't differ from
+                    # no skills
+                    continue
+                out.write("  [%-12s] " % name)
+                skill_set.best.print(out)
+            out.write("\n")
 
     def print_quests(self, out):
         """
@@ -531,7 +614,7 @@ class ItemRewards(object):
         of getting the item, depending on cap or kill and luck skills.
         """
         for quest_item in self._quest_items.itervalues():
-            out.write(unicode(quest_item.quest) + "\n")
+            out.write("(QUEST) " + unicode(quest_item.quest) + "\n")
             out.write("  %20s" % "= Quest\n")
 
             quest_item.check_totals(out)
