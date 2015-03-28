@@ -24,7 +24,7 @@
   </style>
 
   <script type="text/javascript">
-      var STATIC_BASE = "/rewards/";
+      var DATA_PATH = get_base_path() + "/rewards/";
 
       $(document).ready(function(){
           $("#search").click(update_search);
@@ -38,8 +38,13 @@
           return unescape(encodeURIComponent(s));
       }
 
+      function get_base_path() {
+          var path = document.location.pathname;
+          return path.substring(0, path.lastIndexOf('/'));
+      }
+
       function setup_autocomplete() {
-          $.getJSON(STATIC_BASE + "items.json",
+          $.getJSON(DATA_PATH + "items.json",
                     function(data) {
                         $("#item").autocomplete({ source: data });
                     });
@@ -48,7 +53,7 @@
       function update_search() {
           var item_name = $.trim($("#item").val());
 
-          $.get(STATIC_BASE + encode_utf8(item_name) + ".txt",
+          $.get(DATA_PATH + encode_utf8(item_name) + ".txt",
                 function(data) {
                     $("#output").text(data);
                 });
