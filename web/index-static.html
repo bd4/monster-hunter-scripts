@@ -56,6 +56,9 @@
           $.get(DATA_PATH + encode_utf8(item_name) + ".txt",
                 function(data) {
                     $("#output").text(data);
+                }).fail(
+                function() {
+                    $("#output").text("Error: item '" + item_name + "' not found");
                 });
       }
   </script>
