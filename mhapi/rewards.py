@@ -70,7 +70,7 @@ class QuestReward(object):
             # variable reward, expected number of draws depends on luck skill
             counts = [stats.quest_reward_expected_c(self.slot, skill)
                       for skill in xrange(stats.LUCK_SKILL_NONE,
-                                          stats.LUCK_SKILL_GREAT+1)]
+                                          stats.LUCK_SKILL_AMAZING+1)]
 
 
             evs = [((count - self.fixed_rewards)
@@ -107,7 +107,7 @@ class QuestItemExpectedValue(object):
         # dict mapping slot name to list of lists
         # of the form (slot, list_of_expected_values).
         self.slot_rewards = dict(A=[], B=[], Sub=[])
-        self.total_expected_values = [0, 0, 0]
+        self.total_expected_values = [0, 0, 0, 0]
 
         self._set_rewards(quest.rewards)
 
@@ -437,7 +437,7 @@ class ItemRewards(object):
             ("Carving God",
                RankAndSkills("G", carving_skill=stats.CARVING_SKILL_GOD)),
             ("Great Luck",
-               RankAndSkills("G", luck_skill=stats.LUCK_SKILL_GREAT)),
+               RankAndSkills("G", luck_skill=stats.LUCK_SKILL_AMAZING)),
             ("Low  Rank", RankAndSkills("LR")),
             ("High Rank", RankAndSkills("HR")),
         ])
@@ -542,6 +542,8 @@ class ItemRewards(object):
             for m in quest_monsters:
                 mid = m["monster_id"]
                 hunt_item = self.get_hunt_item(mid, quest_item.quest.rank)
+                if hunt_item is None:
+                    continue
 
                 kill_ev[0] += hunt_item.expected_value(STRAT_KILL)
                 kill_ev[1] += hunt_item.expected_value(STRAT_KILL,
@@ -567,4 +569,4 @@ class ItemRewards(object):
                           % ("Cap", _format_range(*cap_ev)))
                 if shiny_ev:
                     out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
-                out.write("\n")
+            out.write("\n")
