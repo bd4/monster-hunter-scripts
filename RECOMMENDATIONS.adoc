@@ -1,0 +1,180 @@
+= Poogie Recommends
+
+This tool is designed to find the best quest or hunt for farming a monster
+part. To do this, it calculates the
+link:http://en.wikipedia.org/wiki/Expected_value[expected value] for each
+quest, which is the average number of rewards from doing the quest many times.
+For easy display, it's listed as the expected value from doing the quest 100
+times. This value can be greater than 100, which indicates that on average,
+you can expect to get more than 1 of the item in each run of the quest.
+Expected value is linear, meaning that if you do half the number of quests, the
+expected value will be half. If you do one quest, the expected value is 1/100th
+of the shown value.
+
+Remember that expected value is an average - in a single run you could get none
+or a lot less than expected and you could get more than expected. By the
+link:http://en.wikipedia.org/wiki/Law_of_large_numbers[law of large numbers],
+if you do the quest many many times, it's very likely that your average will be
+close to the expected average. If you do the quest only a few times, it's not
+surprising or unlucky to get less than expected.
+
+== Example
+
+=== Poogie Recommends
+
+The "Poogie Recommends" section is all you need if you don't care about the
+details. Here is a snippet of recommendation results for "Zinogre Jasper":
+
+-------------------------------------
+*** Poogie Recommends ***
+> G
+  [No skills   ] (QUEST) Advanced: Fury on the Mount G cap (114.40)
+  [Capture God ] (QUEST) Advanced: Fury on the Mount G cap (124.90)
+  [Amazing Luck] (QUEST) Advanced: Fury on the Mount G cap (164.20)
+
+> HR
+  [No skills   ] (QUEST) The Caravaneer's Challenge HR kill (28.13)
+  [Carving God ] (QUEST) The Caravaneer's Challenge HR kill (37.03)
+  [Amazing Luck] (QUEST) The Caravaneer's Challenge HR kill (34.09)
+-------------------------------------
+
+For each rank, it recommends the best quest and strategy for getting
+a Jasper. LR is not listed because the item is not available from low rank
+quests or hunts. The numbers given at the end in parenthesis are the expected
+values. If luck, capture, or carvings kills can give you a better expected
+value, they will be listed as well. This can give you an idea which armor
+skills may be worth using to farm the item.
+
+These recommendations and expected values assume that you break all parts of
+the monster and cut and carve the tail. For details on which of these actually
+give you the item, scroll to the detailed entry for the quest or hunt below.
+
+If hunting a monster in quests that don't give the item as a reward gives
+better results than a quest that does have the item, or if the item simply
+isn't available as a quest reward, hunts will be recommended instead of quests.
+
+=== Hunt list
+
+After the recommendations, the monster that have the item are listed, along
+with detailed expected values:
+
+-------------------------------------
+(HUNT)  Zinogre HR
+            Body Carve 1  9.00 / 100 ( 3 each) 9.75 10.50 12.00 14.34
+            Tail Carve 1  2.00 / 100 ( 2 each) 2.50 3.00 4.00 5.56
+            Shiny Drop 1  2.00 / 100 ( 2 each)
+               Capture 1  5.38 / 100 ( 2 each) 6.00 7.38 8.00
+            Break Head 1  3.00 / 100 ( 3 each)
+              = Totals
+                  Kill 14.00 to 22.91 / 100
+                   Cap 10.38 to 13.00 / 100
+                 Shiny  2.00 / 100
+-------------------------------------
+
+The totals can be used to figure out if killing or capture the monster will
+yield better results on average. The first value is the expected number of
+rewards from 100 hunts, assuming no skills. The second value assumes the best
+possible armor skill - Capture God for cap, and Carving God for kill. Shiny
+drops are not included in the total, but can be multiplied by the average
+number of shinys you get per quest and added to the carve or cap total. This
+is one of the advantages of using expected value instead of probability of
+at least one: it is very easy to calculate.
+
+The previous lines give a breakdown of the expected value from each source,
+with the following format:
+
+    Source StackSize ExpectedValue (DropChance each) [EVWithSkill1, EVWithSkill2, ...]
+
+For the quest section the source is A, B, or Sub, for the first line, second
+line, and Sub quest line. The ExpectedValue assumes no food or armor skills and
+takes into account StackSize. For quest rewards, cap rewards, and carves, the
+extra values at the end are for armor skills, starting from the weakest version
+to the best version. For example on quest lines the values are for Good Luck,
+Great Luck, and Amazing Luck.
+
+=== Quest list
+
+Finally quests are listed, which combine the quest reward expected values and
+the carve/cap expected values from hunting the monster which are also listed
+in the HUNT sections above.
+
+-------------------------------------
+(QUEST) See the Lightning (Caravan 6* HR)
+ Goal: Hunt a Zinogre
+ Sub : Wound the Zinogre's back
+              = Quest
+                     A 1  4.71 / 100 ( 1 each) 5.24 5.90 6.70
+                   Sub 1  2.49 / 100 ( 1 each) 2.87 3.31 3.82
+          = Zinogre HR
+            Body Carve 1  9.00 / 100 ( 3 each) 9.75 10.50 12.00 14.34
+            Tail Carve 1  2.00 / 100 ( 2 each) 2.50 3.00 4.00 5.56
+            Shiny Drop 1  2.00 / 100 ( 2 each)
+               Capture 1  5.38 / 100 ( 2 each) 6.00 7.38 8.00
+            Break Head 1  3.00 / 100 ( 3 each)
+              = Totals
+                  Kill 21.19 to 30.10 / 100
+                   Cap 17.57 to 20.19 / 100
+                 Shiny  2.00 / 100
+-------------------------------------
+
+=== Wyporium Trades
+
+Items that are only available by trading other monster parts at the Wyporium
+are supported by showing recommendations for the item you trade for that part.
+For example, "Zinogre Skymerald" can be traded for "Nargacuga Mantle". When
+searching for the mantle, this is displayed on top of the results for skymerald:
+
+-------------------------------------
+*** Wyporium trade for 'Zinogre Skymerald'
+    Unlocked by quest 'Advanced: Bolt of Pink (Guild 9* G)'
+
+*** Poogie Recommends ***
+> G
+  [No skills   ] (QUEST) Advanced: Fury on the Mount G kill (53.97)
+  [Capture God ] (QUEST) Advanced: Fury on the Mount G cap (54.97)
+  [Carving God ] (QUEST) Advanced: Fury on the Mount G kill (68.22)
+  [Amazing Luck] (QUEST) Advanced: Fury on the Mount G kill (70.57)
+
+...
+-------------------------------------
+
+== Known issues
+
+=== Recommendation engine issues
+
+These are known issues in the recommendation engine which I plan on fixing:
+
+- If cap and kill have equal expected values, e.g. if the item comes only
+  from quest rewards and breaks that you can get with both strategies, it
+  will still be listed with strategy 'cap'. I'd like to enhance this so it
+  reports that it doesn't matter.
+- I'd like to list more details in the recommendation section so you don't
+  need to scroll down to see which breaks and shinys you should try for.
+
+=== Database issues
+
+The monster hunter database used by this recommendation engine is a work in
+progress, and in some places the data is in complete or incorrect.
+
+In particular:
+
+- Drop rates are determined by the community and not provided by Capcom, so
+  they may be slightly off from the actual values used by the game.
+- Some quests rewards have total probabilities that add up to more than 100.
+  This shows up in the results as WARNING lines.
+- Some quests are not linked to all the monsters you hunt in that quest. When
+  this happens the expected values will not be correct. This is easy to see
+  when the quest goal says something like "Hunt MONSTER1 and MONSTER2", and
+  MONSTER2 has the item, but it's not listed below. The monsters in a quest
+  are found from the database, not from interpreting the goal text.
+
+=== Monster hunter mechanics
+
+There are also assumptions made by the recommendation engine about how the game
+determines rewards that may not be correct. Some examples:
+
+- Quest line A always has at least 4 rewards, line B always has at least 2,
+  and C always has at least one. This is probably a good approximation for most
+  quests, but it may vary between quests.
+- Probabilities for getting more than the minimum rewards may be off, and the
+  way the number of rewards is determined may even be wrong.

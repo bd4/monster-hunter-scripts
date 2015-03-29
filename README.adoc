@@ -9,6 +9,13 @@ Tested using Python 2.7, might work with 2.6. Uses sqlite3, which is part of
 the standard library now but I'm not sure it's always compiled in by default
 in all Python distributions (e.g. for Windows or Mac OS X).
 
+== Acknowledgements
+
+The bundled monster hunter db is from the excellent
+link:https://github.com/kamegami13/MonsterHunter4UDatabase[MonsterHunter4UDatabase]
+Android app by DavianCorp, which is also MIT licensed. See db/COPYING.mh4udb
+for license details.
+
 == Example usage
 
 For a list of quests providing the specified monster part:
@@ -46,4 +53,6 @@ popular method I've seen online is to calculate the probability of getting at
 least one. I prefer to use expected (mean) value, which is easier to calculate
 and provides a more intuitive quantity. For
 more information see the
-link:http://en.wikipedia.org/wiki/Binomial_distribution#Mean_and_variance[Wikipedia article].
+link:http://en.wikipedia.org/wiki/Expected_value[Wikipedia article] on expected
+value, and the description of how to calculate expected value on the
+link:http://en.wikipedia.org/wiki/Binomial_distribution#Mean_and_variance[Binomial distribution].
