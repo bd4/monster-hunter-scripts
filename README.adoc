@@ -1,7 +1,9 @@
 = Monster Hunter scripts
 
-This repository contains scripts for calculating probabilities and expected
-values for rewards and carves in Monster Hunter games.
+This repository contains the source code for http://mhapi.info, a site for
+monster hunter related calculators and tools. It also contains scripts that
+can be used directly from the command line, and python modules that can be used
+to build other monster hunter related tools.
 
 == Dependencies
 
@@ -13,28 +15,20 @@ in all Python distributions (e.g. for Windows or Mac OS X).
 
 The bundled monster hunter db is from the excellent
 link:https://github.com/kamegami13/MonsterHunter4UDatabase[MonsterHunter4UDatabase]
-Android app by DavianCorp, which is also MIT licensed. See db/COPYING.mh4udb
-for license details.
+Android app by DavianCorp, which is also MIT licensed. See
+link:db/COPYING.mh4udb[] for license details.
 
 == Example usage
 
-For a list of quests providing the specified monster part:
+For a list of quests and hunts providing the specified monster part:
 
  bin/mhrewards.py "Zinogre Jasper"
 
-This gives expected values for the item from different sources, including
-quest rewards, carves, capture, and shiny drops. An expected value of
-8% means that on average, you would get 8 of the item from 100 quests. Note
-that this is different from the probability of getting at least one, which
-will be lower and is a pain to calculate when there can be different number
-of rewards. It also takes into account Carving and Luck skills. The main
-value shown assumes no food or armor skills. For Carves the extra values
-listed on the right are for felyne skills Carver Lo, Carver Hi, then armor
-skills Carving Master and Carving God. For quest rewards the extra values
-are for food/armor skills Lucky Cat/Good Luck and Ultra Lucky Cat/Great Luck.
-The totals at the end list the range from no skills to the best skill. For
-capture rewards the extra values are for armor skills Capture Expect, Master,
-and God.
+This gives detailed expected values for the item from different sources,
+including quest rewards, carves, capture, and shiny drops. It also gives
+recommendations for which quests and strategy (capture or kill) will give the
+best results. See link:RECOMMENDATIONS.adoc[] for a more detailed explanation of
+the output.
 
 For more manual calculations, mhprob.py can be used directly. The quest
 "Plain Dangerous" in 3U has 2 fixed rewards in A, one in B. Diablos hardhorns
