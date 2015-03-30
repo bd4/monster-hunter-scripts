@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Monster Hunter Item Search</title>
+  <title>Poogie Recommends</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
@@ -43,6 +43,23 @@
           return path.substring(0, path.lastIndexOf('/'));
       }
 
+      function normalize_name(s) {
+          var chars = s.split("");
+          var cap_next = true;
+          var i;
+          for (i=0; i<chars.length; i++) {
+              if (cap_next) {
+                  chars[i] = chars[i].toUpperCase();
+                  cap_next = false;
+              } else if (chars[i] == "." || chars[i] == " " || chars[i] == "-") {
+                  cap_next = true;
+              } else {
+                  chars[i] = chars[i].toLowerCase();
+              }
+          }
+          return chars.join("");
+      }
+
       function setup_autocomplete() {
           $.getJSON(DATA_PATH + "items.json",
                     function(data) {
@@ -52,13 +69,14 @@
 
       function update_search() {
           var item_name = $.trim($("#item").val());
+          var normalized_name = normalize_name(item_name);
 
-          $.get(DATA_PATH + encode_utf8(item_name) + ".txt",
+          $.get(DATA_PATH + encode_utf8(normalized_name) + ".txt",
                 function(data) {
                     $("#output").text(data);
                 }).fail(
                 function() {
-                    $("#output").text("Error: item '" + item_name + "' not found");
+                    $("#output").text("Error: item '" + normalized_name + "' not found");
                 });
       }
   </script>
