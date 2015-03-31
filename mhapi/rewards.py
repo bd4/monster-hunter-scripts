@@ -238,6 +238,7 @@ class HuntReward(object):
             self.cap = True
             self.kill = True
         elif self.condition == "Body Carve":
+            # TODO: some monsters have 4 body carves
             self.skill = SKILL_CARVING
             self.cap = False
             self.kill = True
