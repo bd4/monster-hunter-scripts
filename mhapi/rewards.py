@@ -104,6 +104,8 @@ class QuestItemExpectedValue(object):
 
         self.fixed_rewards = dict(A=0, B=0, Sub=0)
         self.total_reward_p = dict(A=0, B=0, Sub=0)
+        # renormalize percentages if total is > 100
+        self.normalize_reward_p = dict(A=1, B=1, Sub=1)
 
         # dict mapping slot name to list of lists
         # of the form (slot, list_of_expected_values).
@@ -125,12 +127,14 @@ class QuestItemExpectedValue(object):
                        cap_skill=None, carving_skill=None):
         return self.total_expected_values[luck_skill]
 
-    def check_totals(self, outfile):
+    def _check_totals(self):
         # sanity check values from the db
         for slot in self.total_reward_p.keys():
-            if self.total_reward_p[slot] not in (0, 100):
-                print("WARNING: bad total p for %s = %d"
-                      % (slot, self.total_reward_p[slot]), file=outfile)
+            total_p = self.total_reward_p[slot]
+            if total_p not in (0, 100):
+                #print("WARNING: bad total p for %s = %d, renormalizing"
+                #      % (slot, total_p))
+                self.normalize_reward_p[slot] = (100.0 / total_p)
 
     def _set_rewards(self, rewards):
         # preprocessing step - figure out how many fixed rewards there
@@ -143,13 +147,17 @@ class QuestItemExpectedValue(object):
             else:
                 self.total_reward_p[slot] += reward["percentage"]
 
+        self._check_totals()
+
         for reward in rewards:
             if reward["item_id"] != self.item_id:
                 continue
             self._add_reward(reward)
 
     def _add_reward(self, r):
-        reward = QuestReward(r, self.fixed_rewards)
+        mutable_r = dict(r)
+        mutable_r["percentage"] *= self.normalize_reward_p[r["reward_slot"]]
+        reward = QuestReward(mutable_r, self.fixed_rewards)
 
         self.slot_rewards[reward.slot].append(reward)
         evs = reward.expected_values()
@@ -634,7 +642,6 @@ class ItemRewards(object):
             out.write("(QUEST) " + unicode(quest_item.quest) + "\n")
             out.write("  %20s" % "= Quest\n")
 
-            quest_item.check_totals(out)
             quest_item.print(out, indent=2)
 
             quest_monsters = self.db.get_quest_monsters(quest_item.quest.id)
