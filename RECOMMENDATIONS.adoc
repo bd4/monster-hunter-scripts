@@ -144,12 +144,10 @@ searching for the mantle, this is displayed on top of the results for skymerald:
 
 These are known issues in the recommendation engine which I plan on fixing:
 
-- If cap and kill have equal expected values, e.g. if the item comes only
-  from quest rewards and breaks that you can get with both strategies, it
-  will still be listed with strategy 'cap'. I'd like to enhance this so it
-  reports that it doesn't matter.
 - I'd like to list more details in the recommendation section so you don't
   need to scroll down to see which breaks and shinys you should try for.
+- Assumes 3 body carvers for all monsters. Some like Gravios have
+  actually have4.
 
 === Database issues
 
@@ -161,7 +159,8 @@ In particular:
 - Drop rates are determined by the community and not provided by Capcom, so
   they may be slightly off from the actual values used by the game.
 - Some quests rewards have total probabilities that add up to more than 100.
-  This shows up in the results as WARNING lines.
+  It now normalizes the values so the total is 100, but the data is still
+  suspect.
 - Some quests are not linked to all the monsters you hunt in that quest. When
   this happens the expected values will not be correct. This is easy to see
   when the quest goal says something like "Hunt MONSTER1 and MONSTER2", and
