@@ -16,6 +16,7 @@ SKILL_NONE = None
 STRAT_KILL = "kill"
 STRAT_CAP = "cap"
 STRAT_SHINY = "shiny"
+STRAT_CAP_OR_KILL = "cap/kill"
 
 
 def _format_range(min_v, max_v):
@@ -337,7 +338,20 @@ class RankAndSkills(object):
             return False
         return True
 
-    def _compare_strat(self, new_strat):
+    def _compare_strats(self, kill_strat, cap_strat):
+        """
+        Compare kill vs cap, and compare the best with current best. If cap
+        and kill are the same, keep track that it doesn't matter which is
+        used.
+        """
+        if kill_strat == cap_strat:
+            new_strat = kill_strat
+            new_strat.strat = STRAT_CAP_OR_KILL
+        elif kill_strat > cap_strat:
+            new_strat = kill_strat
+        else:
+            new_strat = cap_strat
+
         if self.best is None:
             self.best = new_strat
             return True
@@ -350,15 +364,15 @@ class RankAndSkills(object):
         if not self._rank_available(hunt_item.monster_rank):
             return False
 
-        kill = ItemStrategy(STRAT_KILL,
-                            cap_skill=self.cap_skill,
-                            carving_skill=self.carving_skill)
-        cap =  ItemStrategy(STRAT_CAP,
-                            cap_skill=self.cap_skill,
-                            carving_skill=self.carving_skill)
-        for strat in (kill, cap):
+        kill_strat = ItemStrategy(STRAT_KILL,
+                                  cap_skill=self.cap_skill,
+                                  carving_skill=self.carving_skill)
+        cap_strat  = ItemStrategy(STRAT_CAP,
+                                  cap_skill=self.cap_skill,
+                                  carving_skill=self.carving_skill)
+        for strat in (kill_strat, cap_strat):
             strat.add_hunt_item(hunt_item)
-            self._compare_strat(strat)
+        self._compare_strats(kill_strat, cap_strat)
 
     def add_quest_option(self, quest_item, hunt_items):
         if not self._rank_available(quest_item.quest.rank):
@@ -376,7 +390,7 @@ class RankAndSkills(object):
             strat.set_quest_item(quest_item)
             for hi in hunt_items:
                 strat.add_hunt_item(hi)
-            self._compare_strat(strat)
+        self._compare_strats(kill_strat, cap_strat)
 
 
 class ItemStrategy(object):
