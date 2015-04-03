@@ -439,12 +439,10 @@ class ItemStrategy(object):
 
     def print(self, out):
         if self.quest_item:
-            out.write("(QUEST) %s %s %s (%5.2f)\n" %
-                      (self.quest_item.quest.name,
-                       self.quest_item.quest.rank,
-                       self.strat, self.ev))
+            out.write("(QUEST) " + self.quest_item.quest.one_line_u())
+            out.write(" %s [%5.2f]\n" % (self.strat, self.ev))
         else:
-            out.write("(HUNT)  %s %s %s (%5.2f)\n" %
+            out.write("(HUNT)  %s %s %s [%5.2f]\n" %
                       (self.hunt_item.monster_name,
                        self.hunt_item.monster_rank,
                        self.strat, self.ev))
