@@ -19,6 +19,9 @@ STRAT_SHINY = "shiny"
 STRAT_CAP_OR_KILL = "cap/kill"
 
 
+ITEM_TYPES = "Bone Bug Fish Flesh Meat Ore Plant Sac/Fluid".split()
+
+
 def _format_range(min_v, max_v):
     if min_v == max_v:
         return "%5.2f" % min_v
@@ -37,7 +40,7 @@ def find_item(db, item_name, err_out):
                 # single char terms aren't very useful, too many results
                 continue
             print("= Matching term '%s'" % term, file=err_out)
-            rows = db.search_item_name(term, "Flesh")
+            rows = db.search_item_name(term, ITEM_TYPES)
             for row in rows:
                 print(" ", row["name"], file=err_out)
         return None

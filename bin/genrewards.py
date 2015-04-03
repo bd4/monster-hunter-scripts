@@ -33,7 +33,7 @@ if __name__ == '__main__':
     db_path = os.path.join(db_path, "..", "db", "mh4u.db")
     db = MHDB(db_path)
 
-    items = db.get_item_names()
+    items = db.get_item_names(rewards.ITEM_TYPES)
 
     # write all names json to /items.json
     items_file = os.path.join(outdir, "items.json")

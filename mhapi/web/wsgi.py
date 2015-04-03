@@ -98,7 +98,7 @@ class App(object):
 
         resp.content_type = "application/json"
         resp.body_file.write("[")
-        items = self.db.get_item_names()
+        items = self.db.get_item_names(rewards.ITEM_TYPES)
         first = True
         for item in items:
             if first:

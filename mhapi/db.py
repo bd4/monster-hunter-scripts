@@ -69,11 +69,13 @@ class MHDB(object):
     def close(self):
         return self.conn.close()
 
-    def get_item_names(self):
+    def get_item_names(self, item_types):
+        item_types.sort()
+        placeholders = ", ".join(["?"] * len(item_types))
         v = self._get_memoized("item_names", """
             SELECT _id, name FROM items
-            WHERE type IN ('Bone', 'Flesh', 'Sac/Fluid')
-        """)
+            WHERE type IN (%s)
+        """ % placeholders, *item_types)
         return v
 
     def get_item(self, item_id):
@@ -97,18 +99,27 @@ class MHDB(object):
         """, item_id)
         return v[0] if v else None
 
-    def search_item_name(self, term, item_type):
+    def search_item_name(self, term, item_type=None):
         """
         Search for items containing @term somewhere in the name. Returns
         list of matching items.
 
         Not memoized.
         """
-        cursor = self.conn.execute("""
+        query = """
             SELECT * FROM items
             WHERE name LIKE ?
-            AND type = ?
-        """, ("%%%s%%" % term, item_type))
+        """
+        args = ["%%%s%%" % term]
+        if item_type is not None:
+            if isinstance(item_type, (list, tuple)):
+                query += "AND type IN (%s)" % (",".join(["?"] * len(item_type)))
+                args += item_type
+            else:
+                query += "AND type = ?"
+                args += [item_type]
+
+        cursor = self.conn.execute(query, args)
         return cursor.fetchall()
 
     def get_monster_by_name(self, name):
