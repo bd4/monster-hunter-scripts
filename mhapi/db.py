@@ -29,6 +29,11 @@ class Quest(object):
         self.sub_goal = quest_row["sub_goal"]
         self.rank = quest_row["rank"]
 
+    def is_multi_monster(self):
+        return (" and " in self.goal
+                or "," in self.goal
+                or " all " in self.goal)
+
     def one_line_u(self):
         return self._one_line_template.substitute(self.__dict__)
 
@@ -170,8 +175,8 @@ class MHDB(object):
 
     def get_quest_monsters(self, quest_id):
         v = self._get_memoized("quest_monsters", """
-            SELECT monster_id FROM monster_to_quest
-            WHERE quest_id=? AND unstable='no'
+            SELECT monster_id, unstable FROM monster_to_quest
+            WHERE quest_id=?
         """, quest_id)
         return v
 

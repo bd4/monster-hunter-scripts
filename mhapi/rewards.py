@@ -160,7 +160,9 @@ class QuestItemExpectedValue(object):
 
     def _add_reward(self, r):
         mutable_r = dict(r)
-        mutable_r["percentage"] *= self.normalize_reward_p[r["reward_slot"]]
+        # don't adjust fixed rewards
+        if mutable_r["percentage"] != 100:
+            mutable_r["percentage"] *= self.normalize_reward_p[r["reward_slot"]]
         reward = QuestReward(mutable_r, self.fixed_rewards)
 
         self.slot_rewards[reward.slot].append(reward)
@@ -417,9 +419,9 @@ class ItemStrategy(object):
 
     def add_hunt_item(self, hunt_item):
         self.hunt_items.append(hunt_item)
-        ev = self.hunt_item.expected_value(self.strat,
-                                           carving_skill=self.carving_skill,
-                                           cap_skill=self.cap_skill)
+        ev = hunt_item.expected_value(self.strat,
+                                      carving_skill=self.carving_skill,
+                                      cap_skill=self.cap_skill)
         self.hunt_ev += ev
         self.ev += ev
 
@@ -501,6 +503,12 @@ class HuntItemExpectedValue(object):
                                         carving_skill=carving_skill)
         return ev
 
+    def __nonzero__(self):
+        return bool(len(self.matching_rewards))
+
+    def __len__(self):
+        return len(self.matching_rewards)
+
     def print(self, out, indent=2):
         for hr in self.matching_rewards:
             hr.print(out, indent)
@@ -509,6 +517,7 @@ class HuntItemExpectedValue(object):
         for reward in rewards:
             if reward["item_id"] != self.item_id:
                 continue
+            # TODO: warn when percentage == 0
             self._add_reward(reward)
 
     def _add_reward(self, r):
@@ -570,6 +579,8 @@ class ItemRewards(object):
             reward_rows = self.db.get_monster_rewards(mid, rank)
             hunt_item = HuntItemExpectedValue(self.item_id, monster["name"],
                                               rank, reward_rows)
+            if not hunt_item:
+                continue
             key = (mid, rank)
             self._hunt_items[key] = hunt_item
 
@@ -596,6 +607,16 @@ class ItemRewards(object):
             hunt_items = []
             for m in quest_monsters:
                 mid = m["monster_id"]
+
+                # It looks like every monster other than the first is
+                # marked as stable. This looks like it's usually correct
+                # for single monster quests, but wrong for multi monster
+                # quests, so skip the unstable monsters for single monster
+                # quests.
+                unstable = (m["unstable"] == "yes")
+                if unstable and not q.is_multi_monster():
+                    continue
+
                 hunt_item = self.get_hunt_item(mid, quest_item.quest.rank)
                 if hunt_item:
                     hunt_items.append(hunt_item)
