@@ -6,16 +6,19 @@ import string
 
 import sqlite3
 
-
 class Quest(object):
     def __init__(self, quest_row, quest_rewards=None):
         self._row = quest_row
         self.rewards = quest_rewards
 
-        self._template = string.Template(
+        self._full_template = string.Template(
            "$name ($hub $stars* $rank)"
-         + "\n Goal: $goal"
-         + "\n Sub : $sub_goal"
+           "\n Goal: $goal"
+           "\n Sub : $sub_goal"
+        )
+
+        self._one_line_template = string.Template(
+           "$name ($hub $stars* $rank)"
         )
 
         self.id = quest_row["_id"]
@@ -24,25 +27,16 @@ class Quest(object):
         self.hub = quest_row["hub"]
         self.goal = quest_row["goal"]
         self.sub_goal = quest_row["sub_goal"]
-        self.rank = get_rank(self.hub, self.stars)
+        self.rank = quest_row["rank"]
+
+    def one_line_u(self):
+        return self._one_line_template.substitute(self.__dict__)
+
+    def full_u(self):
+        return self._full_template.substitute(self.__dict__)
 
     def __unicode__(self):
-        return self._template.substitute(self.__dict__)
-
-
-def get_rank(hub, stars):
-    if hub == "Caravan":
-        if stars < 6:
-            return "LR"
-        elif stars < 10:
-            return "HR"
-        return "G"
-    if hub == "Guild":
-        if stars < 4:
-            return "LR"
-        elif stars < 8:
-            return "HR"
-        return "G"
+        return self.full_u()
 
 
 class MHDB(object):
@@ -65,6 +59,15 @@ class MHDB(object):
         if self.use_cache:
             self.cache[key][args] = v
         return v
+
+    def cursor(self):
+        return self.conn.cursor()
+
+    def commit(self):
+        return self.conn.commit()
+
+    def close(self):
+        return self.conn.close()
 
     def get_item_names(self):
         v = self._get_memoized("item_names", """
@@ -128,6 +131,12 @@ class MHDB(object):
             WHERE _id=?
         """, quest_id)
         return v[0] if v else None
+
+    def get_quests(self):
+        v = self._get_memoized("quests", """
+            SELECT * FROM quests
+        """)
+        return v
 
     def get_quest_rewards(self, quest_id):
         v = self._get_memoized("quest_rewards", """
