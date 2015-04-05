@@ -83,6 +83,12 @@ class MHDB(object):
         """ % placeholders, *item_types)
         return v
 
+    def get_monster_names(self):
+        v = self._get_memoized("monster_names", """
+            SELECT name FROM monsters
+        """)
+        return v
+
     def get_item(self, item_id):
         v = self._get_memoized("item", """
             SELECT * FROM items
