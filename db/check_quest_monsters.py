@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-# Note: requires python-Levenshtein, available as package in debian and
-# ubuntu
+"""
+This is a messy heuristic script for parsing monster names from quest and
+sub quest goals and comparing that with the monster_to_quest table in the db.
+"""
 
 import os.path
 import codecs
 from collections import namedtuple
-
-from Levenshtein import distance
+import difflib
 
 import _pathfix
 
@@ -129,14 +129,19 @@ def _parse_monster(name):
     return name
 
 
-def parse_goal_monster_names(goal):
+def parse_goal_monster_names(goal, errors):
     if goal == "None":
         return []
+    if "Severthe " in goal or "Hunta " in goal:
+        goal2 = goal.replace("Severthe ", "Sever the ")
+        goal2 = goal2.replace("Hunta ", "Hunt a ")
+        errors.append("Spelling: '%s' => '%s'" % (goal, goal2))
+        goal = goal2
     if goal.startswith("Deliver ") or goal.startswith("Topple "):
         # TODO: subquest, could parse the item and look up which monster
         # it's from
         return []
-    if goal == "Supress its Frenzy (2x)":
+    if goal == "Suppress its Frenzy (2x)":
         return []
     goal = lstrip(goal, "Hunt ")
     # type in 253
@@ -148,8 +153,6 @@ def parse_goal_monster_names(goal):
     # sub quests
     goal = lstrip(goal, "Wound ")
     goal = lstrip(goal, "Sever ")
-    # typo in 71
-    goal = lstrip(goal, "Severthe ")
     goal = lstrip(goal, "Break ")
     goal = lstrip(goal, "Suppress ")
 
@@ -160,8 +163,8 @@ def parse_goal_monster_names(goal):
     return [_parse_monster(p) for p in parts]
 
 
-def get_goal_monsters(db, goal):
-    names = parse_goal_monster_names(goal)
+def get_goal_monsters(db, goal, errors):
+    names = parse_goal_monster_names(goal, errors)
     #print quest.goal, names
     monsters = []
     for name in names:
@@ -175,36 +178,38 @@ def get_goal_monsters(db, goal):
                 name = name2
         if m is None:
             name2 = fuzzy_find(name)
-            m = db.get_monster_by_name(name2)
-            if m is not None:
-                print "Fuzzy match: %s => %s" % (name, name2)
-                name = name2
+            if name2:
+                m = db.get_monster_by_name(name2)
+                if m is not None:
+                    errors.append("Fuzzy match: %s => %s" % (name, name2))
+                    name = name2
         if m is None:
-            print "ERROR: can't find monster '%s'" % name
+            errors.append("ERROR: can't find monster '%s'" % name)
             continue
         monsters.append(QuestMonster(m["_id"], name))
     return monsters
 
 
-def fuzzy_find(name, max_distance=3):
-    best = (None, 10000)
-    for n in ALL_NAMES:
-        d = distance(name, n)
-        if d < best[1]:
-            best = (n, d)
-    if best[1] <= max_distance:
-        return best[0]
+def fuzzy_find(name):
+    matches = difflib.get_close_matches(name, ALL_NAMES, 1)
+    if matches:
+        return matches[0]
     return None
 
 
 def check_hunts(db, quest):
+    print ">", quest.id, quest.name,
+
+    monsters_match = False
+
     all_names = db.get_monster_names()
 
     db_expected = set()
     db_expected_unstable = set()
 
-    goal_expected = set(get_goal_monsters(db, quest.goal))
-    sub_expected = set(get_goal_monsters(db, quest.sub_goal))
+    errors = []
+    goal_expected = set(get_goal_monsters(db, quest.goal, errors))
+    sub_expected = set(get_goal_monsters(db, quest.sub_goal, errors))
 
     monsters = db.get_quest_monsters(quest.id)
     for m in monsters:
@@ -216,7 +221,6 @@ def check_hunts(db, quest):
             db_expected.add(qm)
     if goal_expected != db_expected:
         missing = goal_expected - db_expected
-        skip = False
         if (len(goal_expected) == 1 and len(db_expected) == 1):
             # handle subspecious and Apex - e.g. when the goal lists the
             # bare name, but in the db it's listed as Apex NAME, assume
@@ -226,16 +230,36 @@ def check_hunts(db, quest):
             goal = next(iter(goal_expected))
             db = next(iter(db_expected))
             if goal[0] == db[0] - 1 and db[1].endswith(goal[1]):
-                skip = True
-        if not skip:
-            print ">", quest.id, quest.name
-            print " goal:", quest.goal
-            print "  sub:", quest.sub_goal
-            print "   parsed:", goal_expected
-            if sub_expected and not sub_expected < goal_expected:
-                print " sub prsd:", sub_expected
-            print "       db:", db_expected
-            print " db unstb:", db_expected_unstable
+                monsters_match = True
+    else:
+        monsters_match = True
+
+    if monsters_match and not errors:
+        # useful for doing grep -v on output
+        print " *OK*"
+    elif monsters_match:
+        print " *MISSPELLING*"
+        print " goal:", quest.goal
+        print "  sub:", quest.sub_goal
+        for err in errors:
+            print " ", err
+    else:
+        print " *MISMATCH*",
+        if errors:
+            print " *MISSPELLING*",
+        print
+        for err in errors:
+            print " ", err
+        print " goal:", quest.goal
+        print "  sub:", quest.sub_goal
+        print "   parsed:", goal_expected
+        if sub_expected and not sub_expected < goal_expected:
+            # print if sub monster looks like it's not one of the
+            # main  monsters. This will false positive when main quest
+            # is hunt all large monsters.
+            print " sub prsd:", sub_expected
+        print "       db:", db_expected
+        print " db unstb:", db_expected_unstable
 
 
 if __name__ == '__main__':
