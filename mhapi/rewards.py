@@ -47,6 +47,72 @@ def find_item(db, item_name, err_out):
     return item_row
 
 
+class GatherReward(object):
+    def __init__(self, gathering_row):
+        self.item_id = gathering_row["item_id"]
+        self.location_id = gathering_row["location_id"]
+        self.area = gathering_row["area"]
+        self.site = gathering_row["site"]
+        self.rank = gathering_row["rank"]
+        self.stack_size = gathering_row["quantity"]
+        self.percentage = gathering_row["percentage"]
+
+    def expected_value(self):
+        # TODO: add gathering skill
+        # Assume average of 3 gathers on every site. Simplistic but
+        # should be a reasonable approximation to start with.
+        return 3 * self.percentage
+
+    def print(self, out, indent=2):
+        area_site = "%s %s" % (self.area, self.site)
+        out.write("%s%20s %d %5.2f / 100"
+                  % (" " * indent, area_site, self.stack_size,
+                     self.expected_value()))
+        out.write(" (%2d each)" % self.percentage)
+        out.write("\n")
+
+
+class GatherLocation(object):
+    """
+    Track total expected value for an item in one location/rank.
+    """
+    def __init__(self, location_row, rank, gathering_rows):
+        self.location_id = location_row["_id"]
+        self.location_name = location_row["name"]
+        self.rank = rank
+        self._rewards = []
+        self._ev = 0
+        self._explorer_ev = 0
+        self._add_rewards(gathering_rows)
+
+    def _add_rewards(self, rows):
+        for r in rows:
+            if (r["location_id"] == self.location_id
+            and r["rank"] == self.rank):
+                gr = GatherReward(r)
+                self._rewards.append(gr)
+                self._explorer_ev += gr.expected_value()
+                if gr.area != "Secret":
+                    self._ev += gr.expected_value()
+
+    def expected_value(self, explorer=False):
+        if explorer:
+            return self._explorer_ev
+        else:
+            return self._ev
+
+    def print(self, out, indent=2):
+        for gr in self._rewards:
+            gr.print(out, indent)
+
+    def __nonzero__(self):
+        return bool(len(self._rewards))
+
+    def __len__(self):
+        return len(self._rewards)
+
+
+
 class QuestReward(object):
     def __init__(self, reward, fixed_rewards):
         self.slot = reward["reward_slot"]
@@ -330,11 +396,15 @@ class RankAndSkills(object):
     def __init__(self, rank="G",
                  luck_skill=stats.LUCK_SKILL_NONE,
                  cap_skill=stats.CAP_SKILL_NONE,
-                 carving_skill=stats.CARVING_SKILL_NONE):
+                 carving_skill=stats.CARVING_SKILL_NONE,
+                 explorer=False):
         self.rank = rank
         self.luck_skill = luck_skill
         self.cap_skill = cap_skill
         self.carving_skill = carving_skill
+        self.explorer = explorer
+        if self.rank == "LR":
+            assert not explorer, "Explorer is not available in low rank"
         self.best = None
 
     def _rank_available(self, rank):
@@ -358,6 +428,9 @@ class RankAndSkills(object):
         else:
             new_strat = cap_strat
 
+        return self._compare_best(new_strat)
+
+    def _compare_best(self, new_strat):
         if self.best is None:
             self.best = new_strat
             return True
@@ -365,6 +438,16 @@ class RankAndSkills(object):
             self.best = new_strat
             return True
         return False
+
+    def add_gather_option(self, gather_location):
+        if not self._rank_available(gather_location.rank):
+            return False
+
+        # strat is ignored
+        gather_strat  = ItemStrategy(STRAT_CAP)
+        gather_strat.add_gather_location(gather_location)
+        self._compare_best(gather_strat)
+
 
     def add_hunt_option(self, hunt_item):
         if not self._rank_available(hunt_item.monster_rank):
@@ -380,20 +463,24 @@ class RankAndSkills(object):
             strat.add_hunt_item(hunt_item)
         self._compare_strats(kill_strat, cap_strat)
 
-    def add_quest_option(self, quest_item, hunt_items):
+    def add_quest_option(self, quest_item, hunt_items, gather_location):
         if not self._rank_available(quest_item.quest.rank):
             return False
 
         cap_strat = ItemStrategy(STRAT_CAP,
                                  luck_skill=self.luck_skill,
                                  cap_skill=self.cap_skill,
-                                 carving_skill=self.carving_skill)
+                                 carving_skill=self.carving_skill,
+                                 explorer=self.explorer)
         kill_strat = ItemStrategy(STRAT_KILL,
                                  luck_skill=self.luck_skill,
                                  cap_skill=self.cap_skill,
-                                 carving_skill=self.carving_skill)
+                                 carving_skill=self.carving_skill,
+                                 explorer=self.explorer)
         for strat in (cap_strat, kill_strat):
             strat.set_quest_item(quest_item)
+            if gather_location:
+                strat.set_gather_location(gather_location)
             for hi in hunt_items:
                 strat.add_hunt_item(hi)
         self._compare_strats(kill_strat, cap_strat)
@@ -405,16 +492,20 @@ class ItemStrategy(object):
     cap and skills.
     """
     def __init__(self, strat,
-                 luck_skill=None, cap_skill=None, carving_skill=None):
+                 luck_skill=None, cap_skill=None, carving_skill=None,
+                 explorer=False):
         self.strat = strat
         self.luck_skill = luck_skill
         self.cap_skill = cap_skill
         self.carving_skill = carving_skill
+        self.explorer = explorer
 
         self.hunt_items = []
         self.quest_item = None
+        self.gather_location = None
         self.hunt_ev = 0
         self.quest_ev = 0
+        self.gather_ev = 0
         self.ev = 0
 
     def add_hunt_item(self, hunt_item):
@@ -437,6 +528,13 @@ class ItemStrategy(object):
         self.quest_ev = ev
         self.ev += ev
 
+    def set_gather_location(self, gather_location):
+        assert self.gather_location is None
+        self.gather_location = gather_location
+        ev = gather_location.expected_value(self.explorer)
+        self.gather_ev = ev
+        self.ev += ev
+
     @property
     def hunt_item(self):
         assert len(self.hunt_items) == 1
@@ -444,10 +542,17 @@ class ItemStrategy(object):
 
     def print(self, out):
         if self.quest_item:
-            out.write("(QUEST) " + self.quest_item.quest.one_line_u())
+            out.write("(QUEST)  " + self.quest_item.quest.one_line_u())
             out.write(" %s [%5.2f]\n" % (self.strat, self.ev))
+        elif self.gather_location:
+            out.write("(GATHER) %s %s [%5.2f]\n" %
+                      (self.gather_location.location_name,
+                       self.gather_location.rank,
+                       self.ev))
+
+
         else:
-            out.write("(HUNT)  %s %s %s [%5.2f]\n" %
+            out.write("(HUNT)   %s %s %s [%5.2f]\n" %
                       (self.hunt_item.monster_name,
                        self.hunt_item.monster_rank,
                        self.strat, self.ev))
@@ -462,6 +567,8 @@ class ItemStrategy(object):
         if self.hunt_ev != other.hunt_ev:
             return False
         if self.quest_ev != other.quest_ev:
+            return False
+        if self.gather_ev != other.gather_ev:
             return False
 
         for self_hi, other_hi in zip(self.hunt_items, other.hunt_items):
@@ -559,15 +666,31 @@ class ItemRewards(object):
                 ("Amazing Luck",
                  RankAndSkills(rank, luck_skill=stats.LUCK_SKILL_AMAZING)),
             ])
+            if rank != "LR":
+                self.rank_skill_sets[rank]["Explorer"] = \
+                                     RankAndSkills(rank, explorer=True)
 
         self._hunt_items = OrderedDict()
         self._quest_items = OrderedDict()
+        self._gather_items = OrderedDict()
 
+        self._find_gather_items()
         self._find_hunt_items()
         self._find_quest_items()
 
     def is_empty(self):
-        return (not self._hunt_items and not self._quest_items)
+        return (not self._hunt_items and not self._quest_items
+                and not self._gather_items)
+
+    def _find_gather_items(self):
+        gathering_rows = self.db.get_item_gathering(self.item_id)
+        locations = self.db.get_locations()
+        for loc in locations:
+            for rank in "LR HR G".split():
+                gl = GatherLocation(loc, rank, gathering_rows)
+                if gl:
+                    key = (loc["_id"], rank)
+                    self._gather_items[key] = gl
 
     def _find_hunt_items(self):
         monsters = self.db.get_item_monsters(self.item_id)
@@ -621,11 +744,30 @@ class ItemRewards(object):
                 if hunt_item:
                     hunt_items.append(hunt_item)
 
+            gather_key = (quest_item.quest.location_id, quest_item.quest.rank)
+            gather_location = self._gather_items.get(gather_key)
+
             for rank, skill_sets in self.rank_skill_sets.iteritems():
                 for s in skill_sets.itervalues():
-                    s.add_quest_option(quest_item, hunt_items)
+                    s.add_quest_option(quest_item, hunt_items, gather_location)
+
+    def print_gather_locations(self, out):
+        if not self._gather_items:
+            return
+
+        for gl in self._gather_items.itervalues():
+            out.write("(GATHER)  %s %s\n"
+                      % (gl.location_name, gl.rank))
+            gl.print(out, indent=2)
+            out.write("  %20s\n" % "= Totals")
+            out.write("  %20s %d / 100\n"
+                      % ("All", gl.expected_value()))
+            out.write("\n")
 
     def print_monsters(self, out):
+        if not self._hunt_items:
+            return
+
         for hunt_item in self._hunt_items.itervalues():
             out.write("(HUNT)  %s %s\n"
                       % (hunt_item.monster_name, hunt_item.monster_rank))
@@ -685,6 +827,11 @@ class ItemRewards(object):
 
             quest_ev = quest_item.expected_value()
 
+            gather_key = (quest_item.quest.location_id, quest_item.quest.rank)
+            gather_location = self._gather_items.get(gather_key)
+            if gather_location:
+                quest_ev += gather_location.expected_value()
+
             cap_ev = [quest_ev, quest_ev]
             kill_ev = [quest_ev, quest_ev]
             shiny_ev = 0
@@ -711,19 +858,31 @@ class ItemRewards(object):
 
                 hunt_item.print(out, indent=2)
 
-                out.write("  %20s\n" % "= Totals")
+            if gather_location:
+                out.write("  %20s\n"
+                          % ("= " + gather_location.location_name
+                             + " " + gather_location.rank))
+                gather_location.print(out, indent=2)
+
+            out.write("  %20s\n" % "= Totals")
+            if quest_monsters:
                 out.write("  %20s %s / 100\n"
                           % ("Kill", _format_range(*kill_ev)))
                 out.write("  %20s %s / 100\n"
                           % ("Cap", _format_range(*cap_ev)))
                 if shiny_ev:
                     out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
+            else:
+                out.write("  %20s %d / 100\n"
+                          % ("Quest+Gather", quest_ev))
             out.write("\n")
 
     def print_all(self, out):
         if self.is_empty():
             out.write("ERROR: data for this item is not yet available\n")
             return
+
+        #out.write("item id: %d\n" % self.item_id)
 
         if self.trade_unlock_quest:
             item_name = self.item_row["name"]
@@ -733,5 +892,6 @@ class ItemRewards(object):
             out.write("\n")
 
         self.print_recommended_hunts(out)
+        self.print_gather_locations(out)
         self.print_monsters(out)
         self.print_quests(out)

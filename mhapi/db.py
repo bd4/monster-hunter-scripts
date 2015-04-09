@@ -28,6 +28,7 @@ class Quest(object):
         self.goal = quest_row["goal"]
         self.sub_goal = quest_row["sub_goal"]
         self.rank = quest_row["rank"]
+        self.location_id = quest_row["location_id"]
 
     def is_multi_monster(self):
         return (" and " in self.goal
@@ -212,5 +213,28 @@ class MHDB(object):
             SELECT DISTINCT monster_id, rank FROM hunting_rewards
             WHERE item_id=?
         """, item_id)
+
+        return v
+
+    def get_item_gathering(self, item_id):
+        v = self._get_memoized("item_gathering", """
+            SELECT * FROM gathering
+            WHERE item_id=?
+        """, item_id)
+
+        return v
+
+    def get_location(self, location_id):
+        v = self._get_memoized("location", """
+            SELECT * FROM locations
+            WHERE _id=?
+        """, location_id)
+
+        return v
+
+    def get_locations(self):
+        v = self._get_memoized("locations", """
+            SELECT * FROM locations
+        """)
 
         return v
