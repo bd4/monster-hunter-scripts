@@ -737,7 +737,7 @@ class ItemRewards(object):
                 # quests, so skip the unstable monsters for single monster
                 # quests.
                 unstable = (m["unstable"] == "yes")
-                if unstable and not q.is_multi_monster():
+                if unstable:
                     continue
 
                 hunt_item = self.get_hunt_item(mid, quest_item.quest.rank)
@@ -838,7 +838,7 @@ class ItemRewards(object):
             for m in quest_monsters:
                 mid = m["monster_id"]
                 hunt_item = self.get_hunt_item(mid, quest_item.quest.rank)
-                if hunt_item is None:
+                if hunt_item is None or m["unstable"] == "yes":
                     continue
 
                 kill_ev[0] += hunt_item.expected_value(STRAT_KILL)

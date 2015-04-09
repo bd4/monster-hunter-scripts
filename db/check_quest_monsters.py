@@ -170,6 +170,8 @@ def get_goal_monsters(db, goal, errors):
     for name in names:
         if name == "all large monsters":
             continue
+        elif name == "monster":
+            continue
         m = db.get_monster_by_name(name)
         if m is None and name.endswith("s"):
             name2 = name.rstrip("s")
