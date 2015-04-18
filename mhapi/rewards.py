@@ -7,7 +7,8 @@ from __future__ import print_function
 from collections import OrderedDict
 
 from mhapi import stats
-from mhapi.db import Quest
+from mhapi.model import Quest
+from mhapi.skills import LuckSkill, CapSkill, CarvingSkill
 
 SKILL_CARVING = "carving"
 SKILL_CAP = "cap"
@@ -125,7 +126,7 @@ class QuestReward(object):
         self.skill_delta = 0
         self.evs = self._calculate_ev()
 
-    def expected_value(self, luck_skill=stats.LUCK_SKILL_NONE,
+    def expected_value(self, luck_skill=LuckSkill.NONE,
                        cap_skill=None, carving_skill=None):
         return self.evs[luck_skill]
 
@@ -140,8 +141,8 @@ class QuestReward(object):
         else:
             # variable reward, expected number of draws depends on luck skill
             counts = [stats.quest_reward_expected_c(self.slot, skill)
-                      for skill in xrange(stats.LUCK_SKILL_NONE,
-                                          stats.LUCK_SKILL_AMAZING+1)]
+                      for skill in xrange(LuckSkill.NONE,
+                                          LuckSkill.AMAZING+1)]
 
 
             evs = [((count - self.fixed_rewards)
@@ -193,7 +194,7 @@ class QuestItemExpectedValue(object):
         return (len(self.slot_rewards["A"]) > 0
                 or len(self.slot_rewards["B"]) > 0)
 
-    def expected_value(self, luck_skill=stats.LUCK_SKILL_NONE,
+    def expected_value(self, luck_skill=LuckSkill.NONE,
                        cap_skill=None, carving_skill=None):
         return self.total_expected_values[luck_skill]
 
@@ -262,8 +263,8 @@ class HuntReward(object):
         self.evs = self._calculate_evs()
 
     def expected_value(self, strategy, luck_skill=None,
-                       cap_skill=stats.CAP_SKILL_NONE,
-                       carving_skill=stats.CARVING_SKILL_NONE):
+                       cap_skill=CapSkill.NONE,
+                       carving_skill=CarvingSkill.NONE):
         if strategy == STRAT_CAP:
             if not self.cap:
                 return 0
@@ -292,6 +293,27 @@ class HuntReward(object):
             out.write(" " + " ".join("%0.2f" % i for i in self.evs[1:]))
         out.write("\n")
 
+    def as_data(self):
+        d = dict(condition=self.condition,
+                 stack_size=self.stack_size,
+                 percentage=self.percentage,
+                 item_id=self.item_id,
+                 cap=self.cap,
+                 kill=self.kill,
+                 shiny=self.shiny)
+        kill_ev = dict()
+        cap_ev = dict()
+        for skill in xrange(CarvingSkill.NONE, CarvingSkill.GOD+1):
+            kill_ev[CarvingSkill.name(skill)] = \
+                self.expected_value(STRAT_CAP, carving_skill=skill)
+        for skill in xrange(CapSkill.NONE, CapSkill.GOD+1):
+            cap_ev[CapSkill.name(skill)] = self.expected_value(STRAT_CAP,
+                                                         cap_skill=skill)
+
+        d["kill_expected_value"] = kill_ev
+        d["cap_expected_value"] = cap_ev
+        return d
+
     def _calculate_evs(self):
         if self.condition == "Tail Carve":
             self.skill = SKILL_CARVING
@@ -299,8 +321,8 @@ class HuntReward(object):
             self.kill = True
             counts = [
                 1 + stats.carve_delta_expected_c(skill)
-                for skill in xrange(stats.CARVING_SKILL_PRO,
-                                    stats.CARVING_SKILL_GOD+1)
+                for skill in xrange(CarvingSkill.PRO,
+                                    CarvingSkill.GOD+1)
             ]
         elif self.condition == "Body Carve (Apparent Death)":
             # Gypceros fake death. Assume one carve, it's dangerous to try
@@ -315,8 +337,8 @@ class HuntReward(object):
             self.kill = True
             counts = [
                 3 + stats.carve_delta_expected_c(skill)
-                for skill in xrange(stats.CARVING_SKILL_PRO,
-                                    stats.CARVING_SKILL_GOD+1)
+                for skill in xrange(CarvingSkill.PRO,
+                                    CarvingSkill.GOD+1)
             ]
         elif self.condition.startswith("Body Carve (KO"):
             # Kelbi
@@ -325,8 +347,8 @@ class HuntReward(object):
             self.kill = True
             counts = [
                 1 + stats.carve_delta_expected_c(skill)
-                for skill in xrange(stats.CARVING_SKILL_PRO,
-                                    stats.CARVING_SKILL_GOD+1)
+                for skill in xrange(CarvingSkill.PRO,
+                                    CarvingSkill.GOD+1)
             ]
         elif "Carve" in self.condition:
             # Mouth Carve: Dah'ren Mohran
@@ -340,8 +362,8 @@ class HuntReward(object):
             self.kill = True
             counts = [
                 3 + stats.carve_delta_expected_c(skill)
-                for skill in xrange(stats.CARVING_SKILL_PRO,
-                                    stats.CARVING_SKILL_GOD+1)
+                for skill in xrange(CarvingSkill.PRO,
+                                    CarvingSkill.GOD+1)
             ]
         elif self.condition == "Capture":
             self.skill = SKILL_CAP
@@ -349,8 +371,8 @@ class HuntReward(object):
             self.kill = False
             counts = [
                 stats.capture_reward_expected_c(skill)
-                for skill in xrange(stats.CAP_SKILL_NONE,
-                                    stats.CAP_SKILL_GOD+1)
+                for skill in xrange(CapSkill.NONE,
+                                    CapSkill.GOD+1)
             ]
         elif self.condition == "Virus Reward":
             # TODO: not sure how these work
@@ -394,9 +416,9 @@ class RankAndSkills(object):
     rank.
     """
     def __init__(self, rank="G",
-                 luck_skill=stats.LUCK_SKILL_NONE,
-                 cap_skill=stats.CAP_SKILL_NONE,
-                 carving_skill=stats.CARVING_SKILL_NONE,
+                 luck_skill=LuckSkill.NONE,
+                 cap_skill=CapSkill.NONE,
+                 carving_skill=CarvingSkill.NONE,
                  explorer=False):
         self.rank = rank
         self.luck_skill = luck_skill
@@ -600,8 +622,8 @@ class HuntItemExpectedValue(object):
         self._set_rewards(hunt_rewards)
 
     def expected_value(self, strategy, luck_skill=None,
-                       cap_skill=stats.CAP_SKILL_NONE,
-                       carving_skill=stats.CARVING_SKILL_NONE):
+                       cap_skill=CapSkill.NONE,
+                       carving_skill=CarvingSkill.NONE):
         ev = 0
         for reward in self.matching_rewards:
             ev += reward.expected_value(strategy,
@@ -619,6 +641,23 @@ class HuntItemExpectedValue(object):
     def print(self, out, indent=2):
         for hr in self.matching_rewards:
             hr.print(out, indent)
+
+    def as_data(self):
+        d = dict(monster_name=self.monster_name,
+                 monster_rank=self.monster_rank,
+                 rewards=[r.as_data() for r in self.matching_rewards])
+        kill_ev = dict()
+        cap_ev = dict()
+        for skill in xrange(CarvingSkill.NONE, CarvingSkill.GOD+1):
+            kill_ev[CarvingSkill.name(skill)] = \
+                self.expected_value(STRAT_CAP, carving_skill=skill)
+        for skill in xrange(CapSkill.NONE, CapSkill.GOD+1):
+            cap_ev[CapSkill.name(skill)] = self.expected_value(STRAT_CAP,
+                                                         cap_skill=skill)
+
+        d["kill_expected_value"] = kill_ev
+        d["cap_expected_value"] = cap_ev
+        return d
 
     def _set_rewards(self, rewards):
         for reward in rewards:
@@ -658,13 +697,13 @@ class ItemRewards(object):
                  RankAndSkills(rank)),
 
                 ("Capture God",
-                 RankAndSkills(rank, cap_skill=stats.CAP_SKILL_GOD)),
+                 RankAndSkills(rank, cap_skill=CapSkill.GOD)),
 
                 ("Carving God",
-                 RankAndSkills(rank, carving_skill=stats.CARVING_SKILL_GOD)),
+                 RankAndSkills(rank, carving_skill=CarvingSkill.GOD)),
 
-                ("Amazing Luck",
-                 RankAndSkills(rank, luck_skill=stats.LUCK_SKILL_AMAZING)),
+                ("Magnificent Luck",
+                 RankAndSkills(rank, luck_skill=LuckSkill.AMAZING)),
             ])
             if rank != "LR":
                 self.rank_skill_sets[rank]["Explorer"] = \
@@ -776,11 +815,11 @@ class ItemRewards(object):
             kill_ev = [0, 0]
             kill_ev[0] = hunt_item.expected_value(STRAT_KILL)
             kill_ev[1] = hunt_item.expected_value(STRAT_KILL,
-                                          carving_skill=stats.CARVING_SKILL_GOD)
+                                          carving_skill=CarvingSkill.GOD)
             cap_ev = [0, 0]
             cap_ev[0] = hunt_item.expected_value(STRAT_CAP)
             cap_ev[1] = hunt_item.expected_value(STRAT_CAP,
-                                          cap_skill=stats.CAP_SKILL_GOD)
+                                          cap_skill=CapSkill.GOD)
             shiny_ev = hunt_item.expected_value(STRAT_SHINY)
             out.write("  %20s\n" % "= Totals")
             out.write("  %20s %s / 100\n"
@@ -843,10 +882,10 @@ class ItemRewards(object):
 
                 kill_ev[0] += hunt_item.expected_value(STRAT_KILL)
                 kill_ev[1] += hunt_item.expected_value(STRAT_KILL,
-                                          carving_skill=stats.CARVING_SKILL_GOD)
+                                          carving_skill=CarvingSkill.GOD)
                 cap_ev[0] += hunt_item.expected_value(STRAT_CAP)
                 cap_ev[1] += hunt_item.expected_value(STRAT_CAP,
-                                              cap_skill=stats.CAP_SKILL_GOD)
+                                              cap_skill=CapSkill.GOD)
                 shiny_ev = hunt_item.expected_value(STRAT_SHINY)
 
                 if kill_ev[0] == 0 and cap_ev[0] == 0 and shiny_ev == 0:

@@ -2,48 +2,9 @@
 Module for accessing the sqlite monster hunter db from
 """
 
-import string
-
 import sqlite3
 
-class Quest(object):
-    def __init__(self, quest_row, quest_rewards=None):
-        self._row = quest_row
-        self.rewards = quest_rewards
-
-        self._full_template = string.Template(
-           "$name ($hub $stars* $rank)"
-           "\n Goal: $goal"
-           "\n Sub : $sub_goal"
-        )
-
-        self._one_line_template = string.Template(
-           "$name ($hub $stars* $rank)"
-        )
-
-        self.id = quest_row["_id"]
-        self.name = quest_row["name"]
-        self.stars = quest_row["stars"]
-        self.hub = quest_row["hub"]
-        self.goal = quest_row["goal"]
-        self.sub_goal = quest_row["sub_goal"]
-        self.rank = quest_row["rank"]
-        self.location_id = quest_row["location_id"]
-
-    def is_multi_monster(self):
-        return (" and " in self.goal
-                or "," in self.goal
-                or " all " in self.goal)
-
-    def one_line_u(self):
-        return self._one_line_template.substitute(self.__dict__)
-
-    def full_u(self):
-        return self._full_template.substitute(self.__dict__)
-
-    def __unicode__(self):
-        return self.full_u()
-
+from mhapi import model
 
 class MHDB(object):
     def __init__(self, path, use_cache=True):
@@ -204,7 +165,7 @@ class MHDB(object):
         for r in rows:
             quest_row = self.get_quest(r["quest_id"])
             rewards_rows = self.get_quest_rewards(r["quest_id"])
-            quests.append(Quest(quest_row, rewards_rows))
+            quests.append(model.Quest(quest_row, rewards_rows))
 
         return quests
 
@@ -235,6 +196,14 @@ class MHDB(object):
     def get_locations(self):
         v = self._get_memoized("locations", """
             SELECT * FROM locations
+        """)
+
+        return v
+
+    def get_weapons(self):
+        v = self._get_memoized("weapons", """
+            SELECT * FROM weapons
+            LEFT JOIN items ON weapons._id = items._id
         """)
 
         return v
