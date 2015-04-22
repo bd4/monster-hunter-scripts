@@ -200,6 +200,14 @@ class MHDB(object):
 
         return v
 
+    def get_monster_damage(self, monster_id):
+        v = self._get_memoized("monster_damage", """
+            SELECT * FROM monster_damage
+            WHERE monster_id=?
+        """, monster_id)
+
+        return v
+
     def get_weapons(self):
         v = self._get_memoized("weapons", """
             SELECT * FROM weapons
@@ -207,3 +215,27 @@ class MHDB(object):
         """)
 
         return v
+
+    def get_weapon(self, weapon_id):
+        v = self._get_memoized("weapon", """
+            SELECT * FROM weapons
+            LEFT JOIN items ON weapons._id = items._id
+            WHERE weapons._id=?
+        """, weapon_id)
+        return v[0] if v else None
+
+    def get_weapon_by_name(self, name):
+        v = self._get_memoized("weapon", """
+            SELECT * FROM weapons
+            LEFT JOIN items ON weapons._id = items._id
+            WHERE items.name=?
+        """, name)
+        return v[0] if v else None
+
+    def get_monster_breaks(self, monster_id):
+        v = self._get_memoized("monster_breaks", """
+            SELECT DISTINCT condition FROM hunting_rewards
+            WHERE monster_id=? AND condition LIKE 'Break %'
+        """, monster_id)
+
+        return [row["condition"][len("Break "):] for row in v]
