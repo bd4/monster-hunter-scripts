@@ -247,6 +247,10 @@ class MonsterPartStateDamage(RowModel):
         for col in "impact cut shot ko ice dragon water fire thunder".split():
             if self[col] != other[col]:
                 return False
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 
 class MonsterPartDamage(ModelBase):
@@ -273,6 +277,7 @@ class MonsterPartDamage(ModelBase):
                 # if the damage is different for break state, the part
                 # must be breakable, even if we couldn't find a match
                 # when searching break rewards
+                # print "%s is breakable [by hitzone diff]" % self.part
                 self.breakable = True
 
     def as_data(self):
@@ -319,6 +324,7 @@ class MonsterDamage(ModelBase):
         """
         for name, part_damage in self.parts.iteritems():
             if _break_find(name, self.parts, breakable_list):
+                #print "part %s is breakable [by rewards]" % name
                 part_damage.breakable = True
 
 
