@@ -701,7 +701,7 @@ class ItemRewards(object):
                 ("Carving God",
                  RankAndSkills(rank, carving_skill=CarvingSkill.GOD)),
 
-                ("Magnificent Luck",
+                ("Amazing Luck",
                  RankAndSkills(rank, luck_skill=LuckSkill.AMAZING)),
             ])
             if rank != "LR":

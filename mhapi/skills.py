@@ -23,7 +23,7 @@ class LuckSkill(EnumBase):
     _names = { NONE: "No skills",
                GOOD: "Good Luck",
                GREAT: "Great Luck",
-               AMAZING: "Magnificent Luck" }
+               AMAZING: "Amazing Luck" }
 
 
 class CarvingSkill(EnumBase):
