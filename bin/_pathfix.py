@@ -12,3 +12,4 @@ sys.path.insert(0, project_path)
 
 db_path = join(project_path, "db", "mh4u.db")
 motion_values_path = join(project_path, "db", "motion_values.json")
+web_path = join(project_path, "web")

@@ -5,6 +5,7 @@ Script to generate static rewards files for all items.
 
 import codecs
 import urllib
+import os.path
 
 import _pathfix
 
@@ -21,11 +22,14 @@ if __name__ == '__main__':
     import os
     import os.path
 
-    if len(sys.argv) != 2:
-        print("Usage: %s outdir" % sys.argv[0])
+    if len(sys.argv) == 1:
+        outdir = os.path.join(_pathfix.web_path, "rewards")
+    elif len(sys.argv) == 2:
+        outdir = sys.argv[1]
+    else:
+        print("Usage: %s [outdir]" % sys.argv[0])
         sys.exit(os.EX_USAGE)
 
-    outdir = sys.argv[1]
     err_out = get_utf8_writer(sys.stderr)
 
     # TODO: doesn't work if script is symlinked
