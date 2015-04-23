@@ -309,9 +309,14 @@ class MHDB(object):
         List of strings.
         """
         def model(row):
-            return row["condition"][len("Break "):]
+            condition = row["condition"]
+            if condition == "Tail Carve":
+                return "Tail"
+            else:
+                return condition[len("Break "):]
 
         return self._query_all("monster_breaks", """
             SELECT DISTINCT condition FROM hunting_rewards
-            WHERE monster_id=? AND condition LIKE 'Break %'
+            WHERE monster_id=?
+            AND (condition LIKE 'Break %' OR condition = 'Tail Carve')
         """, (monster_id,), model_cls=model)

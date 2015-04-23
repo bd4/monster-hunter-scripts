@@ -5,7 +5,7 @@ import difflib
 import re
 
 from mhapi import skills
-from mhapi.model import SharpnessLevel
+from mhapi.model import SharpnessLevel, _break_find
 
 
 WEAKPART_WEIGHT = 0.5
@@ -160,7 +160,7 @@ class WeaponMonsterDamage(object):
     Class for calculating how much damage a weapon does to a monster.
     Does not include overall monster defense.
     """
-    def __init__(self, weapon_row, monster_row, monster_damage_rows, motion,
+    def __init__(self, weapon_row, monster_row, monster_damage, motion,
                  sharp_plus=False, breakable_parts=None,
                  attack_skill=skills.AttackUp.NONE,
                  critical_eye_skill=skills.CriticalEye.NONE,
@@ -168,7 +168,7 @@ class WeaponMonsterDamage(object):
                  awaken=False):
         self.weapon = weapon_row
         self.monster = monster_row
-        self.monster_damage = monster_damage_rows
+        self.monster_damage = monster_damage
         self.motion = motion
         self.sharp_plus = sharp_plus
         self.breakable_parts = breakable_parts
@@ -259,7 +259,8 @@ class WeaponMonsterDamage(object):
                 part_damage.part = part
             if alt is None:
                 if (self.breakable_parts
-                and _part_find(part, self.breakable_parts)):
+                and _break_find(part, self.monster_damage.parts.keys(),
+                                self.breakable_parts)):
                     part_damage.breakable = True
                 if hitbox > self.max_raw_part[1]:
                     self.max_raw_part = (part, hitbox)
@@ -503,26 +504,6 @@ class PartDamage(object):
             state = "Break Part"
         self.states[state] = PartDamageState(raw, element,
                                              hitbox, ehitbox, state)
-
-
-def _part_find(part, breaks):
-    if (part == "Wing" and "Wing" not in breaks
-    and "Talon" in breaks):
-        # for Teostra
-        return "Talon"
-    if (part == "Head" and "Head" not in breaks
-    and "Horn" in breaks):
-        # for Fatalis
-        return "Horn"
-    if (part == "Winglegs" and "Winglegs" not in breaks
-    and "Wing Leg" in breaks):
-        # for Gore
-        return "Wing Leg"
-    #print "part_find", part, breaks
-    matches = difflib.get_close_matches(part, breaks, 1, 0.8)
-    if matches:
-        return matches[0]
-    return None
 
 
 def element_attack_up(value):

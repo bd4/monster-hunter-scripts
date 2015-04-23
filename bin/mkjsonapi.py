@@ -43,6 +43,7 @@ def monster_json(db, path):
         m.update_indexes(indexes)
         data = m.as_data()
         damage = db.get_monster_damage(m.id)
+        damage.set_breakable(db.get_monster_breaks(m.id))
         data["damage"] = damage.as_data()
         with open(monster_path, "w") as f:
             json.dump(data, f, cls=model.ModelJSONEncoder, indent=2)

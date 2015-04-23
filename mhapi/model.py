@@ -3,6 +3,7 @@ import json
 import urllib
 from collections import defaultdict
 import re
+import difflib
 
 from mhapi.util import EnumBase
 
@@ -242,6 +243,11 @@ class MonsterPartStateDamage(RowModel):
         self._data["part"] = part
         self._data["state"] = state
 
+    def __eq__(self, other):
+        for col in "impact cut shot ko ice dragon water fire thunder".split():
+            if self[col] != other[col]:
+                return False
+
 
 class MonsterPartDamage(ModelBase):
     """
@@ -250,14 +256,30 @@ class MonsterPartDamage(ModelBase):
     """
     def __init__(self, part):
         self.part = part
+        self.breakable = False
         self.states = {}
 
     def add_state(self, state, damage_row):
         self.states[state] = MonsterPartStateDamage(self.part, state,
                                                     damage_row)
+        # TODO: what about state 'Without Hide' for S.Nerscylla, which
+        # appears like it might be the same as Break Part, or might
+        # affect across hitzones.
+        if state == "Break Part":
+            # the default damage should be sorted before the alternate
+            # state damage
+            assert "Default" in self.states
+            if self.states[state] != self.states["Default"]:
+                # if the damage is different for break state, the part
+                # must be breakable, even if we couldn't find a match
+                # when searching break rewards
+                self.breakable = True
 
     def as_data(self):
-        return self.states
+        return dict(
+            breakable=self.breakable,
+            damage=self.states
+        )
 
 
 class MonsterDamage(ModelBase):
@@ -270,8 +292,11 @@ class MonsterDamage(ModelBase):
         self.parts = {}
         self.states = set()
         for row in damage_rows:
+            if row["cut"] == -1:
+                # -1 indicates missing data
+                continue
             part = row["body_part"]
-            state = "Normal"
+            state = "Default"
             m = re.match(r"([^(]+) \(([^)]+)\)", part)
             if m:
                 part = m.group(1)
@@ -286,3 +311,42 @@ class MonsterDamage(ModelBase):
             states=list(self.states),
             parts=self.parts
         )
+
+    def set_breakable(self, breakable_list):
+        """
+        Set breakable flag on parts based on the breakable list from
+        rewards (use MHDB.get_monster_breaks).
+        """
+        for name, part_damage in self.parts.iteritems():
+            if _break_find(name, self.parts, breakable_list):
+                part_damage.breakable = True
+
+
+def _break_find(part, parts, breaks):
+    # favor 'Tail Tip' over Tail for Basarios
+    if part == "Tail" and "Tail Tip" in parts:
+        return None
+    if part == "Tail Tip" and "Tail" in breaks:
+        return "Tail"
+    if part == "Neck/Tail" and "Tail" in breaks:
+        return "Tail"
+    if part == "Wing" and "Wing" not in breaks:
+        if "Talon" in breaks and "Talon" not in parts:
+            # for Teostra
+            return "Talon"
+    if part == "Head" and "Head" not in breaks:
+        if "Horn" in breaks and "Horn" not in parts:
+            # for Fatalis
+            return "Horn"
+        if "Ear" in breaks and "Ear" not in parts:
+            # Kecha Wacha
+            return "Ear"
+    if part == "Winglegs" and "Winglegs" not in breaks:
+        if "Wing Leg" in breaks and "Wing Leg" not in parts:
+            # for Gore
+            return "Wing Leg"
+    #print "part_find", part, breaks
+    matches = difflib.get_close_matches(part, breaks, 1, 0.8)
+    if matches:
+        return matches[0]
+    return None
