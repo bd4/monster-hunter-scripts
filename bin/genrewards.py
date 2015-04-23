@@ -33,7 +33,7 @@ if __name__ == '__main__':
     db_path = os.path.join(db_path, "..", "db", "mh4u.db")
     db = MHDB(db_path)
 
-    items = db.get_item_names(rewards.ITEM_TYPES)
+    items = db.get_items(rewards.ITEM_TYPES)
 
     # write all names json to /items.json
     items_file = os.path.join(outdir, "items.json")
@@ -48,13 +48,13 @@ if __name__ == '__main__':
             else:
                 out.write(", ")
             out.write('"')
-            out.write(item["name"])
+            out.write(item.name)
             out.write('"')
         out.write("]")
 
     for item in items:
-        name = item["name"]
-        item_id = item["_id"]
+        name = item.name
+        item_id = item.id
         encoded_name = name.encode("utf8")
         item_file = os.path.join(outdir, encoded_name + ".txt")
         print "Writing", item_id, item_file

@@ -78,7 +78,7 @@ class GatherLocation(object):
     Track total expected value for an item in one location/rank.
     """
     def __init__(self, location_row, rank, gathering_rows):
-        self.location_id = location_row["_id"]
+        self.location_id = location_row.id
         self.location_name = location_row["name"]
         self.rank = rank
         self._rewards = []
@@ -675,12 +675,11 @@ class ItemRewards(object):
     def __init__(self, db, item_row):
         self.db = db
         self.item_row = item_row
-        self.item_id = item_row["_id"]
+        self.item_id = item_row.id
 
         wyp_row = db.get_wyporium_trade(self.item_id)
         if wyp_row is not None:
-            self.trade_unlock_quest = Quest(
-                                db.get_quest(wyp_row["unlock_quest_id"]))
+            self.trade_unlock_quest = db.get_quest(wyp_row["unlock_quest_id"])
             self.trade_item_row = self.item_row
             self.trade_item_id = self.item_id
             self.item_id = wyp_row["item_out_id"]
@@ -728,7 +727,7 @@ class ItemRewards(object):
             for rank in "LR HR G".split():
                 gl = GatherLocation(loc, rank, gathering_rows)
                 if gl:
-                    key = (loc["_id"], rank)
+                    key = (loc.id, rank)
                     self._gather_items[key] = gl
 
     def _find_hunt_items(self):
@@ -759,7 +758,7 @@ class ItemRewards(object):
         Get a list of the quests for acquiring a given item and the probability
         of getting the item, depending on cap or kill and luck skills.
         """
-        quests = self.db.get_item_quest_objects(self.item_id)
+        quests = self.db.get_item_quests(self.item_id)
         if not quests:
             return
         for q in quests:

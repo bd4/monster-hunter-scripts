@@ -4,6 +4,9 @@ import json
 import difflib
 import re
 
+from mhapi import skills
+from mhapi.model import SharpnessLevel
+
 
 WEAKPART_WEIGHT = 0.5
 
@@ -14,7 +17,7 @@ def raw_damage(true_raw, sharpness, affinity, monster_hitbox, motion):
     sharpness, monster raw weakness, and weapon motion value.
     """
     return (true_raw
-            * Sharpness.raw_modifier(sharpness)
+            * SharpnessLevel.raw_modifier(sharpness)
             * (1 + (affinity / 400.0))
             * motion / 100.0
             * monster_hitbox / 100.0)
@@ -27,42 +30,8 @@ def element_damage(element, sharpness, monster_ehitbox):
     Note that this is independent of the motion value of the attack.
     """
     return (element / 10.0
-            * Sharpness.element_modifier(sharpness)
+            * SharpnessLevel.element_modifier(sharpness)
             * monster_ehitbox / 100.0)
-
-
-class Sharpness(object):
-    """
-    Enumeration for weapon sharpness.
-    """
-
-    RED = 0
-    ORANGE = 1
-    YELLOW = 2
-    GREEN = 3
-    BLUE = 4
-    WHITE = 5
-    PURPLE = 6
-
-    ALL = range(0, PURPLE + 1)
-
-    _modifier = {
-        RED:    (0.50, 0.25),
-        ORANGE: (0.75, 0.50),
-        YELLOW: (1.00, 0.75),
-        GREEN:  (1.05, 1.00),
-        BLUE:   (1.20, 1.06),
-        WHITE:  (1.32, 1.12),
-        PURPLE: (1.44, 1.20),
-    }
-
-    @classmethod
-    def raw_modifier(cls, sharpness):
-        return cls._modifier[sharpness][0]
-
-    @classmethod
-    def element_modifier(cls, sharpness):
-        return cls._modifier[sharpness][1]
 
 
 class MotionType(object):
@@ -192,13 +161,21 @@ class WeaponMonsterDamage(object):
     Does not include overall monster defense.
     """
     def __init__(self, weapon_row, monster_row, monster_damage_rows, motion,
-                 sharp_plus=False, breakable_parts=None):
+                 sharp_plus=False, breakable_parts=None,
+                 attack_skill=skills.AttackUp.NONE,
+                 critical_eye_skill=skills.CriticalEye.NONE,
+                 element_skill=skills.ElementAttackUp.NONE,
+                 awaken=False):
         self.weapon = weapon_row
         self.monster = monster_row
         self.monster_damage = monster_damage_rows
         self.motion = motion
         self.sharp_plus = sharp_plus
         self.breakable_parts = breakable_parts
+        self.attack_skill = attack_skill
+        self.critical_eye_skill = critical_eye_skill
+        self.element_skill = element_skill
+        self.awaken = awaken
 
         self.damage_map = defaultdict(PartDamage)
         self.average = 0
@@ -209,16 +186,25 @@ class WeaponMonsterDamage(object):
         self.weapon_type = self.weapon["wtype"]
         self.true_raw = (self.weapon["attack"]
                          / WeaponType.multiplier(self.weapon_type))
-        sharp = _parse_sharpness(self.weapon)
         if sharp_plus:
-            self.sharpness = sharp[1]
+            self.sharpness = self.weapon.sharpness_plus.max
         else:
-            self.sharpness = sharp[0]
+            self.sharpness = self.weapon.sharpness.max
         #print "sharpness=", self.sharpness
         self.affinity = int(self.weapon["affinity"] or 0)
         self.damage_type = WeaponType.damage_type(self.weapon_type)
         self.etype = self.weapon["element"]
         self.eattack = self.weapon["element_attack"]
+        if not self.etype and self.awaken:
+            self.etype = self.weapon.awaken
+            self.eattack = self.weapon.awaken_attack
+
+        self.true_raw = skills.AttackUp.modified(attack_skill,
+                                                 self.true_raw)
+        self.affinity = skills.CriticalEye.modified(critical_eye_skill,
+                                                    self.affinity)
+        self.eattack  = skills.ElementAttackUp.modified(element_skill,
+                                                        self.eattack)
 
         self.parts = []
         self.break_count = 0
@@ -234,8 +220,13 @@ class WeaponMonsterDamage(object):
         self.max_element_part = (None, 0)
         self._calculate_damage()
 
+    @property
+    def attack(self):
+        return self.true_raw * WeaponType.multiplier(self.weapon_type)
+
     def _calculate_damage(self):
-        for row in self.monster_damage:
+        for row in self.monster_damage._rows:
+            # TODO: refactor to take advantage of new model
             part = row["body_part"]
             alt = None
             m = re.match(r"([^(]+) \(([^)]+)\)", part)
@@ -548,18 +539,3 @@ def element_x_attack_up(value, level=1):
         value += 90
     else:
         raise ValueError("level must be 1, 2, or 3")
-
-
-def _parse_sharpness(weapon_row):
-    """
-    Parse the sharpness field from a weapon row, to determine
-    the max sharpness of the weapon with and without sharpness +1.
-    """
-    db_values = weapon_row["sharpness"].split(" ")
-    sharpness = [Sharpness.RED, Sharpness.RED]
-    for i, db_value in enumerate(db_values):
-        values = [int(s) for s in db_value.split(".")]
-        for s in Sharpness.ALL:
-            if values[s] > 0:
-                sharpness[i] = s
-    return sharpness
