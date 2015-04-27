@@ -54,6 +54,9 @@ class RowModel(ModelBase):
     def __getitem__(self, key):
         return self._data[key]
 
+    def __contains__(self, key):
+        return key in self._data
+
     def fields(self):
         return self._data.keys()
 
@@ -188,6 +191,76 @@ class WeaponSharpness(ModelBase):
 
     def as_data(self):
         return self.value_list
+
+
+class ItemWithSkills(RowModel):
+    def __init__(self, item_row):
+        super(ItemWithSkills, self).__init__(item_row)
+        self.skills = None
+        self.skill_ids = []
+        self.skill_names = []
+
+    def set_skills(self, item_skills):
+        self.skills = {}
+        for s in item_skills:
+            self.skills[s.skill_tree_id] = s.point_value
+            self.skills[s.name] = s.point_value
+            self.skill_ids.append(s.skill_tree_id)
+            self.skill_names.append(s.name)
+
+    def skill(self, skill_id_or_name):
+        return self.skills.get(skill_id_or_name, 0)
+
+    def one_line_skills_u(self, skill_names=None):
+        if skill_names is None:
+            skill_names = sorted(self.skill_names)
+        return ", ".join("%s %d" % (name, self.skills[name])
+                         for name in skill_names
+                         if name in self.skills)
+
+
+class Armor(ItemWithSkills):
+    _indexes = { "name": ["id"],
+                 "slot": ["id", "name"] }
+
+    _one_line_template = string.Template(
+       "$name ($slot) Def $defense-$max_defense Slot $num_slots"
+    )
+
+    def __init__(self, armor_item_row):
+        super(Armor, self).__init__(armor_item_row)
+
+    def one_line_u(self):
+        return self._one_line_template.substitute(self.as_data())
+
+    def skill(self, skill_id_or_name, decoration_values=()):
+        """
+        decoration_values should be a list of points from the given
+        number of slots, e.g. [1, 3] means that one slot gets 1 point
+        and two slots get 3 points, [1, 0, 4] means that one slot gets 1 point,
+        there is no two slot gem, and three slots gets 4 points.
+        """
+        assert self.skills is not None
+        total = self.skills.get(skill_id_or_name, 0)
+        slots_left = self.num_slots
+        for slots in xrange(len(decoration_values), 0, -1):
+            if slots_left == 0:
+                break
+            decoration_value = decoration_values[slots-1]
+            if not decoration_value:
+                continue
+            if slots <= slots_left:
+                total += decoration_value
+                slots_left -= slots
+        return total
+
+
+class Decoration(ItemWithSkills):
+    pass
+
+
+class ItemSkill(RowModel):
+    pass
 
 
 class Weapon(RowModel):

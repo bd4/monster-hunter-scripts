@@ -18,9 +18,11 @@ def percent_change(a, b):
 
 
 def parse_args(argv):
-    parser = argparse.ArgumentParser(
+    parser = argparse.ArgumentParser(description=
         "Calculate damage to monster from different weapons of the"
-        " same class"
+        " same class. The average motion value for the weapon class"
+        " is used for raw damage calculations, to get a rough idea of"
+        " the relative damage from raw vs element when comparing."
     )
     parser.add_argument("-s", "--sharpness-plus-one", action="store_true",
                         default=False,

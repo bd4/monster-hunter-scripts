@@ -102,12 +102,12 @@ class MHDB(object):
         """
         List of unicode strings.
         """
-        item_types.sort()
+        args = sorted(item_types)
         placeholders = ", ".join(["?"] * len(item_types))
         return self._query_all("item_names", """
             SELECT _id, name FROM items
             WHERE type IN (%s)
-        """ % placeholders, tuple(item_types), model_cls=field_model("name"))
+        """ % placeholders, tuple(args), model_cls=field_model("name"))
 
     def get_items(self, item_types=None):
         """
@@ -115,7 +115,7 @@ class MHDB(object):
         """
         q = "SELECT * FROM items"
         if item_types:
-            item_types.sort()
+            item_types = sorted(item_types)
             placeholders = ", ".join(["?"] * len(item_types))
             q += "\nWHERE type IN (%s)" % placeholders
             item_types = tuple(item_types)
@@ -303,6 +303,104 @@ class MHDB(object):
             LEFT JOIN items ON weapons._id = items._id
             WHERE items.name=?
         """, (name,), model_cls=model.Weapon)
+
+    def get_armors(self):
+        return self._query_all("armors", """
+            SELECT * FROM armor
+            LEFT JOIN items ON armor._id = items._id
+        """, model_cls=model.Armor)
+
+    def get_armor(self, armor_id):
+        return self._query_one("armor", """
+            SELECT * FROM armor
+            LEFT JOIN items ON armor._id = items._id
+            WHERE armor._id=?
+        """, (armor_id,), model_cls=model.Armor)
+
+    def get_armor_by_name(self, name):
+        return self._query_one("armor", """
+            SELECT * FROM armor
+            LEFT JOIN items ON armor._id = items._id
+            WHERE items.name=?
+        """, (name,), model_cls=model.Armor)
+
+    def get_item_skills(self, item_id):
+        return self._query_all("item_skills", """
+            SELECT item_to_skill_tree.*, skill_trees.name
+            FROM item_to_skill_tree
+            LEFT JOIN skill_trees
+              ON item_to_skill_tree.skill_tree_id = skill_trees._id
+            WHERE item_to_skill_tree.item_id=?
+        """, (item_id,), model_cls=model.ItemSkill)
+
+    def get_decorations(self):
+        return self._query_all("decorations", """
+            SELECT *
+            FROM decorations
+            INNER JOIN items
+              ON items._id = decorations._id
+        """, model_cls=model.Decoration)
+
+    def get_decoration(self, decoration_id):
+        return self._query_one("decoration", """
+            SELECT *
+            FROM decorations
+            INNER JOIN items
+              ON items._id = decorations._id
+            WHERE decorations._id = ?
+        """, (decoration_id,), model_cls=model.Decoration)
+
+    def get_decoration_by_name(self, name):
+        return self._query_all("decoration", """
+            SELECT *
+            FROM decorations
+            INNER JOIN items
+              ON items._id = decorations._id
+            WHERE items.name = ?
+        """, (name,), model_cls=model.Decoration)
+
+    def get_skill_tree_id(self, skill_tree_name):
+        result = self._query_one("skill", """
+            SELECT _id FROM skill_trees
+            WHERE name=?
+        """, (skill_tree_name,))
+        if result:
+            return result["_id"]
+        return None
+
+    def get_decorations_by_skills(self, skill_tree_ids):
+        args = sorted(skill_tree_ids)
+        placeholders = ", ".join(["?"] * len(skill_tree_ids))
+        return self._query_all("decorations", """
+            SELECT items.*, decorations.*
+            FROM item_to_skill_tree
+            LEFT JOIN items
+              ON items._id = item_to_skill_tree.item_id
+            LEFT JOIN decorations
+              ON decorations._id = item_to_skill_tree.item_id
+            WHERE items.type = 'Decoration'
+              AND item_to_skill_tree.skill_tree_id IN (%s)
+              AND item_to_skill_tree.point_value > 0
+            GROUP BY item_to_skill_tree.item_id
+        """ % placeholders, tuple(args), model_cls=model.Decoration)
+
+    def get_armors_by_skills(self, skill_tree_ids, hunter_type):
+        args = sorted(skill_tree_ids)
+        placeholders = ", ".join(["?"] * len(skill_tree_ids))
+        args += [hunter_type]
+        return self._query_all("decorations", """
+            SELECT items.*, armor.*
+            FROM item_to_skill_tree
+            LEFT JOIN items
+              ON items._id = item_to_skill_tree.item_id
+            LEFT JOIN armor
+              ON armor._id = item_to_skill_tree.item_id
+            WHERE items.type = 'Armor'
+              AND item_to_skill_tree.skill_tree_id IN (%s)
+              AND item_to_skill_tree.point_value > 0
+              AND armor.hunter_type IN ('Both', ?)
+            GROUP BY item_to_skill_tree.item_id
+        """ % placeholders, tuple(args), model_cls=model.Armor)
 
     def get_monster_breaks(self, monster_id):
         """

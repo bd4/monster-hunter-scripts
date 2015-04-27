@@ -199,6 +199,11 @@ class WeaponMonsterDamage(object):
             self.etype = self.weapon.awaken
             self.eattack = self.weapon.awaken_attack
 
+        if self.eattack:
+            self.eattack = int(self.eattack)
+        else:
+            self.eattack = 0
+
         self.true_raw = skills.AttackUp.modified(attack_skill,
                                                  self.true_raw)
         self.affinity = skills.CriticalEye.modified(critical_eye_skill,

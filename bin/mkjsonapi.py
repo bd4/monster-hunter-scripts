@@ -5,6 +5,7 @@ import json
 import sys
 import errno
 from collections import defaultdict
+import urllib
 
 import _pathfix
 
@@ -18,6 +19,17 @@ def mkdirs_p(path):
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
+
+
+SAFE_CHARS = " &'+\""
+
+
+def file_path(path, model_object, use_name=False):
+    if use_name and "name" in model_object:
+        key = urllib.quote(model_object.name.encode("utf8"), SAFE_CHARS)
+    else:
+        key = str(model_object.id)
+    return os.path.join(path, "%s.json" % key)
 
 
 def write_list_file(path, model_list):
@@ -39,7 +51,7 @@ def monster_json(db, path):
 
     indexes = {}
     for m in monsters:
-        monster_path = os.path.join(path, "%s.json" % m.id)
+        monster_path = file_path(path, m)
         m.update_indexes(indexes)
         data = m.as_data()
         damage = db.get_monster_damage(m.id)
@@ -58,7 +70,7 @@ def weapon_json(db, path):
 
     indexes = {}
     for w in weapons:
-        weapon_path = os.path.join(path, "%s.json" % w.id)
+        weapon_path = file_path(path, w)
         w.update_indexes(indexes)
         with open(weapon_path, "w") as f:
             w.json_dump(f)
@@ -73,7 +85,7 @@ def items_json(db, path):
 
     indexes = {}
     for item in items:
-        item_path = os.path.join(path, "%s.json" % item.id)
+        item_path = file_path(path, item)
         item.update_indexes(indexes)
         with open(item_path, "w") as f:
             item.json_dump(f)
