@@ -76,7 +76,10 @@ class RowModel(ModelBase):
             self.update_index(key_field, value_fields, data[key_field])
 
     def update_index(self, key_field, value_fields, data):
-        item = dict((k, self[k]) for k in value_fields)
+        if isinstance(value_fields, str):
+            item = self[value_fields]
+        else:
+            item = dict((k, self[k]) for k in value_fields)
         key_value = self[key_field]
         if key_value not in data:
             data[key_value] = []
@@ -212,16 +215,29 @@ class ItemWithSkills(RowModel):
         return self.skills.get(skill_id_or_name, 0)
 
     def one_line_skills_u(self, skill_names=None):
+        """
+        Get comma separated list of skills on the item. If @skill_names
+        is passed, only include skills that are in that list.
+        """
         if skill_names is None:
             skill_names = sorted(self.skill_names)
         return ", ".join("%s %d" % (name, self.skills[name])
                          for name in skill_names
                          if name in self.skills)
 
+    def as_data(self):
+        data = super(ItemWithSkills, self).as_data()
+        if self.skills is not None:
+            data["skills"] = dict((name, self.skills[name])
+                                  for name in self.skill_names)
+        #data["skills_by_id"] = dict((sid, self.skills[sid])
+        #                            for sid in self.skill_ids)
+        return data
+
 
 class Armor(ItemWithSkills):
-    _indexes = { "name": ["id"],
-                 "slot": ["id", "name"] }
+    _indexes = { "name": "id",
+                 "slot": "name" }
 
     _one_line_template = string.Template(
        "$name ($slot) Def $defense-$max_defense Slot $num_slots"
@@ -236,9 +252,10 @@ class Armor(ItemWithSkills):
     def skill(self, skill_id_or_name, decoration_values=()):
         """
         decoration_values should be a list of points from the given
-        number of slots, e.g. [1, 3] means that one slot gets 1 point
-        and two slots get 3 points, [1, 0, 4] means that one slot gets 1 point,
-        there is no two slot gem, and three slots gets 4 points.
+        number of slots, e.g. [1, 3] or [1, 3, 0] means that one slot
+        gets 1 point and two slots get 3 points, [1, 0, 4] means that
+        one slot gets 1 point, there is no two slot gem, and three slots
+        gets 4 points. If not passed, just returns native skill points.
         """
         assert self.skills is not None
         total = self.skills.get(skill_id_or_name, 0)
@@ -249,7 +266,7 @@ class Armor(ItemWithSkills):
             decoration_value = decoration_values[slots-1]
             if not decoration_value:
                 continue
-            if slots <= slots_left:
+            while slots <= slots_left:
                 total += decoration_value
                 slots_left -= slots
         return total
@@ -261,6 +278,27 @@ class Decoration(ItemWithSkills):
 
 class ItemSkill(RowModel):
     pass
+
+
+class SkillTree(RowModel):
+    def __init__(self, skill_tree_row):
+        super(SkillTree, self).__init__(skill_tree_row)
+        self.decoration_values = None
+        self.decoration_ids = None
+
+    def set_decorations(self, decorations):
+        if decorations is None:
+            self.decoration_values = None
+        else:
+            self.decoration_ids, self.decoration_values = \
+                        get_decoration_values(self.id, decorations)
+
+    def as_data(self):
+        data = super(SkillTree, self).as_data()
+        if self.decoration_values is not None:
+            data["decoration_values"] = self.decoration_values
+            data["decoration_ids"] = self.decoration_ids
+        return data
 
 
 class Weapon(RowModel):
@@ -399,6 +437,22 @@ class MonsterDamage(ModelBase):
             if _break_find(name, self.parts, breakable_list):
                 #print "part %s is breakable [by rewards]" % name
                 part_damage.breakable = True
+
+
+def get_decoration_values(skill_id, decorations):
+    # TODO: write script to compute this and shove into skill_tree table
+    values = [0, 0, 0]
+    ids = [None, None, None]
+    for d in decorations:
+        assert d.num_slots is not None
+        # some skills like Handicraft have multiple decorations with
+        # same number of slots - use the best one
+        new = d.skills[skill_id]
+        current = values[d.num_slots-1]
+        if new > current:
+            values[d.num_slots-1] = new
+            ids[d.num_slots-1] = d.id
+    return (ids, values)
 
 
 def _break_find(part, parts, breaks):

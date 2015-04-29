@@ -1,0 +1,18 @@
+<table>
+<% for(var i=0; i<decorations.length; i++) { %>
+    <tr>
+    <td><%= Array(decorations[i]["num_slots"] + 1).join("\u26ab") %></td>
+    <td><%= decorations[i]["display_name"] %>
+        <button id="<%= type %>_remove_decoration_<%= i %>"
+                class="remove_decoration">-</button></td>
+    </tr>
+<% } %>
+<% if (free_slots > 0) { %>
+    <tr>
+    <td><%= Array(free_slots + 1).join("\u26aa") %><%= Array(3- free_slots + 1).join("&nbsp;") %></td>
+    <td><input id="<%= type %>_decoration" type="text" size="12">
+        <button id="<%= type %>_add_decoration"
+                class="add_decoration">+</button></td>
+    </tr>
+<% } %>
+</table>

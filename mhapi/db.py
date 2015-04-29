@@ -299,27 +299,31 @@ class MHDB(object):
 
     def get_weapon_by_name(self, name):
         return self._query_one("weapon", """
-            SELECT * FROM weapons
+            SELECT items._id, items.name, items.buy, weapons.*
+            FROM weapons
             LEFT JOIN items ON weapons._id = items._id
             WHERE items.name=?
         """, (name,), model_cls=model.Weapon)
 
     def get_armors(self):
         return self._query_all("armors", """
-            SELECT * FROM armor
+            SELECT items._id, items.name, items.buy, armor.*
+            FROM armor
             LEFT JOIN items ON armor._id = items._id
         """, model_cls=model.Armor)
 
     def get_armor(self, armor_id):
         return self._query_one("armor", """
-            SELECT * FROM armor
+            SELECT items._id, items.name, items.buy, armor.*
+            FROM armor
             LEFT JOIN items ON armor._id = items._id
             WHERE armor._id=?
         """, (armor_id,), model_cls=model.Armor)
 
     def get_armor_by_name(self, name):
         return self._query_one("armor", """
-            SELECT * FROM armor
+            SELECT items._id, items.name, items.buy, armor.*
+            FROM armor
             LEFT JOIN items ON armor._id = items._id
             WHERE items.name=?
         """, (name,), model_cls=model.Armor)
@@ -335,7 +339,7 @@ class MHDB(object):
 
     def get_decorations(self):
         return self._query_all("decorations", """
-            SELECT *
+            SELECT items._id, items.name, items.buy, decorations.*
             FROM decorations
             INNER JOIN items
               ON items._id = decorations._id
@@ -343,7 +347,7 @@ class MHDB(object):
 
     def get_decoration(self, decoration_id):
         return self._query_one("decoration", """
-            SELECT *
+            SELECT items._id, items.name, items.buy, decorations.*
             FROM decorations
             INNER JOIN items
               ON items._id = decorations._id
@@ -352,12 +356,17 @@ class MHDB(object):
 
     def get_decoration_by_name(self, name):
         return self._query_all("decoration", """
-            SELECT *
+            SELECT items._id, items.name, items.buy, decorations.*
             FROM decorations
             INNER JOIN items
               ON items._id = decorations._id
             WHERE items.name = ?
         """, (name,), model_cls=model.Decoration)
+
+    def get_skill_trees(self):
+        return self._query_all("skills", """
+            SELECT _id, name FROM skill_trees
+        """, model_cls=model.SkillTree)
 
     def get_skill_tree_id(self, skill_tree_name):
         result = self._query_one("skill", """
@@ -372,7 +381,7 @@ class MHDB(object):
         args = sorted(skill_tree_ids)
         placeholders = ", ".join(["?"] * len(skill_tree_ids))
         return self._query_all("decorations", """
-            SELECT items.*, decorations.*
+            SELECT items._id, items.name, items.buy, decorations.*
             FROM item_to_skill_tree
             LEFT JOIN items
               ON items._id = item_to_skill_tree.item_id
@@ -389,7 +398,7 @@ class MHDB(object):
         placeholders = ", ".join(["?"] * len(skill_tree_ids))
         args += [hunter_type]
         return self._query_all("decorations", """
-            SELECT items.*, armor.*
+            SELECT items._id, items.name, items.buy, armor.*
             FROM item_to_skill_tree
             LEFT JOIN items
               ON items._id = item_to_skill_tree.item_id

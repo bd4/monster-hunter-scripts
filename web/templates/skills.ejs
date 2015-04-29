@@ -1,0 +1,25 @@
+<table id="skills_table" cellpadding="2" border="0">
+    <tr>
+      <th>&nbsp;</th>
+      <th>Total</th>
+<% for(var i=0; i<TYPES.length; i++) { %>
+      <td><%= TYPES[i] %></td>
+<% } %>
+    </tr>
+<% for(var i=0; i<active_skills.length; i++) { %>
+    <tr>
+    <td><%= active_skills[i] %></td>
+    <td class="num"><%= skills[active_skills[i]] %></td>
+    <% for(var j=0; j<TYPES.length; j++) { %>
+    <td class="num">
+      <%= (armors[TYPES[j]] && tskills_by_type[TYPES[j]][active_skills[i]])
+          ? tskills_by_type[TYPES[j]][active_skills[i]]
+          : "&nbsp;" %>
+      <%= 0 && (armors[TYPES[j]] && dskills_by_type[TYPES[j]][active_skills[i]])
+          ? " (" + dskills_by_type[TYPES[j]][active_skills[i]] + ")"
+          : "&nbsp;" %>
+    </td>
+    <% } %>
+    </tr>
+<% } %>
+</table>

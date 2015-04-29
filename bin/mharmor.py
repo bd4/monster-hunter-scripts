@@ -7,9 +7,9 @@ import codecs
 import _pathfix
 
 from mhapi.db import MHDB
+from mhapi.model import get_decoration_values
+from mhapi.util import get_utf8_writer
 
-def get_utf8_writer(writer):
-    return codecs.getwriter("utf8")(writer)
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(description=
@@ -46,7 +46,7 @@ def find_armors(args):
         ds = db.get_decorations_by_skills([sid])
         for d in ds:
             d.set_skills(db.get_item_skills(d.id))
-        decoration_values = get_decoration_values(sid, ds)
+        decoration_values = get_decoration_values(sid, ds)[1]
         decorations[sid] = (ds, decoration_values)
         print "%s[%s]:" % (skill_name, sid), ", ".join(d.name for d in ds), \
               decoration_values
@@ -86,20 +86,6 @@ def find_armors(args):
         total = skill_totals[a.id]
         print a.id, skill_totals[a.id], a.one_line_u()
         print "  ", a.one_line_skills_u(args.skills)
-
-
-def get_decoration_values(skill_id, decorations):
-    # TODO: write script to compute this and shove innto skill_tree table
-    values = [0, 0, 0]
-    for d in decorations:
-        assert d.num_slots is not None
-        # some skills like Handicraft have multiple decorations with
-        # same number of slots - use the best one
-        new = d.skills[skill_id]
-        current = values[d.num_slots-1]
-        if new > current:
-            values[d.num_slots-1] = new
-    return values
 
 
 if __name__ == '__main__':

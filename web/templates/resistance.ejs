@@ -1,0 +1,21 @@
+<table id="resist_table" cellpadding="2" border="0">
+    <tr>
+      <th>&nbsp;</th>
+      <th>Total</th>
+      <th>Head</th>
+      <th>Body</th>
+      <th>Arms</th>
+      <th>Waist</th>
+      <th>Legs</th>
+    </tr>
+<% for(var i=0; i<ELEMENTS.length; i++) { %>
+    <tr>
+    <th><%= ELEMENTS[i] %></th>
+    <td class="num"><%= element_resist[ELEMENTS[i]] %></td>
+    <% for(var j=0; j<TYPES.length; j++) { %>
+      <td class="num">
+         <%= armors[TYPES[j]]
+            ? armors[TYPES[j]][ELEMENTS[i] + "_res"] : "&nbsp;" %></td>
+    <% } %>
+<% } %>
+</table>

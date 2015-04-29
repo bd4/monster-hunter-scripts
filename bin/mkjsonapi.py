@@ -35,13 +35,21 @@ def file_path(path, model_object, use_name=False):
 def write_list_file(path, model_list):
     list_path = os.path.join(path, "_list.json")
     with open(list_path, "w") as f:
-        json.dump([o.as_list_data() for o in model_list], f, indent=2)
+        json.dump([o.as_list_data() for o in model_list],
+                  f, cls=model.ModelJSONEncoder, indent=2)
 
 
 def write_index_file(path, indexes):
-    index_path = os.path.join(path, "_index.json")
-    with open(index_path, "w") as f:
-        json.dump(indexes, f, indent=2)
+    for key, data in indexes.iteritems():
+        index_path = os.path.join(path, "_index_%s.json" % key)
+        with open(index_path, "w") as f:
+            json.dump(data, f, cls=model.ModelJSONEncoder, indent=2)
+
+
+def write_all_file(path, all_data):
+    all_path = os.path.join(path, "_all.json")
+    with open(all_path, "w") as f:
+        json.dump(all_data, f, cls=model.ModelJSONEncoder, indent=2)
 
 
 def monster_json(db, path):
@@ -61,6 +69,73 @@ def monster_json(db, path):
             json.dump(data, f, cls=model.ModelJSONEncoder, indent=2)
 
     write_index_file(path, indexes)
+
+
+def armor_json(db, path):
+    armors = db.get_armors()
+    mkdirs_p(path)
+    write_list_file(path, armors)
+    all_data = []
+
+    indexes = {}
+    for a in armors:
+        armor_path = file_path(path, a)
+        a.update_indexes(indexes)
+        skills = db.get_item_skills(a.id)
+        if not skills:
+            print "WARN: armor '%s' (%d) has no skills" % (a.name, a.id)
+        a.set_skills(skills)
+
+        all_data.append(a.as_data())
+
+        with open(armor_path, "w") as f:
+            a.json_dump(f)
+
+    write_index_file(path, indexes)
+    write_all_file(path, all_data)
+
+
+def decoration_json(db, path):
+    decorations = db.get_decorations()
+    mkdirs_p(path)
+    write_list_file(path, decorations)
+    all_data = []
+
+    indexes = {}
+    for a in decorations:
+        decoration_path = file_path(path, a)
+        a.update_indexes(indexes)
+        skills = db.get_item_skills(a.id)
+        if not skills:
+            print "WARN: decoration '%s' (%d) has no skills" % (a.name, a.id)
+        a.set_skills(skills)
+
+        all_data.append(a.as_data())
+
+        with open(decoration_path, "w") as f:
+            a.json_dump(f)
+
+    write_index_file(path, indexes)
+    write_all_file(path, all_data)
+
+
+def skilltree_json(db, path):
+    skill_trees = db.get_skill_trees()
+    mkdirs_p(path)
+    write_list_file(path, skill_trees)
+
+    all_data = {}
+    for st in skill_trees:
+        ds = db.get_decorations_by_skills([st.id])
+        for d in ds:
+            d.set_skills(db.get_item_skills(d.id))
+        st.set_decorations(ds)
+        skilltree_path = file_path(path, st)
+        all_data[st.name] = st
+        with open(skilltree_path, "w") as f:
+            st.json_dump(f)
+
+    write_all_file(path, all_data)
 
 
 def weapon_json(db, path):
@@ -104,7 +179,10 @@ def main():
     items_json(db, os.path.join(outpath, "item"))
     weapon_json(db, os.path.join(outpath, "weapon"))
     monster_json(db, os.path.join(outpath, "monster"))
-    #quest_json
+    armor_json(db, os.path.join(outpath, "armor"))
+    skilltree_json(db, os.path.join(outpath, "skilltree"))
+    decoration_json(db, os.path.join(outpath, "decoration"))
+    #quest_json(db, os.path.join(outpath, "quest"))
 
 
 if __name__ == '__main__':

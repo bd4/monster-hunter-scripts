@@ -1,0 +1,402 @@
+<html>
+<head>
+  <title>Poogie Outfitters</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+  <script type="text/javascript" src="js/ejs_production.js"></script>
+
+  <style>
+      label {
+          font-weight: bold;
+      }
+
+      body {
+          font-family: sans, sans-serif;
+      }
+
+      td.num {
+          text-align: right;
+      }
+
+      /*@media (max-width: 600) {*/
+      #flexbox {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+      }
+
+  </style>
+
+  <script type="text/javascript">
+    var DATA_PATH = get_base_path() + "/jsonapi/";
+    var TYPES = ["Head", "Body", "Arms", "Waist", "Legs"];
+    var ELEMENTS = ["fire", "water", "thunder", "ice", "dragon"];
+
+    // dict mapping armor name to list containing id
+    var armor_ids = {};
+
+    // dict mapping skill name to object
+    var skill_trees = {};
+
+    // dict mapping type to armor name
+    var armors = {};
+
+    var decorations = { "Head": [], "Body": [], "Arms": [],
+                        "Waist": [], "Legs": [] };
+    var slots_left = {};
+
+    $(document).ready(function(){
+        $.getJSON(DATA_PATH + "armor/_index_name.json",
+                  function(data) {
+                      armor_ids = data;
+                      setup_autocomplete();
+                      $.getJSON(DATA_PATH + "skilltree/_all.json",
+                                function(data) {
+                                    skill_trees = data;
+                                    load_armors();
+                                    load_decorations();
+                                    // if nothing is loaded update won't be
+                                    // called, so force an update
+                                    update_skills();
+                                });
+                  });
+        $("#armor_table").on("click", "button.add_decoration",
+            function (evt) {
+                add_decoration_by_element(evt.target.id);
+            });
+        $("#armor_table").on("click", "button.remove_decoration",
+            function (evt) {
+                remove_decoration_by_element(evt.target.id);
+            });
+        // TODO: update skills
+    });
+
+    function load_armors() {
+        armors_saved = localStorage.getItem("armor_names");
+        if (armors_saved != null) {
+            armor_names = JSON.parse(armors_saved);
+            $.each(armor_names, function(type, name) {
+                if (name) {
+                    $("#" + type).val(name);
+                    set_armor(type, name);
+                }
+            });
+        }
+    }
+
+    function load_decorations() {
+        decorations_saved = localStorage.getItem("decoration_name_lists");
+        if (decorations_saved != null) {
+            dname_list = JSON.parse(decorations_saved);
+            $.each(dname_list, function(type, names) {
+                $.each(names, function(i, name) {
+                    add_decoration(type, name);
+                });
+            });
+        }
+    }
+
+    function add_decoration_by_element(element_id) {
+        parts = element_id.split("_");
+        type = parts[0];
+        value = $("#" + type + "_decoration").val();
+        add_decoration(type, value);
+    }
+
+    function remove_decoration_by_element(element_id) {
+        parts = element_id.split("_");
+        type = parts[0];
+        index = parts[3];
+        remove_decoration(type, index);
+    }
+
+    function setup_decoration_autocomplete(type, max_slots) {
+        options = [];
+        $.each(skill_trees, function(skill_name, stree) {
+            $.each(stree["decoration_values"], function(i, points) {
+                nslots = i + 1;
+                if (nslots <= max_slots && points > 0) {
+                    option_name = stree["name"] + " +" + points;
+                    options.push(option_name);
+                }
+            });
+        });
+        $("#" + type + "_decoration").autocomplete({ source: options });
+        $("#" + type + "_decoration").keypress(function(e) {
+            if (e.which == 13) {
+                value = $("#" + type + "_decoration").val();
+                add_decoration(type, value);
+            }
+        });
+    }
+
+    function save_armors() {
+        var armor_names = {};
+        $.each(armors, function(type, armor) {
+            armor_names[type] = armor["name"];
+        });
+        localStorage.setItem("armor_names", JSON.stringify(armor_names));
+    }
+
+    function save_decorations() {
+        var decoration_name_lists = {};
+        $.each(decorations, function(type, dlist) {
+            $.each(dlist, function(i, d) {
+                if (! (type in decoration_name_lists)) {
+                    decoration_name_lists[type] = [];
+                }
+                decoration_name_lists[type].push(d["display_name"]);
+            });
+        });
+        localStorage.setItem("decoration_name_lists",
+                             JSON.stringify(decoration_name_lists));
+    }
+
+    function get_base_path() {
+        var path = document.location.pathname;
+        return path.substring(0, path.lastIndexOf('/'));
+    }
+
+    function setup_autocomplete() {
+        $.getJSON(DATA_PATH + "armor/_index_slot.json",
+            function(data) {
+                $.each(TYPES,
+                       function(i, type) {
+                           $("#" + type).autocomplete(
+                              { source: data[type],
+                                change: function (event, ui) {
+                                    set_armor(this.id, ui.item["value"]);
+                                }
+                              }
+                           );
+                           $("#" + type).keypress(function(e) {
+                               if (e.which == 13) {
+                                   set_armor(this.id, $("#" + this.id).val());
+                               }
+                           });
+                      });
+            }
+        );
+    }
+
+    function add_decoration(type, value) {
+        parts = value.split(" +");
+        skill = parts[0]
+        points = parts[1]
+        slots = 0;
+        for (i=0; i < 3; i++) {
+            if (skill_trees[skill]["decoration_values"][i] == points) {
+                slots = i + 1;
+                break;
+            }
+        }
+        decoration_id = skill_trees[skill]["decoration_ids"][slots-1];
+        $.getJSON(DATA_PATH + "decoration/" + decoration_id + ".json",
+            function (data) {
+                if (! (type in decorations)) {
+                    decorations[type] = []
+                }
+                data["display_name"] = value;
+                decorations[type].push(data);
+                slots_left[type] -= data["num_slots"];
+                save_decorations();
+                update_slots(type);
+                update_skills();
+            }
+        );
+    }
+
+    function remove_decoration(type, index) {
+        d = decorations[type][index];
+        slots_left[type] += d["num_slots"];
+        decorations[type].splice(index, 1);
+        save_decorations();
+        update_slots(type);
+        update_skills();
+    }
+
+    function set_armor(type, name, noupdate) {
+        armor_id = armor_ids[name][0];
+        $.getJSON(DATA_PATH + "armor/" + armor_id + ".json",
+            function(data) {
+                armors[type] = data;
+                if (noupdate == undefined) {
+                    save_armors();
+                    decorations[type] = [];
+                    slots_left[type] = data["num_slots"];
+                    var skill_names = Object.keys(data["skills"]);
+                    skill_names.sort();
+                    var slist = "";
+                    $.each(skill_names, function(i, sname) {
+                        if (i != 0) {
+                            slist += ", ";
+                        }
+                        slist += sname + " " + data["skills"][sname];
+                    });
+                    $("#" + type + "_skills").html(slist);
+                    update_slots(type);
+                    update_skills();
+                }
+            }
+        );
+    }
+
+    function update_slots(type) {
+        var free_slots = slots_left[type];
+        var slots_html = new EJS(
+            { url: "templates/decorations.ejs" }
+        ).render({ decorations: decorations[type],
+                   free_slots: free_slots,
+                   type: type });
+        $("#" + type + "_slots").html(slots_html);
+        if (free_slots > 0) {
+            setup_decoration_autocomplete(type, free_slots);
+        }
+    }
+
+    function update_skills() {
+        // map of skill name to total
+        var skills = {};
+
+        // map of type to dict map of skill name to total including decoration
+        var tskills_by_type = {};
+
+        // map of type to dict map of skill name to total from decorations only
+        var dskills_by_type = {};
+
+        var element_resist = {};
+        var slots = 0;
+        var slots_free = 0;
+
+        $.each(armors, function(type, armor) {
+            dskills_by_type[type] = {};
+            tskills_by_type[type] = {};
+            $.each(armor["skills"], function(skill_name, skill_value) {
+                if (! (skill_name in skills)) {
+                    skills[skill_name] = 0;
+                }
+                skills[skill_name] += skill_value;
+
+                if (! (skill_name in tskills_by_type[type])) {
+                    tskills_by_type[type][skill_name] = 0;
+                }
+                tskills_by_type[type][skill_name] += skill_value;
+            })
+            $.each(decorations[type], function(i, decoration) {
+                $.each(decoration["skills"],
+                    function(skill_name, skill_value) {
+                        if (! (skill_name in skills)) {
+                            skills[skill_name] = 0;
+                        }
+                        skills[skill_name] += skill_value;
+
+                        if (! (skill_name in dskills_by_type[type])) {
+                            dskills_by_type[type][skill_name] = 0;
+                        }
+                        dskills_by_type[type][skill_name] += skill_value;
+
+                        if (! (skill_name in tskills_by_type[type])) {
+                            tskills_by_type[type][skill_name] = 0;
+                        }
+                        tskills_by_type[type][skill_name] += skill_value;
+                    }
+                );
+            })
+            $.each(ELEMENTS, function(i, element) {
+                key = element + "_res";
+                if (! (element in element_resist)) {
+                    element_resist[element] = 0;
+                }
+                element_resist[element] += armor[key];
+                $("#" + type + "_" + element).html(armor[key]);
+            })
+            slots += armor["num_slots"];
+            slots_free += slots_left[type];
+            //$("#" + type + "_slots").html(armor["num_slots"]);
+        });
+        $("#Total_slots").html((slots - slots_free)
+                               + " used / " + slots + " slots");
+
+        var skill_names = Object.keys(skills);
+        skill_names.sort(function(a, b) {
+            sa = skills[a] ? skills[a] : 0;
+            sb = skills[b] ? skills[b] : 0;
+            return sb - sa;
+        });
+
+        var skills_table = new EJS(
+            { url: "templates/skills.ejs" }
+        ).render({ TYPES: TYPES,
+                   skills: skills,
+                   dskills_by_type: dskills_by_type,
+                   tskills_by_type: tskills_by_type,
+                   active_skills: skill_names,
+                   armors: armors });
+        $("#skills_div").html(skills_table);
+
+        var resist_table = new EJS(
+            { url: "templates/resistance.ejs" }
+        ).render({ TYPES: TYPES,
+                   ELEMENTS: ELEMENTS,
+                   armors: armors,
+                   element_resist: element_resist });
+        $("#resist_div").html(resist_table);
+
+    }
+  </script>
+</head>
+<body>
+  <table id="armor_table" cellpadding="2" cellspacing="2">
+    <tr>
+      <td><label for="Head">Head:</label></td>
+      <td><input id="Head" type="text" size="15" /></td>
+      <td id="Head_slots">&nbsp;</td>
+      <td id="Head_skills">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label for="Body">Body:</label></td>
+      <td><input id="Body" type="text" size="15" /></td>
+      <td id="Body_slots">&nbsp;</td>
+      <td id="Body_skills">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label for="Arms">Arms:</label></td>
+      <td><input id="Arms" type="text" size="15" /></td>
+      <td id="Arms_slots">&nbsp;</td>
+      <td id="Arms_skills">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label for="Waist">Waist:</label></td>
+      <td><input id="Waist" type="text" size="15" /></td>
+      <td id="Waist_slots">&nbsp;</td>
+      <td id="Waist_skills">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><label for="Legs">Legs:</label></td>
+      <td><input id="Legs" type="text" size="15" /></td>
+      <td id="Legs_slots">&nbsp;</td>
+      <td id="Legs_skills">&nbsp;</td>
+    </tr>
+    <tr>
+      <th>&nbsp;</th>
+      <td>&nbsp;</td>
+      <td id="Total_slots">0</td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+  <div id="flexbox">
+    <fieldset>
+      <legend>Skills</legend>
+      <div id="skills_div"></div>
+    </fieldset>
+    <fieldset>
+      <legend>Elemental Resistance</legend>
+      <div id="resist_div"></div>
+    </fieldset>
+  </div>
+</body>
+</body>
