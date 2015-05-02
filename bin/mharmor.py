@@ -24,6 +24,8 @@ def parse_args(argv):
                         help="Only include armors with min defense")
     parser.add_argument("-t", "--type",
                         help="Head, Body, Arms, Waist, or Legs")
+    parser.add_argument("-r", "--resist",
+                        help="fire, water, thunder, ice, or dragon. Show and use as secondary sort key instead of defense")
     parser.add_argument("skills", nargs="+",
                         help="One or more armor skills to search for")
 
@@ -76,7 +78,13 @@ def find_armors(args):
             total += a.skill(sid, dv)
         skill_totals[a.id] = total
 
-    armors.sort(key=lambda a: (skill_totals[a.id], a.defense), reverse=True)
+    def sort_key(a):
+        if args.resist:
+            return (skill_totals[a.id], a[args.resist + "_res"], a.defense)
+        else:
+            return (skill_totals[a.id], a.defense)
+
+    armors.sort(key=sort_key, reverse=True)
 
     for a in armors:
         if args.min_defense and a.defense < args.min_defense:
@@ -84,7 +92,11 @@ def find_armors(args):
         if args.type and a.slot != args.type:
             continue
         total = skill_totals[a.id]
-        print a.id, skill_totals[a.id], a.one_line_u()
+        print a.id, skill_totals[a.id], a.one_line_u(),
+        if args.resist:
+            print args.resist.title(), a[args.resist + "_res"]
+        else:
+            print
         print "  ", a.one_line_skills_u(args.skills)
 
 
