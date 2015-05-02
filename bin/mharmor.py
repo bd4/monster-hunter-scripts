@@ -23,9 +23,13 @@ def parse_args(argv):
     parser.add_argument("-d", "--min-defense", type=int,
                         help="Only include armors with min defense")
     parser.add_argument("-t", "--type",
-                        help="Head, Body, Arms, Waist, or Legs")
+                        help="Head, Body, Arms, Waist, or Legs",
+                        type=str_title)
     parser.add_argument("-r", "--resist",
-                        help="fire, water, thunder, ice, or dragon. Show and use as secondary sort key instead of defense")
+                        help="fire, water, thunder, ice, or dragon."
+                             " Show and use as secondary sort key instead of"
+                             " defense",
+                        type=str_lower)
     parser.add_argument("skills", nargs="+",
                         help="One or more armor skills to search for")
 
@@ -39,6 +43,10 @@ def find_armors(args):
     skill_ids = [] # preserve arg order
     decorations = {}
     for skill_name in args.skills:
+        # TODO: handle common mispellings. Some skills like FreeElemnt
+        # can't simply be title'd, but lower().title() could be a useful
+        # first pass. Another option would be to slirp in the full list
+        # and use difflib to search it.
         sid = db.get_skill_tree_id(skill_name)
         if sid is None:
             raise ValueError("Skill '%s' not found" % skill_name)
@@ -98,6 +106,14 @@ def find_armors(args):
         else:
             print
         print "  ", a.one_line_skills_u(args.skills)
+
+
+def str_lower(x):
+    return str(x).lower()
+
+
+def str_title(x):
+    return str(x).title()
 
 
 if __name__ == '__main__':
