@@ -21,7 +21,7 @@ if __name__ == '__main__':
         print("Usage: %s 'item name'" % sys.argv[0])
         sys.exit(os.EX_USAGE)
 
-    item_name = sys.argv[1]
+    item_name = " ".join(sys.argv[1].lower().split()).title()
 
     out = get_utf8_writer(sys.stdout)
     err_out = get_utf8_writer(sys.stderr)
