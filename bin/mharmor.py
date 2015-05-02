@@ -2,7 +2,7 @@
 
 import sys
 import argparse
-import codecs
+import difflib
 
 import _pathfix
 
@@ -31,7 +31,8 @@ def parse_args(argv):
                              " defense",
                         type=str_lower)
     parser.add_argument("skills", nargs="+",
-                        help="One or more armor skills to search for")
+                        help="One or more armor skills to search for",
+                        type=canonical_skill_name)
 
     return parser.parse_args(argv)
 
@@ -42,12 +43,24 @@ def find_armors(args):
     skills = {}
     skill_ids = [] # preserve arg order
     decorations = {}
-    for skill_name in args.skills:
-        # TODO: handle common mispellings. Some skills like FreeElemnt
-        # can't simply be title'd, but lower().title() could be a useful
-        # first pass. Another option would be to slirp in the full list
-        # and use difflib to search it.
-        sid = db.get_skill_tree_id(skill_name)
+
+    skill_tree_names = []
+    skill_tree_id_map = {}
+    skill_trees = db.get_skill_trees()
+    for tree in skill_trees:
+        skill_tree_names.append(tree.name)
+        skill_tree_id_map[tree.name] = tree.id
+
+    for i, skill_name in enumerate(args.skills):
+        sid = skill_tree_id_map.get(skill_name)
+        if sid is None:
+            matches = difflib.get_close_matches(skill_name, skill_tree_names,
+                                                1, 0.5)
+            if matches:
+                print "Fuzzy Match:", matches[0]
+                sid = skill_tree_id_map.get(matches[0])
+                skill_name = matches[0]
+                args.skills[i] = skill_name
         if sid is None:
             raise ValueError("Skill '%s' not found" % skill_name)
         skills[skill_name] = sid
@@ -114,6 +127,33 @@ def str_lower(x):
 
 def str_title(x):
     return str(x).title()
+
+
+_SKILL_NAME_SPECIAL = dict(
+    steadyhand="SteadyHand",
+    freeelemnt="FreeElemnt",
+    punishdraw="PunishDraw",
+    fastcharge="FastCharge",
+    ko="KO",
+    lastingpwr="LastingPwr",
+    thunderatk="ThunderAtk",
+    thunderres="ThunderRes",
+    teamplayer="TeamPlayer",
+    teamleader="TeamLeader",
+    speedsetup="SpeedSetup",
+    critelemnt="CritElement",
+    critstatus="CritStatus",
+    lighteater="LightEater",
+    powereater="PowerEater"
+)
+
+def canonical_skill_name(skill_name):
+    skill_name_lc = skill_name.lower()
+    skill_name_lc_nospace = "".join(skill_name_lc.split(" "))
+    if skill_name_lc_nospace in _SKILL_NAME_SPECIAL:
+        return _SKILL_NAME_SPECIAL[skill_name_lc_nospace]
+    else:
+        return skill_name_lc.title()
 
 
 if __name__ == '__main__':
