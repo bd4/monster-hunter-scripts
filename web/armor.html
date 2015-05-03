@@ -289,7 +289,9 @@
     function save_armors() {
         var armor_names = {};
         $.each(armors, function(type, armor) {
-            armor_names[type] = armor["name"];
+            if (armor && armor["name"]) {
+                armor_names[type] = armor["name"];
+            }
         });
         localStorage.setItem("armor_names", JSON.stringify(armor_names));
     }
@@ -462,7 +464,7 @@
         log("set_armor " + type + " " + name);
         if (name.length == 0) {
             _reset_slots(type, 0);
-            armors[type] = null;
+            delete armors[type];
             $("#" + type + "_skills").html("");
             if (nodisplay == undefined) {
                 save_armors();
@@ -574,7 +576,7 @@
         $.each(GEAR, function(i, type) {
             armor = armors[type];
             if (armor == undefined) {
-                armor = { "skills": [] };
+                armor = { "skills": [], "num_slots": 0 };
             }
             if (decorations[type] == undefined) {
                 decorations[type] = [];
@@ -624,7 +626,7 @@
                 $("#" + type + "_" + element).html(armor[key]);
             })
             slots += armor["num_slots"];
-            slots_free += slots_left[type];
+            slots_free += slots_left[type] || 0;
             //$("#" + type + "_slots").html(armor["num_slots"]);
         });
         $("#Total_slots").html((slots - slots_free)
