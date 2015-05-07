@@ -92,7 +92,7 @@
         for (i=1; i<3; i++) {
             $("#Talisman_skill" + i).on("autocompletechange", { "num": i },
                 function(evt) {
-                    set_talisman_skill(evt.data["num"], $(evt.target).val(), 1);
+                    set_talisman_skill(evt.data["num"], $(evt.target).val(), 5);
                 });
             $("#Talisman_points" + i).on("change", { "num": i },
                 function(evt) {
@@ -526,6 +526,7 @@
         if (nodisplay == undefined) {
             save_talisman_skills();
             display_talisman();
+            display_skills();
         }
     }
 
