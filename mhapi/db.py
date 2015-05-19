@@ -290,20 +290,31 @@ class MHDB(object):
             LEFT JOIN items ON weapons._id = items._id
         """, model_cls=model.Weapon)
 
-    def get_weapon(self, weapon_id):
-        return self._query_one("weapon", """
+    def _add_components(self, item_data):
+        ccomps = self.get_item_components(item_data.id, "Create")
+        ucomps = self.get_item_components(item_data.id, "Improve")
+        item_data.set_components(ccomps, ucomps)
+
+    def get_weapon(self, weapon_id, get_components=False):
+        weapon = self._query_one("weapon", """
             SELECT * FROM weapons
             LEFT JOIN items ON weapons._id = items._id
             WHERE weapons._id=?
         """, (weapon_id,), model_cls=model.Weapon)
+        if weapon and get_components:
+            self._add_components(weapon)
+        return weapon
 
-    def get_weapon_by_name(self, name):
-        return self._query_one("weapon", """
+    def get_weapon_by_name(self, name, get_components=False):
+        weapon = self._query_one("weapon", """
             SELECT items._id, items.name, items.buy, weapons.*
             FROM weapons
             LEFT JOIN items ON weapons._id = items._id
             WHERE items.name=?
         """, (name,), model_cls=model.Weapon)
+        if weapon and get_components:
+            self._add_components(weapon)
+        return weapon
 
     def get_armors(self):
         return self._query_all("armors", """
@@ -427,3 +438,13 @@ class MHDB(object):
             WHERE monster_id=?
             AND (condition LIKE 'Break %' OR condition = 'Tail Carve')
         """, (monster_id,), model_cls=model)
+
+    def get_item_components(self, item_id, method="Create"):
+        return self._query_all("item_components", """
+            SELECT items._id, items.name, items.type,
+                   components.quantity, components.type AS method
+            FROM components
+            LEFT JOIN items
+              ON items._id = components.component_item_id
+            WHERE created_item_id=? AND components.type=?
+        """, (item_id, method), model_cls=model.ItemComponent)

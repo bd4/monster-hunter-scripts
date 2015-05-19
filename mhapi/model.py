@@ -152,13 +152,14 @@ class SharpnessLevel(EnumBase):
         PURPLE: "Purple",
     }
 
+    # source: http://kiranico.com/en/mh4u/wiki/weapons
     _modifier = {
         RED:    (0.50, 0.25),
         ORANGE: (0.75, 0.50),
         YELLOW: (1.00, 0.75),
-        GREEN:  (1.05, 1.00),
-        BLUE:   (1.20, 1.06),
-        WHITE:  (1.32, 1.12),
+        GREEN:  (1.125, 1.00),
+        BLUE:   (1.25, 1.0625),
+        WHITE:  (1.32, 1.125),
         PURPLE: (1.44, 1.20),
     }
 
@@ -303,13 +304,19 @@ class SkillTree(RowModel):
 
 class Weapon(RowModel):
     _list_fields = ["id", "wtype", "name"]
-    _indexes = { "name": ["id"],
+    _indexes = { "name": "id",
                  "wtype": ["id", "name"] }
 
     def __init__(self, weapon_item_row):
         super(Weapon, self).__init__(weapon_item_row)
 
         self._parse_sharpness()
+        self.create_components = []
+        self.upgrade_components = []
+
+    def set_components(self, create_components, upgrade_components):
+        self.create_components = create_components
+        self.upgrade_components = upgrade_components
 
     def _parse_sharpness(self):
         """
@@ -327,6 +334,17 @@ class Weapon(RowModel):
         self._data["sharpness"] = WeaponSharpness(normal)
         self._data["sharpness_plus"] = WeaponSharpness(plus)
 
+    def as_data(self):
+        data = super(Weapon, self).as_data()
+        if self.create_components is not None:
+            data["create_components"] = dict((item.name, item.quantity)
+                                             for item in self.create_components)
+        if self.upgrade_components is not None:
+            data["upgrade_components"] = dict((item.name, item.quantity)
+                                         for item in self.upgrade_components)
+        return data
+
+
 
 class Monster(RowModel):
     _list_fields = ["id", "class", "name"]
@@ -336,6 +354,12 @@ class Item(RowModel):
     _list_fields = ["id", "type", "name"]
     _indexes = { "name": ["id"],
                  "type": ["id", "name"] }
+
+
+class ItemComponent(RowModel):
+    _list_fields = ["id", "name"]
+    _indexes = { "method": ["id", "name"] }
+
 
 
 class Location(RowModel):

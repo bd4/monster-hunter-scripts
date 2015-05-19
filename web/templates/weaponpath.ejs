@@ -1,0 +1,23 @@
+<fieldset>
+<legend title="<%= path_string %>"
+    ><%= path[0]["name"] %> (<%= path.length %>)</legend>
+<table>
+  <tr>
+    <td colspan="2"><%= zenny %>z</td>
+  </tr>
+<% for(var i=0; i<all_components.length; i++) { %>
+  <tr>
+  <% if (all_components[i] in components) { %>
+    <td class="<%= delta[all_components[i]] < 0 ? 'plus' :
+                   delta[all_components[i]] > 0 ? 'minus' :
+                   'neutral' %>"
+        ><%= all_components[i] %></td>
+    <td class="num"><%= components[all_components[i]] %></td>
+  <% } else { %>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  <% } %>
+  </tr>
+<% } %>
+</table>
+</fieldset>

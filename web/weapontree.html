@@ -1,0 +1,124 @@
+<html>
+<head>
+  <title>Poogie's Weapon Tree</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+  <script type="text/javascript" src="js/ejs_production.js"></script>
+
+  <style>
+      label {
+          font-weight: bold;
+      }
+
+      body {
+          font-family: sans, sans-serif;
+      }
+
+      td.plus {
+          background-color: LightCyan;
+      }
+
+      td.minus {
+          background-color: LightPink;
+      }
+
+      td.num {
+          text-align: right;
+      }
+
+      /*@media (max-width: 600) {*/
+      .flexbox {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+      }
+
+  </style>
+
+  <script type="text/javascript">
+    var DATA_PATH = get_base_path() + "/jsonapi/";
+
+    var WEAPON_NAME_IDX = {};
+
+    var template_path = new EJS({ url: "templates/weaponpath.ejs" });
+
+    $(document).ready(function(){
+        $.getJSON(DATA_PATH + "weapon/_index_name.json",
+                  function(data) {
+                      WEAPON_NAME_IDX = data;
+                      setup_autocomplete();
+                  });
+    });
+
+    function get_base_path() {
+        var path = document.location.pathname;
+        return path.substring(0, path.lastIndexOf('/'));
+    }
+
+    function setup_autocomplete() {
+        $("#weapon").autocomplete(
+          { source: Object.keys(WEAPON_NAME_IDX),
+            change: function (event, ui) {
+                show_trees(ui.item["value"]);
+            }
+          }
+        );
+        $("#weapon").keypress(function(e) {
+           if (e.which == 13) {
+               show_trees($("#weapon").val());
+           }
+        });
+    }
+
+    function show_trees(weapon_name) {
+        weapon_id = WEAPON_NAME_IDX[weapon_name][0];
+        $("#results").html("");
+        $.getJSON(DATA_PATH + "weapon/" + weapon_id + "_tree.json",
+                  function(data) {
+                      all_components = Object.keys(
+                                        data[data.length-1]["components"]);
+                      all_components.sort();
+                      for (i=0; i<data.length; i++) {
+                          delta = {};
+                          path = data[i];
+                          components = path["components"]
+                          path["path_string"] = "";
+                          for (j=0; j<path["path"].length; j++) {
+                              if (j != 0) {
+                                  path["path_string"] += " -> ";
+                              }
+                              path["path_string"] += path["path"][j]["name"];
+                          }
+                          path["all_components"] = all_components;
+                          path["component_list"] = Object.keys(components);
+                          if (i > 0) {
+                              prev_comps = data[i-1]["components"];
+                              $.each(components, function(name, quantity) {
+                                   if (name in prev_comps) {
+                                       delta[name] = components[name]
+                                                     - prev_comps[name];
+                                   }
+                              });
+                          }
+                          path["delta"] = delta;
+                          path["component_list"].sort();
+                          var html = template_path.render(path);
+                          $("#results").append(html);
+                      }
+                  });
+    }
+  </script>
+</head>
+<body>
+<div>
+  <label for="weapon">Weapon:</label>
+  <input id="weapon" type="text" size="20" />
+  <button id="search">Ask Poogie</button>
+</div>
+<div id="results" class="flexbox"></div>
+</body>
+</body>
