@@ -7,7 +7,6 @@ from __future__ import print_function
 from collections import OrderedDict
 
 from mhapi import stats
-from mhapi.model import Quest
 from mhapi.skills import LuckSkill, CapSkill, CarvingSkill
 
 SKILL_CARVING = "carving"
@@ -315,56 +314,25 @@ class HuntReward(object):
         return d
 
     def _calculate_evs(self):
+        counts = [self.stack_size]
         if self.condition == "Tail Carve":
             self.skill = SKILL_CARVING
             self.cap = True
             self.kill = True
-            counts = [
-                1 + stats.carve_delta_expected_c(skill)
-                for skill in xrange(CarvingSkill.PRO,
-                                    CarvingSkill.GOD+1)
-            ]
         elif self.condition == "Body Carve (Apparent Death)":
-            # Gypceros fake death. Assume one carve, it's dangerous to try
-            # for two.
-            counts = [1]
+            # Gypceros fake death
             self.cap = True
             self.kill = True
-        elif self.condition == "Body Carve":
-            # TODO: some monsters have 4 body carves
+        elif "Body Carve" in self.condition:
             self.skill = SKILL_CARVING
             self.cap = False
             self.kill = True
-            counts = [
-                3 + stats.carve_delta_expected_c(skill)
-                for skill in xrange(CarvingSkill.PRO,
-                                    CarvingSkill.GOD+1)
-            ]
-        elif self.condition.startswith("Body Carve (KO"):
-            # Kelbi
-            self.skill = SKILL_CARVING
-            self.cap = True
-            self.kill = True
-            counts = [
-                1 + stats.carve_delta_expected_c(skill)
-                for skill in xrange(CarvingSkill.PRO,
-                                    CarvingSkill.GOD+1)
-            ]
         elif "Carve" in self.condition:
+            # other live carves:
             # Mouth Carve: Dah'ren Mohran
-            # Upper Body Carve: Dalamadur
-            # Lower Body Carve: Dalamadur
             # Head Carve: Dalamadur
-            # TODO: separate these out, some have >3 carves, not sure
-            # about others
-            self.skill = SKILL_CARVING
-            self.cap = False
+            self.cap = True
             self.kill = True
-            counts = [
-                3 + stats.carve_delta_expected_c(skill)
-                for skill in xrange(CarvingSkill.PRO,
-                                    CarvingSkill.GOD+1)
-            ]
         elif self.condition == "Capture":
             self.skill = SKILL_CAP
             self.cap = True
@@ -383,9 +351,7 @@ class HuntReward(object):
             # give more rewards or just higher rarity crystals?
             self.cap = True
             self.kill = True
-            counts = [1]
         else:
-            counts = [1]
             if self.condition.startswith("Shiny"):
                 # don't include shiny in total, makes it easier to
                 # calculate separately since shinys are variable by
@@ -406,7 +372,15 @@ class HuntReward(object):
                 raise ValueError("Unknown condition: '%s'"
                                  % self.condition)
 
-        evs = [(i *  self.stack_size * self.percentage) for i in counts]
+        if self.skill == SKILL_CARVING:
+            counts = [
+                self.stack_size + stats.carve_delta_expected_c(skill)
+                for skill in xrange(CarvingSkill.NONE,
+                                    CarvingSkill.GOD+1)
+            ]
+
+        evs = [(i *  self.percentage) for i in counts]
+
         return evs
 
 

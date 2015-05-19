@@ -1,0 +1,74 @@
+[
+{
+  "carves": {
+    "Body Carve": 4,
+    "Tail Carve": 2
+  },
+  "monsters": [
+    "Gravios", "Apex Gravios", "Black Gravios",
+    "Deviljho", "Apex Deviljho", "Savage Deviljho",
+    "Akantor", "Ukanlos",
+    "Monoblos", "White Monoblos"
+  ]
+},
+{
+  "carves": {
+    "Body Carve": 4,
+    "Tail Carve": 1
+  },
+  "monsters": [
+    "Teostra", "Chameleos", "Raging Brachydios",
+    "Kushala Daora", "Rusted Kushala Daora"
+  ]
+},
+{
+  "monsters": ["Dah'ren Mohran"],
+  "carves": {
+    "Body Carve": 8,
+    "Mouth Carve": 2
+  }
+},
+{
+  "monsters": ["Dalamadur", "Shah Dalamadur"],
+  "carves": {
+    "Upper Body Carve": 4,
+    "Lower Body Carve": 4,
+    "Head Carve": 2,
+    "Tail Carve": 1
+  }
+},
+{
+  "monsters": ["Gogmazios"],
+  "carves": {
+    "Body Carve": 6,
+    "Tail Carve": 2
+  }
+},
+{
+  "monsters": ["Fatalis", "Crimson Fatalis", "White Fatalis"],
+  "carves": {
+    "Body Carve": 9
+  }
+},
+{
+  "carves": {
+    "Body Carve": 2
+  },
+  "monsters": ["Aptonoth", "Apceros", "Popo", "Rhenoplos", "Slagtoth",
+               "Jaggia"]
+},
+{
+  "monsters": ["Kelbi"],
+  "carves": {
+    "Body Carve": 1,
+    "Body Carve (KO)": 1,
+    "Body Carve (KO Large Kelbi)": 1
+  }
+},
+{
+  "monsters": ["Gypceros", "Purple Gypceros"],
+  "carves": {
+    "Body Carve (Apparent Death)": 1
+  }
+}
+]
