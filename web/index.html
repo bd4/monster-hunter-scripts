@@ -1,65 +1,74 @@
 <html>
 <head>
-  <title>Monster Hunter Item Search</title>
+  <title>Poogie's Toolbox</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 
-  <style>
-      .flex {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-      }
+  <script src="js/common.js"></script>
 
+  <script type="text/javascript">
+      $(document).ready(function(){
+          setup_item_autocomplete("#item");
+          setup_weapon_autocomplete("#weapon_type", "#weapon");
+      });
+  </script>
+
+  <style>
       label {
           font-weight: bold;
           font-family: sans, sans-serif;
       }
-
-      #output { flex: 99 1 auto; }
   </style>
-
-  <script type="text/javascript">
-      $(document).ready(function(){
-          $("#search").click(update_search);
-          $("#item").keypress(function(e) {
-              if (e.which == 13) { update_search(); }
-          });
-          setup_autocomplete();
-      });
-
-      function setup_autocomplete() {
-          $.getJSON("/mhapi/item_name_list",
-                    function(data) {
-                        $("#item").autocomplete({ source: data });
-                    });
-      }
-
-      function update_search() {
-          var item_name = $.trim($("#item").val());
-
-          $.get("/mhapi/rewards",
-                { "item_name": item_name },
-                function(data) {
-                    $("#output").text(data);
-                });
-      }
-  </script>
 </head>
 <body>
-<div class="flex">
-  <div>
-    <label for="item">Item:</label>
-    <input id="item" type="text" size="20" />
-    <button id="search">Ask Poogie</button>
-    <a href="https://github.com/bd4/monster-hunter-scripts/blob/master/RECOMMENDATIONS.adoc">Understanding Results</a> 
-    (<a href="https://github.com/bd4/monster-hunter-scripts">source</a>)
-  </div>
-  <br />
-  <textarea readonly="true" rows="10" cols="80" id="output"></textarea>
-</div>
+<form action="recommends.html" method="GET">
+ <fieldset>
+  <legend title="Find the best quests and armor skills for farming an item."
+        >Poogie Recommends</legend>
+  <label for="item">Item:</label>
+  <input id="item" name="item" type="text" size="20" />
+  <input type="submit" value="Ask Poogie" />
+  <p></p>
+ </fieldset>
+</form>
+<form action="weaponplanner.html" method="GET">
+ <fieldset>
+  <legend title="Compare the cost of making a weapon from different starting points in the tree"
+    >Poogie's Weapon Planner</legend>
+  <table>
+  <tr>
+    <td><label for="type">Type:</label></td>
+    <td><select id="weapon_type" name="weapon_type">
+        <option value="All">All</option>
+        <option value="Great Sword">Great Sword</option>
+        <option value="Long Sword">Long Sword</option>
+        <option value="Sword and Shield">Sword and Shield</option>
+        <option value="Dual Blades">Dual Blades</option>
+        <option value="Hammer">Hammer</option>
+        <option value="Hunting Horn">Hunting Horn</option>
+        <option value="Lance">Lance</option>
+        <option value="Gunlance">Gunlance</option>
+        <option value="Switch Axe">Switch Axe</option>
+        <option value="Charge Blade">Charge Blade</option>
+        <option value="Insect Glaive">Insect Glaive</option>
+        <option value="Light Bowgun">Light Bowgun</option>
+        <option value="Heavy Bowgun">Heavy Bowgun</option>
+        <option value="Bow">Bow</option>
+    </select></td>
+  </tr>
+  <tr>
+    <td><label for="weapon">Weapon:</label></td>
+    <td><input id="weapon" name="weapon" weapon="text" size="20" />
+    <input type="submit" value="Ask Poogie" /></td>
+  </tr>
+  </table>
+ </fieldset>
+</form>
+ <fieldset>
+  <legend title="Plan armor sets">Poogie Outfitters</legend>
+  <a href="outfitters.html">Armor set planner</a>
+ </fieldset>
 </body>

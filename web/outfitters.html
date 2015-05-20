@@ -9,6 +9,8 @@
 
   <script type="text/javascript" src="js/ejs_production.js"></script>
 
+  <script src="js/common.js"></script>
+
   <style>
       label {
           font-weight: bold;
@@ -307,11 +309,6 @@
         var svalue = JSON.stringify(decoration_name_lists);
         log("save decorations " + svalue);
         localStorage.setItem("decoration_name_lists", svalue);
-    }
-
-    function get_base_path() {
-        var path = document.location.pathname;
-        return path.substring(0, path.lastIndexOf('/'));
     }
 
     function setup_autocomplete() {

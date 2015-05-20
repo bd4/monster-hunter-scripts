@@ -284,11 +284,15 @@ class MHDB(object):
             WHERE monster_id=?
         """, (monster_id,), collection_cls=model.MonsterDamage)
 
-    def get_weapons(self):
-        return self._query_all("weapons", """
+    def get_weapons(self, get_components=False):
+        results = self._query_all("weapons", """
             SELECT * FROM weapons
             LEFT JOIN items ON weapons._id = items._id
         """, model_cls=model.Weapon)
+        if results and get_components:
+            for r in results:
+                self._add_components(r)
+        return results
 
     def _add_components(self, item_data):
         ccomps = self.get_item_components(item_data.id, "Create")

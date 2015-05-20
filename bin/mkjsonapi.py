@@ -139,7 +139,7 @@ def skilltree_json(db, path):
 
 
 def weapon_json(db, path):
-    weapons = db.get_weapons()
+    weapons = db.get_weapons(get_components=True)
     mkdirs_p(path)
     write_list_file(path, weapons)
 
@@ -149,6 +149,14 @@ def weapon_json(db, path):
         w.update_indexes(indexes)
         with open(weapon_path, "w") as f:
             w.json_dump(f)
+
+        tree_path = os.path.join(path, "%s_tree.json" % w.id)
+        costs = model.get_costs(db, w)
+        for cost in costs:
+            cost["path"] = [dict(name=w.name, id=w.id)
+                            for w in cost["path"]]
+        with open(tree_path, "w") as f:
+            json.dump(costs, f, cls=model.ModelJSONEncoder, indent=2)
 
     write_index_file(path, indexes)
 
@@ -176,12 +184,15 @@ def main():
     else:
         outpath = os.path.join(_pathfix.web_path, "jsonapi")
 
-    items_json(db, os.path.join(outpath, "item"))
     weapon_json(db, os.path.join(outpath, "weapon"))
+    sys.exit(0)
+
+    items_json(db, os.path.join(outpath, "item"))
     monster_json(db, os.path.join(outpath, "monster"))
     armor_json(db, os.path.join(outpath, "armor"))
     skilltree_json(db, os.path.join(outpath, "skilltree"))
     decoration_json(db, os.path.join(outpath, "decoration"))
+
     #quest_json(db, os.path.join(outpath, "quest"))
 
 

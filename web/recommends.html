@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 
+  <script src="js/common.js"></script>
+
   <style>
       .flex {
           width: 100%;
@@ -31,41 +33,13 @@
           $("#item").keypress(function(e) {
               if (e.which == 13) { update_search(); }
           });
-          setup_autocomplete();
-      });
-
-      function encode_utf8(s) {
-          return unescape(encodeURIComponent(s));
-      }
-
-      function get_base_path() {
-          var path = document.location.pathname;
-          return path.substring(0, path.lastIndexOf('/'));
-      }
-
-      function normalize_name(s) {
-          var chars = s.split("");
-          var cap_next = true;
-          var i;
-          for (i=0; i<chars.length; i++) {
-              if (cap_next) {
-                  chars[i] = chars[i].toUpperCase();
-                  cap_next = false;
-              } else if (chars[i] == "." || chars[i] == " " || chars[i] == "-") {
-                  cap_next = true;
-              } else {
-                  chars[i] = chars[i].toLowerCase();
-              }
+          setup_item_autocomplete("#item");
+          var item_name = $.QueryString["item"];
+          if (item_name) {
+              $("#item").val(item_name);
+              update_search();
           }
-          return chars.join("");
-      }
-
-      function setup_autocomplete() {
-          $.getJSON(DATA_PATH + "items.json",
-                    function(data) {
-                        $("#item").autocomplete({ source: data });
-                    });
-      }
+      });
 
       function update_search() {
           var item_name = $.trim($("#item").val());

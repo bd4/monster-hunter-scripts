@@ -507,3 +507,59 @@ def _break_find(part, parts, breaks):
     if matches:
         return matches[0]
     return None
+
+
+def get_costs(db, weapon):
+    """
+    Get a list of alternative ways of making a weapon, as a list of dicts
+    containing item counts. The dicts also contain special keys _zenny
+    for the total zenny needed, and _path for a list of weapons that
+    make up the upgrade path.
+    """
+    costs = []
+    if weapon.parent_id:
+        if not weapon.upgrade_cost:
+            # db has errors where upgrade cost is listed as create
+            # cost and components are listed under create. Assume
+            # parent_id is correct, and they are upgrade only.
+            if not weapon.upgrade_components and weapon.create_components:
+                weapon.upgrade_components = weapon.create_components
+                weapon.create_components = []
+            weapon.upgrade_cost = weapon.creation_cost
+            weapon.creation_cost = 0
+        try:
+            upgrade_cost = int(weapon.upgrade_cost)
+        except ValueError:
+            upgrade_cost = 0
+            print "WARN: bad upgrade cost for '%s' (%s): '%s'" \
+                  % (weapon.name, weapon.id, weapon.upgrade_cost)
+        except UnicodeError:
+            upgrade_cost = 0
+            cost_display = urllib.quote(weapon.upgrade_cost)
+            print "WARN: bad upgrade cost for '%s' (%s): '%s'" \
+                % (weapon.name, weapon.id, cost_display)
+        parent_weapon = db.get_weapon(weapon.parent_id, True)
+        costs = get_costs(db, parent_weapon)
+        for cost in costs:
+            cost["zenny"] += upgrade_cost
+            cost["path"] += [weapon]
+            for item in weapon.upgrade_components:
+                if item.type == "Weapon":
+                    continue
+                if item.name not in cost["components"]:
+                    cost["components"][item.name] = 0
+                cost["components"][item.name] += item.quantity
+    if weapon.create_components:
+        try:
+            zenny = int(weapon.creation_cost)
+        except ValueError:
+            print "WARN: bad creation cost for '%s': '%s'" \
+                % (weapon.name, weapon.creation_cost)
+            zenny = weapon.upgrade_cost or 0
+        create_cost = dict(zenny=zenny,
+                           path=[weapon],
+                           components={})
+        for item in weapon.create_components:
+            create_cost["components"][item.name] = item.quantity
+        costs = [create_cost] + costs
+    return costs

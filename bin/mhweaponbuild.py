@@ -7,7 +7,7 @@ import json
 import _pathfix
 
 from mhapi.db import MHDB
-from mhapi.model import ModelJSONEncoder
+from mhapi.model import ModelJSONEncoder, get_costs
 
 
 def parse_args(argv):
@@ -21,36 +21,6 @@ def parse_args(argv):
     parser.add_argument("weapon",
                         help="Full name of weapon")
     return parser.parse_args(argv)
-
-
-def get_costs(db, weapon):
-    """
-    Get a list of alternative ways of making a weapon, as a list of dicts
-    containing item counts. The dicts also contain special keys _zenny
-    for the total zenny needed, and _path for a list of weapons that
-    make up the upgrade path.
-    """
-    costs = []
-    if weapon.parent_id:
-        parent_weapon = db.get_weapon(weapon.parent_id, True)
-        costs = get_costs(db, parent_weapon)
-        for cost in costs:
-            for item in weapon.upgrade_components:
-                if item.type == "Weapon":
-                    continue
-                if item.name not in cost["components"]:
-                    cost["components"][item.name] = 0
-                cost["components"][item.name] += item.quantity
-            cost["zenny"] += weapon.upgrade_cost
-            cost["path"] += [weapon]
-    if weapon.creation_cost:
-        create_cost = dict(zenny=weapon.creation_cost,
-                           path=[weapon],
-                           components={})
-        for item in weapon.create_components:
-            create_cost["components"][item.name] = item.quantity
-        costs = [create_cost] + costs
-    return costs
 
 
 if __name__ == '__main__':
