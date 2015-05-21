@@ -572,7 +572,9 @@
         var slots_free = 0;
 
         $.each(GEAR, function(i, type) {
-            armor = armors[type];
+            var gear_decorations = {};
+            var armor_skills = {};
+            var armor = armors[type];
             if (armor == undefined) {
                 armor = { "skills": [], "num_slots": 0 };
             }
@@ -581,7 +583,19 @@
             }
             dskills_by_type[type] = {};
             tskills_by_type[type] = {};
-            $.each(armor["skills"], function(skill_name, skill_value) {
+            if (armor["skills"]["Torso Up"] == 1) {
+                if (armors["Body"]) {
+                    armor_skills = armors["Body"]["skills"];
+                    gear_decorations = decorations["Body"];
+                } else {
+                    armor_skills = {};
+                    gear_decorations = {};
+                }
+            } else {
+                armor_skills = armor["skills"];
+                gear_decorations = decorations[type];
+            }
+            $.each(armor_skills, function(skill_name, skill_value) {
                 if (! (skill_name in skills)) {
                     skills[skill_name] = 0;
                 }
@@ -592,7 +606,7 @@
                 }
                 tskills_by_type[type][skill_name] += skill_value;
             })
-            $.each(decorations[type], function(i, decoration) {
+            $.each(gear_decorations, function(i, decoration) {
                 $.each(decoration["skills"],
                     function(skill_name, skill_value) {
                         if (! (skill_name in skills)) {
