@@ -45,6 +45,9 @@
     // dict mapping skill name to object
     var skill_trees = {};
 
+    // dict mapping skill_tree_id to list of skill dicts, highest point first
+    var tree_skills = {};
+
     // dict mapping type to armor data, including dummy dict for Weapon and
     // Talisman (containing "num_slots" and "skills" dicts
     var armors = {
@@ -69,8 +72,13 @@
                       $.getJSON(DATA_PATH + "skilltree/_all.json",
                                 function(data) {
                                     skill_trees = data;
-                                    setup_talisman_autocomplete();
-                                    load_local_storage();
+                                    $.getJSON(DATA_PATH +
+                                              "skill/_index_skill_tree_id.json",
+                                              function(data) {
+                                                  tree_skills = data;
+                                                  setup_talisman_autocomplete();
+                                                  load_local_storage();
+                                              });
                                 });
                   });
         $("#armor_table").on("click", "button.add_decoration",
@@ -605,7 +613,7 @@
                     tskills_by_type[type][skill_name] = 0;
                 }
                 tskills_by_type[type][skill_name] += skill_value;
-            })
+            });
             $.each(gear_decorations, function(i, decoration) {
                 $.each(decoration["skills"],
                     function(skill_name, skill_value) {
@@ -625,7 +633,7 @@
                         tskills_by_type[type][skill_name] += skill_value;
                     }
                 );
-            })
+            });
             $.each(ELEMENTS, function(i, element) {
                 key = element + "_res";
                 if (armor[key] == undefined) {
@@ -636,7 +644,7 @@
                 }
                 element_resist[element] += armor[key];
                 $("#" + type + "_" + element).html(armor[key]);
-            })
+            });
             slots += armor["num_slots"];
             slots_free += slots_left[type] || 0;
             //$("#" + type + "_slots").html(armor["num_slots"]);
@@ -651,12 +659,34 @@
             return sb - sa;
         });
 
+        var active_skills = {}
+        $.each(skills, function(skill_name, total_points) {
+            var skill_tree_id = skill_trees[skill_name]["id"];
+            var current_tree_skills = tree_skills[skill_tree_id] || [];
+            for (i=0; i<current_tree_skills.length; i++) {
+                var skill = current_tree_skills[i];
+                required_points = skill["required_skill_tree_points"];
+                if (total_points > 0) {
+                    if (total_points >= required_points && required_points > 0) {
+                        active_skills[skill_name] = skill;
+                        break;
+                    }
+                } else if (total_points < 0) {
+                    if (total_points <= required_points && required_points < 0) {
+                        active_skills[skill_name] = skill;
+                        break;
+                    }
+                }
+            }
+        });
+
         var skills_table = template_skills.render(
                  { TYPES: GEAR,
                    skills: skills,
                    dskills_by_type: dskills_by_type,
                    tskills_by_type: tskills_by_type,
-                   active_skills: skill_names,
+                   skill_names: skill_names,
+                   active_skills: active_skills,
                    armors: armors });
         $("#skills_div").html(skills_table);
 

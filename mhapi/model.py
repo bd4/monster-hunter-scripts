@@ -302,6 +302,13 @@ class SkillTree(RowModel):
         return data
 
 
+class Skill(RowModel):
+    _list_fields = ["id", "name"]
+    _indexes = { "skill_tree_id":
+                 ["id", "required_skill_tree_points", "name", "description"] }
+
+
+
 class Weapon(RowModel):
     _list_fields = ["id", "wtype", "name"]
     _indexes = { "name": "id",

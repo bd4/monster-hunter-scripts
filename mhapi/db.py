@@ -379,7 +379,7 @@ class MHDB(object):
         """, (name,), model_cls=model.Decoration)
 
     def get_skill_trees(self):
-        return self._query_all("skills", """
+        return self._query_all("skill_trees", """
             SELECT _id, name FROM skill_trees
         """, model_cls=model.SkillTree)
 
@@ -391,6 +391,13 @@ class MHDB(object):
         if result:
             return result["_id"]
         return None
+
+    def get_skills(self):
+        return self._query_all("skills", """
+            SELECT _id, skill_tree_id, required_skill_tree_points,
+                   name, description
+            FROM skills
+        """, model_cls=model.Skill)
 
     def get_decorations_by_skills(self, skill_tree_ids):
         args = sorted(skill_tree_ids)

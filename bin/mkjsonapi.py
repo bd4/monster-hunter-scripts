@@ -119,6 +119,21 @@ def decoration_json(db, path):
     write_all_file(path, all_data)
 
 
+def skill_json(db, path):
+    skills = db.get_skills()
+    mkdirs_p(path)
+    write_list_file(path, skills)
+
+    indexes = {}
+    for s in skills:
+        s.update_indexes(indexes)
+        skill_path = file_path(path, s)
+        with open(skill_path, "w") as f:
+            s.json_dump(f)
+
+    write_index_file(path, indexes)
+
+
 def skilltree_json(db, path):
     skill_trees = db.get_skill_trees()
     mkdirs_p(path)
@@ -185,12 +200,11 @@ def main():
         outpath = os.path.join(_pathfix.web_path, "jsonapi")
 
     weapon_json(db, os.path.join(outpath, "weapon"))
-    sys.exit(0)
-
     items_json(db, os.path.join(outpath, "item"))
     monster_json(db, os.path.join(outpath, "monster"))
     armor_json(db, os.path.join(outpath, "armor"))
     skilltree_json(db, os.path.join(outpath, "skilltree"))
+    skill_json(db, os.path.join(outpath, "skill"))
     decoration_json(db, os.path.join(outpath, "decoration"))
 
     #quest_json(db, os.path.join(outpath, "quest"))
