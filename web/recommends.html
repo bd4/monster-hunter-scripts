@@ -36,21 +36,56 @@
           setup_item_autocomplete("#item");
           var item_name = $.QueryString["item"];
           if (item_name) {
-              $("#item").val(item_name);
-              update_search();
+              console.log("qs item: " + item_name);
+              if (history.state && history.state["item_name"]) {
+                  item_name = history.state["item_name"];
+                  console.log("override qs with state item: " + item_name);
+              }
+              var normalized_name = normalize_name(item_name);
+              var encoded_name = encodeURIComponent(normalized_name);
+              display_item(normalized_name);
+              console.log("replaceState: " + normalized_name);
+              window.history.replaceState({ "item_name": normalized_name }, "",
+                                          "/recommends.html?item="
+                                          + encoded_name );
           }
+          $(window).on("popstate", function(e) {
+              var oe = e.originalEvent;
+              if (oe.state !== null) {
+                  console.log("popState:" + JSON.stringify(oe.state));
+                  display_item(oe.state["item_name"]);
+              }
+          });
       });
 
       function update_search() {
+          // update the item search based on the text field, and also push
+          // the state to history
           var item_name = $.trim($("#item").val());
           var normalized_name = normalize_name(item_name);
+          if (window.history.state["item_name"] == normalized_name) {
+              console.log("item not changed, skipping update");
+              return;
+          }
+          var encoded_name = encodeURIComponent(normalized_name);
+          display_item(normalized_name);
+          console.log("pushState: " + normalized_name);
+          window.history.pushState({ "item_name": normalized_name }, "",
+                                   "/recommends.html?item=" + encoded_name );
+      }
 
-          $.get(DATA_PATH + encode_utf8(normalized_name) + ".txt",
+      function display_item(normalized_name) {
+          // display the exact item name if available; does not push state
+          $("#item").val(normalized_name);
+          var encoded_name = encodeURIComponent(normalized_name);
+
+          $.get(DATA_PATH + encoded_name + ".txt",
                 function(data) {
                     $("#output").text(data);
                 }).fail(
                 function() {
-                    $("#output").text("Error: item '" + normalized_name + "' not found");
+                    $("#output").text("Error: item '"
+                                      + normalized_name + "' not found");
                 });
       }
   </script>
