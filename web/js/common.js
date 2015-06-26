@@ -1,6 +1,39 @@
 WEAPON_NAME_IDX = {};
 WEAPON_TYPE_IDX = {};
 
+_ITEM_NAME_SPECIAL = {
+    "welldonesteak":	"Well-done Steak",
+    "lrgelderdragonbone":	"Lrg ElderDragon Bone",
+    "highqualitypelt":	"High-quality Pelt",
+    "kingsfrill":   	"King's Frill",
+    "btetsucabrahardclaw":	"B.TetsucabraHardclaw",
+    "heartstoppingbeak":	"Heart-stopping Beak",
+    "dsqueenconcentrate":	"D.S.QueenConcentrate",
+    "dahrenstone":  	"Dah'renstone",
+    "championsweapon":	"Champion's Weapon",
+    "championsarmor":	"Champion's Armor",
+    "popeyedgoldfish":	"Pop-eyed Goldfish",
+    "100mwantedposter":	"100m+ Wanted Poster",
+    "goddesssmelody":	"Goddess's Melody",
+    "goddesssembrace":	"Goddess's Embrace",
+    "capcommhspissue":	"Capcom MH Sp. Issue",
+    "goddesssfire": 	"Goddess's Fire",
+    "huntersticket":	"Hunter's Ticket",
+    "herosseal":    	"Hero's Seal",
+    "thetaleofpoogie":	"The Tale of Poogie",
+    "goddesssgrace":	"Goddess's Grace",
+    "conquerorsseal":	"Conqueror's Seal",
+    "conquerorssealg":	"Conqueror's Seal G",
+    "questersticket":	"Quester's Ticket",
+    "instructorsticket":"Instructor's Ticket",
+    "veticket":         "VE Ticket",
+    "vedeluxeticket":	"VE Deluxe Ticket",
+    "vebronzeticket":	"VE Bronze Ticket",
+    "vesilverticket":	"VE Silver Ticket",
+    "vegoldenticket":	"VE Golden Ticket",
+    "vecosmicticket":	"VE Cosmic Ticket"
+};
+
 (function($) {
     $.QueryString = (function(a) {
         if (a == "") return {};
@@ -17,31 +50,40 @@ WEAPON_TYPE_IDX = {};
 
 
 function encode_utf8(s) {
-  return unescape(encodeURIComponent(s));
+    return unescape(encodeURIComponent(s));
 }
 
 
 function get_base_path() {
-  var path = document.location.pathname;
-  return path.substring(0, path.lastIndexOf('/'));
+    var path = document.location.pathname;
+    return path.substring(0, path.lastIndexOf('/'));
+}
+
+
+function _item_name_key(s) {
+    return s.replace(RegExp("[ .'+-]","g"), '').toLowerCase();
 }
 
 
 function normalize_name(s) {
-  var chars = s.split("");
-  var cap_next = true;
-  var i;
-  for (i=0; i<chars.length; i++) {
-      if (cap_next) {
-          chars[i] = chars[i].toUpperCase();
-          cap_next = false;
-      } else if (chars[i] == "." || chars[i] == " " || chars[i] == "-") {
-          cap_next = true;
-      } else {
-          chars[i] = chars[i].toLowerCase();
-      }
-  }
-  return chars.join("");
+    var key = _item_name_key(s);
+    if (_ITEM_NAME_SPECIAL[key]) {
+        return _ITEM_NAME_SPECIAL[key];
+    }
+    var chars = s.split("");
+    var cap_next = true;
+    var i;
+    for (i=0; i<chars.length; i++) {
+        if (cap_next) {
+            chars[i] = chars[i].toUpperCase();
+            cap_next = false;
+        } else if (chars[i] == "." || chars[i] == " " || chars[i] == "-") {
+            cap_next = true;
+        } else {
+            chars[i] = chars[i].toLowerCase();
+        }
+    }
+    return chars.join("");
 }
 
 
