@@ -39,12 +39,56 @@
           flex-wrap: wrap;
       }
 
+      .sharpness-bar {
+            border: 1px #d3d3d3 solid;
+         min-width: 92px;
+                         height: 10px;
+            background-color: #d3d3d3;
+            float: left;
+            clear: both;
+        }
+
+        .sharpness-bar span {
+            display: inline-block;
+            height: 100%;
+            float: left;
+        }
+
+        .sharpness-bar .red {
+            background-color: #C00C38 !important;
+        }
+
+        .sharpness-bar .orange {
+            background-color: #E85018 !important;
+        }
+
+        .sharpness-bar .yellow {
+            background-color: #F0C830 !important;
+        }
+
+        .sharpness-bar .green {
+            background-color: #58D000 !important;
+        }
+
+        .sharpness-bar .blue {
+            background-color: #3068E8 !important;
+        }
+
+        .sharpness-bar .white {
+            background-color: #F0F0F0 !important;
+        }
+
+        .sharpness-bar .purple {
+            background-color: #c3c !important;
+        }
+
   </style>
 
   <script type="text/javascript">
     var DATA_PATH = get_base_path() + "/jsonapi/";
 
     var template_path = new EJS({ url: "templates/weaponpath.ejs" });
+    var template_stats = new EJS({ url: "templates/weaponstats.ejs" });
 
     $(document).ready(function(){
         setup_weapon_autocomplete("#weapon_type", "#weapon",
@@ -115,6 +159,13 @@
         console.log("show_trees(" + weapon_name + "): " + weapon_id);
         $("#weapon").val(weapon_name);
         $("#results").html("");
+        $("#weapon_stats").html("");
+        $.getJSON(DATA_PATH + "weapon/" + weapon_id + ".json",
+                  function(data) {
+                      var html = template_stats.render(data);
+                      $("#weapon_stats").html(html);
+                  });
+ 
         $.getJSON(DATA_PATH + "weapon/" + weapon_id + "_tree.json",
                   function(data) {
                       all_components = Object.keys(
@@ -181,6 +232,7 @@
   </tr>
   </table>
 </div>
+<div id="weapon_stats"></div>
 <div id="results" class="flexbox"></div>
 </body>
 </body>

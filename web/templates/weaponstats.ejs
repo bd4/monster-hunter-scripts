@@ -1,0 +1,35 @@
+<table>
+<tr>
+<td><%= attack %></td>
+<td>
+<% if (awaken) { %>
+  [<%= awaken_attack %> <%= awaken %>]
+<% } else if (element) { %>
+  (<%= element_attack %> <%= element %>
+  <% if (element_2) { %>
+    , <%= element_2_attack %> <%= element_2 %>
+  <% } %>)
+<% } %>
+</td>
+<td><%= Array(num_slots + 1).join("\u26aa") %></td>
+<td>
+<div class="sharpness-bar">
+<span style="width:<%= sharpness[0] %>px" class="red"></span>
+<span style="width:<%= sharpness[1] %>px" class="orange"></span>
+<span style="width:<%= sharpness[2] %>px" class="yellow"></span>
+<span style="width:<%= sharpness[3] %>px" class="green"></span>
+<span style="width:<%= sharpness[4] %>px" class="blue"></span>
+<span style="width:<%= sharpness[5] %>px" class="white"></span>
+<span style="width:<%= sharpness[6] %>px" class="purple"></span>
+</div>
+<div class="sharpness-bar">
+<span style="width:<%= sharpness_plus[0] %>px" class="red"></span>
+<span style="width:<%= sharpness_plus[1] %>px" class="orange"></span>
+<span style="width:<%= sharpness_plus[2] %>px" class="yellow"></span>
+<span style="width:<%= sharpness_plus[3] %>px" class="green"></span>
+<span style="width:<%= sharpness_plus[4] %>px" class="blue"></span>
+<span style="width:<%= sharpness_plus[5] %>px" class="white"></span>
+<span style="width:<%= sharpness_plus[6] %>px" class="purple"></span>
+</div>
+</td>
+</table>
