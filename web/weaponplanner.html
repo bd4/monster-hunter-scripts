@@ -165,9 +165,19 @@
  
         $.getJSON(DATA_PATH + "weapon/" + weapon_id + "_tree.json",
                   function(data) {
-                      all_components = Object.keys(
-                                        data[data.length-1]["components"]);
+                      // first pass: collect all components and sort them
+                      var all_dict = {};
+                      for (i=0; i<data.length; i++) {
+                          var components = Object.keys(data[i]["components"]);
+                          for (j=0; j<components.length; j++) {
+                              all_dict[components[j]] = 0;
+                          }
+                      }
+                      var all_components = Object.keys(all_dict);
                       all_components.sort();
+                      // second pass: generate the fieldset for each weapon
+                      //  path. Note that the template uses all components
+                      //  to order the components and make them line up
                       for (i=0; i<data.length; i++) {
                           delta = {};
                           path = data[i];
