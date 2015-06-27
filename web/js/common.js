@@ -54,6 +54,17 @@ function encode_utf8(s) {
 }
 
 
+function encode_qs(obj) {
+    var params = [];
+    for (var key in obj) {
+        if (!obj.hasOwnProperty(key)) continue;
+        params.push(encodeURIComponent(key) + "="
+                    + encodeURIComponent(obj[key]));
+    }
+    return params.join("&");
+}
+
+
 function get_base_path() {
     var path = document.location.pathname;
     return path.substring(0, path.lastIndexOf('/'));
@@ -137,6 +148,7 @@ function _setup_weapon_autocomplete(type, weapon_selector, change_fn) {
     $(weapon_selector).autocomplete(
       { source: source,
         change: function (event, ui) {
+            if (!ui.item) return;
             if (change_fn) {
                 change_fn(ui.item["value"]);
             }

@@ -48,23 +48,72 @@
 
     $(document).ready(function(){
         setup_weapon_autocomplete("#weapon_type", "#weapon",
-                                  load_qs, show_trees);
+                                  init_page, show_trees);
     });
+
+    function init_page() {
+        load_qs();
+        $("#search").click(update_search);
+        $("#weapon").keypress(function(e) {
+            if (e.which == 13) { update_search(); }
+        });
+        $(window).on("popstate", function(e) {
+            var oe = e.originalEvent;
+            if (oe.state !== null) {
+                console.log("popState:" + JSON.stringify(oe.state));
+                $("#weapon_type").val(oe.state["weapon_type"]);
+                $("#weapon_type").change();
+                show_trees(oe.state["weapon"]);
+            }
+        });
+    }
 
     function load_qs() {
         var wtype = $.QueryString["weapon_type"];
         var weapon = $.QueryString["weapon"];
-        if (wtype) {
-            $("#weapon_type").val(wtype);
+        if (!wtype) {
+            wtype = "All";
         }
+        $("#weapon_type").val(wtype);
+        $("#weapon_type").change();
         if (weapon) {
-            $("#weapon").val(weapon);
             show_trees(weapon);
+            console.log("replaceState: " + weapon);
+            set_state(wtype, weapon, true);
         }
     }
 
+    function set_state(weapon_type, weapon, replace) {
+        var state = { "weapon": weapon, "weapon_type": weapon_type };
+        var url = "/weaponplanner.html?" + encode_qs(state);
+        if (replace) {
+            window.history.replaceState(state, "", url);
+        } else {
+            window.history.pushState(state, "", url);
+        }
+    }
+
+    function update_search() {
+        var weapon_name = $("#weapon").val();
+        var wtype = $("#weapon_type").val();
+
+        if (!weapon_name) return;
+
+        if (window.history.state["weapon"] == weapon_name) {
+            console.log("weapon not changed, skipping update");
+            return;
+        }
+
+        show_trees(weapon_name);
+        console.log("pushState: " + weapon_name);
+        set_state(wtype, weapon_name, false);
+    }
+
     function show_trees(weapon_name) {
+        if (!weapon_name) return;
         weapon_id = WEAPON_NAME_IDX[weapon_name][0];
+        console.log("show_trees(" + weapon_name + "): " + weapon_id);
+        $("#weapon").val(weapon_name);
         $("#results").html("");
         $.getJSON(DATA_PATH + "weapon/" + weapon_id + "_tree.json",
                   function(data) {
@@ -128,7 +177,7 @@
   <tr>
     <td><label for="weapon">Weapon:</label></td>
     <td><input id="weapon" name="weapon" weapon="text" size="20" />
-    <input type="submit" value="Ask Poogie" /></td>
+    <button id="search">Ask Poogie</button></td>
   </tr>
   </table>
 </div>
