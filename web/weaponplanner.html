@@ -92,15 +92,12 @@
 
     $(document).ready(function(){
         setup_weapon_autocomplete("#weapon_type", "#weapon",
-                                  init_page, show_trees);
+                                  init_page, update_search);
     });
 
     function init_page() {
         load_qs();
         $("#search").click(update_search);
-        $("#weapon").keypress(function(e) {
-            if (e.which == 13) { update_search(); }
-        });
         $(window).on("popstate", function(e) {
             var oe = e.originalEvent;
             if (oe.state !== null) {

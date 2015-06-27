@@ -124,6 +124,7 @@ function setup_weapon_autocomplete(type_selector, weapon_selector, ready_fn,
                                                      weapon_selector,
                                                      change_fn);
                                 $(type_selector).change(function(evt) {
+                                    $(weapon_selector).val("");
                                     _setup_weapon_autocomplete(
                                                 $(type_selector).val(),
                                                 weapon_selector, change_fn);
@@ -149,15 +150,17 @@ function _setup_weapon_autocomplete(type, weapon_selector, change_fn) {
       { source: source,
         change: function (event, ui) {
             if (!ui.item) return;
+            console.log("weapon autocomplete change");
             if (change_fn) {
-                change_fn(ui.item["value"]);
+                change_fn();
             }
         }
       }
     );
     $(weapon_selector).keypress(function(e) {
        if (e.which == 13 && change_fn) {
-           change_fn($(weapon_selector).val());
+           console.log("weapon enter keypress");
+           change_fn();
        }
     });
 }
