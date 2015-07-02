@@ -184,13 +184,15 @@
                           delta = {};
                           path = data[i];
                           components = path["components"]
-                          path["path_string"] = "";
+                          path_string = "";
                           for (j=0; j<path["path"].length; j++) {
                               if (j != 0) {
-                                  path["path_string"] += " -> ";
+                                  path_string += " -&gt; ";
                               }
-                              path["path_string"] += path["path"][j]["name"];
+                              path_string += path["path"][j]["name"];
                           }
+                          path["path_string"] = path_string.replace(/"/g,
+                                                                    '&quot;');
                           path["all_components"] = all_components;
                           path["component_list"] = Object.keys(components);
                           if (i > 0) {
