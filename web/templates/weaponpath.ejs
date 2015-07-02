@@ -11,7 +11,9 @@
     <td class="<%= delta[all_components[i]] < 0 ? 'plus' :
                    delta[all_components[i]] > 0 ? 'minus' :
                    'neutral' %>"
-        ><%= all_components[i] %></td>
+        ><a href="recommends.html?item=<%=
+                    encodeURIComponent(all_components[i]) %>"
+           ><%= all_components[i] %></a></td>
     <td class="num"><%= components[all_components[i]] %></td>
   <% } else { %>
     <td>&nbsp;</td>
