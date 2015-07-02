@@ -14,7 +14,7 @@
 </td>
 <td><%= Array(num_slots + 1).join("\u26aa") %></td>
 <td>
-<div class="sharpness-bar">
+<div class="sharpness-bar" title="<%= sharpness_title %>">
 <span style="width:<%= sharpness[0] %>px" class="red"></span>
 <span style="width:<%= sharpness[1] %>px" class="orange"></span>
 <span style="width:<%= sharpness[2] %>px" class="yellow"></span>
@@ -23,7 +23,7 @@
 <span style="width:<%= sharpness[5] %>px" class="white"></span>
 <span style="width:<%= sharpness[6] %>px" class="purple"></span>
 </div>
-<div class="sharpness-bar">
+<div class="sharpness-bar" title="<%= sharpness_plus_title %>">
 <span style="width:<%= sharpness_plus[0] %>px" class="red"></span>
 <span style="width:<%= sharpness_plus[1] %>px" class="orange"></span>
 <span style="width:<%= sharpness_plus[2] %>px" class="yellow"></span>

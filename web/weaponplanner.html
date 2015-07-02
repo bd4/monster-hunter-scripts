@@ -40,47 +40,47 @@
       }
 
       .sharpness-bar {
-            border: 1px #d3d3d3 solid;
-         min-width: 92px;
-                         height: 10px;
-            background-color: #d3d3d3;
-            float: left;
-            clear: both;
-        }
+          border: 1px #d3d3d3 solid;
+          min-width: 92px;
+          height: 10px;
+          background-color: #d3d3d3;
+          float: left;
+          clear: both;
+      }
 
-        .sharpness-bar span {
-            display: inline-block;
-            height: 100%;
-            float: left;
-        }
+      .sharpness-bar span {
+          display: inline-block;
+          height: 100%;
+          float: left;
+      }
 
-        .sharpness-bar .red {
-            background-color: #C00C38 !important;
-        }
+      .sharpness-bar .red {
+          background-color: #C00C38 !important;
+      }
 
-        .sharpness-bar .orange {
-            background-color: #E85018 !important;
-        }
+      .sharpness-bar .orange {
+          background-color: #E85018 !important;
+      }
 
-        .sharpness-bar .yellow {
-            background-color: #F0C830 !important;
-        }
+      .sharpness-bar .yellow {
+          background-color: #F0C830 !important;
+      }
 
-        .sharpness-bar .green {
-            background-color: #58D000 !important;
-        }
+      .sharpness-bar .green {
+          background-color: #58D000 !important;
+      }
 
-        .sharpness-bar .blue {
-            background-color: #3068E8 !important;
-        }
+      .sharpness-bar .blue {
+          background-color: #3068E8 !important;
+      }
 
-        .sharpness-bar .white {
-            background-color: #F0F0F0 !important;
-        }
+      .sharpness-bar .white {
+          background-color: #F0F0F0 !important;
+      }
 
-        .sharpness-bar .purple {
-            background-color: #c3c !important;
-        }
+      .sharpness-bar .purple {
+          background-color: #c3c !important;
+      }
 
   </style>
 
@@ -159,6 +159,8 @@
         $("#weapon_stats").html("");
         $.getJSON(DATA_PATH + "weapon/" + weapon_id + ".json",
                   function(data) {
+                      data["sharpness_title"] = data["sharpness"].join(",");
+                      data["sharpness_plus_title"] = data["sharpness_plus"].join(",");
                       var html = template_stats.render(data);
                       $("#weapon_stats").html(html);
                   });
