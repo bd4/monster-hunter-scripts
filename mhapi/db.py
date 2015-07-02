@@ -301,7 +301,8 @@ class MHDB(object):
 
     def get_weapon(self, weapon_id, get_components=False):
         weapon = self._query_one("weapon", """
-            SELECT * FROM weapons
+            SELECT items._id, items.name, items.buy, weapons.*
+            FROM weapons
             LEFT JOIN items ON weapons._id = items._id
             WHERE weapons._id=?
         """, (weapon_id,), model_cls=model.Weapon)
@@ -319,6 +320,18 @@ class MHDB(object):
         if weapon and get_components:
             self._add_components(weapon)
         return weapon
+
+    def get_weapons_by_parent(self, parent_id, get_components=False):
+        weapons = self._query_all("weapon_by_parent", """
+            SELECT items._id, items.name, items.buy, weapons.*
+            FROM weapons
+            LEFT JOIN items ON weapons._id = items._id
+            WHERE weapons.parent_id=?
+        """, (parent_id,), model_cls=model.Weapon)
+        if get_components:
+            for weapon in weapons:
+                self._add_components(weapon)
+        return weapons
 
     def get_armors(self):
         return self._query_all("armors", """

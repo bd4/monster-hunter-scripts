@@ -33,4 +33,13 @@
 <span style="width:<%= sharpness_plus[6] %>px" class="purple"></span>
 </div>
 </td>
+<% if (children.length) { %>
+  <tr><td colspan="5"> -&gt;
+  <% for(var i=0; i<children.length; i++) { %>
+    <a href="weaponplanner.html?weapon=<%= encodeURIComponent(children[i]['name']) %>"
+        ><%= children[i]["name"] %></a>
+    <% if (i != children.length - 1) { %>|<% } %>
+  <% } %>
+  </td></tr>
+<% } %>
 </table>

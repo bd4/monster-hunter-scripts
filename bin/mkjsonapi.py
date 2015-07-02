@@ -4,13 +4,26 @@ import os
 import json
 import sys
 import errno
-from collections import defaultdict
 import urllib
+import argparse
 
 import _pathfix
 
 from mhapi.db import MHDB
 from mhapi import model
+
+ENTITIES = "item weapon monster armor skilltree skill decoration".split()
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=
+        "Create static JSON files that mimic a REST API for monster hunter data"
+    )
+    parser.add_argument("-o", "--outpath",
+                        help="output base directory, defaults to web/jsonapi/"
+                             " in project root")
+    parser.add_argument("entities", nargs="*",
+                        help=", ".join(ENTITIES))
+    return parser.parse_args(argv)
 
 
 def mkdirs_p(path):
@@ -162,8 +175,11 @@ def weapon_json(db, path):
     for w in weapons:
         weapon_path = file_path(path, w)
         w.update_indexes(indexes)
+        data = w.as_data()
+        child_weapons = db.get_weapons_by_parent(w.id)
+        data["children"] = [dict(id=c.id, name=c.name) for c in child_weapons]
         with open(weapon_path, "w") as f:
-            w.json_dump(f)
+            json.dump(data, f, cls=model.ModelJSONEncoder, indent=2)
 
         tree_path = os.path.join(path, "%s_tree.json" % w.id)
         costs = model.get_costs(db, w)
@@ -176,7 +192,7 @@ def weapon_json(db, path):
     write_index_file(path, indexes)
 
 
-def items_json(db, path):
+def item_json(db, path):
     items = db.get_items()
     mkdirs_p(path)
     write_list_file(path, items)
@@ -194,20 +210,22 @@ def items_json(db, path):
 def main():
     db = MHDB(_pathfix.db_path)
 
-    if len(sys.argv) > 1:
-        outpath = sys.argv[1]
+    args = parse_args()
+
+    if not args.outpath:
+        args.outpath = os.path.join(_pathfix.web_path, "jsonapi")
+
+    if args.entities:
+        for entity in args.entities:
+            if entity not in ENTITIES:
+                print "Unknown entity: %s" % entity
+                sys.exit(1)
     else:
-        outpath = os.path.join(_pathfix.web_path, "jsonapi")
+        args.entities = ENTITIES
 
-    weapon_json(db, os.path.join(outpath, "weapon"))
-    items_json(db, os.path.join(outpath, "item"))
-    monster_json(db, os.path.join(outpath, "monster"))
-    armor_json(db, os.path.join(outpath, "armor"))
-    skilltree_json(db, os.path.join(outpath, "skilltree"))
-    skill_json(db, os.path.join(outpath, "skill"))
-    decoration_json(db, os.path.join(outpath, "decoration"))
-
-    #quest_json(db, os.path.join(outpath, "quest"))
+    for entity in args.entities:
+        fn = globals()["%s_json" % entity]
+        fn(db, os.path.join(args.outpath, entity))
 
 
 if __name__ == '__main__':
