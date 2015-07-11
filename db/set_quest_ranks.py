@@ -5,7 +5,7 @@ import codecs
 
 import _pathfix
 
-from mhapi.db import MHDB, Quest
+from mhapi.db import MHDB
 
 
 RANK_NUM = dict(LR=0, HR=1, G=2)
@@ -21,32 +21,31 @@ def set_quest_ranks(db):
     for quest in quests:
         if not quest["name"]:
             assert quest["hub"] == "Event"
-            print "WARN: skipping non localized event quest: %d" % quest["_id"]
+            print "WARN: skipping non localized event quest: %d" % quest.id
             continue
         set_quest_rank(db, quest)
 
 
-def set_quest_rank(db, quest_row):
-    quest_id = quest_row["_id"]
-    hub = quest_row["hub"]
-    stars = quest_row["stars"]
+def set_quest_rank(db, quest):
+    quest_id = quest.id
+    hub = quest.hub
+    stars = quest.stars
     rank_stars_guess = guess_rank(hub, stars)
     if isinstance(rank_stars_guess, tuple):
         rewards = db.get_quest_rewards(quest_id)
         rank = guess_quest_rank_from_rewards(db, rewards)
         if rank is None:
             print "WARN: quest '%s' has no flesh rewards, assuming lower rank"\
-                % (quest_row["name"].encode("utf8"),)
+                % (quest.name.encode("utf8"),)
             rank = rank_stars_guess[0]
         elif rank not in rank_stars_guess:
             print "ERROR: quest '%s' reward guess '%s' not in stars guess '%s'"\
-             % (quest_row["name"], rank, rank_stars_guess)
+             % (quest.name, rank, rank_stars_guess)
     else:
         rank = rank_stars_guess
 
     assert rank in "LR HR G".split()
 
-    quest = Quest(quest_row)
     quest.rank = rank
     print quest.one_line_u()
     cur = db.cursor()

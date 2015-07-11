@@ -27,7 +27,7 @@ def set_creation_cost(db, item_id, creation_cost):
 
 if __name__ == '__main__':
     db = MHDB()
-    delta_file_path = os.path.join(_pathfix.db_path, "weapons-delta.csv")
+    delta_file_path = os.path.join(_pathfix.db_path, "delta", "weapons.csv")
 
     with open(delta_file_path) as f:
         reader = csv.DictReader(f)

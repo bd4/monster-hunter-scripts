@@ -12,7 +12,8 @@ import difflib
 
 import _pathfix
 
-from mhapi.db import MHDB, Quest
+from mhapi.db import MHDB
+from mhapi.model import Quest
 
 QuestMonster = namedtuple("QuestMonster", "id name")
 
@@ -36,8 +37,7 @@ def set_unstable(db, quest_id, monster_id, value):
 
 def check_quests(db):
     quests = db.get_quests()
-    for quest_row in quests:
-        quest = Quest(quest_row)
+    for quest in quests:
         if not quest.name:
             assert quest.hub == "Event"
             #print "WARN: skipping non localized event quest: %d" \
@@ -65,6 +65,8 @@ def rstrip(s, postfix):
 def _parse_monster(name):
     name = name.strip()
     #print name,
+
+    assert name
 
     name = lstrip(name, "and ")
     name = lstrip(name, "a ")
@@ -160,7 +162,7 @@ def parse_goal_monster_names(goal, errors):
         parts = goal.split(",")
     else:
         parts = goal.split(" and ")
-    return [_parse_monster(p) for p in parts]
+    return [_parse_monster(p) for p in parts if p.strip()]
 
 
 def get_goal_monsters(db, goal, errors):
@@ -188,7 +190,7 @@ def get_goal_monsters(db, goal, errors):
         if m is None:
             errors.append("ERROR: can't find monster '%s'" % name)
             continue
-        monsters.append(QuestMonster(m["_id"], name))
+        monsters.append(QuestMonster(m.id, name))
     return monsters
 
 
@@ -216,7 +218,7 @@ def check_hunts(db, quest):
     monsters = db.get_quest_monsters(quest.id)
     for m in monsters:
         monster = db.get_monster(m["monster_id"])
-        qm = QuestMonster(monster["_id"], monster["name"])
+        qm = QuestMonster(monster.id, monster.name)
         if m["unstable"] == "yes":
             db_expected_unstable.add(qm)
         else:
@@ -269,7 +271,7 @@ if __name__ == '__main__':
     db_file = os.path.join(db_path, "mh4u.db")
     db = MHDB(db_file)
 
-    ALL_NAMES = [row["name"] for row in db.get_monster_names()]
+    ALL_NAMES = db.get_monster_names()
 
     import sys
     sys.stdout = get_utf8_writer(sys.stdout)
