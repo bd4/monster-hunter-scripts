@@ -191,7 +191,14 @@ class WeaponMonsterDamage(object):
         else:
             self.sharpness = self.weapon.sharpness.max
         #print "sharpness=", self.sharpness
-        self.affinity = int(self.weapon["affinity"] or 0)
+        if self.weapon["affinity"]:
+            # handle chaotic gore affinity - use average, which is
+            # probably not quite right but at least allows an initial
+            # comparison point
+            parts = [int(x) for x in self.weapon["affinity"].split("/")]
+            self.affinity = sum(parts)/len(parts)
+        else:
+            self.affinity = 0
         self.damage_type = WeaponType.damage_type(self.weapon_type)
         self.etype = self.weapon["element"]
         self.eattack = self.weapon["element_attack"]
