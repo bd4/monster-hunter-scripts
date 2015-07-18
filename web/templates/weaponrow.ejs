@@ -1,37 +1,29 @@
-<table>
 <tr>
-<td><%= name %></td>
-<td>(<%= wtype %>)</td>
-<td style="text-align:right"><% if (phial) { %>&lt;<%= phial %> Phial&gt;<% } %></td>
-<td><%= Array(num_slots + 1).join("o")
-     %><%= Array(3 - num_slots + 1).join("-") %></td>
-</tr>
-</table>
-
-<table>
-<tr>
-<td>Atk: <%= attack %></td>
+<td><% if (final == 1) { %>
+      <strong>*</strong>
+    <% } else { %>
+      &nbsp;
+    <% } %>
+</td>
+<td>
+  <a href="weaponplanner.html?weapon=<%= encodeURIComponent(name) %>"
+        ><%= name %></a>
+</td>
+<td><%= wtype %></td>
+<td><%= attack %></td>
 <td style="text-align:right"><% if (affinity) { %><%= affinity %>%<% } %></td>
 <td>
 <% if (awaken) { %>
-  (<img style="height:.8em" title="Awaken <%= awaken %>"
-            src="img/<%= awaken %>.png" /><%= awaken_attack %> <%= awaken %>)
+  [<%= awaken_attack %> <%= awaken %>]
 <% } else if (element) { %>
-  <img style="height:.8em" title="<%= element %>"
-            src="img/<%= element %>.png" /> <%= element_attack %>
-            <%= element %>
+  (<%= element_attack %> <%= element %>
   <% if (element_2) { %>
-    <img style="height:.8em" title="<%= element_2 %>"
-            src="img/<%= element_2 %>.png" /> <%= element_2_attack %>
-            <%= element_2 %>
-  <% } %>
+    , <%= element_2_attack %> <%= element_2 %>
+  <% } %>)
 <% } %>
 </td>
-<td style="text-align:right"><% if (defense) { %>+<%= defense %> Def<% } %></td>
-</tr>
-</table>
-<table>
-<tr>
+<td><%= Array(num_slots + 1).join("o")
+     %><%= Array(3 - num_slots + 1).join("-") %></td>
 <td>
 <div class="sharpness-bar" title="<%= sharpness_title %>">
 <span style="width:<%= sharpness[0] %>px" class="red"></span>
@@ -55,15 +47,3 @@
 <td><%= sharpness_title %></td>
 <td>(<%= sharpness_plus_title %>)</td>
 </tr>
-</table>
-<% if (children.length) { %>
-  <table>
-  <tr><td colspan="5"> -&gt;
-  <% for(var i=0; i<children.length; i++) { %>
-    <a href="weaponplanner.html?weapon=<%= encodeURIComponent(children[i]['name']) %>"
-        ><%= children[i]["name"] %></a>
-    <% if (i != children.length - 1) { %>|<% } %>
-  <% } %>
-  </td></tr>
-  </table>
-<% } %>

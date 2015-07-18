@@ -91,7 +91,7 @@
     var template_stats = new EJS({ url: "templates/weaponstats.ejs" });
 
     $(document).ready(function(){
-        setup_weapon_autocomplete("#weapon_type", "#weapon",
+        setup_weapon_autocomplete("#weapon", autocomplete_predicate,
                                   init_page, update_search);
     });
 
@@ -107,6 +107,11 @@
                 show_trees(oe.state["weapon"]);
             }
         });
+        $("#weapon_type").change(function(evt) {
+            update_weapon_autocomplete("#weapon", autocomplete_predicate,
+                                       update_search);
+            $("#weapon").val("");
+        });
     }
 
     function load_qs() {
@@ -120,12 +125,16 @@
         if (weapon) {
             show_trees(weapon);
             console.log("replaceState: " + weapon);
-            set_state(wtype, weapon, true);
+            save_state(get_state(), true);
         }
     }
 
-    function set_state(weapon_type, weapon, replace) {
-        var state = { "weapon": weapon, "weapon_type": weapon_type };
+    function get_state() {
+        return { "weapon": $("#weapon").val(),
+                 "weapon_type": $("#weapon_type").val() };
+    }
+
+    function save_state(state, replace) {
         var url = "/weaponplanner.html?" + encode_qs(state);
         if (replace) {
             window.history.replaceState(state, "", url);
@@ -134,20 +143,30 @@
         }
     }
 
+    function autocomplete_predicate(weapon_data) {
+        var weapon_type = $("#weapon_type").val();
+
+        if (weapon_type != "All" && weapon_type != weapon_data["wtype"]) {
+            return false;
+        }
+
+        return true;
+    }
+
     function update_search() {
         var weapon_name = $("#weapon").val();
-        var wtype = $("#weapon_type").val();
 
         if (!weapon_name) return;
 
-        if (window.history.state["weapon"] == weapon_name) {
+        if (window.history.state
+            && window.history.state["weapon"] == weapon_name) {
             console.log("weapon not changed, skipping update");
             return;
         }
 
         show_trees(weapon_name);
         console.log("pushState: " + weapon_name);
-        set_state(wtype, weapon_name, false);
+        save_state(get_state(), false);
     }
 
     function show_trees(weapon_name) {
@@ -164,7 +183,7 @@
                       var html = template_stats.render(data);
                       $("#weapon_stats").html(html);
                   });
- 
+
         $.getJSON(DATA_PATH + "weapon/" + weapon_id + "_tree.json",
                   function(data) {
                       // first pass: collect all components and sort them
@@ -217,8 +236,8 @@
 <div>
   <table>
   <tr>
-    <td><label for="type">Type:</label></td>
-    <td><select id="weapon_type" name="weapon_type">
+    <td><label for="weapon_type">Type:</label></td>
+    <td><select id="weapon_type">
         <option value="All">All</option>
         <option value="Great Sword">Great Sword</option>
         <option value="Long Sword">Long Sword</option>
@@ -238,12 +257,11 @@
   </tr>
   <tr>
     <td><label for="weapon">Weapon:</label></td>
-    <td><input id="weapon" name="weapon" weapon="text" size="20" />
+    <td><input id="weapon" name="weapon" size="20" />
     <button id="search">Ask Poogie</button></td>
   </tr>
   </table>
 </div>
 <div id="weapon_stats"></div>
 <div id="results" class="flexbox"></div>
-</body>
 </body>

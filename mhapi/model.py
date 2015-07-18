@@ -312,7 +312,11 @@ class Skill(RowModel):
 class Weapon(RowModel):
     _list_fields = ["id", "wtype", "name"]
     _indexes = { "name": "id",
-                 "wtype": ["id", "name"] }
+                 "wtype": ["id", "name"],
+                 # subset of all data that can be used for searching and
+                 # not be too bloated
+                 "id": ["name", "wtype", "final", "element", "element_2",
+                        "awaken"] }
 
     def __init__(self, weapon_item_row):
         super(Weapon, self).__init__(weapon_item_row)

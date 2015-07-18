@@ -1,5 +1,9 @@
+// maps name -> [id]
 WEAPON_NAME_IDX = {};
-WEAPON_TYPE_IDX = {};
+
+// maps id -> dict with keys:
+//            ["name", "wtype", "final", "element", "element_2", "awaken"]
+WEAPON_ID_IDX = {};
 
 _ITEM_NAME_SPECIAL = {
     "welldonesteak":	"Well-done Steak",
@@ -107,45 +111,50 @@ function setup_item_autocomplete(selector) {
 }
 
 
-function setup_weapon_autocomplete(type_selector, weapon_selector, ready_fn,
-                                   change_fn) {
+function load_weapon_data(ready_fn) {
     var DATA_PATH = get_base_path() + "/jsonapi/";
     $.getJSON(DATA_PATH + "weapon/_index_name.json",
               function(data) {
                   WEAPON_NAME_IDX = data;
-                  $.getJSON(DATA_PATH + "weapon/_index_wtype.json",
+                  $.getJSON(DATA_PATH + "weapon/_index_id.json",
                             function(data) {
-                                WEAPON_TYPE_IDX = data;
-                                if (ready_fn) {
-                                    ready_fn();
-                                }
-                                _setup_weapon_autocomplete(
-                                                     $(type_selector).val(),
-                                                     weapon_selector,
-                                                     change_fn);
-                                $(type_selector).change(function(evt) {
-                                    $(weapon_selector).val("");
-                                    _setup_weapon_autocomplete(
-                                                $(type_selector).val(),
-                                                weapon_selector, change_fn);
-                                });
+                                WEAPON_ID_IDX = data;
+                                ready_fn();
                             });
               });
 }
 
-function _setup_weapon_autocomplete(type, weapon_selector, change_fn) {
-    //alert("set weapon type " + type + " (" + weapon_selector + ")");
-    var source;
-    if (type == "All") {
-        source = Object.keys(WEAPON_NAME_IDX);
-        //alert(source[10]);
-    } else {
-        var object_list = WEAPON_TYPE_IDX[type];
-        source = [];
-        for (i=0; i<object_list.length; i++) {
-            source.push(object_list[i]["name"]);
+
+function setup_weapon_autocomplete(weapon_selector, predicate_fn, ready_fn,
+                                   change_fn) {
+    load_weapon_data(function() {
+        update_weapon_autocomplete(
+                             weapon_selector,
+                             predicate_fn,
+                             change_fn);
+        if (ready_fn) {
+            ready_fn();
         }
-    }
+    });
+}
+
+
+function update_weapon_autocomplete(weapon_selector, predicate_fn, change_fn) {
+    //alert("set weapon type " + type + " (" + weapon_selector + ")");
+    source = [];
+    $.each(WEAPON_ID_IDX, function(weapon_id, weapons) {
+        var weapon_data = weapons[0];
+        if (predicate_fn(weapon_data)) {
+            var name = weapon_data["name"];
+            if (name) {
+                source.push(name);
+            } else {
+                console.log("WARN: weapon with no name '" + weapon_id + "'");
+            }
+        }
+    });
+    console.log("update weapon autocomplete len: " + source.length);
+    console.log("weapon_selector = '" + weapon_selector + "'");
     $(weapon_selector).autocomplete(
       { source: source,
         change: function (event, ui) {

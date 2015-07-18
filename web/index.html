@@ -10,10 +10,29 @@
   <script src="js/common.js"></script>
 
   <script type="text/javascript">
-      $(document).ready(function(){
-          setup_item_autocomplete("#item");
-          setup_weapon_autocomplete("#weapon_type", "#weapon");
-      });
+    $(document).ready(function(){
+        setup_item_autocomplete("#item");
+        setup_weapon_autocomplete_by_type();
+        $("#weapon_type").change(function(evt) {
+            update_weapon_autocomplete("#weapon", autocomplete_predicate, null);
+        });
+
+    });
+
+    function autocomplete_predicate(weapon_data) {
+        var weapon_type = $("#weapon_type").val();
+        if (weapon_type != "All" && weapon_type != weapon_data["wtype"]) {
+            return false;
+        }
+        return true;
+    }
+
+    function setup_weapon_autocomplete_by_type() {
+        // the completion and change fn are null because the page uses a form
+        // and submits to the weapon planner page
+        setup_weapon_autocomplete("#weapon", autocomplete_predicate,
+                                  null, null);
+    }
   </script>
 
   <style>
