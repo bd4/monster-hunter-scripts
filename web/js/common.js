@@ -202,3 +202,21 @@ function update_weapon_autocomplete(weapon_selector, predicate_fn, change_fn) {
        }
     });
 }
+
+
+function set_sharpness_titles(weapon_data) {
+    if (weapon_data["sharpness"]) {
+        weapon_data["sharpness_title"] =
+              weapon_data["sharpness"].join(",");
+        weapon_data["sharpness_plus_title"] =
+              weapon_data["sharpness_plus"].join(",");
+        weapon_data["sharpness_all_title"] =
+          weapon_data["sharpness_title"] + " ("
+          + weapon_data["sharpness_plus_title"] + ")";
+    } else {
+        // gunner weapons have no sharpness
+        weapon_data["sharpness_title"] = "";
+        weapon_data["sharpness_plus_title"] = "";
+        weapon_data["sharpness_all_title"] = "";
+    }
+}

@@ -27,13 +27,9 @@
   <% } %>
 <% } %>
 </td>
-<td style="text-align:right"><% if (defense) { %>+<%= defense %> Def<% } %></td>
-</tr>
-</table>
-<table>
-<tr>
 <td>
-<div class="sharpness-bar" title="<%= sharpness_title %>">
+<% if (sharpness) { %>
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
 <span style="width:<%= sharpness[0] %>px" class="red"></span>
 <span style="width:<%= sharpness[1] %>px" class="orange"></span>
 <span style="width:<%= sharpness[2] %>px" class="yellow"></span>
@@ -42,7 +38,7 @@
 <span style="width:<%= sharpness[5] %>px" class="white"></span>
 <span style="width:<%= sharpness[6] %>px" class="purple"></span>
 </div>
-<div class="sharpness-bar" title="<%= sharpness_plus_title %>">
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
 <span style="width:<%= sharpness_plus[0] %>px" class="red"></span>
 <span style="width:<%= sharpness_plus[1] %>px" class="orange"></span>
 <span style="width:<%= sharpness_plus[2] %>px" class="yellow"></span>
@@ -51,9 +47,9 @@
 <span style="width:<%= sharpness_plus[5] %>px" class="white"></span>
 <span style="width:<%= sharpness_plus[6] %>px" class="purple"></span>
 </div>
+<% } %>
 </td>
-<td><%= sharpness_title %></td>
-<td>(<%= sharpness_plus_title %>)</td>
+<td style="text-align:right"><% if (defense) { %>+<%= defense %> Def<% } %></td>
 </tr>
 </table>
 <% if (children.length) { %>

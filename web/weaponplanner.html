@@ -178,8 +178,7 @@
         $("#weapon_stats").html("");
         $.getJSON(DATA_PATH + "weapon/" + weapon_id + ".json",
                   function(data) {
-                      data["sharpness_title"] = data["sharpness"].join(",");
-                      data["sharpness_plus_title"] = data["sharpness_plus"].join(",");
+                      set_sharpness_titles(data);
                       var html = template_stats.render(data);
                       $("#weapon_stats").html(html);
                   });

@@ -31,6 +31,7 @@
 <td><%= Array(num_slots + 1).join("o")
      %><%= Array(3 - num_slots + 1).join("-") %></td>
 <td>
+<% if (sharpness) { %>
 <div class="sharpness-bar" title="<%= sharpness_all_title %>">
 <span style="width:<%= sharpness[0] %>px" class="red"></span>
 <span style="width:<%= sharpness[1] %>px" class="orange"></span>
@@ -49,6 +50,7 @@
 <span style="width:<%= sharpness_plus[5] %>px" class="white"></span>
 <span style="width:<%= sharpness_plus[6] %>px" class="purple"></span>
 </div>
+<% } %>
 </td>
 <td><%= defense ? "+" + defense + " Def" : "" %></td>
 <td><%= phial %></td>
