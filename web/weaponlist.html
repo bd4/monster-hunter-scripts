@@ -217,11 +217,18 @@
                                         data["sharpness"].join(",");
                                   data["sharpness_plus_title"] =
                                         data["sharpness_plus"].join(",");
+                                  data["sharpness_all_title"] =
+                                    data["sharpness_title"] + " ("
+                                    + data["sharpness_plus_title"] + ")";
                               } else {
                                   // gunner weapons have no sharpness
                                   data["sharpness_title"] = "";
                                   data["sharpness_plus_title"] = "";
+                                  data["sharpness_all_title"] = "";
                               }
+                              data["wtype_short"] =
+                                        WEAPON_TYPE_ABBR[data["wtype"]];
+                              data["ELEMENT_ABBR"] = ELEMENT_ABBR;
                               var html = template_row.render(data);
                               $("#weapon_table").append(html);
                           });

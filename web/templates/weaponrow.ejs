@@ -9,23 +9,29 @@
   <a href="weaponplanner.html?weapon=<%= encodeURIComponent(name) %>"
         ><%= name %></a>
 </td>
-<td><%= wtype %></td>
-<td><%= attack %></td>
+<td><%= wtype_short %></td>
+<td style="text-align:right"><%= attack %></td>
 <td style="text-align:right"><% if (affinity) { %><%= affinity %>%<% } %></td>
 <td>
 <% if (awaken) { %>
-  [<%= awaken_attack %> <%= awaken %>]
+  (<img style="height:.8em" title="Awaken <%= awaken %>"
+            src="img/<%= awaken %>.png" /><%= awaken_attack %>
+            <%= ELEMENT_ABBR[awaken] %>)
 <% } else if (element) { %>
-  (<%= element_attack %> <%= element %>
+  <img style="height:.8em" title="<%= element %>"
+            src="img/<%= element %>.png" /> <%= element_attack %>
+            <%= ELEMENT_ABBR[element] %>
   <% if (element_2) { %>
-    , <%= element_2_attack %> <%= element_2 %>
-  <% } %>)
+    <img style="height:.8em" title="<%= element_2 %>"
+            src="img/<%= element_2 %>.png" /> <%= element_2_attack %>
+            <%= ELEMENT_ABBR[element_2] %>
+  <% } %>
 <% } %>
 </td>
 <td><%= Array(num_slots + 1).join("o")
      %><%= Array(3 - num_slots + 1).join("-") %></td>
 <td>
-<div class="sharpness-bar" title="<%= sharpness_title %>">
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
 <span style="width:<%= sharpness[0] %>px" class="red"></span>
 <span style="width:<%= sharpness[1] %>px" class="orange"></span>
 <span style="width:<%= sharpness[2] %>px" class="yellow"></span>
@@ -34,7 +40,7 @@
 <span style="width:<%= sharpness[5] %>px" class="white"></span>
 <span style="width:<%= sharpness[6] %>px" class="purple"></span>
 </div>
-<div class="sharpness-bar" title="<%= sharpness_plus_title %>">
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
 <span style="width:<%= sharpness_plus[0] %>px" class="red"></span>
 <span style="width:<%= sharpness_plus[1] %>px" class="orange"></span>
 <span style="width:<%= sharpness_plus[2] %>px" class="yellow"></span>
@@ -44,6 +50,6 @@
 <span style="width:<%= sharpness_plus[6] %>px" class="purple"></span>
 </div>
 </td>
-<td><%= sharpness_title %></td>
-<td>(<%= sharpness_plus_title %>)</td>
+<td><%= defense ? "+" + defense + " Def" : "" %></td>
+<td><%= phial %></td>
 </tr>

@@ -38,6 +38,35 @@ _ITEM_NAME_SPECIAL = {
     "vecosmicticket":	"VE Cosmic Ticket"
 };
 
+WEAPON_TYPE_ABBR = {
+    "Great Sword":  	"GS",
+    "Long Sword":    	"LS",
+    "Sword and Shield":	"Sw",
+    "Dual Blades":	    "DB",
+    "Hammer":	        "Ha",
+    "Hunting Horn":	    "HH",
+    "Lance":	        "La",
+    "Gunlance":	        "GL",
+    "Switch Axe":	    "SA",
+    "Charge Blade":	    "CB",
+    "Insect Glaive":	"IG",
+    "Light Bowgun":	    "LBG",
+    "Heavy Bowgun":	    "HBG",
+    "Bow":      	    "Bow"
+};
+
+ELEMENT_ABBR = {
+    "Fire":         "Fi",
+    "Water":        "Wa",
+    "Thunder":      "Th",
+    "Ice":          "Ic",
+    "Dragon":       "Dr",
+    "Poison":       "Po",
+    "Paralysis":    "Pa",
+    "Sleep":        "Sl",
+    "Blashblight":  "Bl"
+};
+
 (function($) {
     $.QueryString = (function(a) {
         if (a == "") return {};
