@@ -30,7 +30,9 @@
 </td>
 <td><%= Array(num_slots + 1).join("o")
      %><%= Array(3 - num_slots + 1).join("-") %></td>
-<td>
+<td id="sharpness_td"
+    data-sharpness="<%= sharpness_all_title %>"
+    data-id="<%= id %>">
 <% if (sharpness) { %>
 <div class="sharpness-bar" title="<%= sharpness_all_title %>">
 <span style="width:<%= sharpness[0] %>px" class="red"></span>

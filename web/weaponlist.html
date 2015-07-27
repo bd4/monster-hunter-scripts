@@ -82,6 +82,14 @@
           background-color: #c3c !important;
       }
 
+      #sharpness_popup {
+          position: absolute;
+          display: none;
+          border: 1px solid;
+          background: rgba(204, 204, 204, 0.9);
+          z-index: 10;
+      }
+
   </style>
 
   <script type="text/javascript">
@@ -91,6 +99,17 @@
 
     $(document).ready(function(){
         load_weapon_data(init_page);
+
+        $("#sharpness_popup").on("click", function(evt) {
+            $(this).html("").offset({top:0, left:0}).hide();
+        });
+
+        $("#weapon_table").on("click", "#sharpness_td", function(evt) {
+            var td_obj = $(evt.currentTarget);
+            var offset = td_obj.offset();
+            var sharpness = td_obj.data("sharpness");
+            $("#sharpness_popup").html(sharpness).offset(offset).show();
+        });
     });
 
     function init_page() {
@@ -276,4 +295,5 @@
 </div>
 <table id="weapon_table">
 </table>
+<div id="sharpness_popup"></div>
 </body>
