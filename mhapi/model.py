@@ -377,6 +377,13 @@ class Location(RowModel):
     pass
 
 
+class HornMelody(RowModel):
+    _list_fields = ["notes", "song", "effect1", "effect2",
+                    "duration", "extension"]
+    _indexes = { "notes": ["song", "effect1", "effect2", "duration",
+                           "extension"] }
+
+
 class MonsterPartStateDamage(RowModel):
     """
     Model for the damage to the monster on a particular hitbox and in

@@ -472,3 +472,16 @@ class MHDB(object):
               ON items._id = components.component_item_id
             WHERE created_item_id=? AND components.type=?
         """, (item_id, method), model_cls=model.ItemComponent)
+
+    def get_horn_melodies(self):
+        return self._query_all("horn_melodies", """
+            SELECT *
+            FROM horn_melodies
+        """, model_cls=model.HornMelody)
+
+    def get_horn_melodies_by_notes(self, notes):
+        return self._query_all("horn_melodies", """
+            SELECT *
+            FROM horn_melodies
+            WHERE notes=?
+        """, (notes,), model_cls=model.HornMelody)

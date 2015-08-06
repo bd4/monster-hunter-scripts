@@ -12,7 +12,9 @@ import _pathfix
 from mhapi.db import MHDB
 from mhapi import model
 
-ENTITIES = "item weapon monster armor skilltree skill decoration".split()
+ENTITIES = """item weapon monster armor
+              skilltree skill decoration
+              horn_melody""".split()
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=
@@ -37,9 +39,10 @@ def mkdirs_p(path):
 SAFE_CHARS = " &'+\""
 
 
-def file_path(path, model_object, use_name=False):
-    if use_name and "name" in model_object:
-        key = urllib.quote(model_object.name.encode("utf8"), SAFE_CHARS)
+def file_path(path, model_object, alt_name_field=None):
+    if alt_name_field:
+        key = urllib.quote(model_object[alt_name_field].encode("utf8"),
+                           SAFE_CHARS)
     else:
         key = str(model_object.id)
     return os.path.join(path, "%s.json" % key)
@@ -171,13 +174,25 @@ def weapon_json(db, path):
     mkdirs_p(path)
     write_list_file(path, weapons)
 
+    melodies = {}
+
     indexes = {}
     for w in weapons:
         weapon_path = file_path(path, w)
         w.update_indexes(indexes)
         data = w.as_data()
+
         child_weapons = db.get_weapons_by_parent(w.id)
         data["children"] = [dict(id=c.id, name=c.name) for c in child_weapons]
+
+        if w.horn_notes:
+            if w.horn_notes not in melodies:
+                melodies[w.horn_notes] = [
+                    dict(song=melody.song, effect1=melody.effect1)
+                    for melody in db.get_horn_melodies_by_notes(w.horn_notes)
+                ]
+            data["horn_melodies"] = melodies[w.horn_notes]
+
         with open(weapon_path, "w") as f:
             json.dump(data, f, cls=model.ModelJSONEncoder, indent=2)
 
@@ -203,6 +218,18 @@ def item_json(db, path):
         item.update_indexes(indexes)
         with open(item_path, "w") as f:
             item.json_dump(f)
+
+    write_index_file(path, indexes)
+
+
+def horn_melody_json(db, path):
+    # only 143 rows, just do index with all data
+    melodies = db.get_horn_melodies()
+    mkdirs_p(path)
+
+    indexes = {}
+    for melody in melodies:
+        melody.update_indexes(indexes)
 
     write_index_file(path, indexes)
 

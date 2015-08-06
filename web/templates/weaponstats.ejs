@@ -1,9 +1,15 @@
 <table>
-<tr>
+<tr title="<%= id %>">
 <td><%= name %></td>
 <td>(<%= wtype %>)</td>
-<td><% if (phial) { %>&lt;<%= phial %> Phial&gt;<% } %></td>
-<td><% if (shelling_type) { %>&lt;<%= shelling_type %>&gt;<% } %></td>
+<td><% if (phial) {
+       %>&lt;<%= phial %> Phial&gt;<%
+     } else if (shelling_type) {
+       %>&lt;<%= shelling_type %>&gt;<%
+     } else if (horn_notes) {
+       %><span title="<%= horn_melodies_title %>"
+          >[<%= horn_notes %>]<%
+     } %></td>
 <td><%= Array(num_slots + 1).join("o")
      %><%= Array(3 - num_slots + 1).join("-") %></td>
 </tr>

@@ -220,3 +220,18 @@ function set_sharpness_titles(weapon_data) {
         weapon_data["sharpness_all_title"] = "";
     }
 }
+
+
+function set_horn_melodies_title(weapon_data) {
+    if (! weapon_data["horn_notes"]) {
+        weapon_data["horn_melodies_title"] = ""
+        return;
+    }
+
+    var lines = [];
+    $.each(weapon_data["horn_melodies"], function(i, melody) {
+        var space = Array(6 - melody["song"].length).join("&nbsp;");
+        lines.push(melody["song"] + space + melody["effect1"]);
+    });
+    weapon_data["horn_melodies_title"] = lines.join("&#10;");
+}

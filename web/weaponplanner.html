@@ -179,6 +179,7 @@
         $.getJSON(DATA_PATH + "weapon/" + weapon_id + ".json",
                   function(data) {
                       set_sharpness_titles(data);
+                      set_horn_melodies_title(data);
                       var html = template_stats.render(data);
                       $("#weapon_stats").html(html);
                   });
