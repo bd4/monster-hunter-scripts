@@ -254,7 +254,9 @@ class WeaponMonsterDamage(object):
             elif self.damage_type == WeaponType.IMPACT:
                 hitbox = hitbox_impact
             elif self.damage_type == WeaponType.MIXED:
-                hitbox = max(hitbox_cut, hitbox_impact)
+                # Info from /u/ShadyFigure, see
+                # https://www.reddit.com/r/MonsterHunter/comments/3fr2u0/124th_weekly_stupid_question_thread/cts3hz8?context=3
+                hitbox = max(hitbox_cut, hitbox_impact * .72)
 
             raw = raw_damage(self.true_raw, self.sharpness, self.affinity,
                              hitbox, self.motion)
