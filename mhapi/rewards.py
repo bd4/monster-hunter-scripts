@@ -210,17 +210,29 @@ class QuestItemExpectedValue(object):
         # preprocessing step - figure out how many fixed rewards there
         # are, which we need to know in order to figure out how many
         # chances there are to get other rewards.
-        for reward in rewards:
+        fixed_seen = dict(A=set(), B=set(), Sub=set())
+        dups = dict()
+        for i in xrange(len(rewards)):
+            reward = rewards[i]
             slot = reward["reward_slot"]
             if reward["percentage"] == 100:
-                self.fixed_rewards[slot] += 1
+                if reward["item_id"] in fixed_seen[slot]:
+                    # db has some errors where fixed items appear twice
+                    # TODO: this could be mislabeled fixed subquest reward,
+                    # anecdotally S.Dalamadur Steel+ looks like that.
+                    dups[i] = True
+                else:
+                    self.fixed_rewards[slot] += 1
+                    fixed_seen[slot].add(reward["item_id"])
             else:
                 self.total_reward_p[slot] += reward["percentage"]
 
         self._check_totals()
 
-        for reward in rewards:
+        for i, reward in enumerate(rewards):
             if reward["item_id"] != self.item_id:
+                continue
+            if i in dups:
                 continue
             self._add_reward(reward)
 
@@ -802,6 +814,9 @@ class ItemRewards(object):
             if shiny_ev:
                 out.write("  %20s %5.2f / 100\n" % ("Shiny", shiny_ev))
             out.write("\n")
+
+    def get_best_strat(self, rank="G", skill="No skills"):
+        return self.rank_skill_sets[rank][skill].best
 
     def print_recommended_hunts(self, out):
         out.write("*** Poogie Recommends ***\n")
