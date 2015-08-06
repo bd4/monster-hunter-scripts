@@ -269,7 +269,7 @@ function get_calculating_palico_setup(weapon_data) {
         max_sharpness = i;
     }
     setup.push(max_sharpness);
-    setup.push("3.1.awk,shp");
+    setup.push("0.1.awk,shp");
     return setup.join(".");
 }
 
