@@ -254,7 +254,7 @@ function set_horn_melodies_title(weapon_data) {
 function get_calculating_palico_setup(weapon_data) {
     // NB: load_calculating_palico_data must be called first
     var name = weapon_data["name"];
-    if (! name in PALICO_ID) {
+    if (! (name in PALICO_ID)) {
         return "";
     }
 
