@@ -249,7 +249,9 @@
 <div>
   <table>
   <tr>
-    <td><label for="weapon_type">Type:</label></td>
+    <td><label for="weapon_type"
+               title="Only show weapons of this type"
+        >Type:</label></td>
     <td><select id="weapon_type">
         <option value="All">All</option>
         <option value="Great Sword">Great Sword</option>
@@ -267,7 +269,9 @@
         <option value="Heavy Bowgun">Heavy Bowgun</option>
         <option value="Bow">Bow</option>
     </select></td>
-    <td><label for="weapon_element">Element:</label></td>
+    <td><label for="weapon_element"
+               title="Only show weapons with this element (native or requiring awaken)"
+        >Element:</label></td>
     <td><select id="weapon_element">
         <option value="All">All</option>
         <option value="Fire">Fire</option>
@@ -280,15 +284,21 @@
         <option value="Sleep">Sleep</option>
         <option value="Blastblight">Blast</option>
     </select></td>
-    <td><label for="weapon_final">Final?</label></td>
+    <td><label for="weapon_final"
+               title="Only show weapons with no furthur upgrades"
+        >Final?</label></td>
     <td><input id="weapon_final" type="checkbox" /></td>
     <td><button id="search">Search</button></td>
   </tr>
   <tr>
     <td colspan="7">
-      <label for="weapon_name_text">Name:</label>
+      <label for="weapon_name_text"
+             title="Show only weapons with a match in the name. List of strings separated by '|' (vertical bar)."
+             >Name:</label>
       <input id="weapon_name_text" size="15" />
-      <label for="weapon_component_text">Components:</label>
+      <label for="weapon_component_text"
+             title="Show only weapons with a matching create or upgrade component. List separated by '|' (veritical bar)."
+             >Components:</label>
       <input id="weapon_component_text" size="15" />
     </td>
   </tr>
