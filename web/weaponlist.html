@@ -90,6 +90,10 @@
           z-index: 10;
       }
 
+      #cp_div {
+          display: none;
+      }
+
   </style>
 
   <script type="text/javascript">
@@ -98,7 +102,9 @@
     var template_row = new EJS({ url: "templates/weaponrow.ejs" });
 
     $(document).ready(function(){
-        load_weapon_data(init_page);
+        load_weapon_data(function() {
+            load_calculating_palico_data(init_page);
+        });
 
         $("#sharpness_popup").on("click", function(evt) {
             $(this).html("").offset({top:0, left:0}).hide();
@@ -211,6 +217,7 @@
 
     function update_weapon_list(state) {
         var match_count = 0;
+        var cp_setups = [];
         var comps = state["weapon_component_text"].split("|");
         console.log("updating weapon list: " + JSON.stringify(state));
         $("#weapon_table").empty();
@@ -238,10 +245,30 @@
                               data["ELEMENT_ABBR"] = ELEMENT_ABBR;
                               var html = template_row.render(data);
                               $("#weapon_table").append(html);
+                              var setup = get_calculating_palico_setup(data);
+                              console.log("setup for " + weapon_id + ": "
+                                          + setup);
+                              if (setup.length) {
+                                  cp_setups.push(setup);
+                              }
+                              update_cp_link(cp_setups);
                           });
             }
         });
         console.log("match count: " + match_count);
+
+    }
+
+    function update_cp_link(setups) {
+        if (setups.length == 0) {
+            console.log("no matches or no cp setups, hiding cp link");
+            $("#cp_div").hide();
+        } else {
+            var href = get_calculating_palico_uri(setups);
+            console.log("cp link: " + href);
+            $("#cp_link").prop("href", href);
+            $("#cp_div").show();
+        }
     }
   </script>
 </head>
@@ -303,6 +330,11 @@
     </td>
   </tr>
   </table>
+</div>
+<div id="cp_div">
+<a id="cp_link"
+   href="http://minyoung.ch/calculatingpalico/"
+ >Compare weapons (Calculating Palico)</a>
 </div>
 <table id="weapon_table">
 </table>

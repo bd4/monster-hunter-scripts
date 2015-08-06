@@ -5,6 +5,9 @@ WEAPON_NAME_IDX = {};
 //            ["name", "wtype", "final", "element", "element_2", "awaken"]
 WEAPON_ID_IDX = {};
 
+// maps weapon name name -> calculating palico id string
+PALICO_ID = {};
+
 _ITEM_NAME_SPECIAL = {
     "welldonesteak":	"Well-done Steak",
     "lrgelderdragonbone":	"Lrg ElderDragon Bone",
@@ -154,6 +157,17 @@ function load_weapon_data(ready_fn) {
 }
 
 
+function load_calculating_palico_data(ready_fn) {
+    var DATA_PATH = get_base_path() + "/data/";
+    $.getJSON(DATA_PATH + "calculating_palico_weapon_map.json",
+              function(data) {
+                  PALICO_ID = data;
+                  ready_fn();
+              });
+}
+
+
+
 function setup_weapon_autocomplete(weapon_selector, predicate_fn, ready_fn,
                                    change_fn) {
     load_weapon_data(function() {
@@ -234,4 +248,33 @@ function set_horn_melodies_title(weapon_data) {
         lines.push(melody["song"] + space + melody["effect1"]);
     });
     weapon_data["horn_melodies_title"] = lines.join("&#10;");
+}
+
+
+function get_calculating_palico_setup(weapon_data) {
+    // NB: load_calculating_palico_data must be called first
+    var name = weapon_data["name"];
+    if (! name in PALICO_ID) {
+        return "";
+    }
+
+    var setup = [];
+    setup.push(PALICO_ID[name]);
+    var sharpness_plus = weapon_data["sharpness_plus"];
+    var max_sharpness = -1;
+    for (var i=0; i < sharpness_plus.length; i++) {
+        if (sharpness_plus[i] == 0) {
+            break;
+        }
+        max_sharpness = i;
+    }
+    setup.push(max_sharpness);
+    setup.push("3.1.awk,shp");
+    return setup.join(".");
+}
+
+function get_calculating_palico_uri(setups) {
+    // m=31 is Great Jaggi
+    var base = "http://minyoung.ch/calculatingpalico/?m=31&s=";
+    return base + encodeURIComponent(JSON.stringify(setups));
 }
