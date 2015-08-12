@@ -170,7 +170,7 @@ def skilltree_json(db, path):
 
 
 def weapon_json(db, path):
-    weapons = db.get_weapons(get_components=True)
+    weapons = db.get_weapons()
     mkdirs_p(path)
     write_list_file(path, weapons)
 
@@ -235,7 +235,7 @@ def horn_melody_json(db, path):
 
 
 def main():
-    db = MHDB(_pathfix.db_path)
+    db = MHDB(include_item_components=True)
 
     args = parse_args()
 

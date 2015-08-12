@@ -1,7 +1,6 @@
 import string
 import json
 import urllib
-from collections import defaultdict
 import re
 import difflib
 
@@ -197,7 +196,28 @@ class WeaponSharpness(ModelBase):
         return self.value_list
 
 
-class ItemWithSkills(RowModel):
+class ItemCraftable(RowModel):
+    def __init__(self, item_row):
+        super(ItemCraftable, self).__init__(item_row)
+        self.create_components = None
+        self.upgrade_components = None
+
+    def set_components(self, create_components, upgrade_components):
+        self.create_components = create_components
+        self.upgrade_components = upgrade_components
+
+    def as_data(self):
+        data = super(ItemCraftable, self).as_data()
+        if self.create_components is not None:
+            data["create_components"] = dict((item.name, item.quantity)
+                                             for item in self.create_components)
+        if self.upgrade_components is not None:
+            data["upgrade_components"] = dict((item.name, item.quantity)
+                                         for item in self.upgrade_components)
+        return data
+
+
+class ItemWithSkills(ItemCraftable):
     def __init__(self, item_row):
         super(ItemWithSkills, self).__init__(item_row)
         self.skills = None
@@ -308,8 +328,7 @@ class Skill(RowModel):
                  ["id", "required_skill_tree_points", "name", "description"] }
 
 
-
-class Weapon(RowModel):
+class Weapon(ItemCraftable):
     _list_fields = ["id", "wtype", "name"]
     _indexes = { "name": "id",
                  "wtype": ["id", "name"],
@@ -320,14 +339,7 @@ class Weapon(RowModel):
 
     def __init__(self, weapon_item_row):
         super(Weapon, self).__init__(weapon_item_row)
-
         self._parse_sharpness()
-        self.create_components = []
-        self.upgrade_components = []
-
-    def set_components(self, create_components, upgrade_components):
-        self.create_components = create_components
-        self.upgrade_components = upgrade_components
 
     def _parse_sharpness(self):
         """
@@ -344,17 +356,6 @@ class Weapon(RowModel):
         normal, plus = parts
         self._data["sharpness"] = WeaponSharpness(normal)
         self._data["sharpness_plus"] = WeaponSharpness(plus)
-
-    def as_data(self):
-        data = super(Weapon, self).as_data()
-        if self.create_components is not None:
-            data["create_components"] = dict((item.name, item.quantity)
-                                             for item in self.create_components)
-        if self.upgrade_components is not None:
-            data["upgrade_components"] = dict((item.name, item.quantity)
-                                         for item in self.upgrade_components)
-        return data
-
 
 
 class Monster(RowModel):
@@ -556,7 +557,7 @@ def get_costs(db, weapon):
             cost_display = urllib.quote(weapon.upgrade_cost)
             print "WARN: bad upgrade cost for '%s' (%s): '%s'" \
                 % (weapon.name, weapon.id, cost_display)
-        parent_weapon = db.get_weapon(weapon.parent_id, True)
+        parent_weapon = db.get_weapon(weapon.parent_id)
         costs = get_costs(db, parent_weapon)
         for cost in costs:
             cost["zenny"] += upgrade_cost

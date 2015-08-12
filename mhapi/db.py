@@ -35,8 +35,30 @@ class MHDB(object):
     - get_ENTITY_NAME_names will return a list of all names of the
           entities in the db, possibly with a type param.
     """
+    # buy and sell are empty, uses weapon.create_cost and upgrade_cost
+    _weapon_select = """
+        SELECT items._id, items.type, items.name, items.rarity, weapons.*
+        FROM weapons
+        LEFT JOIN items ON weapons._id = items._id
+    """
 
-    def __init__(self, path=None, use_cache=False):
+    # sell has the a value, but not used at the moment
+    _decoration_select = """
+        SELECT items._id, items.type, items.name, items.rarity, decorations.*
+        FROM decorations
+        LEFT JOIN items ON decorations._id = items._id
+    """
+
+    # buy has the armor cost, sell is empty
+    _armor_select = """
+        SELECT items._id, items.type, items.name, items.rarity, items.buy,
+               armor.*
+        FROM armor
+        LEFT JOIN items ON armor._id = items._id
+    """
+
+    def __init__(self, path=None, use_cache=False,
+                 include_item_components=False):
         """
         If use_cache=True, a lot of memory could be used. No attempt is
         made to de-dupe data between keys, e.g. if you access an item
@@ -50,6 +72,7 @@ class MHDB(object):
         self.conn = sqlite3.connect(path)
         self.conn.row_factory = sqlite3.Row
         self.use_cache = use_cache
+        self.include_item_components = include_item_components
         self.cache = {}
 
     def _query_one(self, key, query, args=(), model_cls=None,
@@ -71,6 +94,7 @@ class MHDB(object):
                     return v
             else:
                 self.cache[key] = {}
+        #print "query", query
         cursor = self.conn.execute(query, args)
         rows = cursor.fetchall()
         if model_cls:
@@ -79,6 +103,7 @@ class MHDB(object):
             rows = collection_cls(rows)
         if self.use_cache and not no_cache:
             self.cache[key][args] = rows
+        self._add_components(key, rows)
         return rows
 
     def cursor(self):
@@ -284,75 +309,66 @@ class MHDB(object):
             WHERE monster_id=?
         """, (monster_id,), collection_cls=model.MonsterDamage)
 
-    def get_weapons(self, get_components=False):
-        results = self._query_all("weapons", """
-            SELECT * FROM weapons
-            LEFT JOIN items ON weapons._id = items._id
-        """, model_cls=model.Weapon)
-        if results and get_components:
-            for r in results:
-                self._add_components(r)
+    def get_weapons(self):
+        return self._query_all("weapons", MHDB._weapon_select,
+                               model_cls=model.Weapon)
+
+    def get_weapons_by_query(self, wtype=None, element=None,
+                             final=None):
+        """
+        @element can have the special value 'Raw' to search for weapons
+        with no element. Otherwise @element is searched for in both
+        awaken and native, and can be a status or an element.
+
+        @final should be string '1' or '0'
+        """
+        q = MHDB._weapon_select
+        where = []
+        args = []
+        if wtype is not None:
+            where.append("wtype = ?")
+            args.append(wtype)
+        if element is not None:
+            if element == "Raw":
+                where.append("(element = '' AND awaken = '')")
+            else:
+                where.append("(element = ? OR element_2 = ? OR awaken = ?)")
+                args.extend([element] * 3)
+        if final is not None:
+            where.append("final = ?")
+            args.append(final)
+        if where:
+            q += "WHERE " + "\nAND ".join(where)
+        results = self._query_all("weapons", q, tuple(args),
+                                  model_cls=model.Weapon)
         return results
 
-    def _add_components(self, item_data):
-        ccomps = self.get_item_components(item_data.id, "Create")
-        ucomps = self.get_item_components(item_data.id, "Improve")
-        item_data.set_components(ccomps, ucomps)
-
-    def get_weapon(self, weapon_id, get_components=False):
-        weapon = self._query_one("weapon", """
-            SELECT items._id, items.name, items.buy, weapons.*
-            FROM weapons
-            LEFT JOIN items ON weapons._id = items._id
+    def get_weapon(self, weapon_id):
+        return self._query_one("weapon", MHDB._weapon_select + """
             WHERE weapons._id=?
         """, (weapon_id,), model_cls=model.Weapon)
-        if weapon and get_components:
-            self._add_components(weapon)
-        return weapon
 
-    def get_weapon_by_name(self, name, get_components=False):
-        weapon = self._query_one("weapon", """
-            SELECT items._id, items.name, items.buy, weapons.*
-            FROM weapons
-            LEFT JOIN items ON weapons._id = items._id
+    def get_weapon_by_name(self, name):
+        return self._query_one("weapon", MHDB._weapon_select + """
             WHERE items.name=?
         """, (name,), model_cls=model.Weapon)
-        if weapon and get_components:
-            self._add_components(weapon)
-        return weapon
 
-    def get_weapons_by_parent(self, parent_id, get_components=False):
-        weapons = self._query_all("weapon_by_parent", """
-            SELECT items._id, items.name, items.buy, weapons.*
-            FROM weapons
-            LEFT JOIN items ON weapons._id = items._id
+    def get_weapons_by_parent(self, parent_id):
+        return self._query_all("weapon_by_parent", MHDB._weapon_select + """
             WHERE weapons.parent_id=?
         """, (parent_id,), model_cls=model.Weapon)
-        if get_components:
-            for weapon in weapons:
-                self._add_components(weapon)
-        return weapons
 
     def get_armors(self):
-        return self._query_all("armors", """
-            SELECT items._id, items.name, items.buy, armor.*
-            FROM armor
-            LEFT JOIN items ON armor._id = items._id
-        """, model_cls=model.Armor)
+        return self._query_all("armors", MHDB._armor_select,
+                               model_cls=model.Armor)
 
     def get_armor(self, armor_id):
-        return self._query_one("armor", """
-            SELECT items._id, items.name, items.buy, armor.*
-            FROM armor
-            LEFT JOIN items ON armor._id = items._id
+        return self._query_one("armor", MHDB._armor_select + """
             WHERE armor._id=?
         """, (armor_id,), model_cls=model.Armor)
 
     def get_armor_by_name(self, name):
-        return self._query_one("armor", """
-            SELECT items._id, items.name, items.buy, armor.*
-            FROM armor
-            LEFT JOIN items ON armor._id = items._id
+        return self._query_one("armor", MHDB._armor_select + """
             WHERE items.name=?
         """, (name,), model_cls=model.Armor)
 
@@ -366,28 +382,16 @@ class MHDB(object):
         """, (item_id,), model_cls=model.ItemSkill)
 
     def get_decorations(self):
-        return self._query_all("decorations", """
-            SELECT items._id, items.name, items.buy, decorations.*
-            FROM decorations
-            INNER JOIN items
-              ON items._id = decorations._id
-        """, model_cls=model.Decoration)
+        return self._query_all("decorations", MHDB._decoration_select,
+                               model_cls=model.Decoration)
 
     def get_decoration(self, decoration_id):
-        return self._query_one("decoration", """
-            SELECT items._id, items.name, items.buy, decorations.*
-            FROM decorations
-            INNER JOIN items
-              ON items._id = decorations._id
+        return self._query_one("decoration", MHDB._decoration_select + """
             WHERE decorations._id = ?
         """, (decoration_id,), model_cls=model.Decoration)
 
     def get_decoration_by_name(self, name):
-        return self._query_all("decoration", """
-            SELECT items._id, items.name, items.buy, decorations.*
-            FROM decorations
-            INNER JOIN items
-              ON items._id = decorations._id
+        return self._query_all("decoration", MHDB._decoration_select + """
             WHERE items.name = ?
         """, (name,), model_cls=model.Decoration)
 
@@ -416,7 +420,8 @@ class MHDB(object):
         args = sorted(skill_tree_ids)
         placeholders = ", ".join(["?"] * len(skill_tree_ids))
         return self._query_all("decorations", """
-            SELECT items._id, items.name, items.buy, decorations.*
+            SELECT items._id, items.type, items.name, items.rarity,
+                   decorations.*
             FROM item_to_skill_tree
             LEFT JOIN items
               ON items._id = item_to_skill_tree.item_id
@@ -433,7 +438,8 @@ class MHDB(object):
         placeholders = ", ".join(["?"] * len(skill_tree_ids))
         args += [hunter_type]
         return self._query_all("decorations", """
-            SELECT items._id, items.name, items.buy, armor.*
+            SELECT items._id, item.type, items.name, item.rariry, items.buy,
+                   armor.*
             FROM item_to_skill_tree
             LEFT JOIN items
               ON items._id = item_to_skill_tree.item_id
@@ -485,3 +491,29 @@ class MHDB(object):
             FROM horn_melodies
             WHERE notes=?
         """, (notes,), model_cls=model.HornMelody)
+
+    def _add_components(self, key, item_results):
+        """
+        Add component data to item results from _query_one or _query_all,
+        if include_item_components is set. Uses the cache key to determine
+        if it's one of the item types we care about having components for.
+
+        TODO: use batches or single query to make this more efficient for
+        large result sets.
+        """
+        if not self.include_item_components:
+            return
+        if key.rstrip("s") not in "weapon armor decoration".split():
+            return
+        if item_results is None:
+            return
+        if not isinstance(item_results, list):
+            item_results = [item_results]
+        for item_data in item_results:
+            ccomps = self.get_item_components(item_data.id, "Create")
+            if item_data["type"] == "Weapon":
+                # only weapons have upgrade components
+                ucomps = self.get_item_components(item_data.id, "Improve")
+            else:
+                ucomps = None
+            item_data.set_components(ccomps, ucomps)
