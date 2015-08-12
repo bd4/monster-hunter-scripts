@@ -7,6 +7,7 @@
       <th>Arms</th>
       <th>Waist</th>
       <th>Legs</th>
+      <th>Skills</th>
     </tr>
 <% for(var i=0; i<ELEMENTS.length; i++) { %>
     <tr>
@@ -17,5 +18,8 @@
          <%= armors[TYPES[j]]
             ? armors[TYPES[j]][ELEMENTS[i] + "_res"] : "&nbsp;" %></td>
     <% } %>
+      <td class="num">
+         <%= skill_res[ELEMENTS[i]]
+            ? skill_res[ELEMENTS[i]] : "&nbsp;" %></td>
 <% } %>
 </table>

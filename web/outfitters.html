@@ -471,6 +471,8 @@
             _reset_slots(type, 0);
             delete armors[type];
             $("#" + type + "_skills").html("");
+            $("#" + type + "_row").attr("title", "");
+            $("#" + type + "_def").html("");
             if (nodisplay == undefined) {
                 save_armors();
                 save_decorations();
@@ -578,6 +580,11 @@
         var element_resist = {};
         var slots = 0;
         var slots_free = 0;
+        var total_defense = 0;
+        var total_max_defense = 0;
+
+        // map of component name to count
+        var components = {};
 
         $.each(GEAR, function(i, type) {
             var gear_decorations = {};
@@ -585,6 +592,16 @@
             var armor = armors[type];
             if (armor == undefined) {
                 armor = { "skills": [], "num_slots": 0 };
+            } else if (type != "Weapon" && type != "Talisman") {
+                total_defense += armor["defense"];
+                total_max_defense += armor["max_defense"];
+                $("#" + type + "_def").html("" + armor["defense"]);
+                $("#" + type + "_def").attr("title", "Max:"
+                                                     + armor["max_defense"]);
+
+                var comps_txt = get_object_as_text(armor["create_components"]);
+                $("#" + type + "_row").attr("title", comps_txt);
+                object_add_values(components, armor["create_components"]);
             }
             if (decorations[type] == undefined) {
                 decorations[type] = [];
@@ -603,36 +620,16 @@
                 armor_skills = armor["skills"];
                 gear_decorations = decorations[type];
             }
-            $.each(armor_skills, function(skill_name, skill_value) {
-                if (! (skill_name in skills)) {
-                    skills[skill_name] = 0;
-                }
-                skills[skill_name] += skill_value;
 
-                if (! (skill_name in tskills_by_type[type])) {
-                    tskills_by_type[type][skill_name] = 0;
-                }
-                tskills_by_type[type][skill_name] += skill_value;
-            });
+            // add armor skills
+            object_add_values(skills, armor_skills);
+            object_add_values(tskills_by_type[type], armor_skills);
+
+            // add decoration skills
             $.each(gear_decorations, function(i, decoration) {
-                $.each(decoration["skills"],
-                    function(skill_name, skill_value) {
-                        if (! (skill_name in skills)) {
-                            skills[skill_name] = 0;
-                        }
-                        skills[skill_name] += skill_value;
-
-                        if (! (skill_name in dskills_by_type[type])) {
-                            dskills_by_type[type][skill_name] = 0;
-                        }
-                        dskills_by_type[type][skill_name] += skill_value;
-
-                        if (! (skill_name in tskills_by_type[type])) {
-                            tskills_by_type[type][skill_name] = 0;
-                        }
-                        tskills_by_type[type][skill_name] += skill_value;
-                    }
-                );
+                object_add_values(skills, decoration["skills"]);
+                object_add_values(dskills_by_type[type], decoration["skills"]);
+                object_add_values(tskills_by_type[type], decoration["skills"]);
             });
             $.each(ELEMENTS, function(i, element) {
                 key = element + "_res";
@@ -651,6 +648,11 @@
         });
         $("#Total_slots").html((slots - slots_free)
                                + " used / " + slots + " slots");
+        $("#Total_def").html("" + total_defense);
+        $("#Total_def").prop("title", "Max:" + total_max_defense);
+
+        var comps_txt = get_object_as_text(components);
+        $("#Total_row").attr("title", comps_txt);
 
         var skill_names = Object.keys(skills);
         skill_names.sort(function(a, b) {
@@ -660,22 +662,44 @@
         });
 
         var active_skills = {}
-        $.each(skills, function(skill_name, total_points) {
-            var skill_tree_id = skill_trees[skill_name]["id"];
+        var skill_res = {}
+        $.each(skills, function(tree_name, total_points) {
+            var skill_tree_id = skill_trees[tree_name]["id"];
             var current_tree_skills = tree_skills[skill_tree_id] || [];
+            var found = 0; // 1 or -1 for plus/minus
             for (i=0; i<current_tree_skills.length; i++) {
                 var skill = current_tree_skills[i];
                 required_points = skill["required_skill_tree_points"];
                 if (total_points > 0) {
                     if (total_points >= required_points && required_points > 0) {
-                        active_skills[skill_name] = skill;
+                        active_skills[tree_name] = skill;
+                        found = 1;
                         break;
                     }
                 } else if (total_points < 0) {
                     if (total_points <= required_points && required_points < 0) {
-                        active_skills[skill_name] = skill;
+                        active_skills[tree_name] = skill;
+                        found = -1;
                         break;
                     }
+                }
+            }
+            if (found != 0) {
+                var element_res = parse_element_res_skill(skill["name"]);
+                if (element_res) {
+                    skill_res[element_res[0]] = element_res[1];
+                    element_resist[element] += element_res[1];
+                }
+                var defense_skill = parse_defense_skill(skill["name"]);
+                if (defense_skill && defense_skill[0] == "Up") {
+                    total_defense2 = get_defense_up(total_defense,
+                                                    defense_skill[1]);
+                    total_max_defense2 = get_defense_up(total_max_defense,
+                                                        defense_skill[1]);
+                    $("#Total_def").prop("title",
+                                         "Max:" + total_max_defense
+                                         + " (" + total_max_defense2
+                                         + " with armor skill)");
                 }
             }
         });
@@ -694,55 +718,110 @@
                  { TYPES: TYPES,
                    ELEMENTS: ELEMENTS,
                    armors: armors,
+                   skill_res: skill_res,
                    element_resist: element_resist });
         $("#resist_div").html(resist_table);
     }
+
+    function parse_element_res_skill(skill_name) {
+        parts = skill_name.split(" ");
+        //console.log("skill parts: " + JSON.stringify(parts));
+        if (parts.length != 3) {
+            return null;
+        }
+        if (parts[1] != "Res") {
+            return null;
+        }
+        element = parts[0].toLowerCase();
+        amount = parseInt(parts[2]);
+        return [element, amount];
+    }
+
+    function parse_defense_skill(skill_name) {
+        // Return [Up|Down, (S, M, L, or XL)] if defense skill, null otherwise
+        parts = skill_name.split(" ");
+        //console.log("skill parts: " + JSON.stringify(parts));
+        if (parts.length != 3) {
+            return null;
+        }
+        if (parts[0] != "Defense") {
+            return null;
+        }
+        level = parts[2].substring(1, parts[2].length - 1);
+        console.log("defense skill: " + parts[1] + " " + level);
+        return [parts[1], level];
+    }
+
+    function get_defense_up(defense, skill_level) {
+        switch (skill_level) {
+            case "S":
+                defense = defense + 15;
+                break;
+            case "M":
+                defense = Math.floor(defense * 1.03) + 20;
+                break;
+            case "L":
+                defense = Math.floor(defense * 1.05) + 25;
+                break;
+            case "XL":
+                defense = Math.floor(defense * 1.08) + 30;
+                break;
+        }
+        return defense;
+    }
+
   </script>
 </head>
 <body>
   <table id="armor_table" cellpadding="2" cellspacing="2">
-    <tr>
+    <tr id="Weapon_row">
       <td><label for="Weapon">Weapon:</label></td>
       <td><input id="Weapon_nslots" type="number" value="0" min="0" max="3" /> slots</td>
       <td id="Weapon_slots">&nbsp;</td>
+      <td id="Weapon_def">&nbsp;</td>
       <td id="Weapon_skills">&nbsp;</td>
     </tr>
-    <tr>
+    <tr id="Head_row">
       <td><label for="Head">Head:</label></td>
       <td><input id="Head" type="text" size="15" />
           <button id="Head_clear" class="clear">X</button></td>
       <td id="Head_slots">&nbsp;</td>
+      <td class="num" id="Head_def">&nbsp;</td>
       <td id="Head_skills">&nbsp;</td>
     </tr>
-    <tr>
+    <tr id="Body_row">
       <td><label for="Body">Body:</label></td>
       <td><input id="Body" type="text" size="15" />
           <button id="Body_clear" class="clear">X</button></td>
       <td id="Body_slots">&nbsp;</td>
+      <td class="num" id="Body_def">&nbsp;</td>
       <td id="Body_skills">&nbsp;</td>
     </tr>
-    <tr>
+    <tr id="Arms_row">
       <td><label for="Arms">Arms:</label></td>
       <td><input id="Arms" type="text" size="15" />
           <button id="Arms_clear" class="clear">X</button></td>
       <td id="Arms_slots">&nbsp;</td>
+      <td class="num" id="Arms_def">&nbsp;</td>
       <td id="Arms_skills">&nbsp;</td>
     </tr>
-    <tr>
+    <tr id="Waist_row">
       <td><label for="Waist">Waist:</label></td>
       <td><input id="Waist" type="text" size="15" />
           <button id="Waist_clear" class="clear">X</button></td>
       <td id="Waist_slots">&nbsp;</td>
+      <td class="num" id="Waist_def">&nbsp;</td>
       <td id="Waist_skills">&nbsp;</td>
     </tr>
-    <tr>
+    <tr id="Legs_row">
       <td><label for="Legs">Legs:</label></td>
       <td><input id="Legs" type="text" size="15" />
           <button id="Legs_clear" class="clear">X</button></td>
       <td id="Legs_slots">&nbsp;</td>
+      <td class="num" id="Legs_def">&nbsp;</td>
       <td id="Legs_skills">&nbsp;</td>
     </tr>
-    <tr>
+    <tr id="Talisman_row">
       <td><label for="Talisman">Talisman:</label></td>
       <td><input id="Talisman_skill1" type="text" size="15" />
           <input id="Talisman_points1" type="number" min="1" max="14" />
@@ -755,12 +834,14 @@
           <input id="Talisman_nslots" type="number" value="0" min="0" max="3" />
           slots</td>
       <td id="Talisman_slots">&nbsp;</td>
+      <td class="num" id="Talisman_def">&nbsp;</td>
       <td id="Talisman_skills">&nbsp;</td>
     </tr>
-    <tr>
+    <tr id="Total_row">
       <th>&nbsp;</th>
       <td>&nbsp;</td>
       <td id="Total_slots">0</td>
+      <td class="num" id="Total_def">&nbsp;</td>
       <td>&nbsp;</td>
     </tr>
   </table>

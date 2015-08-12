@@ -251,6 +251,38 @@ function set_horn_melodies_title(weapon_data) {
 }
 
 
+function get_object_as_text(obj) {
+    /*
+    var max_len = 0;
+    $.each(obj, function(k, v) {
+        if (k.length > max_len)
+            max_len = k.length
+    });
+    */
+    var keys = Object.keys(obj);
+    keys.sort();
+    var lines = [];
+    $.each(keys, function(i, key) {
+        //var space = Array(2 + max_len - key.length).join(" ");
+        lines.push(key + " " + obj[key]);
+    });
+    return lines.join(", ");
+}
+
+
+function object_add_values(dst_obj, src_obj) {
+    // update dst_obj with values from src_obj, adding them together if
+    // the key is already in dst_obj
+    $.each(src_obj, function(k, v) {
+        if (k in dst_obj) {
+            dst_obj[k] += v;
+        } else {
+            dst_obj[k] = v;
+        }
+    });
+}
+
+
 function get_calculating_palico_setup(weapon_data) {
     // NB: load_calculating_palico_data must be called first
     var name = weapon_data["name"];
