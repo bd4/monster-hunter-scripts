@@ -111,6 +111,9 @@ def quest_reward_expected_c(line=QUEST_A, luck_skill=LUCK_SKILL_NONE):
     elif line == QUEST_SUB:
         min_c = 1
         max_c = 4
+        # luck skill does not work on sub quests, see
+        # https://www.reddit.com/r/MonsterHunter/comments/307sda/fate_doesnt_appear_to_do_anything_to_subquest/
+        extend_p = 22 * 100.0 / 32
     else:
         raise ValueError()
 

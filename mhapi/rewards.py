@@ -139,9 +139,13 @@ class QuestReward(object):
             self.skill_delta = 0
         else:
             # variable reward, expected number of draws depends on luck skill
-            counts = [stats.quest_reward_expected_c(self.slot, skill)
-                      for skill in xrange(LuckSkill.NONE,
-                                          LuckSkill.AMAZING+1)]
+            if self.slot == stats.QUEST_SUB:
+                # sub quest rewards aren't affected by luck skill in 4U
+                counts = [stats.quest_reward_expected_c(self.slot)]
+            else:
+                counts = [stats.quest_reward_expected_c(self.slot, skill)
+                          for skill in xrange(LuckSkill.NONE,
+                                              LuckSkill.AMAZING+1)]
 
 
             evs = [((count - self.fixed_rewards)
