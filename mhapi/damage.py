@@ -11,6 +11,7 @@ from mhapi.model import SharpnessLevel, _break_find
 WEAKPART_WEIGHT = 0.5
 
 
+
 def raw_damage(true_raw, sharpness, affinity, monster_hitbox, motion):
     """
     Calculate raw damage to a monster part with the given true raw,
@@ -165,7 +166,7 @@ class WeaponMonsterDamage(object):
                  attack_skill=skills.AttackUp.NONE,
                  critical_eye_skill=skills.CriticalEye.NONE,
                  element_skill=skills.ElementAttackUp.NONE,
-                 awaken=False):
+                 awaken=False, artillery_level=0, limit_parts=None):
         self.weapon = weapon_row
         self.monster = monster_row
         self.monster_damage = monster_damage
@@ -176,12 +177,17 @@ class WeaponMonsterDamage(object):
         self.critical_eye_skill = critical_eye_skill
         self.element_skill = element_skill
         self.awaken = awaken
+        self.artillery_level = artillery_level
+        self.limit_parts = limit_parts
 
         self.damage_map = defaultdict(PartDamage)
         self.average = 0
         self.weakness_weighted = 0
         self.best_weighted = 0
         self.break_weighted = 0
+
+        # map of part -> (map of burst_level -> (raw, ele, burst))
+        self.cb_phial_damage = defaultdict(dict)
 
         self.weapon_type = self.weapon["wtype"]
         self.true_raw = (self.weapon["attack"]
@@ -202,6 +208,8 @@ class WeaponMonsterDamage(object):
         self.damage_type = WeaponType.damage_type(self.weapon_type)
         self.etype = self.weapon["element"]
         self.eattack = self.weapon["element_attack"]
+        self.etype2 = self.weapon["element_2"]
+        self.eattack2 = self.weapon["element_2_attack"]
         if not self.etype and self.awaken:
             self.etype = self.weapon.awaken
             self.eattack = self.weapon.awaken_attack
@@ -210,6 +218,10 @@ class WeaponMonsterDamage(object):
             self.eattack = int(self.eattack)
         else:
             self.eattack = 0
+        if self.eattack2:
+            self.eattack2 = int(self.eattack2)
+        else:
+            self.eattack2 = 0
 
         self.true_raw = skills.AttackUp.modified(attack_skill,
                                                  self.true_raw)
@@ -217,6 +229,8 @@ class WeaponMonsterDamage(object):
                                                     self.affinity)
         self.eattack  = skills.ElementAttackUp.modified(element_skill,
                                                         self.eattack)
+        self.eattack2 = skills.ElementAttackUp.modified(element_skill,
+                                                        self.eattack2)
 
         self.parts = []
         self.break_count = 0
@@ -228,8 +242,8 @@ class WeaponMonsterDamage(object):
             weakpart_raw=0,
             weakpart_element=0,
         )
-        self.max_raw_part = (None, 0)
-        self.max_element_part = (None, 0)
+        self.max_raw_part = (None, -1)
+        self.max_element_part = (None, -1)
         self._calculate_damage()
 
     @property
@@ -245,6 +259,9 @@ class WeaponMonsterDamage(object):
             if m:
                 part = m.group(1)
                 alt = m.group(2)
+
+            if self.limit_parts is not None and part not in self.limit_parts:
+                continue
             #print part, alt
             hitbox = 0
             hitbox_cut = int(row["cut"])
@@ -266,6 +283,14 @@ class WeaponMonsterDamage(object):
             if self.etype in "Fire Water Ice Thunder Dragon".split():
                 ehitbox = int(row[str(self.etype.lower())])
                 element = element_damage(self.eattack, self.sharpness, ehitbox)
+                if self.etype2:
+                    # handle dual blades double element/status
+                    element = element / 2.0
+                    if self.etype2 in "Fire Water Ice Thunder Dragon".split():
+                        ehitbox2 = int(row[str(self.etype2.lower())])
+                        element2 = element_damage(self.eattack2,
+                                                  self.sharpness, ehitbox2)
+                        element += element2 / 2.0
 
             part_damage = self.damage_map[part]
             part_damage.set_damage(raw, element, hitbox, ehitbox, state=alt)
@@ -292,6 +317,25 @@ class WeaponMonsterDamage(object):
         self.averages["break_raw"] = self.break_weakpart_raw()
         self.averages["break_element"] = self.break_weakpart_element()
         self.averages["break_only"] = self.break_only()
+        self._calculate_cb_phial_damage()
+
+    def _calculate_cb_phial_damage(self):
+        if self.weapon_type != "Charge Blade":
+            return
+        if self.weapon.phial == "Impact":
+            fn = cb_impact_phial_damage
+        else:
+            fn = cb_element_phial_damage
+        for part in self.parts:
+            part_damage = self.damage_map[part]
+            hitbox = part_damage.hitbox
+            ehitbox = part_damage.ehitbox
+            for level in (0, 1, 2, 3, 5):
+                damage_tuple = fn(self.true_raw, self.eattack, self.sharpness,
+                                  self.affinity, hitbox, ehitbox, level,
+                                  shield_charged=True,
+                                  artillery_level=self.artillery_level)
+                self.cb_phial_damage[part][level] = damage_tuple
 
     def uniform(self):
         average = 0.0
@@ -328,7 +372,11 @@ class WeaponMonsterDamage(object):
         return average / total_ehitbox
 
     def weakpart_weighted_raw(self, weak_weight=WEAKPART_WEIGHT):
-        other_weight = (1 - weak_weight) / (len(self.parts) - 1)
+        if len(self.parts) == 1:
+            other_weight = 0
+            weak_weight = 1
+        else:
+            other_weight = (1 - weak_weight) / (len(self.parts) - 1)
         average = 0
         for part, damage in self.damage_map.iteritems():
             if part == self.max_raw_part[0]:
@@ -339,7 +387,11 @@ class WeaponMonsterDamage(object):
         return average
 
     def weakpart_weighted_element(self, weak_weight=WEAKPART_WEIGHT):
-        other_weight = (1 - weak_weight) / (len(self.parts) - 1)
+        if len(self.parts) == 1:
+            other_weight = 0
+            weak_weight = 1
+        else:
+            other_weight = (1 - weak_weight) / (len(self.parts) - 1)
         average = 0
         for part, damage in self.damage_map.iteritems():
             if part == self.max_element_part[0]:
@@ -534,3 +586,102 @@ def element_x_attack_up(value, level=1):
         value += 90
     else:
         raise ValueError("level must be 1, 2, or 3")
+
+
+def cb_impact_phial_damage(true_raw, element, sharpness, affinity,
+                           monster_hitbox, monster_ehitbox,
+                           burst_level, artillery_level=0,
+                           shield_charged=False):
+    """
+    @burst_level: 0 for shield thrust, 1 for side chop, 2 for double swing,
+                  3 for AED, 5 for super AED w/ 5 phials
+    @artillery_level: 1 for Novice, 2 for God or Novice + Felyne Bombardier
+
+    See
+    https://www.reddit.com/r/MonsterHunter/comments/391a5i/mh4u_charge_blade_phial_damage/
+
+    Note this contradicts data from the other link, but this is more recent.
+    """
+    motions = _cb_get_motions(burst_level, shield_charged)
+    if burst_level == 5:
+        multiplier = 0.33
+    elif burst_level == 3:
+        multiplier = 0.1
+    else:
+        multiplier = 0.05
+
+    if artillery_level == 1:
+        multiplier *= 1.3
+    elif artillery_level == 2:
+        multiplier *= 1.4
+    elif artillery_level != 0:
+        raise ValueError("artillery_level must be 0, 1 (Novice), or 2 (God)")
+
+    if shield_charged and burst_level != 5:
+        multiplier *= 1.3
+
+    if shield_charged and burst_level == 0:
+        # Shield Thrust gets one blast if shield is charged
+        burst_level = 1
+
+    # burst damage is fixed, doesn't depend on monster hitbox
+    burst_dmg = true_raw * multiplier * burst_level
+    raw_dmg = sum([raw_damage(true_raw, sharpness, affinity, monster_hitbox,
+                              motion)
+                   for motion in motions])
+    ele_dmg = (element_damage(element, sharpness, monster_ehitbox)
+               * len(motions))
+    return (raw_dmg, ele_dmg, burst_dmg)
+
+
+def cb_element_phial_damage(true_raw, element, sharpness, affinity,
+                            monster_hitbox, monster_ehitbox,
+                            burst_level, artillery_level=0,
+                            shield_charged=False):
+    motions = _cb_get_motions(burst_level, shield_charged)
+
+    if burst_level == 5:
+        multiplier = 4.5 * 3
+    elif burst_level == 3:
+        multiplier = 4.5
+    else:
+        multiplier = 3
+
+    if shield_charged and burst_level != 5:
+        multiplier *= 1.35
+
+    if shield_charged and burst_level == 0:
+        # Shield Thrust gets one blast if shield is charged
+        burst_level = 1
+
+    burst_dmg = (element / 10.0 * multiplier * burst_level
+                 * monster_ehitbox / 100.0)
+    raw_dmg = sum([raw_damage(true_raw, sharpness, affinity, monster_hitbox,
+                              motion)
+                   for motion in motions])
+    ele_dmg = (element_damage(element, sharpness, monster_ehitbox)
+               * len(motions))
+    return (raw_dmg, ele_dmg, burst_dmg)
+
+
+def _cb_get_motions(burst_level, shield_charged):
+    # See https://www.reddit.com/r/MonsterHunter/comments/2ue8qw/charge_blade_attack_motion_values/
+    if burst_level == 0:
+        # Shield Thrust
+        motions = [8, 12]
+    elif burst_level == 1:
+        # Burst Side Chop
+        motions = [31] if shield_charged else [26]
+    elif burst_level == 2:
+        # Double Side Swing
+        motions = [21, 96] if shield_charged else [18, 80]
+    elif burst_level == 3:
+        # AED or Super Burst
+        motions = [108] if shield_charged else [90]
+    elif burst_level == 5:
+        # super AED or Ultra Burst, 5 phials filled
+        # Note: w/o phials it's [17, 90], but that is very rarely used
+        motions = [25, 99, 100]
+    else:
+        raise ValueError("burst_level must be 0, 1, 2, 3, or 5 (Super AED)")
+    return motions
