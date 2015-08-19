@@ -186,10 +186,13 @@
         }
 
         if (weapon_element != "All"
-            && weapon_element != weapon_data["element"]
-            && weapon_element != weapon_data["element_2"]
-            && weapon_element != weapon_data["awaken"]) {
-            return false;
+        &&  weapon_element != weapon_data["element"]
+        &&  weapon_element != weapon_data["element_2"]
+        &&  weapon_element != weapon_data["awaken"]) {
+            if (weapon_element != "None"
+            ||  weapon_data["element"] != "" || weapon_data["awaken"] != "") {
+                return false;
+            }
         }
 
         if (weapon_names && !list_match(weapon_names, [weapon_data["name"]])) {
@@ -301,6 +304,7 @@
         >Element:</label></td>
     <td><select id="weapon_element">
         <option value="All">All</option>
+        <option value="None">None</option>
         <option value="Fire">Fire</option>
         <option value="Water">Water</option>
         <option value="Thunder">Thunder</option>
