@@ -166,7 +166,8 @@ class WeaponMonsterDamage(object):
                  attack_skill=skills.AttackUp.NONE,
                  critical_eye_skill=skills.CriticalEye.NONE,
                  element_skill=skills.ElementAttackUp.NONE,
-                 awaken=False, artillery_level=0, limit_parts=None):
+                 awaken=False, artillery_level=0, limit_parts=None,
+                 frenzy_bonus=0):
         self.weapon = weapon_row
         self.monster = monster_row
         self.monster_damage = monster_damage
@@ -179,6 +180,10 @@ class WeaponMonsterDamage(object):
         self.awaken = awaken
         self.artillery_level = artillery_level
         self.limit_parts = limit_parts
+        # 15 normaly for overcoming the virus, 30 with frenzy res skill
+        assert frenzy_bonus in (0, 15, 30)
+        self.frenzy_bonus = frenzy_bonus
+        self.chaotic = False
 
         self.damage_map = defaultdict(PartDamage)
         self.average = 0
@@ -198,13 +203,22 @@ class WeaponMonsterDamage(object):
             self.sharpness = self.weapon.sharpness.max
         #print "sharpness=", self.sharpness
         if self.weapon["affinity"]:
-            # handle chaotic gore affinity - use average, which is
-            # probably not quite right but at least allows an initial
-            # comparison point
-            parts = [int(x) for x in self.weapon["affinity"].split("/")]
-            self.affinity = sum(parts)/len(parts)
+            if "/" in self.weapon["affinity"]:
+                self.chaotic = True
+                # Handle chaotic gore affinity, e.g. -35/10. This means that
+                # 35% of the time it does a negative critical (75% damage)
+                # and 10% of the time does a positive critical (125%
+                # damage). If frenzied (overcome virus which lasts 45
+                # seconds), the negative affinity becomes positive
+                # instead (35 + 10 = 45 in the example).
+                self.affinity = sum(
+                                 abs(int(x)) if self.frenzy_bonus else int(x)
+                                 for x in self.weapon["affinity"].split("/"))
+            else:
+                self.affinity = int(self.weapon["affinity"])
         else:
             self.affinity = 0
+        self.affinity += self.frenzy_bonus
         self.damage_type = WeaponType.damage_type(self.weapon_type)
         self.etype = self.weapon["element"]
         self.eattack = self.weapon["element_attack"]
@@ -305,7 +319,13 @@ class WeaponMonsterDamage(object):
                     self.max_raw_part = (part, hitbox)
                 if ehitbox > self.max_element_part[1]:
                     self.max_element_part = (part, ehitbox)
-        for d in self.damage_map.values():
+
+        for part in self.damage_map.keys():
+            if None not in self.damage_map[part].states:
+                #print "Failed to parse part:", part
+                del self.damage_map[part]
+
+        for part, d in self.damage_map.iteritems():
             if d.is_breakable():
                 self.break_count += 1
         self.parts = self.damage_map.keys()

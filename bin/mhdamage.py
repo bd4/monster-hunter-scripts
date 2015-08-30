@@ -67,7 +67,7 @@ def parse_args(argv):
                         help="add Sharpness +1 skill, default off")
     parser.add_argument("-f", "--awaken", action="store_true",
                         default=False,
-                        help="add Awaken (FreeElement), default off")
+                        help="add Awaken (FreeElemnt), default off")
     parser.add_argument("-a", "--attack-up",
                         type=int, choices=range(0, 5), default=0,
                         help="1-4 for AuS, M, L, XL")
@@ -81,9 +81,21 @@ def parse_args(argv):
     parser.add_argument("-t", "--artillery",
                         type=int, choices=[0,1,2], default=0,
                         help="0-2 for no artillery, novice, god")
+    parser.add_argument("-z", "--frenzy",
+                        help="With virus affinity boost, must be either"
+                            +" 15 (normal) or 30 (with Frenzy Res skill)",
+                        type=int, choices=[0, 15, 30], default=0)
     parser.add_argument("-p", "--parts",
                         help="Limit analysis to specified parts"
                             +" (comma separated list)")
+    parser.add_argument("-l", "--phial",
+                        help="Show CB phial damage at the sepcified level"
+                            +" (1, 2, 3, 5=ultra) instead of normal motion"
+                            +" values.",
+                        type=int, choices=[0, 1, 2, 3, 5], default=0)
+    parser.add_argument("-d", "--diff", action="store_true", default=False,
+                        help="Show percent difference in damage to each part"
+                            +" from first weapon in list.")
     parser.add_argument("-m", "--match", nargs="*",
                     help="WEAPON_TYPE,ELEMENT_OR_STATUS_OR_RAW"
                         +" Include all matching weapons in their final form."
@@ -104,94 +116,67 @@ def parse_args(argv):
     return parser.parse_args(argv)
 
 
-if __name__ == '__main__':
-    args = parse_args(None)
+def print_sorted_phial_damage(names, damage_map_base, weapon_damage_map, parts,
+                              level):
+    def cb_levelN(weapon):
+        return avg_phial(weapon_damage_map[weapon], level=level)
 
-    db = MHDB(_pathfix.db_path)
-    motiondb = MotionValueDB(_pathfix.motion_values_path)
+    def avg_phial(wd, level=5):
+        total = 0.0
+        for part in parts:
+            total += sum(wd.cb_phial_damage[part][level])
+        return total / len(parts)
 
-    monster = db.get_monster_by_name(args.monster)
-    if not monster:
-        raise ValueError("Monster '%s' not found" % args.monster)
-    monster_damage = db.get_monster_damage(monster.id)
+    names_sorted = list(names)
+    names_sorted.sort(key=cb_levelN, reverse=True)
 
-    weapons = []
-    weapon_type = None
+    _print_headers(parts, damage_map_base)
 
-    for match_tuple in args.match:
-        # TODO: better validation
-        wtype, element = match_tuple
-        match_weapons = db.get_weapons_by_query(wtype=wtype, element=element,
-                                                final=1)
-        weapons.extend(match_weapons)
+    for name in names_sorted:
+        print "%-20s:" % name,
+        damage_map = weapon_damage_map[name]
+        print "%0.2f" % avg_phial(damage_map, level=level),
+        for part in parts:
+            part_damage = damage_map[part]
+            print "%0.2f" % sum(damage_map.cb_phial_damage[part][level]),
+        print
 
-    for name in args.weapon:
-        weapon = db.get_weapon_by_name(name)
-        if not weapon:
-            raise ValueError("Weapon '%s' not found" % name)
-        weapons.append(weapon)
 
-    if not weapons:
-        print "Err: no matching weapons"
-        sys.exit(1)
+def _print_headers(parts, damage_map_base):
+    print
+    avg_hitbox = (sum(damage_map_base[part].hitbox for part in parts)
+                  / float(len(parts)))
+    cols = ["%s (%d)" % (part, damage_map_base[part].hitbox)
+            for part in parts]
+    cols = ["%s (%d)" % ("Avg", avg_hitbox)] + cols
+    print " | ".join(cols)
 
-    names = [w.name for w in weapons]
 
-    monster_breaks = db.get_monster_breaks(monster.id)
-    weapon_type = weapons[0]["wtype"]
-    motion = motiondb[weapon_type].average
-    print "Weapon Type: %s" % weapon_type
-    print "Average Motion: %0.1f" % motion
-    print "Monster Breaks: %s" % ", ".join(monster_breaks)
-    skill_names = ["Sharpness +1" if args.sharpness_plus_one else "",
-                   "Awaken" if args.awaken else "",
-                   skills.AttackUp.name(args.attack_up),
-                   skills.CriticalEye.name(args.critical_eye),
-                   skills.ElementAttackUp.name(args.element_up)]
-    print "Skills:", ", ".join(skill for skill in skill_names if skill)
+def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
+    def uniform_average(weapon):
+        return weapon_damage_map[weapon].averages["uniform"]
 
-    if args.parts:
-        limit_parts = args.parts.split(",")
-    else:
-        limit_parts = None
+    names_sorted = list(names)
+    names_sorted.sort(key=uniform_average, reverse=True)
 
-    weapon_damage_map = dict()
-    for row in weapons:
-        name = row["name"]
-        row_type = row["wtype"]
-        if row_type != weapon_type:
-            raise ValueError("Weapon '%s' is different type" % name)
-        try:
-            wd = WeaponMonsterDamage(row,
-                                     monster, monster_damage,
-                                     motion, args.sharpness_plus_one,
-                                     monster_breaks,
-                                     attack_skill=args.attack_up,
-                                     critical_eye_skill=args.critical_eye,
-                                     element_skill=args.element_up,
-                                     awaken=args.awaken,
-                                     artillery_level=args.artillery,
-                                     limit_parts=args.parts)
-            print "%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity),
-            if wd.etype:
-                if wd.etype2:
-                    print "(%4.0f %s, %4.0f %s)" \
-                        % (wd.eattack, wd.etype, wd.eattack2, wd.etype2),
-                else:
-                    print "(%4.0f %s)" % (wd.eattack, wd.etype),
-            print SharpnessLevel.name(wd.sharpness)
-            weapon_damage_map[name] = wd
-        except ValueError as e:
-            print str(e)
-            sys.exit(1)
+    _print_headers(parts, damage_map_base)
 
-    damage_map_base = weapon_damage_map[weapons[0].name]
+    #print
+    #print " | ".join(["%-15s" % "Avg"] + parts)
+    #print " | ".join(["   "] + [str(damage_map_base[part].hitbox)
+    #                            for part in parts])
 
-    if limit_parts:
-        parts = limit_parts
-    else:
-        parts = damage_map_base.parts
+    for name in names_sorted:
+        print "%-20s:" % name,
+        damage_map = weapon_damage_map[name]
+        print "%0.2f" % damage_map.averages["uniform"],
+        for part in parts:
+            part_damage = damage_map[part]
+            print "%0.2f" % part_damage.total,
+        print
 
+
+def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
     for part in parts:
         tdiffs = [percent_change(
                     damage_map_base[part].total,
@@ -244,3 +229,114 @@ if __name__ == '__main__':
         diff_s = ",".join("%+0.1f%%" % i for i in diffs)
 
         print "%22s %0.2f (%s)" % (avg_type, base, diff_s)
+
+
+if __name__ == '__main__':
+    args = parse_args(None)
+
+    db = MHDB(_pathfix.db_path)
+    motiondb = MotionValueDB(_pathfix.motion_values_path)
+
+    monster = db.get_monster_by_name(args.monster)
+    if not monster:
+        raise ValueError("Monster '%s' not found" % args.monster)
+    monster_damage = db.get_monster_damage(monster.id)
+
+    weapons = []
+    weapon_type = None
+    names_set = set()
+
+    for name in args.weapon:
+        weapon = db.get_weapon_by_name(name)
+        if not weapon:
+            raise ValueError("Weapon '%s' not found" % name)
+        names_set.add(name)
+        weapons.append(weapon)
+
+    for match_tuple in args.match:
+        # TODO: better validation
+        wtype, element = match_tuple
+        match_weapons = db.get_weapons_by_query(wtype=wtype, element=element,
+                                                final=1)
+        for w in match_weapons:
+            # skip weapons already explicitly names in arg list.
+            # Especially useful in diff mode.
+            if w.name in names_set:
+                continue
+            weapons.append(w)
+
+    if not weapons:
+        print "Err: no matching weapons"
+        sys.exit(1)
+
+    names = [w.name for w in weapons]
+
+    monster_breaks = db.get_monster_breaks(monster.id)
+    weapon_type = weapons[0]["wtype"]
+    if args.phial and weapon_type != "Charge Blade":
+        print "ERROR: phial option is only supported for Charge Blade"
+        sys.exit(1)
+    motion = motiondb[weapon_type].average
+    print "Weapon Type: %s" % weapon_type
+    print "Average Motion: %0.1f" % motion
+    print "Monster Breaks: %s" % ", ".join(monster_breaks)
+    skill_names = ["Sharpness +1" if args.sharpness_plus_one else "",
+                   "Awaken" if args.awaken else "",
+                   skills.AttackUp.name(args.attack_up),
+                   skills.CriticalEye.name(args.critical_eye),
+                   skills.ElementAttackUp.name(args.element_up)]
+    print "Skills:", ", ".join(skill for skill in skill_names if skill)
+
+    if args.parts:
+        limit_parts = args.parts.split(",")
+    else:
+        limit_parts = None
+
+    weapon_damage_map = dict()
+    for row in weapons:
+        name = row["name"]
+        row_type = row["wtype"]
+        if row_type != weapon_type:
+            raise ValueError("Weapon '%s' is different type" % name)
+        try:
+            wd = WeaponMonsterDamage(row,
+                                     monster, monster_damage,
+                                     motion, args.sharpness_plus_one,
+                                     monster_breaks,
+                                     attack_skill=args.attack_up,
+                                     critical_eye_skill=args.critical_eye,
+                                     element_skill=args.element_up,
+                                     awaken=args.awaken,
+                                     artillery_level=args.artillery,
+                                     limit_parts=args.parts,
+                                     frenzy_bonus=args.frenzy)
+            print "%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity),
+            if wd.etype:
+                if wd.etype2:
+                    print "(%4.0f %s, %4.0f %s)" \
+                        % (wd.eattack, wd.etype, wd.eattack2, wd.etype2),
+                else:
+                    print "(%4.0f %s)" % (wd.eattack, wd.etype),
+            print SharpnessLevel.name(wd.sharpness)
+            weapon_damage_map[name] = wd
+        except ValueError as e:
+            print str(e)
+            sys.exit(1)
+
+    damage_map_base = weapon_damage_map[names[0]]
+
+    if limit_parts:
+        parts = limit_parts
+    else:
+        parts = damage_map_base.parts
+
+    if args.diff:
+        print_damage_percent_diff(names, damage_map_base,
+                                  weapon_damage_map, parts)
+    elif args.phial:
+        print_sorted_phial_damage(names, damage_map_base,
+                                  weapon_damage_map, parts,
+                                  level=args.phial)
+    else:
+        print_sorted_damage(names, damage_map_base,
+                            weapon_damage_map, parts)
