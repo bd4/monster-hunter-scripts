@@ -47,7 +47,7 @@ WTYPE_ABBR = dict(
     GL="Gunlance",
     SA="Switch Axe",
     CB="Charge Blade",
-    IG="Insect Glave",
+    IG="Insect Glaive",
     LBG="Light Bowgun",
     HBG="Heavy Bowgun"
 )
