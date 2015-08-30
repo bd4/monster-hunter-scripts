@@ -438,7 +438,7 @@ class MHDB(object):
         placeholders = ", ".join(["?"] * len(skill_tree_ids))
         args += [hunter_type]
         return self._query_all("decorations", """
-            SELECT items._id, item.type, items.name, item.rariry, items.buy,
+            SELECT items._id, items.type, items.name, items.rarity, items.buy,
                    armor.*
             FROM item_to_skill_tree
             LEFT JOIN items
