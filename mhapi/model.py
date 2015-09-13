@@ -357,6 +357,9 @@ class Weapon(ItemCraftable):
         self._data["sharpness"] = WeaponSharpness(normal)
         self._data["sharpness_plus"] = WeaponSharpness(plus)
 
+    def is_not_localized(self):
+        return (self.name == self.name_jp)
+
 
 class Monster(RowModel):
     _list_fields = ["id", "class", "name"]

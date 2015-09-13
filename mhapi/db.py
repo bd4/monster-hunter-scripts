@@ -37,7 +37,8 @@ class MHDB(object):
     """
     # buy and sell are empty, uses weapon.create_cost and upgrade_cost
     _weapon_select = """
-        SELECT items._id, items.type, items.name, items.rarity, weapons.*
+        SELECT items._id, items.type, items.name, items.name_jp,
+               items.rarity, weapons.*
         FROM weapons
         LEFT JOIN items ON weapons._id = items._id
     """
@@ -310,7 +311,10 @@ class MHDB(object):
         """, (monster_id,), collection_cls=model.MonsterDamage)
 
     def get_weapons(self):
-        return self._query_all("weapons", MHDB._weapon_select,
+        # Note: weapons only available via JP DLC have no localized
+        # name, filter them out.
+        return self._query_all("weapons", MHDB._weapon_select + """
+                               WHERE items.name != items.name_jp""",
                                model_cls=model.Weapon)
 
     def get_weapons_by_query(self, wtype=None, element=None,
@@ -323,7 +327,7 @@ class MHDB(object):
         @final should be string '1' or '0'
         """
         q = MHDB._weapon_select
-        where = []
+        where = ["items.name != items.name_jp"]
         args = []
         if wtype is not None:
             where.append("wtype = ?")
