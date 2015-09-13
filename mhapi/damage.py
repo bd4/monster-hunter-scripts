@@ -3,6 +3,7 @@ from collections import defaultdict
 import json
 import difflib
 import re
+import math
 
 from mhapi import skills
 from mhapi.model import SharpnessLevel, _break_find
@@ -11,17 +12,20 @@ from mhapi.model import SharpnessLevel, _break_find
 WEAKPART_WEIGHT = 0.5
 
 
+def floor(x):
+    return int(math.floor(x))
+
 
 def raw_damage(true_raw, sharpness, affinity, monster_hitbox, motion):
     """
     Calculate raw damage to a monster part with the given true raw,
     sharpness, monster raw weakness, and weapon motion value.
     """
-    return (true_raw
-            * SharpnessLevel.raw_modifier(sharpness)
-            * (1 + (affinity / 400.0))
-            * motion / 100.0
-            * monster_hitbox / 100.0)
+    return floor(true_raw
+                 * SharpnessLevel.raw_modifier(sharpness)
+                 * (1 + (affinity / 400.0))
+                 * motion / 100.0
+                 * monster_hitbox / 100.0)
 
 
 def element_damage(element, sharpness, monster_ehitbox):
@@ -30,9 +34,9 @@ def element_damage(element, sharpness, monster_ehitbox):
     attack, the given sharpness, and the given monster elemental weakness.
     Note that this is independent of the motion value of the attack.
     """
-    return (element / 10.0
-            * SharpnessLevel.element_modifier(sharpness)
-            * monster_ehitbox / 100.0)
+    return floor(element / 10.0
+                 * SharpnessLevel.element_modifier(sharpness)
+                 * monster_ehitbox / 100.0)
 
 
 class MotionType(object):
@@ -276,7 +280,10 @@ class WeaponMonsterDamage(object):
 
             if self.limit_parts is not None and part not in self.limit_parts:
                 continue
-            #print part, alt
+
+            if row["cut"] == -1:
+                continue
+
             hitbox = 0
             hitbox_cut = int(row["cut"])
             hitbox_impact = int(row["impact"])
@@ -572,8 +579,10 @@ class PartDamage(object):
 
     def average(self, break_weight=0.25, rage_weight=0.5):
         if self.break_diff():
-            assert not self.rage_diff()
-            return self.average_break(break_weight)
+            avg = self.average_break(break_weight)
+            if self.rage_diff():
+                return (self.average_rage(rage_weight) + avg) / 2.0
+            return avg
         else:
             return self.average_rage(rage_weight)
 
