@@ -2,6 +2,8 @@
 
 import sys
 import argparse
+import shlex
+import copy
 
 import _pathfix
 
@@ -49,19 +51,39 @@ def get_element_match(term):
     raise ValueError("Unknown element or status: %s" % term)
 
 
+def parse_weapon_arg(arg, base_args):
+    """
+    Return (name, skill_args), where skill_args is None if not specified.
+    """
+    parts = arg.split(";")
+    if len(parts) == 1:
+        return parts[0], None
+    elif len(parts) == 2:
+        parser = argparse.ArgumentParser(description="Parse per-weapon skills")
+        _add_skill_args(parser)
+        skill_args = shlex.split(parts[1])
+        base_copy = copy.copy(base_args)
+        return parts[0], parser.parse_args(skill_args, namespace=base_copy)
+    else:
+        raise ValueError("invalid weapon-skills arg: " + arg)
+
+
+
+def get_skill_names(args):
+    return ["Sharpness +1" if args.sharpness_plus_one else "",
+            "Awaken" if args.awaken else "",
+            skills.AttackUp.name(args.attack_up),
+            skills.CriticalEye.name(args.critical_eye),
+            skills.ElementAttackUp.name(args.element_up)]
+
+
 def percent_change(a, b):
     if a == 0:
         return b
     return (100.0 * (b-a) / a)
 
 
-def parse_args(argv):
-    parser = argparse.ArgumentParser(description=
-        "Calculate damage to monster from different weapons of the"
-        " same class. The average motion value for the weapon class"
-        " is used for raw damage calculations, to get a rough idea of"
-        " the relative damage from raw vs element when comparing."
-    )
+def _add_skill_args(parser):
     parser.add_argument("-s", "--sharpness-plus-one", action="store_true",
                         default=False,
                         help="add Sharpness +1 skill, default off")
@@ -85,6 +107,16 @@ def parse_args(argv):
                         help="With virus affinity boost, must be either"
                             +" 15 (normal) or 30 (with Frenzy Res skill)",
                         type=int, choices=[0, 15, 30], default=0)
+
+
+def parse_args(argv):
+    parser = argparse.ArgumentParser(description=
+        "Calculate damage to monster from different weapons of the"
+        " same class. The average motion value for the weapon class"
+        " is used for raw damage calculations, to get a rough idea of"
+        " the relative damage from raw vs element when comparing."
+    )
+    _add_skill_args(parser)
     parser.add_argument("-p", "--parts",
                         help="Limit analysis to specified parts"
                             +" (comma separated list)")
@@ -138,7 +170,8 @@ def print_sorted_phial_damage(names, damage_map_base, weapon_damage_map, parts,
         print "%0.2f" % avg_phial(damage_map, level=level),
         for part in parts:
             part_damage = damage_map[part]
-            print "%0.2f" % sum(damage_map.cb_phial_damage[part][level]),
+            #print "%0.2f" % sum(damage_map.cb_phial_damage[part][level]),
+            print "%0.2f:%0.2f:%0.2f" % damage_map.cb_phial_damage[part][level],
         print
 
 
@@ -172,7 +205,7 @@ def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
         print "%0.2f" % damage_map.averages["uniform"],
         for part in parts:
             part_damage = damage_map[part]
-            print "%0.2f" % part_damage.total,
+            print "% 2d" % part_damage.average(),
         print
 
 
@@ -246,12 +279,17 @@ if __name__ == '__main__':
     weapon_type = None
     names_set = set()
 
-    for name in args.weapon:
+    skill_args_map = {}
+
+    for name_skills in args.weapon:
+        name, skill_args = parse_weapon_arg(name_skills, args)
         weapon = db.get_weapon_by_name(name)
         if not weapon:
             raise ValueError("Weapon '%s' not found" % name)
         names_set.add(name)
         weapons.append(weapon)
+        if skill_args:
+            skill_args_map[name] = skill_args
 
     for match_tuple in args.match:
         # TODO: better validation
@@ -264,6 +302,7 @@ if __name__ == '__main__':
             if w.name in names_set:
                 continue
             weapons.append(w)
+            names_set.add(w.name)
 
     if not weapons:
         print "Err: no matching weapons"
@@ -280,12 +319,8 @@ if __name__ == '__main__':
     print "Weapon Type: %s" % weapon_type
     print "Average Motion: %0.1f" % motion
     print "Monster Breaks: %s" % ", ".join(monster_breaks)
-    skill_names = ["Sharpness +1" if args.sharpness_plus_one else "",
-                   "Awaken" if args.awaken else "",
-                   skills.AttackUp.name(args.attack_up),
-                   skills.CriticalEye.name(args.critical_eye),
-                   skills.ElementAttackUp.name(args.element_up)]
-    print "Skills:", ", ".join(skill for skill in skill_names if skill)
+    skill_names = get_skill_names(args)
+    print "Common Skills:", ", ".join(skill for skill in skill_names if skill)
 
     if args.parts:
         limit_parts = args.parts.split(",")
@@ -299,17 +334,18 @@ if __name__ == '__main__':
         if row_type != weapon_type:
             raise ValueError("Weapon '%s' is different type" % name)
         try:
+            skill_args = skill_args_map.get(name, args)
             wd = WeaponMonsterDamage(row,
                                      monster, monster_damage,
-                                     motion, args.sharpness_plus_one,
+                                     motion, skill_args.sharpness_plus_one,
                                      monster_breaks,
-                                     attack_skill=args.attack_up,
-                                     critical_eye_skill=args.critical_eye,
-                                     element_skill=args.element_up,
-                                     awaken=args.awaken,
-                                     artillery_level=args.artillery,
+                                     attack_skill=skill_args.attack_up,
+                                     critical_eye_skill=skill_args.critical_eye,
+                                     element_skill=skill_args.element_up,
+                                     awaken=skill_args.awaken,
+                                     artillery_level=skill_args.artillery,
                                      limit_parts=args.parts,
-                                     frenzy_bonus=args.frenzy)
+                                     frenzy_bonus=skill_args.frenzy)
             print "%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity),
             if wd.etype:
                 if wd.etype2:
@@ -317,7 +353,13 @@ if __name__ == '__main__':
                         % (wd.eattack, wd.etype, wd.eattack2, wd.etype2),
                 else:
                     print "(%4.0f %s)" % (wd.eattack, wd.etype),
-            print SharpnessLevel.name(wd.sharpness)
+            print SharpnessLevel.name(wd.sharpness),
+            if skill_args != args:
+                print "{%s}" % ",".join(sn
+                                        for sn in get_skill_names(skill_args)
+                                        if sn)
+            else:
+                print
             weapon_damage_map[name] = wd
         except ValueError as e:
             print str(e)
