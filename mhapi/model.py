@@ -274,6 +274,9 @@ class Armor(ItemWithSkills):
 
     def skill(self, skill_id_or_name, decoration_values=()):
         """
+        Get total value of skill from the armor and decorations based on
+        the number of slots.
+
         decoration_values should be a list of points from the given
         number of slots, e.g. [1, 3] or [1, 3, 0] means that one slot
         gets 1 point and two slots get 3 points, [1, 0, 4] means that
@@ -330,6 +333,14 @@ class Skill(RowModel):
     _list_fields = ["id", "name", "name_jp"]
     _indexes = { "skill_tree_id":
                  ["id", "required_skill_tree_points", "name", "description"] }
+
+    def __init__(self, skill_row):
+        super(Skill, self).__init__(skill_row)
+        self.skill_tree = None
+
+    def set_skill_tree(self, skill_tree):
+        assert skill_tree.id == self.skill_tree_id
+        self.skill_tree = skill_tree
 
 
 class Weapon(ItemCraftable):
@@ -490,6 +501,13 @@ class MonsterDamage(ModelBase):
 
 
 def get_decoration_values(skill_id, decorations):
+    """
+    Given a list of decorations that provide the specified skill_id,
+    figure out the best decoration for each number of slots from
+    one to three. Returns (id_list, value_list), where both are 3 element
+    arrays and id_list contains the decoration ids, and value_list contains
+    the number of skill points provided by each.
+    """
     # TODO: write script to compute this and shove into skill_tree table
     values = [0, 0, 0]
     ids = [None, None, None]

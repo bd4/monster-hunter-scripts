@@ -86,7 +86,7 @@ def find_armors(args):
             sys.exit(1)
         a.set_skills(skills)
         # calculate total using decorations for first skill only. This
-        # works great if all skill shave same slot values; if not it's
+        # works great if all skill have same slot values; if not it's
         # very messy to figure out what is 'best'
         total = 0
         first = True

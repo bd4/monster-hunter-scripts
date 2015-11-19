@@ -364,7 +364,8 @@ class MHDB(object):
         """, (parent_id,), model_cls=model.Weapon)
 
     def get_armors(self):
-        return self._query_all("armors", MHDB._armor_select,
+        return self._query_all("armors", MHDB._armor_select + """
+                               WHERE items.name != items.name_jp""",
                                model_cls=model.Armor)
 
     def get_armor(self, armor_id):
@@ -454,6 +455,7 @@ class MHDB(object):
               AND item_to_skill_tree.skill_tree_id IN (%s)
               AND item_to_skill_tree.point_value > 0
               AND armor.hunter_type IN ('Both', ?)
+              AND items.name != items.name_jp
             GROUP BY item_to_skill_tree.item_id
         """ % placeholders, tuple(args), model_cls=model.Armor)
 
@@ -516,6 +518,10 @@ class MHDB(object):
             item_results = [item_results]
         for item_data in item_results:
             ccomps = self.get_item_components(item_data.id, "Create")
+            if not ccomps:
+                # might be two possible ways of making the item, just
+                # get the first one for now
+                ccomps = self.get_item_components(item_data.id, "Create A")
             if item_data["type"] == "Weapon":
                 # only weapons have upgrade components
                 ucomps = self.get_item_components(item_data.id, "Improve")
