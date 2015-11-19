@@ -9,7 +9,7 @@ from mhapi.util import get_utf8_writer
 
 
 def mk_html_list(dict_list, keys, sort_key):
-    print '<ul data-role="listview" data-filter="true" input="#filterlist">'
+    print '<ul data-role="listview" data-filter="true" data-autodividers="true">'
     for d in sorted(dict_list, key=lambda x: x[sort_key]):
         print "  <li>"
         for k in keys:

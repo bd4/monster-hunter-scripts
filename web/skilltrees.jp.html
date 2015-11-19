@@ -17,8 +17,8 @@
 
 
   <style>
-      span.name { float: left; }
-      span.name_jp { float: right; }
+      span.name { display: inline-block; min-width: 50%; }
+      span.name_jp { display: inline-block; min-width: 50%; }
   </style>
 
 </head>
@@ -28,7 +28,7 @@
 
 <h2>Skill Trees</h2>
 
-<ul data-role="listview" data-filter="true">
+<ul data-role="listview" data-filter="true" data-autodividers="true">
   <li>
     <span class="name">Amplify</span>
     <span class="name_jp">増幅</span>
