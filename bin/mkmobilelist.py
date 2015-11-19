@@ -9,14 +9,12 @@ from mhapi.util import get_utf8_writer
 
 
 def mk_html_list(dict_list, keys, sort_key):
-    print """
-<form class="ui-filterable">
-  <input id="filterlist" data-type="search">
-</form>
-"""
     print '<ul data-role="listview" data-filter="true" input="#filterlist">'
     for d in sorted(dict_list, key=lambda x: x[sort_key]):
-        print '<li>%s</li>' % " ".join(d[k] for k in keys)
+        print "  <li>"
+        for k in keys:
+            print '    <span class="%s">%s</span>' % (k, d[k])
+        print "  </li>"
     print '</ul>'
 
 
