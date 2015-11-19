@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+
+  <style>
+      span.name { display: inline-block; min-width: 50%; }
+      span.name_jp { display: inline-block; min-width: 50%; }
+  </style>
+
+</head>
+<body>
+<div data-role="page" id="skilltrees">
+<div data-role="main" class="ui-content">
+
+<h2>Skill Trees</h2>
+
+<ul data-role="listview" data-filter="true" data-autodividers="true">
+  <li>
+    <span class="name">Amplify</span>
+    <span class="name_jp">増幅</span>
+  </li>
+  <li>
+    <span class="name">Anti-Theft</span>
+    <span class="name_jp">盗み無効</span>
+  </li>
+  <li>
+    <span class="name">Arcana</span>
+    <span class="name_jp">秘伝</span>
+  </li>
+  <li>
+    <span class="name">Artillery</span>
+    <span class="name_jp">砲術</span>
+  </li>
+  <li>
+    <span class="name">Attack</span>
+    <span class="name_jp">攻撃</span>
+  </li>
+  <li>
+    <span class="name">Auto-Guard</span>
+    <span class="name_jp">自動防御</span>
+  </li>
+  <li>
+    <span class="name">Avarice</span>
+    <span class="name_jp">強欲</span>
+  </li>
+  <li>
+    <span class="name">Biology</span>
+    <span class="name_jp">細菌学</span>
+  </li>
+  <li>
+    <span class="name">Blast C+</span>
+    <span class="name_jp">爆破瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Blast S+</span>
+    <span class="name_jp">爆破弾追加</span>
+  </li>
+  <li>
+    <span class="name">Bleeding</span>
+    <span class="name_jp">裂傷</span>
+  </li>
+  <li>
+    <span class="name">Blight Res</span>
+    <span class="name_jp">属性耐性</span>
+  </li>
+  <li>
+    <span class="name">Bomb Boost</span>
+    <span class="name_jp">爆弾強化</span>
+  </li>
+  <li>
+    <span class="name">Brawn</span>
+    <span class="name_jp">剛腕</span>
+  </li>
+  <li>
+    <span class="name">Brutality</span>
+    <span class="name_jp">剛撃</span>
+  </li>
+  <li>
+    <span class="name">C.Range C+</span>
+    <span class="name_jp">接撃瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Carnivore</span>
+    <span class="name_jp">肉食</span>
+  </li>
+  <li>
+    <span class="name">Carving</span>
+    <span class="name_jp">剥ぎ取り</span>
+  </li>
+  <li>
+    <span class="name">Charmer</span>
+    <span class="name_jp">護石王</span>
+  </li>
+  <li>
+    <span class="name">Clust S+</span>
+    <span class="name_jp">拡散弾追加</span>
+  </li>
+  <li>
+    <span class="name">Cold Res</span>
+    <span class="name_jp">耐寒</span>
+  </li>
+  <li>
+    <span class="name">Combo Plus</span>
+    <span class="name_jp">調合数</span>
+  </li>
+  <li>
+    <span class="name">Combo Rate</span>
+    <span class="name_jp">調合成功率</span>
+  </li>
+  <li>
+    <span class="name">Commander</span>
+    <span class="name_jp">指揮</span>
+  </li>
+  <li>
+    <span class="name">Constitutn</span>
+    <span class="name_jp">体術</span>
+  </li>
+  <li>
+    <span class="name">Covert</span>
+    <span class="name_jp">裏稼業</span>
+  </li>
+  <li>
+    <span class="name">Crag S+</span>
+    <span class="name_jp">榴弾追加</span>
+  </li>
+  <li>
+    <span class="name">Crit Draw</span>
+    <span class="name_jp">抜刀会心</span>
+  </li>
+  <li>
+    <span class="name">CritElemnt</span>
+    <span class="name_jp">属性会心</span>
+  </li>
+  <li>
+    <span class="name">CritStatus</span>
+    <span class="name_jp">特殊会心</span>
+  </li>
+  <li>
+    <span class="name">D. Fencing</span>
+    <span class="name_jp">北辰納豆流</span>
+  </li>
+  <li>
+    <span class="name">Dead Eye</span>
+    <span class="name_jp">射法</span>
+  </li>
+  <li>
+    <span class="name">Def Lock</span>
+    <span class="name_jp">対防御DOWN</span>
+  </li>
+  <li>
+    <span class="name">Defense</span>
+    <span class="name_jp">防御</span>
+  </li>
+  <li>
+    <span class="name">Destroyer</span>
+    <span class="name_jp">重撃</span>
+  </li>
+  <li>
+    <span class="name">Dragon Atk</span>
+    <span class="name_jp">龍属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Dragon Res</span>
+    <span class="name_jp">龍耐性</span>
+  </li>
+  <li>
+    <span class="name">Eating</span>
+    <span class="name_jp">食事</span>
+  </li>
+  <li>
+    <span class="name">Edge Lore</span>
+    <span class="name_jp">斬術</span>
+  </li>
+  <li>
+    <span class="name">Edgemaster</span>
+    <span class="name_jp">刀匠</span>
+  </li>
+  <li>
+    <span class="name">Elemental</span>
+    <span class="name_jp">属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Evade Dist</span>
+    <span class="name_jp">回避距離</span>
+  </li>
+  <li>
+    <span class="name">Evasion</span>
+    <span class="name_jp">回避性能</span>
+  </li>
+  <li>
+    <span class="name">Exhaust C+</span>
+    <span class="name_jp">減気瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Expert</span>
+    <span class="name_jp">達人</span>
+  </li>
+  <li>
+    <span class="name">FastCharge</span>
+    <span class="name_jp">溜め短縮</span>
+  </li>
+  <li>
+    <span class="name">Fate</span>
+    <span class="name_jp">運気</span>
+  </li>
+  <li>
+    <span class="name">Fencing</span>
+    <span class="name_jp">剣術</span>
+  </li>
+  <li>
+    <span class="name">Ferocity</span>
+    <span class="name_jp">一心</span>
+  </li>
+  <li>
+    <span class="name">Fire Atk</span>
+    <span class="name_jp">火属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Fire Res</span>
+    <span class="name_jp">火耐性</span>
+  </li>
+  <li>
+    <span class="name">Flame Aura</span>
+    <span class="name_jp">燃鱗</span>
+  </li>
+  <li>
+    <span class="name">FreeElemnt</span>
+    <span class="name_jp">属性解放</span>
+  </li>
+  <li>
+    <span class="name">Frenzy Res</span>
+    <span class="name_jp">狂撃耐性</span>
+  </li>
+  <li>
+    <span class="name">Fury</span>
+    <span class="name_jp">怒</span>
+  </li>
+  <li>
+    <span class="name">Gathering</span>
+    <span class="name_jp">採取</span>
+  </li>
+  <li>
+    <span class="name">Gloves Off</span>
+    <span class="name_jp">本気</span>
+  </li>
+  <li>
+    <span class="name">Gluttony</span>
+    <span class="name_jp">食いしん坊</span>
+  </li>
+  <li>
+    <span class="name">Guard</span>
+    <span class="name_jp">ガード性能</span>
+  </li>
+  <li>
+    <span class="name">Guard Up</span>
+    <span class="name_jp">ガード強化</span>
+  </li>
+  <li>
+    <span class="name">Guts</span>
+    <span class="name_jp">根性</span>
+  </li>
+  <li>
+    <span class="name">Handicraft</span>
+    <span class="name_jp">匠</span>
+  </li>
+  <li>
+    <span class="name">Health</span>
+    <span class="name_jp">体力</span>
+  </li>
+  <li>
+    <span class="name">Hearing</span>
+    <span class="name_jp">聴覚保護</span>
+  </li>
+  <li>
+    <span class="name">Heat Res</span>
+    <span class="name_jp">耐暑</span>
+  </li>
+  <li>
+    <span class="name">Hoarding</span>
+    <span class="name_jp">護石収集</span>
+  </li>
+  <li>
+    <span class="name">Honey</span>
+    <span class="name_jp">ハチミツ</span>
+  </li>
+  <li>
+    <span class="name">Hunger</span>
+    <span class="name_jp">腹減り</span>
+  </li>
+  <li>
+    <span class="name">Ice Atk</span>
+    <span class="name_jp">氷属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Ice Res</span>
+    <span class="name_jp">氷耐性</span>
+  </li>
+  <li>
+    <span class="name">KO</span>
+    <span class="name_jp">KO</span>
+  </li>
+  <li>
+    <span class="name">LastingPwr</span>
+    <span class="name_jp">効果持続</span>
+  </li>
+  <li>
+    <span class="name">LightEater</span>
+    <span class="name_jp">節食</span>
+  </li>
+  <li>
+    <span class="name">Loading</span>
+    <span class="name_jp">装填数</span>
+  </li>
+  <li>
+    <span class="name">Maestro</span>
+    <span class="name_jp">笛</span>
+  </li>
+  <li>
+    <span class="name">Mechanic</span>
+    <span class="name_jp">職工</span>
+  </li>
+  <li>
+    <span class="name">Mounting</span>
+    <span class="name_jp">乗り</span>
+  </li>
+  <li>
+    <span class="name">Mud/Snow</span>
+    <span class="name_jp">耐泥耐雪</span>
+  </li>
+  <li>
+    <span class="name">Mycology</span>
+    <span class="name_jp">茸食</span>
+  </li>
+  <li>
+    <span class="name">Nimbleness</span>
+    <span class="name_jp">回避術</span>
+  </li>
+  <li>
+    <span class="name">Normal S+</span>
+    <span class="name_jp">通常弾追加</span>
+  </li>
+  <li>
+    <span class="name">Normal Up</span>
+    <span class="name_jp">通常弾強化</span>
+  </li>
+  <li>
+    <span class="name">Para C+</span>
+    <span class="name_jp">麻痺瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Paralysis</span>
+    <span class="name_jp">麻痺</span>
+  </li>
+  <li>
+    <span class="name">Pellet S+</span>
+    <span class="name_jp">散弾追加</span>
+  </li>
+  <li>
+    <span class="name">Pellet Up</span>
+    <span class="name_jp">散弾強化</span>
+  </li>
+  <li>
+    <span class="name">Perception</span>
+    <span class="name_jp">観察眼</span>
+  </li>
+  <li>
+    <span class="name">Pierce S+</span>
+    <span class="name_jp">貫通弾追加</span>
+  </li>
+  <li>
+    <span class="name">Pierce Up</span>
+    <span class="name_jp">貫通弾強化</span>
+  </li>
+  <li>
+    <span class="name">Poison</span>
+    <span class="name_jp">毒</span>
+  </li>
+  <li>
+    <span class="name">Poison C+</span>
+    <span class="name_jp">毒瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Potential</span>
+    <span class="name_jp">底力</span>
+  </li>
+  <li>
+    <span class="name">Power C+</span>
+    <span class="name_jp">強撃瓶追加</span>
+  </li>
+  <li>
+    <span class="name">PowerEater</span>
+    <span class="name_jp">食欲</span>
+  </li>
+  <li>
+    <span class="name">Prayer</span>
+    <span class="name_jp">祈願</span>
+  </li>
+  <li>
+    <span class="name">Precision</span>
+    <span class="name_jp">精密射撃</span>
+  </li>
+  <li>
+    <span class="name">Protection</span>
+    <span class="name_jp">加護</span>
+  </li>
+  <li>
+    <span class="name">Prudence</span>
+    <span class="name_jp">潔癖</span>
+  </li>
+  <li>
+    <span class="name">Psychic</span>
+    <span class="name_jp">千里眼</span>
+  </li>
+  <li>
+    <span class="name">PunishDraw</span>
+    <span class="name_jp">抜刀減気</span>
+  </li>
+  <li>
+    <span class="name">Ranger</span>
+    <span class="name_jp">狩人</span>
+  </li>
+  <li>
+    <span class="name">Rapid Fire</span>
+    <span class="name_jp">速射</span>
+  </li>
+  <li>
+    <span class="name">Readiness</span>
+    <span class="name_jp">居合</span>
+  </li>
+  <li>
+    <span class="name">Rec Level</span>
+    <span class="name_jp">回復量</span>
+  </li>
+  <li>
+    <span class="name">Rec Speed</span>
+    <span class="name_jp">回復速度</span>
+  </li>
+  <li>
+    <span class="name">Recoil</span>
+    <span class="name_jp">反動</span>
+  </li>
+  <li>
+    <span class="name">Reload Spd</span>
+    <span class="name_jp">装填速度</span>
+  </li>
+  <li>
+    <span class="name">Resilience</span>
+    <span class="name_jp">頑強</span>
+  </li>
+  <li>
+    <span class="name">Sense</span>
+    <span class="name_jp">気配</span>
+  </li>
+  <li>
+    <span class="name">Sharpener</span>
+    <span class="name_jp">研ぎ師</span>
+  </li>
+  <li>
+    <span class="name">Sharpness</span>
+    <span class="name_jp">斬れ味</span>
+  </li>
+  <li>
+    <span class="name">Sheathing</span>
+    <span class="name_jp">納刀</span>
+  </li>
+  <li>
+    <span class="name">Sleep</span>
+    <span class="name_jp">睡眠</span>
+  </li>
+  <li>
+    <span class="name">Sleep C+</span>
+    <span class="name_jp">睡眠瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Slicing S+</span>
+    <span class="name_jp">斬裂弾追加</span>
+  </li>
+  <li>
+    <span class="name">Spd Gather</span>
+    <span class="name_jp">高速収集</span>
+  </li>
+  <li>
+    <span class="name">SpeedSetup</span>
+    <span class="name_jp">高速設置</span>
+  </li>
+  <li>
+    <span class="name">Spirit</span>
+    <span class="name_jp">闘魂</span>
+  </li>
+  <li>
+    <span class="name">Stalwart</span>
+    <span class="name_jp">盾持</span>
+  </li>
+  <li>
+    <span class="name">Stam Drain</span>
+    <span class="name_jp">減気攻撃</span>
+  </li>
+  <li>
+    <span class="name">Stam Recov</span>
+    <span class="name_jp">気力回復</span>
+  </li>
+  <li>
+    <span class="name">Stamina</span>
+    <span class="name_jp">スタミナ</span>
+  </li>
+  <li>
+    <span class="name">Status</span>
+    <span class="name_jp">特殊攻撃</span>
+  </li>
+  <li>
+    <span class="name">Status Res</span>
+    <span class="name_jp">状態耐性</span>
+  </li>
+  <li>
+    <span class="name">SteadyHand</span>
+    <span class="name_jp">射手</span>
+  </li>
+  <li>
+    <span class="name">Sticky Res</span>
+    <span class="name_jp">耐粘</span>
+  </li>
+  <li>
+    <span class="name">Stun</span>
+    <span class="name_jp">気絶</span>
+  </li>
+  <li>
+    <span class="name">Survivor</span>
+    <span class="name_jp">逆境</span>
+  </li>
+  <li>
+    <span class="name">TeamLeader</span>
+    <span class="name_jp">号令</span>
+  </li>
+  <li>
+    <span class="name">TeamPlayer</span>
+    <span class="name_jp">采配</span>
+  </li>
+  <li>
+    <span class="name">Tenderizer</span>
+    <span class="name_jp">痛撃</span>
+  </li>
+  <li>
+    <span class="name">ThunderAtk</span>
+    <span class="name_jp">雷属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">ThunderRes</span>
+    <span class="name_jp">雷耐性</span>
+  </li>
+  <li>
+    <span class="name">Torso Up</span>
+    <span class="name_jp">胴系統倍加</span>
+  </li>
+  <li>
+    <span class="name">Tranquilzr</span>
+    <span class="name_jp">捕獲</span>
+  </li>
+  <li>
+    <span class="name">Transportr</span>
+    <span class="name_jp">運搬</span>
+  </li>
+  <li>
+    <span class="name">Tremor Res</span>
+    <span class="name_jp">耐震</span>
+  </li>
+  <li>
+    <span class="name">Unscathed</span>
+    <span class="name_jp">無傷</span>
+  </li>
+  <li>
+    <span class="name">Unshakable</span>
+    <span class="name_jp">不動</span>
+  </li>
+  <li>
+    <span class="name">Water Atk</span>
+    <span class="name_jp">水属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Water Res</span>
+    <span class="name_jp">水耐性</span>
+  </li>
+  <li>
+    <span class="name">Whim</span>
+    <span class="name_jp">気まぐれ</span>
+  </li>
+  <li>
+    <span class="name">Wide-Range</span>
+    <span class="name_jp">広域</span>
+  </li>
+  <li>
+    <span class="name">Wind Res</span>
+    <span class="name_jp">風圧</span>
+  </li>
+</ul>
+
+</div>
+</div>
+
+</body>
+</html>
+
+

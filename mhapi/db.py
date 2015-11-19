@@ -45,15 +45,16 @@ class MHDB(object):
 
     # sell has the a value, but not used at the moment
     _decoration_select = """
-        SELECT items._id, items.type, items.name, items.rarity, decorations.*
+        SELECT items._id, items.type, items.name, items.name_jp,
+               items.rarity, decorations.*
         FROM decorations
         LEFT JOIN items ON decorations._id = items._id
     """
 
     # buy has the armor cost, sell is empty
     _armor_select = """
-        SELECT items._id, items.type, items.name, items.rarity, items.buy,
-               armor.*
+        SELECT items._id, items.type, items.name, items.name_jp,
+               items.rarity, items.buy, armor.*
         FROM armor
         LEFT JOIN items ON armor._id = items._id
     """
@@ -401,7 +402,7 @@ class MHDB(object):
 
     def get_skill_trees(self):
         return self._query_all("skill_trees", """
-            SELECT _id, name FROM skill_trees
+            SELECT _id, name, name_jp FROM skill_trees
         """, model_cls=model.SkillTree)
 
     def get_skill_tree_id(self, skill_tree_name):
@@ -416,7 +417,7 @@ class MHDB(object):
     def get_skills(self):
         return self._query_all("skills", """
             SELECT _id, skill_tree_id, required_skill_tree_points,
-                   name, description
+                   name, name_jp, description
             FROM skills
         """, model_cls=model.Skill)
 

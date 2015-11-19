@@ -197,6 +197,8 @@ class WeaponSharpness(ModelBase):
 
 
 class ItemCraftable(RowModel):
+    _list_fields = ["id", "name", "name_jp"]
+
     def __init__(self, item_row):
         super(ItemCraftable, self).__init__(item_row)
         self.create_components = None
@@ -302,6 +304,8 @@ class ItemSkill(RowModel):
 
 
 class SkillTree(RowModel):
+    _list_fields = ["id", "name", "name_jp"]
+
     def __init__(self, skill_tree_row):
         super(SkillTree, self).__init__(skill_tree_row)
         self.decoration_values = None
@@ -323,13 +327,13 @@ class SkillTree(RowModel):
 
 
 class Skill(RowModel):
-    _list_fields = ["id", "name"]
+    _list_fields = ["id", "name", "name_jp"]
     _indexes = { "skill_tree_id":
                  ["id", "required_skill_tree_points", "name", "description"] }
 
 
 class Weapon(ItemCraftable):
-    _list_fields = ["id", "wtype", "name"]
+    _list_fields = ["id", "wtype", "name", "name_jp"]
     _indexes = { "name": "id",
                  "wtype": ["id", "name"],
                  # subset of all data that can be used for searching and
@@ -362,11 +366,11 @@ class Weapon(ItemCraftable):
 
 
 class Monster(RowModel):
-    _list_fields = ["id", "class", "name"]
+    _list_fields = ["id", "class", "name", "name_jp"]
 
 
 class Item(RowModel):
-    _list_fields = ["id", "type", "name"]
+    _list_fields = ["id", "type", "name", "name_jp"]
     _indexes = { "name": ["id"],
                  "type": ["id", "name"] }
 
