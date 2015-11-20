@@ -86,6 +86,10 @@ def mk_html_list(dict_list, keys, sort_keys, divider_fn=None):
         print "  <li>"
         for k in keys:
             value = d[k]
+            if k == "description":
+                if value:
+                    print '    <p class="ui-li-desc">%s</p>' % value
+                continue
             if value.endswith(".png"):
                 value = ('<img class="icon" src="/img/icons_items/%s" />'
                          % value)
@@ -122,6 +126,10 @@ def _main():
       span.name { display: inline-block; min-width: 50%; }
       span.name_jp { display: inline-block; min-width: 50%; }
       img.icon { width: 20px; height: 20px; }
+
+      .ui-page .ui-content .ui-listview .ui-li-desc {
+          white-space : normal;
+      }
   </style>
 
 </head>
@@ -172,7 +180,8 @@ def _main():
     print '<div data-role="page" id="page-hunterarts">'
     print_header_nav("page-hunterarts")
     print '<div data-role="main" class="ui-content">'
-    mk_html_list(ha_list, ("name", "name_jp"), None, divider_fn=ha_divider_fn)
+    mk_html_list(ha_list, ("name", "name_jp", "description"), None,
+                 divider_fn=ha_divider_fn)
     print '</div>'
     print '</div>'
 
