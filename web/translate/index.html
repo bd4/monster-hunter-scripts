@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Poogie Translate</title>
+<meta charset="utf-8" />
+
+<!-- Include meta tag to ensure proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Include jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Include the jQuery library -->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include the jQuery Mobile library -->
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+  <style>
+      span.name { display: inline-block; min-width: 50%; }
+      span.name_jp { display: inline-block; min-width: 50%; }
+      img.icon { width: 20px; height: 20px; }
+  </style>
+
+</head>
+<body>
+
+<div data-role="page" id="page-skilltrees">
+<div data-role="header" data-position="fixed">
+  <div data-role="navbar">
+    <ul>
+      <li><a href="#page-skilltrees"
+             class="ui-btn-active ui-state-persist">Skill Trees</a></li>
+      <li><a href="#page-items">Items</a></li>
+      <li><a href="#page-hunterarts">Hunter Arts</a></li>
+    </ul>
+  </div>
+</div>
+<div data-role="main" class="ui-content">
+<ul data-role="listview" data-filter="true" data-autodividers="true">
+  <li>
+    <span class="name">Amplify</span>
+    <span class="name_jp">増幅</span>
+  </li>
+  <li>
+    <span class="name">Anti-Theft</span>
+    <span class="name_jp">盗み無効</span>
+  </li>
+  <li>
+    <span class="name">Arcana</span>
+    <span class="name_jp">秘伝</span>
+  </li>
+  <li>
+    <span class="name">Artillery</span>
+    <span class="name_jp">砲術</span>
+  </li>
+  <li>
+    <span class="name">Attack</span>
+    <span class="name_jp">攻撃</span>
+  </li>
+  <li>
+    <span class="name">Auto-Guard</span>
+    <span class="name_jp">自動防御</span>
+  </li>
+  <li>
+    <span class="name">Avarice</span>
+    <span class="name_jp">強欲</span>
+  </li>
+  <li>
+    <span class="name">Biology</span>
+    <span class="name_jp">細菌学</span>
+  </li>
+  <li>
+    <span class="name">Blast C+</span>
+    <span class="name_jp">爆破瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Blast S+</span>
+    <span class="name_jp">爆破弾追加</span>
+  </li>
+  <li>
+    <span class="name">Bleeding</span>
+    <span class="name_jp">裂傷</span>
+  </li>
+  <li>
+    <span class="name">Blight Res</span>
+    <span class="name_jp">属性耐性</span>
+  </li>
+  <li>
+    <span class="name">Bomb Boost</span>
+    <span class="name_jp">爆弾強化</span>
+  </li>
+  <li>
+    <span class="name">Brawn</span>
+    <span class="name_jp">剛腕</span>
+  </li>
+  <li>
+    <span class="name">Brutality</span>
+    <span class="name_jp">剛撃</span>
+  </li>
+  <li>
+    <span class="name">C.Range C+</span>
+    <span class="name_jp">接撃瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Carnivore</span>
+    <span class="name_jp">肉食</span>
+  </li>
+  <li>
+    <span class="name">Carving</span>
+    <span class="name_jp">剥ぎ取り</span>
+  </li>
+  <li>
+    <span class="name">Charmer</span>
+    <span class="name_jp">護石王</span>
+  </li>
+  <li>
+    <span class="name">Clust S+</span>
+    <span class="name_jp">拡散弾追加</span>
+  </li>
+  <li>
+    <span class="name">Cold Res</span>
+    <span class="name_jp">耐寒</span>
+  </li>
+  <li>
+    <span class="name">Combo Plus</span>
+    <span class="name_jp">調合数</span>
+  </li>
+  <li>
+    <span class="name">Combo Rate</span>
+    <span class="name_jp">調合成功率</span>
+  </li>
+  <li>
+    <span class="name">Commander</span>
+    <span class="name_jp">指揮</span>
+  </li>
+  <li>
+    <span class="name">Constitutn</span>
+    <span class="name_jp">体術</span>
+  </li>
+  <li>
+    <span class="name">Covert</span>
+    <span class="name_jp">裏稼業</span>
+  </li>
+  <li>
+    <span class="name">Crag S+</span>
+    <span class="name_jp">榴弾追加</span>
+  </li>
+  <li>
+    <span class="name">Crit Draw</span>
+    <span class="name_jp">抜刀会心</span>
+  </li>
+  <li>
+    <span class="name">CritElemnt</span>
+    <span class="name_jp">属性会心</span>
+  </li>
+  <li>
+    <span class="name">CritStatus</span>
+    <span class="name_jp">特殊会心</span>
+  </li>
+  <li>
+    <span class="name">D. Fencing</span>
+    <span class="name_jp">北辰納豆流</span>
+  </li>
+  <li>
+    <span class="name">Dead Eye</span>
+    <span class="name_jp">射法</span>
+  </li>
+  <li>
+    <span class="name">Def Lock</span>
+    <span class="name_jp">対防御DOWN</span>
+  </li>
+  <li>
+    <span class="name">Defense</span>
+    <span class="name_jp">防御</span>
+  </li>
+  <li>
+    <span class="name">Destroyer</span>
+    <span class="name_jp">重撃</span>
+  </li>
+  <li>
+    <span class="name">Dragon Atk</span>
+    <span class="name_jp">龍属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Dragon Res</span>
+    <span class="name_jp">龍耐性</span>
+  </li>
+  <li>
+    <span class="name">Eating</span>
+    <span class="name_jp">食事</span>
+  </li>
+  <li>
+    <span class="name">Edge Lore</span>
+    <span class="name_jp">斬術</span>
+  </li>
+  <li>
+    <span class="name">Edgemaster</span>
+    <span class="name_jp">刀匠</span>
+  </li>
+  <li>
+    <span class="name">Elemental</span>
+    <span class="name_jp">属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Evade Dist</span>
+    <span class="name_jp">回避距離</span>
+  </li>
+  <li>
+    <span class="name">Evasion</span>
+    <span class="name_jp">回避性能</span>
+  </li>
+  <li>
+    <span class="name">Exhaust C+</span>
+    <span class="name_jp">減気瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Expert</span>
+    <span class="name_jp">達人</span>
+  </li>
+  <li>
+    <span class="name">FastCharge</span>
+    <span class="name_jp">溜め短縮</span>
+  </li>
+  <li>
+    <span class="name">Fate</span>
+    <span class="name_jp">運気</span>
+  </li>
+  <li>
+    <span class="name">Fencing</span>
+    <span class="name_jp">剣術</span>
+  </li>
+  <li>
+    <span class="name">Ferocity</span>
+    <span class="name_jp">一心</span>
+  </li>
+  <li>
+    <span class="name">Fire Atk</span>
+    <span class="name_jp">火属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Fire Res</span>
+    <span class="name_jp">火耐性</span>
+  </li>
+  <li>
+    <span class="name">Flame Aura</span>
+    <span class="name_jp">燃鱗</span>
+  </li>
+  <li>
+    <span class="name">FreeElemnt</span>
+    <span class="name_jp">属性解放</span>
+  </li>
+  <li>
+    <span class="name">Frenzy Res</span>
+    <span class="name_jp">狂撃耐性</span>
+  </li>
+  <li>
+    <span class="name">Fury</span>
+    <span class="name_jp">怒</span>
+  </li>
+  <li>
+    <span class="name">Gathering</span>
+    <span class="name_jp">採取</span>
+  </li>
+  <li>
+    <span class="name">Gloves Off</span>
+    <span class="name_jp">本気</span>
+  </li>
+  <li>
+    <span class="name">Gluttony</span>
+    <span class="name_jp">食いしん坊</span>
+  </li>
+  <li>
+    <span class="name">Guard</span>
+    <span class="name_jp">ガード性能</span>
+  </li>
+  <li>
+    <span class="name">Guard Up</span>
+    <span class="name_jp">ガード強化</span>
+  </li>
+  <li>
+    <span class="name">Guts</span>
+    <span class="name_jp">根性</span>
+  </li>
+  <li>
+    <span class="name">Handicraft</span>
+    <span class="name_jp">匠</span>
+  </li>
+  <li>
+    <span class="name">Health</span>
+    <span class="name_jp">体力</span>
+  </li>
+  <li>
+    <span class="name">Hearing</span>
+    <span class="name_jp">聴覚保護</span>
+  </li>
+  <li>
+    <span class="name">Heat Res</span>
+    <span class="name_jp">耐暑</span>
+  </li>
+  <li>
+    <span class="name">Hoarding</span>
+    <span class="name_jp">護石収集</span>
+  </li>
+  <li>
+    <span class="name">Honey</span>
+    <span class="name_jp">ハチミツ</span>
+  </li>
+  <li>
+    <span class="name">Hunger</span>
+    <span class="name_jp">腹減り</span>
+  </li>
+  <li>
+    <span class="name">Ice Atk</span>
+    <span class="name_jp">氷属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Ice Res</span>
+    <span class="name_jp">氷耐性</span>
+  </li>
+  <li>
+    <span class="name">KO</span>
+    <span class="name_jp">KO</span>
+  </li>
+  <li>
+    <span class="name">LastingPwr</span>
+    <span class="name_jp">効果持続</span>
+  </li>
+  <li>
+    <span class="name">LightEater</span>
+    <span class="name_jp">節食</span>
+  </li>
+  <li>
+    <span class="name">Loading</span>
+    <span class="name_jp">装填数</span>
+  </li>
+  <li>
+    <span class="name">Maestro</span>
+    <span class="name_jp">笛</span>
+  </li>
+  <li>
+    <span class="name">Mechanic</span>
+    <span class="name_jp">職工</span>
+  </li>
+  <li>
+    <span class="name">Mounting</span>
+    <span class="name_jp">乗り</span>
+  </li>
+  <li>
+    <span class="name">Mud/Snow</span>
+    <span class="name_jp">耐泥耐雪</span>
+  </li>
+  <li>
+    <span class="name">Mycology</span>
+    <span class="name_jp">茸食</span>
+  </li>
+  <li>
+    <span class="name">Nimbleness</span>
+    <span class="name_jp">回避術</span>
+  </li>
+  <li>
+    <span class="name">Normal S+</span>
+    <span class="name_jp">通常弾追加</span>
+  </li>
+  <li>
+    <span class="name">Normal Up</span>
+    <span class="name_jp">通常弾強化</span>
+  </li>
+  <li>
+    <span class="name">Para C+</span>
+    <span class="name_jp">麻痺瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Paralysis</span>
+    <span class="name_jp">麻痺</span>
+  </li>
+  <li>
+    <span class="name">Pellet S+</span>
+    <span class="name_jp">散弾追加</span>
+  </li>
+  <li>
+    <span class="name">Pellet Up</span>
+    <span class="name_jp">散弾強化</span>
+  </li>
+  <li>
+    <span class="name">Perception</span>
+    <span class="name_jp">観察眼</span>
+  </li>
+  <li>
+    <span class="name">Pierce S+</span>
+    <span class="name_jp">貫通弾追加</span>
+  </li>
+  <li>
+    <span class="name">Pierce Up</span>
+    <span class="name_jp">貫通弾強化</span>
+  </li>
+  <li>
+    <span class="name">Poison</span>
+    <span class="name_jp">毒</span>
+  </li>
+  <li>
+    <span class="name">Poison C+</span>
+    <span class="name_jp">毒瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Potential</span>
+    <span class="name_jp">底力</span>
+  </li>
+  <li>
+    <span class="name">Power C+</span>
+    <span class="name_jp">強撃瓶追加</span>
+  </li>
+  <li>
+    <span class="name">PowerEater</span>
+    <span class="name_jp">食欲</span>
+  </li>
+  <li>
+    <span class="name">Prayer</span>
+    <span class="name_jp">祈願</span>
+  </li>
+  <li>
+    <span class="name">Precision</span>
+    <span class="name_jp">精密射撃</span>
+  </li>
+  <li>
+    <span class="name">Protection</span>
+    <span class="name_jp">加護</span>
+  </li>
+  <li>
+    <span class="name">Prudence</span>
+    <span class="name_jp">潔癖</span>
+  </li>
+  <li>
+    <span class="name">Psychic</span>
+    <span class="name_jp">千里眼</span>
+  </li>
+  <li>
+    <span class="name">PunishDraw</span>
+    <span class="name_jp">抜刀減気</span>
+  </li>
+  <li>
+    <span class="name">Ranger</span>
+    <span class="name_jp">狩人</span>
+  </li>
+  <li>
+    <span class="name">Rapid Fire</span>
+    <span class="name_jp">速射</span>
+  </li>
+  <li>
+    <span class="name">Readiness</span>
+    <span class="name_jp">居合</span>
+  </li>
+  <li>
+    <span class="name">Rec Level</span>
+    <span class="name_jp">回復量</span>
+  </li>
+  <li>
+    <span class="name">Rec Speed</span>
+    <span class="name_jp">回復速度</span>
+  </li>
+  <li>
+    <span class="name">Recoil</span>
+    <span class="name_jp">反動</span>
+  </li>
+  <li>
+    <span class="name">Reload Spd</span>
+    <span class="name_jp">装填速度</span>
+  </li>
+  <li>
+    <span class="name">Resilience</span>
+    <span class="name_jp">頑強</span>
+  </li>
+  <li>
+    <span class="name">Sense</span>
+    <span class="name_jp">気配</span>
+  </li>
+  <li>
+    <span class="name">Sharpener</span>
+    <span class="name_jp">研ぎ師</span>
+  </li>
+  <li>
+    <span class="name">Sharpness</span>
+    <span class="name_jp">斬れ味</span>
+  </li>
+  <li>
+    <span class="name">Sheathing</span>
+    <span class="name_jp">納刀</span>
+  </li>
+  <li>
+    <span class="name">Sleep</span>
+    <span class="name_jp">睡眠</span>
+  </li>
+  <li>
+    <span class="name">Sleep C+</span>
+    <span class="name_jp">睡眠瓶追加</span>
+  </li>
+  <li>
+    <span class="name">Slicing S+</span>
+    <span class="name_jp">斬裂弾追加</span>
+  </li>
+  <li>
+    <span class="name">Spd Gather</span>
+    <span class="name_jp">高速収集</span>
+  </li>
+  <li>
+    <span class="name">SpeedSetup</span>
+    <span class="name_jp">高速設置</span>
+  </li>
+  <li>
+    <span class="name">Spirit</span>
+    <span class="name_jp">闘魂</span>
+  </li>
+  <li>
+    <span class="name">Stalwart</span>
+    <span class="name_jp">盾持</span>
+  </li>
+  <li>
+    <span class="name">Stam Drain</span>
+    <span class="name_jp">減気攻撃</span>
+  </li>
+  <li>
+    <span class="name">Stam Recov</span>
+    <span class="name_jp">気力回復</span>
+  </li>
+  <li>
+    <span class="name">Stamina</span>
+    <span class="name_jp">スタミナ</span>
+  </li>
+  <li>
+    <span class="name">Status</span>
+    <span class="name_jp">特殊攻撃</span>
+  </li>
+  <li>
+    <span class="name">Status Res</span>
+    <span class="name_jp">状態耐性</span>
+  </li>
+  <li>
+    <span class="name">SteadyHand</span>
+    <span class="name_jp">射手</span>
+  </li>
+  <li>
+    <span class="name">Sticky Res</span>
+    <span class="name_jp">耐粘</span>
+  </li>
+  <li>
+    <span class="name">Stun</span>
+    <span class="name_jp">気絶</span>
+  </li>
+  <li>
+    <span class="name">Survivor</span>
+    <span class="name_jp">逆境</span>
+  </li>
+  <li>
+    <span class="name">TeamLeader</span>
+    <span class="name_jp">号令</span>
+  </li>
+  <li>
+    <span class="name">TeamPlayer</span>
+    <span class="name_jp">采配</span>
+  </li>
+  <li>
+    <span class="name">Tenderizer</span>
+    <span class="name_jp">痛撃</span>
+  </li>
+  <li>
+    <span class="name">ThunderAtk</span>
+    <span class="name_jp">雷属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">ThunderRes</span>
+    <span class="name_jp">雷耐性</span>
+  </li>
+  <li>
+    <span class="name">Torso Up</span>
+    <span class="name_jp">胴系統倍加</span>
+  </li>
+  <li>
+    <span class="name">Tranquilzr</span>
+    <span class="name_jp">捕獲</span>
+  </li>
+  <li>
+    <span class="name">Transportr</span>
+    <span class="name_jp">運搬</span>
+  </li>
+  <li>
+    <span class="name">Tremor Res</span>
+    <span class="name_jp">耐震</span>
+  </li>
+  <li>
+    <span class="name">Unscathed</span>
+    <span class="name_jp">無傷</span>
+  </li>
+  <li>
+    <span class="name">Unshakable</span>
+    <span class="name_jp">不動</span>
+  </li>
+  <li>
+    <span class="name">Water Atk</span>
+    <span class="name_jp">水属性攻撃</span>
+  </li>
+  <li>
+    <span class="name">Water Res</span>
+    <span class="name_jp">水耐性</span>
+  </li>
+  <li>
+    <span class="name">Whim</span>
+    <span class="name_jp">気まぐれ</span>
+  </li>
+  <li>
+    <span class="name">Wide-Range</span>
+    <span class="name_jp">広域</span>
+  </li>
+  <li>
+    <span class="name">Wind Res</span>
+    <span class="name_jp">風圧</span>
+  </li>
+</ul>
+</div>
+</div>
+<div data-role="page" id="page-items">
+<div data-role="header" data-position="fixed">
+  <div data-role="navbar">
+    <ul>
+      <li><a href="#page-skilltrees">Skill Trees</a></li>
+      <li><a href="#page-items"
+             class="ui-btn-active ui-state-persist">Items</a></li>
+      <li><a href="#page-hunterarts">Hunter Arts</a></li>
+    </ul>
+  </div>
+</div>
+<div data-role="main" class="ui-content">
+<ul data-role="listview" data-filter="true">
+  <li data-role="list-divider">Ammo</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Blue.png" /></span>
+    <span class="name">Exhaust S Lv1</span>
+    <span class="name_jp">LV1 減気弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Blue.png" /></span>
+    <span class="name">Exhaust S Lv2</span>
+    <span class="name_jp">LV2 減気弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Blue.png" /></span>
+    <span class="name">Freeze S</span>
+    <span class="name_jp">氷結弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Cyan.png" /></span>
+    <span class="name">Sleep S Lv1</span>
+    <span class="name_jp">LV1 睡眠弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Cyan.png" /></span>
+    <span class="name">Sleep S Lv2</span>
+    <span class="name_jp">LV2 睡眠弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Cyan.png" /></span>
+    <span class="name">Water S</span>
+    <span class="name_jp">水冷弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Green.png" /></span>
+    <span class="name">Recover S Lv1</span>
+    <span class="name_jp">LV1 回復弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Green.png" /></span>
+    <span class="name">Recover S Lv2</span>
+    <span class="name_jp">LV2 回復弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Orange.png" /></span>
+    <span class="name">Armor S</span>
+    <span class="name_jp">硬化弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Orange.png" /></span>
+    <span class="name">Blast S</span>
+    <span class="name_jp">爆破弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Pink.png" /></span>
+    <span class="name">Paint S</span>
+    <span class="name_jp">ペイント弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Purple.png" /></span>
+    <span class="name">Poison S Lv1</span>
+    <span class="name_jp">LV1 毒弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Purple.png" /></span>
+    <span class="name">Poison S Lv2</span>
+    <span class="name_jp">LV2 毒弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Red.png" /></span>
+    <span class="name">Demon S</span>
+    <span class="name_jp">鬼人弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Red.png" /></span>
+    <span class="name">Dragon S</span>
+    <span class="name_jp">滅龍弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Red.png" /></span>
+    <span class="name">Flaming S</span>
+    <span class="name_jp">火炎弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Red.png" /></span>
+    <span class="name">Tranq S</span>
+    <span class="name_jp">捕獲用麻酔弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Red.png" /></span>
+    <span class="name">WyvernFire</span>
+    <span class="name_jp">竜撃弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Clust S Lv1</span>
+    <span class="name_jp">LV1 拡散弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Clust S Lv2</span>
+    <span class="name_jp">LV2 拡散弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Clust S Lv3</span>
+    <span class="name_jp">LV3 拡散弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Crag S Lv1</span>
+    <span class="name_jp">LV1 徹甲榴弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Crag S Lv2</span>
+    <span class="name_jp">LV2 徹甲榴弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Crag S Lv3</span>
+    <span class="name_jp">LV3 徹甲榴弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Normal S Lv1</span>
+    <span class="name_jp">LV1 通常弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Normal S Lv2</span>
+    <span class="name_jp">LV2 通常弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Normal S Lv3</span>
+    <span class="name_jp">LV3 通常弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Pellet S Lv1</span>
+    <span class="name_jp">LV1 散弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Pellet S Lv2</span>
+    <span class="name_jp">LV2 散弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Pellet S Lv3</span>
+    <span class="name_jp">LV3 散弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Pierce S Lv1</span>
+    <span class="name_jp">LV1 貫通弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Pierce S Lv2</span>
+    <span class="name_jp">LV2 貫通弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Pierce S Lv3</span>
+    <span class="name_jp">LV3 貫通弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-White.png" /></span>
+    <span class="name">Slicing S</span>
+    <span class="name_jp">斬裂弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Yellow.png" /></span>
+    <span class="name">Garrison Bllsta Ammo</span>
+    <span class="name_jp">要塞防衛式弩砲弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Yellow.png" /></span>
+    <span class="name">Para S Lv1</span>
+    <span class="name_jp">LV1 麻痺弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Yellow.png" /></span>
+    <span class="name">Para S Lv2</span>
+    <span class="name_jp">LV2 麻痺弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Ammo-Yellow.png" /></span>
+    <span class="name">Thunder S</span>
+    <span class="name_jp">電撃弾</span>
+  </li>
+  <li data-role="list-divider">BBQSpit</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/BBQSpit-Red.png" /></span>
+    <span class="name">BBQ Spit</span>
+    <span class="name_jp">肉焼きセット</span>
+  </li>
+  <li data-role="list-divider">Barrel</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Bomb-Blue.png" /></span>
+    <span class="name">Bounce Bomb</span>
+    <span class="name_jp">打上げタル爆弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Bomb-Blue.png" /></span>
+    <span class="name">Bounce Bomb+</span>
+    <span class="name_jp">打上げタル爆弾Ｇ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Bomb-Blue.png" /></span>
+    <span class="name">JUMP Barrel Bomb</span>
+    <span class="name_jp">ＪＵＭＰタル爆弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Bomb-Pink.png" /></span>
+    <span class="name">Felvine Bomb</span>
+    <span class="name_jp">マタタビ爆弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Bomb-Red.png" /></span>
+    <span class="name">Barrel Bomb L</span>
+    <span class="name_jp">大タル爆弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Bomb-Red.png" /></span>
+    <span class="name">Barrel Bomb L+</span>
+    <span class="name_jp">大タル爆弾Ｇ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Bomb-Yellow.png" /></span>
+    <span class="name">Barrel Bomb S</span>
+    <span class="name_jp">小タル爆弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Bomb-Yellow.png" /></span>
+    <span class="name">Barrel Bomb S+</span>
+    <span class="name_jp">小タル爆弾Ｇ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Red.png" /></span>
+    <span class="name">Large Barrel</span>
+    <span class="name_jp">大タル</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Barrel-Yellow.png" /></span>
+    <span class="name">Small Barrel</span>
+    <span class="name_jp">小タル</span>
+  </li>
+  <li data-role="list-divider">Binoculars</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Binoculars.png" /></span>
+    <span class="name">Binoculars</span>
+    <span class="name_jp">双眼鏡</span>
+  </li>
+  <li data-role="list-divider">Bomb</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Bomb-Grey.png" /></span>
+    <span class="name">Sonic Bomb</span>
+    <span class="name_jp">音爆弾</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Bomb-Pink.png" /></span>
+    <span class="name">Paintball</span>
+    <span class="name_jp">ペイントボール</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Bomb-Red.png" /></span>
+    <span class="name">Tranq Bomb</span>
+    <span class="name_jp">捕獲用麻酔玉</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Bomb-White.png" /></span>
+    <span class="name">Bomb Casing</span>
+    <span class="name_jp">素材玉</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Bomb-Yellow.png" /></span>
+    <span class="name">Flash Bomb</span>
+    <span class="name_jp">閃光玉</span>
+  </li>
+  <li data-role="list-divider">Book</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-Blue.png" /></span>
+    <span class="name">Organizer Guide</span>
+    <span class="name_jp">収納上手・技の書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-Grey.png" /></span>
+    <span class="name">Book of Combos 1</span>
+    <span class="name_jp">調合書①入門編</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-Grey.png" /></span>
+    <span class="name">Book of Combos 2</span>
+    <span class="name_jp">調合書②初級編</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-Red.png" /></span>
+    <span class="name">Pack Rat Guide</span>
+    <span class="name_jp">収納上手・力の書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Akantor</span>
+    <span class="name_jp">アカムトルムの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Amphibians</span>
+    <span class="name_jp">両生種の書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Bird Wyverns Vol 1</span>
+    <span class="name_jp">鳥竜種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Bird Wyverns Vol 2</span>
+    <span class="name_jp">鳥竜種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Bird Wyverns Vol 3</span>
+    <span class="name_jp">鳥竜種の書【３巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Book of Combos 3</span>
+    <span class="name_jp">調合書③中級編</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Book of Combos 4</span>
+    <span class="name_jp">調合書④上級編</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Brachydios</span>
+    <span class="name_jp">ブラキディオスの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Carapaceons Vol 1</span>
+    <span class="name_jp">甲殻種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Carapaceons Vol 2</span>
+    <span class="name_jp">甲殻種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Dah'ren Mohran</span>
+    <span class="name_jp">ダレン・モーランの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Dalamadur</span>
+    <span class="name_jp">ダラ・アマデュラの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Deviljho</span>
+    <span class="name_jp">イビルジョーの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Elder Dragons</span>
+    <span class="name_jp">古龍種の書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Fanged Beasts Vol 1</span>
+    <span class="name_jp">牙獣種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Fanged Beasts Vol 2</span>
+    <span class="name_jp">牙獣種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Fanged Beasts Vol 3</span>
+    <span class="name_jp">牙獣種の書【３巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Fanged Beasts Vol 4</span>
+    <span class="name_jp">牙獣種の書【４巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Fanged Wyverns Vol 1</span>
+    <span class="name_jp">牙竜種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Fanged Wyverns Vol 2</span>
+    <span class="name_jp">牙竜種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Fatalis</span>
+    <span class="name_jp">ミラボレアスの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Flying Wyverns Vol 1</span>
+    <span class="name_jp">飛竜種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Flying Wyverns Vol 2</span>
+    <span class="name_jp">飛竜種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Flying Wyverns Vol 3</span>
+    <span class="name_jp">飛竜種の書【３巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Flying Wyverns Vol 4</span>
+    <span class="name_jp">飛竜種の書【４巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Flying Wyverns Vol 5</span>
+    <span class="name_jp">飛竜種の書【５巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Flying Wyverns Vol 6</span>
+    <span class="name_jp">飛竜種の書【６巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Flying Wyverns Vol 7</span>
+    <span class="name_jp">飛竜種の書【７巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Flying Wyverns Vol 8</span>
+    <span class="name_jp">飛竜種の書【８巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Gogmazios</span>
+    <span class="name_jp">ゴグマジオスの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Gore Magala</span>
+    <span class="name_jp">ゴア・マガラの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Herbivores Vol 1</span>
+    <span class="name_jp">草食種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Herbivores Vol 2</span>
+    <span class="name_jp">草食種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Herbivores Vol 3</span>
+    <span class="name_jp">草食種の書【３巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Kirin</span>
+    <span class="name_jp">キリンの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Kushala Daora</span>
+    <span class="name_jp">クシャルダオラの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Lynians</span>
+    <span class="name_jp">獣人種の書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Neopterons Vol 1</span>
+    <span class="name_jp">甲虫種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Neopterons Vol 2</span>
+    <span class="name_jp">甲虫種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Neopterons Vol 3</span>
+    <span class="name_jp">甲虫種の書【３巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Nerscylla</span>
+    <span class="name_jp">ネルスキュラの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Oroshi Kirin</span>
+    <span class="name_jp">キリン亜種の書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Piscine Wyverns Vol1</span>
+    <span class="name_jp">魚竜種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Piscine Wyverns Vol2</span>
+    <span class="name_jp">魚竜種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Rajang</span>
+    <span class="name_jp">ラージャンの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Seltas Queen</span>
+    <span class="name_jp">ゲネル・セルタスの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Seregios</span>
+    <span class="name_jp">セルレギオスの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Shagaru Magala</span>
+    <span class="name_jp">シャガルマガラの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Snake Wyverns Vol 1</span>
+    <span class="name_jp">蛇竜種の書【１巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Snake Wyverns Vol 2</span>
+    <span class="name_jp">蛇竜種の書【２巻】</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Temnocerans</span>
+    <span class="name_jp">鋏角種の書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Teostra</span>
+    <span class="name_jp">テオ・テスカトルの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Tetsucabra</span>
+    <span class="name_jp">テツカブラの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Ukanlos</span>
+    <span class="name_jp">ウカムルバスの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-White.png" /></span>
+    <span class="name">Zamtrios</span>
+    <span class="name_jp">ザボアザギルの書</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Book-Yellow.png" /></span>
+    <span class="name">Book of Combos 5</span>
+    <span class="name_jp">調合書⑤達人編</span>
+  </li>
+  <li data-role="list-divider">Boomerang</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Boomerang-White.png" /></span>
+    <span class="name">Boomerang</span>
+    <span class="name_jp">ブーメラン</span>
+  </li>
+  <li data-role="list-divider">Bugnet</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Bugnet-Grey.png" /></span>
+    <span class="name">Old Bug Net</span>
+    <span class="name_jp">ボロ虫あみ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Bugnet-White.png" /></span>
+    <span class="name">Bug Net</span>
+    <span class="name_jp">虫あみ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Bugnet-Yellow.png" /></span>
+    <span class="name">Mega Bug Net</span>
+    <span class="name_jp">虫あみグレート</span>
+  </li>
+  <li data-role="list-divider">Coin</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Coin-Yellow.png" /></span>
+    <span class="name">Dense Marcoal</span>
+    <span class="name_jp">高密度滅龍炭</span>
+  </li>
+  <li data-role="list-divider">Dung</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Dung.png" /></span>
+    <span class="name">Dung</span>
+    <span class="name_jp">モンスターのフン</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Dung.png" /></span>
+    <span class="name">Dung Bomb</span>
+    <span class="name_jp">こやし玉</span>
+  </li>
+  <li data-role="list-divider">Fang</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Fang-Orange.png" /></span>
+    <span class="name">Armortalon</span>
+    <span class="name_jp">守りの爪</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Fang-Red.png" /></span>
+    <span class="name">Powertalon</span>
+    <span class="name_jp">力の爪</span>
+  </li>
+  <li data-role="list-divider">Flute</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Flute-Blue.png" /></span>
+    <span class="name">Antidote Horn</span>
+    <span class="name_jp">解毒笛</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Flute-Green.png" /></span>
+    <span class="name">Health Horn</span>
+    <span class="name_jp">回復笛</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Flute-Orange.png" /></span>
+    <span class="name">Armor Horn</span>
+    <span class="name_jp">硬化笛</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Flute-Red.png" /></span>
+    <span class="name">Demon Horn</span>
+    <span class="name_jp">鬼人笛</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Flute-Yellow.png" /></span>
+    <span class="name">Field Horn</span>
+    <span class="name_jp">角笛</span>
+  </li>
+  <li data-role="list-divider">Knife</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Knife-Cyan.png" /></span>
+    <span class="name">Sleep Knife</span>
+    <span class="name_jp">眠り投げナイフ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Knife-Purple.png" /></span>
+    <span class="name">Poison Knife</span>
+    <span class="name_jp">毒投げナイフ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Knife-Red.png" /></span>
+    <span class="name">Tranq Knife</span>
+    <span class="name_jp">捕獲用麻酔ナイフ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Knife-White.png" /></span>
+    <span class="name">Throwing Knife</span>
+    <span class="name_jp">投げナイフ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Knife-Yellow.png" /></span>
+    <span class="name">Paralysis Knife</span>
+    <span class="name_jp">麻痺投げナイフ</span>
+  </li>
+  <li data-role="list-divider">Liquid</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Blue.png" /></span>
+    <span class="name">Antidote</span>
+    <span class="name_jp">解毒薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Cyan.png" /></span>
+    <span class="name">Cleanser</span>
+    <span class="name_jp">消散剤</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Cyan.png" /></span>
+    <span class="name">Mega Nutrients</span>
+    <span class="name_jp">栄養剤グレート</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Cyan.png" /></span>
+    <span class="name">Nutrients</span>
+    <span class="name_jp">栄養剤</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Green.png" /></span>
+    <span class="name">Mega Potion</span>
+    <span class="name_jp">回復薬グレート</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Green.png" /></span>
+    <span class="name">Potion</span>
+    <span class="name_jp">回復薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Orange.png" /></span>
+    <span class="name">Armorskin</span>
+    <span class="name_jp">硬化薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Orange.png" /></span>
+    <span class="name">Mega Armorskin</span>
+    <span class="name_jp">硬化薬グレート</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Orange.png" /></span>
+    <span class="name">Psychoserum</span>
+    <span class="name_jp">千里眼の薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Red.png" /></span>
+    <span class="name">Demondrug</span>
+    <span class="name_jp">鬼人薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Red.png" /></span>
+    <span class="name">Hot Drink</span>
+    <span class="name_jp">ホットドリンク</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Red.png" /></span>
+    <span class="name">Mega Demondrug</span>
+    <span class="name_jp">鬼人薬グレート</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Red.png" /></span>
+    <span class="name">Tranquilizer</span>
+    <span class="name_jp">捕獲用麻酔薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-White.png" /></span>
+    <span class="name">Cool Drink</span>
+    <span class="name_jp">クーラードリンク</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Yellow.png" /></span>
+    <span class="name">Dash Juice</span>
+    <span class="name_jp">強走薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Yellow.png" /></span>
+    <span class="name">Energy Drink</span>
+    <span class="name_jp">元気ドリンコ</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Yellow.png" /></span>
+    <span class="name">Immunizer</span>
+    <span class="name_jp">活力剤</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Liquid-Yellow.png" /></span>
+    <span class="name">Mega Dash Juice</span>
+    <span class="name_jp">強走薬グレート</span>
+  </li>
+  <li data-role="list-divider">Pickaxe</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Pickaxe-Grey.png" /></span>
+    <span class="name">Old Pickaxe</span>
+    <span class="name_jp">ボロピッケル</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Pickaxe-White.png" /></span>
+    <span class="name">Iron Pickaxe</span>
+    <span class="name_jp">ピッケル</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Pickaxe-Yellow.png" /></span>
+    <span class="name">Mega Pickaxe</span>
+    <span class="name_jp">ピッケルグレート</span>
+  </li>
+  <li data-role="list-divider">QuestionMark</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/QuestionMark-Yellow.png" /></span>
+    <span class="name">Garbage</span>
+    <span class="name_jp">もえないゴミ</span>
+  </li>
+  <li data-role="list-divider">Sac</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Grey.png" /></span>
+    <span class="name">Catalyst</span>
+    <span class="name_jp">増強剤</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Orange.png" /></span>
+    <span class="name">Adamant Pill</span>
+    <span class="name_jp">忍耐の丸薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Orange.png" /></span>
+    <span class="name">Armorcharm</span>
+    <span class="name_jp">守りの護符</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Pink.png" /></span>
+    <span class="name">Disposable Earplugs</span>
+    <span class="name_jp">応急耳栓</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Red.png" /></span>
+    <span class="name">Ancient Potion</span>
+    <span class="name_jp">いにしえの秘薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Red.png" /></span>
+    <span class="name">Gunpowder</span>
+    <span class="name_jp">爆薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Red.png" /></span>
+    <span class="name">Might Pill</span>
+    <span class="name_jp">怪力の丸薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Red.png" /></span>
+    <span class="name">Powercharm</span>
+    <span class="name_jp">力の護符</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Teal.png" /></span>
+    <span class="name">Dust of Life</span>
+    <span class="name_jp">生命の大粉塵</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-White.png" /></span>
+    <span class="name">Herbal Medicine</span>
+    <span class="name_jp">漢方薬</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-White.png" /></span>
+    <span class="name">Lifecrystals</span>
+    <span class="name_jp">生命の粉</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-White.png" /></span>
+    <span class="name">Lifepowder</span>
+    <span class="name_jp">生命の粉塵</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Sac-Yellow.png" /></span>
+    <span class="name">Max Potion</span>
+    <span class="name_jp">秘薬</span>
+  </li>
+  <li data-role="list-divider">Smoke</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Smoke-Blue.png" /></span>
+    <span class="name">Deodorant</span>
+    <span class="name_jp">消臭玉</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Smoke-Green.png" /></span>
+    <span class="name">Farcaster</span>
+    <span class="name_jp">モドリ玉</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Smoke-Purple.png" /></span>
+    <span class="name">Poison Smoke Bomb</span>
+    <span class="name_jp">毒けむり玉</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Smoke-White.png" /></span>
+    <span class="name">Smoke Bomb</span>
+    <span class="name_jp">けむり玉</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Smoke-Yellow.png" /></span>
+    <span class="name">Portable Steam Bomb</span>
+    <span class="name_jp">万能湯けむり玉</span>
+  </li>
+  <li data-role="list-divider">Spider</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Spider-Web.png" /></span>
+    <span class="name">Net</span>
+    <span class="name_jp">ネット</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Spider-Web.png" /></span>
+    <span class="name">Spider Web</span>
+    <span class="name_jp">クモの巣</span>
+  </li>
+  <li data-role="list-divider">Trap</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Trap-Green.png" /></span>
+    <span class="name">Pitfall Trap</span>
+    <span class="name_jp">落とし穴</span>
+  </li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Trap-Purple.png" /></span>
+    <span class="name">Shock Trap</span>
+    <span class="name_jp">シビレ罠</span>
+  </li>
+  <li data-role="list-divider">Traptool</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Traptool-Green.png" /></span>
+    <span class="name">Trap Tool</span>
+    <span class="name_jp">トラップツール</span>
+  </li>
+  <li data-role="list-divider">Whetstone</li>
+  <li>
+    <span class="icon_name"><img class="icon" src="/img/icons_items/Whetstone.png" /></span>
+    <span class="name">Whetstone</span>
+    <span class="name_jp">砥石</span>
+  </li>
+</ul>
+</div>
+</div>
+<div data-role="page" id="page-hunterarts">
+<div data-role="header" data-position="fixed">
+  <div data-role="navbar">
+    <ul>
+      <li><a href="#page-skilltrees">Skill Trees</a></li>
+      <li><a href="#page-items">Items</a></li>
+      <li><a href="#page-hunterarts"
+             class="ui-btn-active ui-state-persist">Hunter Arts</a></li>
+    </ul>
+  </div>
+</div>
+<div data-role="main" class="ui-content">
+<ul data-role="listview" data-filter="true">
+  <li data-role="list-divider">General Use</li>
+  <li>
+    <span class="name">Absolute Evasion</span>
+    <span class="name_jp">絶対回避</span>
+  </li>
+  <li>
+    <span class="name">Escape Runner</span>
+    <span class="name_jp">エスケープランナー</span>
+  </li>
+  <li>
+    <span class="name">Hunter's Oasis</span>
+    <span class="name_jp">狩人のオアシス</span>
+  </li>
+  <li>
+    <span class="name">Perfect Combination</span>
+    <span class="name_jp">完全調合</span>
+  </li>
+  <li>
+    <span class="name">Phoenix Breath</span>
+    <span class="name_jp">不死鳥の息吹</span>
+  </li>
+  <li>
+    <span class="name">Heal Up</span>
+    <span class="name_jp">ヒールゲイン</span>
+  </li>
+  <li>
+    <span class="name">Metal Body</span>
+    <span class="name_jp">鉄鋼身</span>
+  </li>
+  <li>
+    <span class="name">Frenzy Body</span>
+    <span class="name_jp">狂竜身</span>
+  </li>
+  <li data-role="list-divider">Great Sword</li>
+  <li>
+    <span class="name">Brimstone Slash I</span>
+    <span class="name_jp">震怒竜怨斬 I</span>
+  </li>
+  <li>
+    <span class="name">Lion's Maw I</span>
+    <span class="name_jp">獣宿し【獅子】 I</span>
+  </li>
+  <li>
+    <span class="name">Thrusting Earth Slash I</span>
+    <span class="name_jp">地衝斬 I</span>
+  </li>
+  <li data-role="list-divider">Long Sword</li>
+  <li>
+    <span class="name">Spirit Release Full Moon Slash I</span>
+    <span class="name_jp">練気解放円月斬り I</span>
+  </li>
+  <li>
+    <span class="name">Mirror Flower Stance I</span>
+    <span class="name_jp">鏡花の構え I</span>
+  </li>
+  <li>
+    <span class="name">Sakura Spirit Slash I</span>
+    <span class="name_jp">桜花気刃斬 I</span>
+  </li>
+  <li data-role="list-divider">Sword and Shield</li>
+  <li>
+    <span class="name">Round Force I</span>
+    <span class="name_jp">ラウンドフォース I</span>
+  </li>
+  <li>
+    <span class="name">Shoryugeki I</span>
+    <span class="name_jp">昇竜撃 I</span>
+  </li>
+  <li>
+    <span class="name">Blade Dance I</span>
+    <span class="name_jp">ブレイドダンス I</span>
+  </li>
+  <li data-role="list-divider">Dual Blades</li>
+  <li>
+    <span class="name">Bloody Wind Top I</span>
+    <span class="name_jp">血風独楽 I</span>
+  </li>
+  <li>
+    <span class="name">Soaring Heaven Splitter I</span>
+    <span class="name_jp">天翔空破断 I</span>
+  </li>
+  <li>
+    <span class="name">Beast Mode: Ravenous Wolf I</span>
+    <span class="name_jp">獣宿し【餓狼】 I</span>
+  </li>
+  <li data-role="list-divider">Hammer</li>
+  <li>
+    <span class="name">Provoke I</span>
+    <span class="name_jp">大挑発 I</span>
+  </li>
+  <li>
+    <span class="name">Spinning Meteor I</span>
+    <span class="name_jp">スピニングメテオ I</span>
+  </li>
+  <li>
+    <span class="name">Typhoon Trigger I</span>
+    <span class="name_jp">タイフーントリガー I</span>
+  </li>
+  <li data-role="list-divider">Hunting Horn</li>
+  <li>
+    <span class="name">Sound Attack Tremor I</span>
+    <span class="name_jp">音撃震 I</span>
+  </li>
+  <li>
+    <span class="name">Full Orchestra I</span>
+    <span class="name_jp">奏纏 I</span>
+  </li>
+  <li>
+    <span class="name">Orchestra Soul I</span>
+    <span class="name_jp">オルケスタソウル I</span>
+  </li>
+  <li data-role="list-divider">Lance</li>
+  <li>
+    <span class="name">Shield Assault I</span>
+    <span class="name_jp">シールドアサルト I</span>
+  </li>
+  <li>
+    <span class="name">Enraged Guard I</span>
+    <span class="name_jp">ガードレイジ I</span>
+  </li>
+  <li>
+    <span class="name">Screw Thrust I</span>
+    <span class="name_jp">スクリュースラスト I</span>
+  </li>
+  <li data-role="list-divider">Gunlance</li>
+  <li>
+    <span class="name">Supreme Mountain Wyvern's Fire I</span>
+    <span class="name_jp">覇山竜撃砲 I</span>
+  </li>
+  <li>
+    <span class="name">Wyvern's Breath</span>
+    <span class="name_jp">竜の息吹 I</span>
+  </li>
+  <li>
+    <span class="name">Blast Dash I</span>
+    <span class="name_jp">ブラストダッシュ I</span>
+  </li>
+  <li data-role="list-divider">Switch Axe</li>
+  <li>
+    <span class="name">Translash I</span>
+    <span class="name_jp">トランスラッシュ I</span>
+  </li>
+  <li>
+    <span class="name">Demon Sword Mode I</span>
+    <span class="name_jp">剣鬼形態 I</span>
+  </li>
+  <li>
+    <span class="name">Energy Charge I</span>
+    <span class="name_jp">エネルギーチャージ I</span>
+  </li>
+  <li data-role="list-divider">Charge Blade</li>
+  <li>
+    <span class="name">Energy Blade I</span>
+    <span class="name_jp">エネルギーブレイド I</span>
+  </li>
+  <li>
+    <span class="name">Over Limit I</span>
+    <span class="name_jp">オーバーリミット I</span>
+  </li>
+  <li>
+    <span class="name">Healing Bottle I</span>
+    <span class="name_jp">ヒーリングボトル I</span>
+  </li>
+  <li data-role="list-divider">Insect Glaive</li>
+  <li>
+    <span class="name">Insect Clad I</span>
+    <span class="name_jp">蟲纏い I</span>
+  </li>
+  <li>
+    <span class="name">Extract Hunter I</span>
+    <span class="name_jp">エキスハンター I</span>
+  </li>
+  <li>
+    <span class="name">Soaring Insect Slash I</span>
+    <span class="name_jp">飛翔蟲斬破 I</span>
+  </li>
+  <li data-role="list-divider">Light Bowgun</li>
+  <li>
+    <span class="name">Bullet Geyser I</span>
+    <span class="name_jp">バレットゲイザー I</span>
+  </li>
+  <li>
+    <span class="name">Rapid Heaven I</span>
+    <span class="name_jp">ラピッドヘブン I</span>
+  </li>
+  <li>
+    <span class="name">Full Load I</span>
+    <span class="name_jp">全弾装填 I</span>
+  </li>
+  <li data-role="list-divider">Heavy Bowgun</li>
+  <li>
+    <span class="name">Supernova I</span>
+    <span class="name_jp">スーパーノヴァ I</span>
+  </li>
+  <li>
+    <span class="name">Load Gunpowder I</span>
+    <span class="name_jp">火薬装填</span>
+  </li>
+  <li>
+    <span class="name">Acceleration Shower I</span>
+    <span class="name_jp">アクセルシャワー I</span>
+  </li>
+  <li data-role="list-divider">Bow</li>
+  <li>
+    <span class="name">Acceleration Rain I</span>
+    <span class="name_jp">アクセルレイン I</span>
+  </li>
+  <li>
+    <span class="name">Blade Wire I</span>
+    <span class="name_jp">ブレイドワイヤー I</span>
+  </li>
+  <li>
+    <span class="name">Trinity Raven I</span>
+    <span class="name_jp">トリニティレイヴン I</span>
+  </li>
+</ul>
+</div>
+</div>
+
+</body>
+
