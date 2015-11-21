@@ -124,7 +124,6 @@ def _main():
 
   <style>
       span.name { display: inline-block; min-width: 50%; }
-      span.name_jp { display: inline-block; min-width: 50%; }
       img.icon { width: 20px; height: 20px; }
 
       .ui-page .ui-content .ui-listview .ui-li-desc {
