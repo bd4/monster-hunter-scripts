@@ -63,7 +63,8 @@
           // the state to history
           var item_name = $.trim($("#item").val());
           var normalized_name = normalize_name(item_name);
-          if (window.history.state["item_name"] == normalized_name) {
+          if (window.history.state
+          &&  window.history.state["item_name"] == normalized_name) {
               console.log("item not changed, skipping update");
               return;
           }
