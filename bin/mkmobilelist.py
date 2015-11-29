@@ -10,28 +10,6 @@ from mhapi.db import MHDB
 from mhapi.util import get_utf8_writer
 
 
-PANEL = """
-<div data-role="panel" id="menu" data-display="overlay"
-     data-position="fixed">
-  <div data-role="navbar">
-    <ul>
-    <li><a href="#page-skilltrees">Skill Trees</a></li>
-    <li><a href="#page-items">Items</a></li>
-    </ul>
-  </div>
-</div>
-"""
-
-PANEL2 = """
-<div data-role="panel" id="menu" data-display="overlay"
-     data-position="fixed">
-  <div data-role="controlgroup" data-corners="false">
-    <a href="#page-skilltrees">Skill Trees</a>
-    <a href="#page-items">Items</a>
-  </div>
-</div>
-"""
-
 def print_header_nav(current_page_id):
     pages = [("page-skilltrees", "Skill Trees"),
              ("page-items", "Items"),
@@ -59,12 +37,6 @@ def print_header_nav(current_page_id):
   </div>
 </div>
 """.strip("\n")
-
-
-HEADER_START = """
-<div data-role="header" data-position="fixed">
-<a href="#menu" data-icon="bars" class="ui-btn-left">Menu</a>
-"""
 
 
 def mk_html_list(dict_list, keys, sort_keys, divider_fn=None):
@@ -144,11 +116,6 @@ def _main():
 """
 
     print '<div data-role="page" id="page-skilltrees">'
-    #print PANEL
-    #print HEADER_START
-    #print '<h2>Skill Trees</h2>'
-    #print '</div>'
-    #print HEADER_NAV
     print_header_nav("page-skilltrees")
     print '<div data-role="main" class="ui-content">'
     mk_html_list(strees, ("name", "name_jp"), ("name",))
@@ -162,11 +129,6 @@ def _main():
             return prefix
         return None
     print '<div data-role="page" id="page-items">'
-    #print PANEL
-    #print HEADER_START
-    #print '<h2>Items</h2>'
-    #print '</div>'
-    #print HEADER_NAV
     print_header_nav("page-items")
     print '<div data-role="main" class="ui-content">'
     mk_html_list(items, ("icon_name", "name", "name_jp"),
