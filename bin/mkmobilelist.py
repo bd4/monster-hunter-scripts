@@ -35,6 +35,8 @@ PANEL2 = """
 def print_header_nav(current_page_id):
     pages = [("page-skilltrees", "Skill Trees"),
              ("page-items", "Items"),
+             ("page-gather", "Gather"),
+             ("page-carve", "Carve"),
              ("page-hunterarts", "Hunter Arts"),
              ("page-monsters", "Monsters")]
     print """
@@ -104,6 +106,11 @@ def _main():
     db = MHDB()
     strees = db.get_skill_trees()
     items = db.get_items(item_types=("Tool", "Book", "Consumable", "Ammo"))
+    gather_items = db.get_items(item_types=
+                ("Bone", "Plant", "Ore", "Fish", "Bug", "Sac/Fluid", "Meat"))
+
+    carve_items = db.get_items(item_types=("Flesh",))
+
 
     print """<!DOCTYPE html>
 <html>
@@ -163,6 +170,22 @@ def _main():
     print_header_nav("page-items")
     print '<div data-role="main" class="ui-content">'
     mk_html_list(items, ("icon_name", "name", "name_jp"),
+                 ("icon_name", "name"), divider_fn=item_divider_fn)
+    print '</div>'
+    print '</div>'
+
+    print '<div data-role="page" id="page-gather">'
+    print_header_nav("page-gather")
+    print '<div data-role="main" class="ui-content">'
+    mk_html_list(gather_items, ("icon_name", "name", "name_jp"),
+                 ("icon_name", "name"), divider_fn=item_divider_fn)
+    print '</div>'
+    print '</div>'
+
+    print '<div data-role="page" id="page-carve">'
+    print_header_nav("page-carve")
+    print '<div data-role="main" class="ui-content">'
+    mk_html_list(carve_items, ("icon_name", "name", "name_jp"),
                  ("icon_name", "name"), divider_fn=item_divider_fn)
     print '</div>'
     print '</div>'
