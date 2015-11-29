@@ -1,0 +1,512 @@
+[
+  {
+    "title_jp": "\u708e\u6208\u7adc", 
+    "href": "/wiki/Agnaktor", 
+    "name": "Agnaktor", 
+    "name_jp": "\u30a2\u30b0\u30ca\u30b3\u30c8\u30eb"
+  }, 
+  {
+    "title_jp": "\u9752\u718a\u7363", 
+    "href": "/wiki/Arzuros", 
+    "name": "Arzuros", 
+    "name_jp": "\u30a2\u30aa\u30a2\u30b7\u30e9"
+  }, 
+  {
+    "title_jp": "\u30af\u30ea\u30e0\u30be\u30f3\u30fb\u30d9\u30a2\u30fc", 
+    "href": "/wiki/Crimson_Helmet_Arzuros", 
+    "name": "Crimson Helmet Arzuros", 
+    "name_jp": "\u7d05\u515c\u30a2\u30aa\u30a2\u30b7\u30e9"
+  }, 
+  {
+    "title_jp": "\u96ea\u7345\u5b50", 
+    "href": "/wiki/Blangonga", 
+    "name": "Blangonga", 
+    "name_jp": "\u30c9\u30c9\u30d6\u30e9\u30f3\u30b4"
+  }, 
+  {
+    "title_jp": "\u7815\u7adc", 
+    "href": "/wiki/Brachydios", 
+    "name": "Brachydios", 
+    "name_jp": "\u30d6\u30e9\u30ad\u30c7\u30a3\u30aa\u30b9"
+  }, 
+  {
+    "title_jp": "\u5927\u732a", 
+    "href": "/wiki/Bulldrome", 
+    "name": "Bulldrome", 
+    "name_jp": "\u30c9\u30b9\u30d5\u30a1\u30f3\u30b4"
+  }, 
+  {
+    "title_jp": "\u7802\u7adc", 
+    "href": "/wiki/Cephadrome", 
+    "name": "Cephadrome", 
+    "name_jp": "\u30c9\u30b9\u30ac\u30ec\u30aa\u30b9"
+  }, 
+  {
+    "title_jp": "\u76fe\u87f9", 
+    "href": "/wiki/Daimyo_Hermitaur", 
+    "name": "Daimyo Hermitaur", 
+    "name_jp": "\u30c0\u30a4\u30df\u30e7\u30a6\u30b6\u30b6\u30df"
+  }, 
+  {
+    "title_jp": "\u87f9\u57ce\u58c1", 
+    "href": "/wiki/Spearbreaker_Daimyo_Hermitaur", 
+    "name": "Spearbreaker Daimyo Hermitaur", 
+    "name_jp": "\u77db\u7815\u30c0\u30a4\u30df\u30e7\u30a6\u30b6\u30b6\u30df"
+  }, 
+  {
+    "title_jp": "\u65ac\u7adc", 
+    "href": "/wiki/Dinovaldo", 
+    "name": "Dinovaldo", 
+    "name_jp": "\u30c7\u30a3\u30ce\u30d0\u30eb\u30c9"
+  }, 
+  {
+    "title_jp": "\u5c3e\u69cc\u7adc", 
+    "href": "/wiki/Duramboros", 
+    "name": "Duramboros", 
+    "name_jp": "\u30c9\u30dc\u30eb\u30d9\u30eb\u30af"
+  }, 
+  {
+    "title_jp": "\u5de8\u7363", 
+    "href": "/wiki/Gamuto", 
+    "name": "Gamuto", 
+    "name_jp": "\u30ac\u30e0\u30fc\u30c8"
+  }, 
+  {
+    "title_jp": "\u9ed2\u8755\u7adc", 
+    "href": "/wiki/Gore_Magala", 
+    "name": "Gore Magala", 
+    "name_jp": "\u30b4\u30a2\u30fb\u30de\u30ac\u30e9"
+  }, 
+  {
+    "title_jp": "(?)", 
+    "href": "/wiki/Great_Maccau", 
+    "name": "Great Maccau", 
+    "name_jp": "\u30c9\u30b9\u30de\u30c3\u30ab\u30a9"
+  }, 
+  {
+    "title_jp": "\u6bd2\u602a\u9ce5", 
+    "href": "/wiki/Gypceros", 
+    "name": "Gypceros", 
+    "name_jp": "\u30b2\u30ea\u30e7\u30b9"
+  }, 
+  {
+    "title_jp": "\u591c\u9ce5", 
+    "href": "/wiki/Hororohoruru", 
+    "name": "Hororohoruru", 
+    "name_jp": "\u30db\u30ed\u30ed\u30db\u30eb\u30eb"
+  }, 
+  {
+    "title_jp": "(?)", 
+    "href": "/wiki/Iodrome", 
+    "name": "Iodrome", 
+    "name_jp": "\u30c9\u30b9\u30a4\u30fc\u30aa\u30b9"
+  }, 
+  {
+    "title_jp": "\u5947\u733f\u72d0", 
+    "href": "/wiki/Kecha_Wacha", 
+    "name": "Kecha Wacha", 
+    "name_jp": "\u30b1\u30c1\u30e3\u30ef\u30c1\u30e3"
+  }, 
+  {
+    "title_jp": "\u5e2f\u96fb\u98db\u7adc", 
+    "href": "/wiki/Khezu", 
+    "name": "Khezu", 
+    "name_jp": "\u30d5\u30eb\u30d5\u30eb"
+  }, 
+  {
+    "title_jp": "\u6d77\u7adc", 
+    "href": "/wiki/Lagiacrus", 
+    "name": "Lagiacrus", 
+    "name_jp": "\u30e9\u30ae\u30a2\u30af\u30eb\u30b9"
+  }, 
+  {
+    "title_jp": "\u767d\u514e\u7363", 
+    "href": "/wiki/Lagombi", 
+    "name": "Lagombi", 
+    "name_jp": "\u30a6\u30eb\u30af\u30b9\u30b9"
+  }, 
+  {
+    "title_jp": "\u6eb6\u5ca9\u7adc", 
+    "href": "/wiki/Lavasioth", 
+    "name": "Lavasioth", 
+    "name_jp": "\u30f4\u30a9\u30eb\u30ac\u30ce\u30b9"
+  }, 
+  {
+    "title_jp": "\u7d5e\u86c7\u7adc", 
+    "href": "/wiki/Najarala", 
+    "name": "Najarala", 
+    "name_jp": "\u30ac\u30e9\u30e9\u30a2\u30b8\u30e3\u30e9"
+  }, 
+  {
+    "title_jp": "\u8fc5\u7adc", 
+    "href": "/wiki/Nargacuga", 
+    "name": "Nargacuga", 
+    "name_jp": "\u30ca\u30eb\u30ac\u30af\u30eb\u30ac"
+  }, 
+  {
+    "title_jp": "\u98a8\u65ac\u308b\u767d\u5f71", 
+    "href": "/wiki/Nargacuga_Variant", 
+    "name": "Nargacuga Variant", 
+    "name_jp": "\u767d\u75be\u98a8\u30ca\u30eb\u30ac\u30af\u30eb\u30ac"
+  }, 
+  {
+    "title_jp": "\u6f5c\u53e3\u7adc", 
+    "href": "/wiki/Nibelsnarf", 
+    "name": "Nibelsnarf", 
+    "name_jp": "\u30cf\u30d7\u30eb\u30dc\u30c3\u30ab"
+  }, 
+  {
+    "title_jp": "\u6c34\u7adc", 
+    "href": "/wiki/Plesioth", 
+    "name": "Plesioth", 
+    "name_jp": "\u30ac\u30ce\u30c8\u30c8\u30b9"
+  }, 
+  {
+    "title_jp": "\u96fb\u7adc", 
+    "href": "/wiki/Raizekusu", 
+    "name": "Raizekusu", 
+    "name_jp": "\u30e9\u30a4\u30bc\u30af\u30b9"
+  }, 
+  {
+    "title_jp": "\u706b\u7adc", 
+    "href": "/wiki/Rathalos", 
+    "name": "Rathalos", 
+    "name_jp": "\u30ea\u30aa\u30ec\u30a6\u30b9"
+  }, 
+  {
+    "title_jp": "\u30c0\u30fc\u30af\u30cd\u30b9\u30ed\u30fc\u30c9", 
+    "href": "/wiki/Rathalos_Variant", 
+    "name": "Rathalos Variant", 
+    "name_jp": "\u9ed2\u708e\u738b\u30ea\u30aa\u30ec\u30a6\u30b9"
+  }, 
+  {
+    "title_jp": "\u96cc\u706b\u7adc", 
+    "href": "/wiki/Rathian", 
+    "name": "Rathian", 
+    "name_jp": "\u30ea\u30aa\u30ec\u30a4\u30a2"
+  }, 
+  {
+    "title_jp": "\u30c7\u30c3\u30c9\u30ea\u30fc\u30d7\u30ea\u30f3\u30bb\u30b9", 
+    "href": "/wiki/Rathian_Variant", 
+    "name": "Rathian Variant", 
+    "name_jp": "\u7d2b\u6bd2\u59eb\u30ea\u30aa\u30ec\u30a4\u30a2"
+  }, 
+  {
+    "title_jp": "\u6c34\u7363", 
+    "href": "/wiki/Royal_Ludroth", 
+    "name": "Royal Ludroth", 
+    "name_jp": "\u30ed\u30a2\u30eb\u30c9\u30ed\u30b9"
+  }, 
+  {
+    "title_jp": "\u91cd\u7532\u866b", 
+    "href": "/wiki/Seltas_Queen", 
+    "name": "Seltas Queen", 
+    "name_jp": "\u30b2\u30cd\u30eb\u30fb\u30bb\u30eb\u30bf\u30b9"
+  }, 
+  {
+    "title_jp": "\u5343\u5203\u7adc", 
+    "href": "/wiki/Seregios", 
+    "name": "Seregios", 
+    "name_jp": "\u30bb\u30eb\u30ec\u30ae\u30aa\u30b9"
+  }, 
+  {
+    "title_jp": "\u938c\u87f9", 
+    "href": "/wiki/Shogun_Ceanataur", 
+    "name": "Shogun Ceanataur", 
+    "name_jp": "\u30b7\u30e7\u30a6\u30b0\u30f3\u30ae\u30b6\u30df"
+  }, 
+  {
+    "title_jp": "\u6ce1\u72d0\u7adc", 
+    "href": "/wiki/Tamamitsune", 
+    "name": "Tamamitsune", 
+    "name_jp": "\u30bf\u30de\u30df\u30c4\u30cd"
+  }, 
+  {
+    "title_jp": "\u9b3c\u86d9", 
+    "href": "/wiki/Tetsucabra", 
+    "name": "Tetsucabra", 
+    "name_jp": "\u30c6\u30c4\u30ab\u30d6\u30e9"
+  }, 
+  {
+    "title_jp": "(?)", 
+    "href": "/wiki/Tetsucabra_Variant", 
+    "name": "Tetsucabra Variant", 
+    "name_jp": "(?)"
+  }, 
+  {
+    "title_jp": "\u8f5f\u7adc", 
+    "href": "/wiki/Tigrex", 
+    "name": "Tigrex", 
+    "name_jp": "\u30c6\u30a3\u30ac\u30ec\u30c3\u30af\u30b9"
+  }, 
+  {
+    "title_jp": "\u8352\u9264\u722a", 
+    "href": "/wiki/Tigrex_Variant", 
+    "name": "Tigrex Variant", 
+    "name_jp": "\u8352\u9264\u722a\u30c6\u30a3\u30ac\u30ec\u30c3\u30af\u30b9"
+  }, 
+  {
+    "title_jp": "\u7206\u939a\u7adc", 
+    "href": "/wiki/Uragaan", 
+    "name": "Uragaan", 
+    "name_jp": "\u30a6\u30e9\u30ac\u30f3\u30ad\u30f3"
+  }, 
+  {
+    "title_jp": "(?)", 
+    "href": "/wiki/Velocidrome", 
+    "name": "Velocidrome", 
+    "name_jp": "\u30c9\u30b9\u30e9\u30f3\u30dd\u30b9"
+  }, 
+  {
+    "title_jp": "\u8d64\u7532\u7363", 
+    "href": "/wiki/Volvidon", 
+    "name": "Volvidon", 
+    "name_jp": "\u30e9\u30f3\u30b0\u30ed\u30c8\u30e9"
+  }, 
+  {
+    "title_jp": "\u602a\u9ce5", 
+    "href": "/wiki/Yian_Kut-Ku", 
+    "name": "Yian Kut-Ku", 
+    "name_jp": "\u30a4\u30e3\u30f3\u30af\u30c3\u30af"
+  }, 
+  {
+    "title_jp": "\u9ed2\u72fc\u9ce5", 
+    "href": "/wiki/Yian_Garuga", 
+    "name": "Yian Garuga", 
+    "name_jp": "\u30a4\u30e3\u30f3\u30ac\u30eb\u30eb\u30ac"
+  }, 
+  {
+    "title_jp": "\u5316\u3051\u9bab", 
+    "href": "/wiki/Zamtrios", 
+    "name": "Zamtrios", 
+    "name_jp": "\u30b6\u30dc\u30a2\u30b6\u30ae\u30eb"
+  }, 
+  {
+    "title_jp": "\u96f7\u72fc\u7adc", 
+    "href": "/wiki/Zinogre", 
+    "name": "Zinogre", 
+    "name_jp": "\u30b8\u30f3\u30aa\u30a6\u30ac"
+  }, 
+  {
+    "title_jp": "\u771f\u306a\u308b\u899a\u9192", 
+    "href": "/wiki/Zinogre_Variant", 
+    "name": "Zinogre Variant", 
+    "name_jp": "\u91d1\u96f7\u516c\u30b8\u30f3\u30aa\u30a6\u30ac"
+  }, 
+  {
+    "title_jp": "\u5d50\u9f8d", 
+    "href": "/wiki/Amatsumagatsuchi", 
+    "name": "Amatsumagatsuchi", 
+    "name_jp": "\u30a2\u30de\u30c4\u30de\u30ac\u30c4\u30c1"
+  }, 
+  {
+    "title_jp": "\u971e\u9f8d", 
+    "href": "/wiki/Chameleos", 
+    "name": "Chameleos", 
+    "name_jp": "\u30aa\u30aa\u30ca\u30ba\u30c1"
+  }, 
+  {
+    "title_jp": "\u5e7b\u7363", 
+    "href": "/wiki/Kirin", 
+    "name": "Kirin", 
+    "name_jp": "\u30ad\u30ea\u30f3"
+  }, 
+  {
+    "title_jp": "\u92fc\u9f8d", 
+    "href": "/wiki/Kushala_Daora", 
+    "name": "Kushala Daora", 
+    "name_jp": "\u30af\u30b7\u30e3\u30eb\u30c0\u30aa\u30e9"
+  }, 
+  {
+    "title_jp": "\u708e\u738b\u9f8d", 
+    "href": "/wiki/Teostra", 
+    "name": "Teostra", 
+    "name_jp": "\u30c6\u30aa\u30fb\u30c6\u30b9\u30ab\u30c8\u30eb"
+  }, 
+  {
+    "title_jp": "(?)", 
+    "href": "/wiki/Unnamed_MHX_Elder_Dragon", 
+    "name": "Unnamed MHX Elder Dragon", 
+    "name_jp": "(?)"
+  }, 
+  {
+    "title_jp": "None", 
+    "href": "/wiki/Zamite", 
+    "name": "Zamite", 
+    "name_jp": "\u30b9\u30af\u30a2\u30ae\u30eb"
+  }, 
+  {
+    "title_jp": "\u4e38\u9ce5", 
+    "href": "/wiki/Gargwa", 
+    "name": "Gargwa", 
+    "name_jp": "\u30ac\u30fc\u30b0\u30a1"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Giaprey", 
+    "name": "Giaprey", 
+    "name_jp": "\u30ae\u30a2\u30ce\u30b9"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Ioprey", 
+    "name": "Ioprey", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9"
+  }, 
+  {
+    "title_jp": "\u72d7\u7adc", 
+    "href": "/wiki/Jaggi", 
+    "name": "Jaggi", 
+    "name_jp": "\u30b8\u30e3\u30ae\u30a3"
+  }, 
+  {
+    "title_jp": "\u72d7\u7adc", 
+    "href": "/wiki/Jaggia", 
+    "name": "Jaggia", 
+    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u30ce\u30b9"
+  }, 
+  {
+    "title_jp": "(?)", 
+    "href": "/wiki/Maccau", 
+    "name": "Maccau", 
+    "name_jp": "\u30de\u30c3\u30ab\u30a9"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Velociprey", 
+    "name": "Velociprey", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Ceanataur", 
+    "name": "Ceanataur", 
+    "name_jp": "\u30ac\u30df\u30b6\u30df"
+  }, 
+  {
+    "title_jp": "None", 
+    "href": "/wiki/Hermitaur", 
+    "name": "Hermitaur", 
+    "name_jp": "\u30e4\u30aa\u30b6\u30df"
+  }, 
+  {
+    "title_jp": "None", 
+    "href": "/wiki/Blango", 
+    "name": "Blango", 
+    "name_jp": "\u30d6\u30e9\u30f3\u30b4"
+  }, 
+  {
+    "title_jp": "None", 
+    "href": "/wiki/Bullfango", 
+    "name": "Bullfango", 
+    "name_jp": "\u30d6\u30eb\u30d5\u30a1\u30f3\u30b4"
+  }, 
+  {
+    "title_jp": "None", 
+    "href": "/wiki/Anteka", 
+    "name": "Anteka", 
+    "name_jp": "\u30ac\u30a6\u30b7\u30ab"
+  }, 
+  {
+    "title_jp": "None", 
+    "href": "/wiki/Apceros", 
+    "name": "Apceros", 
+    "name_jp": "\u30a2\u30d7\u30b1\u30ed\u30b9"
+  }, 
+  {
+    "title_jp": "None", 
+    "href": "/wiki/Aptonoth", 
+    "name": "Aptonoth", 
+    "name_jp": "\u30a2\u30d7\u30c8\u30ce\u30b9"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Kelbi", 
+    "name": "Kelbi", 
+    "name_jp": "\u30b1\u30eb\u30d3"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Mosswine", 
+    "name": "Mosswine", 
+    "name_jp": "\u30e2\u30b9"
+  }, 
+  {
+    "title_jp": "\u96f2\u7f8a\u9e7f", 
+    "href": "/wiki/Mufa", 
+    "name": "Mufa", 
+    "name_jp": "\u30e0\u30fc\u30d5\u30a1"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Popo", 
+    "name": "Popo", 
+    "name_jp": "\u30dd\u30dd"
+  }, 
+  {
+    "title_jp": "\u8349\u98df\u7adc", 
+    "href": "/wiki/Rhenoplos", 
+    "name": "Rhenoplos", 
+    "name_jp": "\u30ea\u30ce\u30d7\u30ed\u30b9"
+  }, 
+  {
+    "title_jp": "(?)", 
+    "href": "/wiki/Rimosetosu", 
+    "name": "Rimosetosu", 
+    "name_jp": "\u30ea\u30e2\u30bb\u30c8\u30b9"
+  }, 
+  {
+    "title_jp": "\u6c34\u751f\u7363", 
+    "href": "/wiki/Ludroth", 
+    "name": "Ludroth", 
+    "name_jp": "\u30eb\u30c9\u30ed\u30b9"
+  }, 
+  {
+    "title_jp": "\u6eb6\u5ca9\u7363", 
+    "href": "/wiki/Uroktor", 
+    "name": "Uroktor", 
+    "name_jp": "\u30a6\u30ed\u30b3\u30c8\u30eb"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Felyne", 
+    "name": "Felyne", 
+    "name_jp": "\u30a2\u30a4\u30eb\u30fc"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Melynx", 
+    "name": "Melynx", 
+    "name_jp": "\u30e1\u30e9\u30eb\u30fc"
+  }, 
+  {
+    "title_jp": "\u7532\u866b", 
+    "href": "/wiki/Altaroth", 
+    "name": "Altaroth", 
+    "name_jp": "\u30aa\u30eb\u30bf\u30ed\u30b9"
+  }, 
+  {
+    "title_jp": "\u98db\u7532\u866b", 
+    "href": "/wiki/Bnahabra", 
+    "name": "Bnahabra", 
+    "name_jp": "\u30d6\u30ca\u30cf\u30d6\u30e9"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Hornetaur", 
+    "name": "Hornetaur", 
+    "name_jp": "\u30ab\u30f3\u30bf\u30ed\u30b9"
+  }, 
+  {
+    "title_jp": "N/A", 
+    "href": "/wiki/Vespoid", 
+    "name": "Vespoid", 
+    "name_jp": "\u30e9\u30f3\u30b4\u30b9\u30bf"
+  }, 
+  {
+    "title_jp": "\u7802\u7adc", 
+    "href": "/wiki/Cephalos", 
+    "name": "Cephalos", 
+    "name_jp": "\u30ac\u30ec\u30aa\u30b9"
+  }
+]

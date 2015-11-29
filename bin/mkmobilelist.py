@@ -35,7 +35,8 @@ PANEL2 = """
 def print_header_nav(current_page_id):
     pages = [("page-skilltrees", "Skill Trees"),
              ("page-items", "Items"),
-             ("page-hunterarts", "Hunter Arts")]
+             ("page-hunterarts", "Hunter Arts"),
+             ("page-monsters", "Monsters")]
     print """
 <div data-role="header" data-position="fixed">
   <div data-role="navbar">
@@ -183,6 +184,19 @@ def _main():
                  divider_fn=ha_divider_fn)
     print '</div>'
     print '</div>'
+
+    monster_path = os.path.join(_pathfix.project_path, "db",
+                                "mhx_monster_list.json")
+    with open(monster_path) as f:
+        monster_list = json.load(f)
+
+    print '<div data-role="page" id="page-monsters">'
+    print_header_nav("page-monsters")
+    print '<div data-role="main" class="ui-content">'
+    mk_html_list(monster_list, ("name", "name_jp"), ("name",))
+    print '</div>'
+    print '</div>'
+
 
     print """
 </body>
