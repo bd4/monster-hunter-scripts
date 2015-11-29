@@ -65,6 +65,10 @@ def mk_html_list(dict_list, keys, sort_keys, divider_fn=None):
                 if value:
                     print '    <p class="ui-li-desc">%s</p>' % value
                 continue
+            elif k == "title_jp":
+                if value not in ("", None, "None", "N/A", "(?)"):
+                    print '    <p class="ui-li-desc">Title: %s</p>' % value
+                continue
             if value.endswith(".png"):
                 value = ('<img class="icon" src="/img/icons_items/%s" />'
                          % value)
@@ -178,7 +182,7 @@ def _main():
     print '<div data-role="page" id="page-monsters">'
     print_header_nav("page-monsters")
     print '<div data-role="main" class="ui-content">'
-    mk_html_list(monster_list, ("name", "name_jp"), ("name",))
+    mk_html_list(monster_list, ("name", "name_jp", "title_jp"), ("name",))
     print '</div>'
     print '</div>'
 
