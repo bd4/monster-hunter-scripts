@@ -60,6 +60,8 @@ def parse_wikia_monsters(f):
         m = MONSTER_RE.search(line)
         if m:
             monster = dict(href=m.group(1), name=m.group(2))
+            if monster["name"].startswith("File:"):
+                continue
             if monster["name"] not in seen:
                 data.append(monster)
                 seen.add(monster["name"])
@@ -95,11 +97,14 @@ def _main():
         names = get_jp_names(m["href"])
         if len(names) == 0:
             print >>sys.stderr, "ERROR: no names for %s" % name
-            names = ["(?)", "(?)"]
+            names = ["", ""]
         if len(names) == 1:
-            names.append("(?)")
+            print >>sys.stderr, "ERROR: no title for %s" % name
+            names.append("")
         m["name_jp"] = names[0]
         m["title_jp"] = names[1]
+        if m["title_jp"] in ("None", "N/A", "(?)"):
+            m["title_jp"] = ""
     print json.dumps(monster_list, indent=2)
 
 
