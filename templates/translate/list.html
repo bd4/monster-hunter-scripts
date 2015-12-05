@@ -1,0 +1,54 @@
+## -*- coding: utf-8 -*-
+<%inherit file="base.html" />
+
+<div id="poogie-header">
+ <div class="poogie-header-content">
+  <div class="poogie-header-left">
+  <a class="pure-button button-header"
+     href="index.html"><i class="fa fa-bars"></i> Menu</a>
+  </div>
+% if alt_link:
+  <div class="poogie-header-right">
+  <a class="pure-button button-header"
+     href="${alt_link}">${alt_title}</a>
+  </div>
+% endif
+  <div class="poogie-header-title">${title}</div>
+  <div class="clear"></div>
+ </div>
+</div>
+
+<div id="poogie-content">
+
+<% prev_item = None %>
+% for item in item_list:
+  <% divider_text = divider_fn(item, prev_item) %>
+  % if divider_text is not None:
+  <div class="poogie-li poogie-li-divider">${divider_text}</div>
+  % endif
+  <% icon_prev = False %>
+  <div class="pure-g poogie-li">
+    % for i, k in enumerate(keys):
+       <% value = item[k] %>
+       % if k in ("section", "description"):
+         % if value:
+    <div class="pure-u">${value}</div>
+         % endif
+       % elif k == "title_jp" and i != 0:
+         % if value:
+    <div class="pure-u">Title: ${value}</div>
+         % endif
+       % elif value.endswith(".png"):
+    <div class="pure-u-1-2"><img class="icon" src="/img/icons_items/${value}" />
+       <% icon_prev = True %>
+       % elif icon_prev:
+    ${value}</div>
+       <% icon_prev = False %>
+       % else:
+    <div class="pure-u-1-2">${value}</div>
+       % endif
+    % endfor
+  </div>
+  <% prev_item = item %>
+% endfor
+</div>

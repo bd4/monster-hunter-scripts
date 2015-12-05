@@ -14,7 +14,7 @@ from mhapi.util import get_utf8_writer
 def print_header_nav(title, pid):
     print """
   <div data-role="header" data-position="fixed">
-    <a href="#page-home" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+    <a href="#page-menu" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-bars">Menu</a>
     <h1>%s</h1>
 """.strip() % title
 
@@ -36,10 +36,10 @@ def print_header_nav(title, pid):
 
 def mk_html_list(dict_list, keys, sort_keys, divider_fn="auto"):
     if divider_fn == "auto":
-        print ('<ul data-role="listview" data-filter="false"'
+        print ('<ul data-role="listview" data-filter="true"'
                ' data-autodividers="true">')
     else:
-        print '<ul data-role="listview" data-filter="false">'
+        print '<ul data-role="listview" data-filter="true">'
 
     if isinstance(sort_keys, types.FunctionType):
         sort_fn = sort_keys
@@ -116,9 +116,9 @@ def _main():
 
 </head>
 <body>
-<div data-role="page" id="page-home">
+<div data-role="page" id="page-menu">
   <div data-role="header" data-position="fixed">
-    <h1>Home</h1>
+    <h1>Menu</h1>
   </div>
   <div data-role="main" class="ui-content">
     <ul data-role="listview">
