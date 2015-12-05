@@ -36,10 +36,10 @@ def print_header_nav(title, pid):
 
 def mk_html_list(dict_list, keys, sort_keys, divider_fn="auto"):
     if divider_fn == "auto":
-        print ('<ul data-role="listview" data-filter="true"'
+        print ('<ul data-role="listview" data-filter="false"'
                ' data-autodividers="true">')
     else:
-        print '<ul data-role="listview" data-filter="true">'
+        print '<ul data-role="listview" data-filter="false">'
 
     if isinstance(sort_keys, types.FunctionType):
         sort_fn = sort_keys

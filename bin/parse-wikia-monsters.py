@@ -38,7 +38,7 @@ MONSTER_RE = re.compile(
 
 JAPANESE_NAME_STR = '<h3 class="pi-data-label pi-secondary-font">Japanese:</h3>'
 JAPANESE_NAME_RE = re.compile(
-    '<div class="pi-data-value pi-font">([^<]*)')
+    '<div class="pi-data-value pi-font">(.*)</div>')
 
 
 def parse_wikia_monsters(f):
@@ -83,10 +83,22 @@ def get_jp_names(monster_path):
             line = lines.pop(0).strip()
         m = JAPANESE_NAME_RE.match(line)
         assert m, "No match: " + line
-        names.append(m.group(1))
+        names.append(parse_japanese_name(m.group(1)))
         if len(names) == 2:
             break
     return names
+
+
+def parse_japanese_name(div_contents):
+    parts = div_contents.split("<br />")
+    if len(parts) == 1:
+        return parts[0]
+    assert len(parts) == 2
+    # Remobra has different titles in 2nd and 4th gen, parse from
+    # second part and remove the paren part
+    if parts[1].endswith("(4th Gen)"):
+        return parts[1][:-len("(4th Gen)")]
+    return parts[0]
 
 
 def _main():
