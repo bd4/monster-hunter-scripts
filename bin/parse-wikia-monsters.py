@@ -18,7 +18,6 @@ Returns list of dict, e.g.:
 import sys
 import re
 import json
-from collections import defaultdict, OrderedDict
 
 import requests
 
@@ -32,9 +31,12 @@ NAME_RE = re.compile(
 
 
 MONSTER_RE = re.compile(
-    '(?:</td>)?<td style="[^"]*background-color:#EBEBEB;">\s*'
+    '(?:</td>)?<td style="[^"]*background-color:#EBEBEB;[^"]*">\s*'
     '<a href="([^"]*)" [^>]* title="([^"]*)"')
 
+MONSTER_LINK_RE = re.compile(
+ '<a href="(/wiki/[^/"]*)"\s+class="image image-thumbnail link-internal"\s+'
+ 'title="([^"]*)"\s+>')
 
 JAPANESE_NAME_STR = '<h3 class="pi-data-label pi-secondary-font">Japanese:</h3>'
 JAPANESE_NAME_RE = re.compile(
@@ -57,8 +59,7 @@ def parse_wikia_monsters(f):
             continue
         if section != "Large Monsters":
             continue
-        m = MONSTER_RE.search(line)
-        if m:
+        for m in MONSTER_LINK_RE.finditer(line):
             monster = dict(href=m.group(1), name=m.group(2))
             if monster["name"].startswith("File:"):
                 continue
@@ -71,7 +72,6 @@ def parse_wikia_monsters(f):
 def get_jp_names(monster_path):
     url = "http://monsterhunter.wikia.com" + monster_path
     r = requests.get(url)
-    html = r.text
     lines = r.text.split("\n")
     names = []
     while lines:
