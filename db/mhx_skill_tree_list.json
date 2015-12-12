@@ -124,6 +124,10 @@
     "name": "CritStatus"
   }, 
   {
+    "name_jp": "\u5317\u8fb0\u7d0d\u8c46\u6d41", 
+    "name": "D. Fencing"
+  }, 
+  {
     "name_jp": "\u3060\u308b\u307e", 
     "name": "Daruma"
   }, 
@@ -304,8 +308,8 @@
     "name": "LastingPwr"
   }, 
   {
-    "name_jp": "\u8df3\u8e8d", 
-    "name": "Leaping"
+    "name_jp": "\u98db\u71d5", 
+    "name": "Swift Bird"
   }, 
   {
     "name_jp": "\u7bc0\u98df", 
