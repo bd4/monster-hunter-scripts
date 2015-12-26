@@ -1,3 +1,4 @@
 *.pyc
 README.html
 RECOMMENDATIONS.html
+tmp/

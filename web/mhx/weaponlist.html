@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 
-  <script type="text/javascript" src="js/ejs_production.js"></script>
+  <script type="text/javascript" src="/js/ejs_production.js"></script>
 
-  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript" src="/js/common.js"></script>
 
   <style>
       label {
@@ -41,7 +41,7 @@
 
       .sharpness-bar {
           border: 1px #d3d3d3 solid;
-          min-width: 92px;
+          min-width: 72px;
           height: 10px;
           background-color: #d3d3d3;
           float: left;
@@ -79,7 +79,8 @@
       }
 
       .sharpness-bar .purple {
-          background-color: #c3c !important;
+          /* no purple in mhx */
+          display: none;
       }
 
       #sharpness_popup {
@@ -97,14 +98,22 @@
   </style>
 
   <script type="text/javascript">
-    var DATA_PATH = get_base_path() + "/jsonapi/";
+    var WEAPON_LIST = null;
 
-    var template_row = new EJS({ url: "templates/weaponrow.ejs" });
+    $.ajax({
+        url: "/jsonapi/mhx/weapon_list.json",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            WEAPON_LIST = data;
+            console.log("weapon count " + WEAPON_LIST.length);
+        }
+    });
+
+    var template_row = new EJS({ url: "/templates/weaponrow.ejs" });
 
     $(document).ready(function(){
-        load_weapon_data(function() {
-            load_calculating_palico_data(init_page);
-        });
+        init_page();
 
         $("#sharpness_popup").on("click", function(evt) {
             $(this).html("").offset({top:0, left:0}).hide();
@@ -119,7 +128,7 @@
     });
 
     function init_page() {
-        load_qs();
+        var qs = load_qs();
         $(window).on("popstate", function(e) {
             var oe = e.originalEvent;
             if (oe.state !== null) {
@@ -132,20 +141,25 @@
             save_state(state);
             update_weapon_list(state);
         });
+
+        if (qs) {
+            update_weapon_list(qs);
+        }
     }
 
     function load_qs() {
         if ($.QueryString["weapon_type"]) {
             load_state($.QueryString);
+            return $.QueryString;
         }
+        return null;
     }
 
     function get_ui_state() {
         return { "weapon_type": $("#weapon_type").val(),
                  "weapon_element": $("#weapon_element").val(),
                  "weapon_final": $("#weapon_final").is(":checked"),
-                 "weapon_name_text": $("#weapon_name_text").val(),
-                 "weapon_component_text": $("#weapon_component_text").val() };
+                 "weapon_name_text": $("#weapon_name_text").val() };
     }
 
     function load_state(state) {
@@ -153,7 +167,6 @@
         $("#weapon_element").val(state["weapon_element"]);
         $("#weapon_final").prop("checked", state["weapon_final"]);
         $("#weapon_name_text").val(state["weapon_name_text"]);
-        $("#weapon_component_text").val(state["weapon_component_text"]);
     }
 
     function save_state(state, replace) {
@@ -177,6 +190,8 @@
             return false;
         }
 
+        console.log("check " + weapon_data["name"]);
+
         if (final_only && weapon_data["final"] != 1) {
             return false;
         }
@@ -190,7 +205,8 @@
         &&  weapon_element != weapon_data["element_2"]
         &&  weapon_element != weapon_data["awaken"]) {
             if (weapon_element != "None"
-            ||  weapon_data["element"] != "" || weapon_data["awaken"] != "") {
+            ||  weapon_data["element"] != null
+            || weapon_data["awaken"] != null) {
                 return false;
             }
         }
@@ -220,59 +236,58 @@
 
     function update_weapon_list(state) {
         var match_count = 0;
-        var cp_setups = [];
-        var comps = state["weapon_component_text"].split("|");
         console.log("updating weapon list: " + JSON.stringify(state));
         $("#weapon_table").empty();
-        $.each(WEAPON_ID_IDX, function(weapon_id, weapon_list) {
-            var weapon_data = weapon_list[0];
+        var results = [];
+        $.each(WEAPON_LIST, function(i, weapon_data) {
             if (weapon_predicate(state, weapon_data)) {
+                weapon_data["id"] = i;
+                weapon_data["awaken"] = null;
+                weapon_data["element_2"] = "";
+                weapon_data["element_2_attack"] = "";
+                weapon_data["phial"] = "";
+                weapon_data["shelling_type"] = "";
+                weapon_data["horn_notes"] = "";
                 match_count += 1;
-                $.getJSON(DATA_PATH + "weapon/" + weapon_id + ".json",
-                          function(data) {
-                              if (comps
-                              && !list_match(comps,
-                                     Object.keys(data["create_components"]))
-                              && !list_match(comps,
-                                     Object.keys(data["upgrade_components"])))
-                              {
-                                    console.log("skipping '"
-                                                + data["name"]
-                                                + "', failed component match");
-                                    return;
-                              }
-                              set_sharpness_titles(data);
-                              set_horn_melodies_title(data);
-                              data["wtype_short"] =
-                                        WEAPON_TYPE_ABBR[data["wtype"]];
-                              data["ELEMENT_ABBR"] = ELEMENT_ABBR;
-                              data["url"] = null;
-                              var html = template_row.render(data);
-                              $("#weapon_table").append(html);
-                              var setup = get_calculating_palico_setup(data);
-                              console.log("setup for " + weapon_id + ": "
-                                          + setup);
-                              if (setup.length) {
-                                  cp_setups.push(setup);
-                              }
-                              update_cp_link(cp_setups);
-                          });
+                set_sharpness_titles(weapon_data);
+                set_horn_melodies_title(weapon_data);
+                weapon_data["wtype_short"] =
+                          WEAPON_TYPE_ABBR[weapon_data["wtype"]];
+                weapon_data["ELEMENT_ABBR"] = ELEMENT_ABBR;
+                var html = template_row.render(weapon_data);
+                results.push([weapon_data, html]);
             }
+        });
+        results.sort(function (a, b) {
+            avals = get_sort_values(a[0]);
+            bvals = get_sort_values(b[0]);
+            if (avals > bvals) {
+                return -1;
+            }
+            if (avals < bvals) {
+                return 1;
+            }
+            return 0;
+        });
+        $.each(results, function(i, pair) {
+            $("#weapon_table").append(pair[1]);
         });
         console.log("match count: " + match_count);
 
     }
 
-    function update_cp_link(setups) {
-        if (setups.length == 0) {
-            console.log("no matches or no cp setups, hiding cp link");
-            $("#cp_div").hide();
-        } else {
-            var href = get_calculating_palico_uri(setups);
-            console.log("cp link: " + href);
-            $("#cp_link").prop("href", href);
-            $("#cp_div").show();
-        }
+    function get_sort_values(weapon_data) {
+        var sharp_reverse = Array.prototype.slice.call(
+                                        weapon_data["sharpness"]);
+        sharp_reverse.reverse();
+        return [
+            weapon_data["attack"],
+            sharp_reverse,
+            weapon_data["element_attack"],
+            weapon_data["affinity"],
+            weapon_data["num_slots"],
+            weapon_data["defense"]
+        ];
     }
   </script>
 </head>
@@ -314,7 +329,7 @@
         <option value="Poison">Poison</option>
         <option value="Paralysis">Paralysis</option>
         <option value="Sleep">Sleep</option>
-        <option value="Blastblight">Blast</option>
+        <option value="Blast">Blast</option>
     </select></td>
     <td><label for="weapon_final"
                title="Only show weapons with no furthur upgrades"
@@ -328,18 +343,9 @@
              title="Show only weapons with a match in the name. List of strings separated by '|' (vertical bar)."
              >Name:</label>
       <input id="weapon_name_text" size="15" />
-      <label for="weapon_component_text"
-             title="Show only weapons with a matching create or upgrade component. List separated by '|' (veritical bar)."
-             >Components:</label>
-      <input id="weapon_component_text" size="15" />
     </td>
   </tr>
   </table>
-</div>
-<div id="cp_div">
-<a id="cp_link"
-   href="http://minyoung.ch/calculatingpalico/"
- >Compare damage (Calculating Palico)</a>
 </div>
 <table id="weapon_table">
 </table>
