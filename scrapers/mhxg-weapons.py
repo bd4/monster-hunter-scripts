@@ -9,10 +9,18 @@ from lxml import etree
 
 import _pathfix
 
+_BASE_URL = "http://wiki.mhxg.org"
 
 _WEAPON_URLS = {
-    "Hammer": ["http://wiki.mhxg.org/data/1904.html",
-               "http://wiki.mhxg.org/data/2886.html"],
+    "Great Sword": ["/data/1900.html", "/data/2882.html"],
+    "Long Sword": ["/data/1901.html", "/data/2883.html"],
+    "Sword and Shield": ["/data/1902.html", "/data/2884.html"],
+    "Hammer": ["/data/1904.html", "/data/2886.html"],
+    "Lance": ["/data/1906.html", "/data/2888.html"],
+    "Gunlance": ["/data/1907.html", "/data/2889.html"],
+    "Switch Axe": ["/data/1908.html", "/data/2890.html"],
+    "Charge Blade": ["/data/1909.html"],
+    "Insect Glaive": ["/data/1910.html"],
 }
 
 
@@ -29,26 +37,52 @@ _ELEMENT_MAP = {
 }
 
 
+_GL_SHOT_TYPES = {
+    u"通常": "Normal",
+    u"放射": "Long",
+    u"拡散": "Wide",
+}
+
+
+_SA_PHIAL_TYPES = {
+    u"強撃ビン": "Power",
+    u"減気ビン": "Exhaust",
+    u"滅龍ビン": "Dragon",
+    u"強属性ビン": "Element",
+    u"毒ビン": "Poison",
+    u"麻痺ビン": "Paralysis",
+}
+
+
+_CB_PHIAL_TYPES = {
+    u"榴弾ビン": "Impact",
+    u"強属性ビン": "Element",
+}
+
+
 def extract_weapon_list(wtype, tree):
     weapons = []
     rows = tree.xpath('//*[@id="sorter"]/tbody/tr')
-    i = 0
     parent_name = None
     parent_href = None
     for row in rows:
         cells = list(row)
-        if len(cells) != 5:
+        if len(cells) < 5:
             continue
         name, href, final = _parse_name_td(cells[0])
         attack = int(cells[1].text)
         affinity, defense, element, element_attack = _parse_extra_td(cells[2])
-        sharpness = _parse_sharpness_td(cells[3])
-        slots = _parse_slots_td(cells[4])
+        sharpness = _parse_sharpness_td(cells[-2])
+        slots = _parse_slots_td(cells[-1])
         data = dict(name_jp=name, name=name, wtype=wtype, final=final,
                     sharpness=sharpness[0], sharpness_plus=sharpness[1],
                     attack=attack, num_slots=slots,
                     affinity=affinity, defense=defense,
-                    element=element, element_attack=element_attack)
+                    element=element, element_attack=element_attack,
+                    phial=None, shelling_type=None, horn_notes=None,
+                    awaken=None, element_2=None, element_2_attack=None)
+        if len(cells) == 6:
+            _add_phial_or_shot_data(data, cells[-3])
         if href is None or href == parent_href:
             data["parent"] = parent_name
             data["href"] = parent_href
@@ -60,6 +94,19 @@ def extract_weapon_list(wtype, tree):
         data["url"] = "http://wiki.mhxg.org" + data["href"]
         weapons.append(data)
     return weapons
+
+
+def _add_phial_or_shot_data(data, td_element):
+    text = td_element.text.strip()
+    if data["wtype"] == "Charge Blade":
+        data["phial"] = _CB_PHIAL_TYPES[text]
+    elif data["wtype"] == "Switch Axe":
+        data["phial"] = _SA_PHIAL_TYPES[text]
+    elif data["wtype"] == "Gunlance":
+        shot_type = _GL_SHOT_TYPES[text[:2]]
+        data["shelling_type"] = "%s %s" % (shot_type, text[2])
+    else:
+        raise ValueError("Unexpected element for wtype '%s'" % data["wtype"])
 
 
 def _parse_extra_td(td_element):
@@ -149,7 +196,7 @@ def _main():
     for wtype, urls in _WEAPON_URLS.iteritems():
         for i, url in enumerate(urls):
             fpath = os.path.join(tmp_path, "%s-%d.html" % (wtype, i))
-            urllib.urlretrieve(url, fpath)
+            urllib.urlretrieve(_BASE_URL + url, fpath)
             with open(fpath) as f:
                 tree = etree.parse(f, parser)
                 wlist = extract_weapon_list(wtype, tree)

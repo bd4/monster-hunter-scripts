@@ -190,8 +190,6 @@
             return false;
         }
 
-        console.log("check " + weapon_data["name"]);
-
         if (final_only && weapon_data["final"] != 1) {
             return false;
         }
@@ -242,12 +240,6 @@
         $.each(WEAPON_LIST, function(i, weapon_data) {
             if (weapon_predicate(state, weapon_data)) {
                 weapon_data["id"] = i;
-                weapon_data["awaken"] = null;
-                weapon_data["element_2"] = "";
-                weapon_data["element_2_attack"] = "";
-                weapon_data["phial"] = "";
-                weapon_data["shelling_type"] = "";
-                weapon_data["horn_notes"] = "";
                 match_count += 1;
                 set_sharpness_titles(weapon_data);
                 set_horn_melodies_title(weapon_data);
