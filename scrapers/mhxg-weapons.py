@@ -15,6 +15,7 @@ _WEAPON_URLS = {
     "Great Sword": ["/data/1900.html", "/data/2882.html"],
     "Long Sword": ["/data/1901.html", "/data/2883.html"],
     "Sword and Shield": ["/data/1902.html", "/data/2884.html"],
+    "Dual Blades": ["/data/1903.html", "/data/2885.html"],
     "Hammer": ["/data/1904.html", "/data/2886.html"],
     "Lance": ["/data/1906.html", "/data/2888.html"],
     "Gunlance": ["/data/1907.html", "/data/2889.html"],
@@ -105,7 +106,7 @@ def extract_weapon_list(wtype, tree):
             continue
         name, href, final = _parse_name_td(cells[0])
         attack = int(cells[1].text)
-        affinity, defense, element, element_attack = _parse_extra_td(cells[2])
+        affinity, defense, elements = _parse_elements_td(cells[2])
         if wtype not in _RANGED_TYPES:
             sharpness = _parse_sharpness_td(cells[-2])
             shots, ammo = None, None
@@ -118,10 +119,16 @@ def extract_weapon_list(wtype, tree):
                     sharpness=sharpness[0], sharpness_plus=sharpness[1],
                     attack=attack, num_slots=slots,
                     affinity=affinity, defense=defense,
-                    element=element, element_attack=element_attack,
-                    phial=None, shelling_type=None, horn_notes=None,
+                    element=None, element_attack=None,
                     awaken=None, element_2=None, element_2_attack=None,
+                    phial=None, shelling_type=None, horn_notes=None,
                     arc_type=None, ammo=ammo, shot_types=shots)
+        if elements:
+            data["element"] = elements[0][0]
+            data["element_attack"] = elements[0][1]
+            if len(elements) > 1:
+                data["element_2"] = elements[1][0]
+                data["element_2_attack"] = elements[1][1]
         if len(cells) == 6:
             _add_phial_or_shot_data(data, cells[-3])
         if href is None or href == parent_href:
@@ -172,25 +179,26 @@ def _parse_bow_td(td_element):
     return shots, coatings
 
 
-def _parse_extra_td(td_element):
+def _parse_elements_td(td_element):
     # 会心<span class="c_r">-20</span>%<br>
     # 防御+5
+    # <span class="type_N">氷14</span>
     spans = td_element.xpath('./span')
     affinity = 0
     defense = 0
-    element = None
-    element_attack = None
+    elements = []
     for span in spans:
         span_class = span.attrib.get("class")
         if span_class and span_class.startswith("type_"):
-            element, element_attack = _parse_element(span.text.strip())
+            e = _parse_element(span.text.strip())
+            elements.append(e)
         else:
             affinity = int(span.text.strip())
     text_lines = td_element.text.strip().split("\n")
     for line in text_lines:
         if line.startswith(u"防御+"):
             defense = int(line[3:])
-    return affinity, defense, element, element_attack
+    return affinity, defense, elements
 
 
 def _parse_element(text):
