@@ -184,12 +184,6 @@
         var final_only = state["weapon_final"];
         var weapon_names = state["weapon_name_text"].split("|");
 
-        if (weapon_type == "Bow" || weapon_type == "Light Bowgun"
-        || weapon_type == "Heavy Bowgun") {
-            // we only support blademaster weapons for now
-            return false;
-        }
-
         if (final_only && weapon_data["final"] != 1) {
             return false;
         }
@@ -235,13 +229,13 @@
     function update_weapon_list(state) {
         var match_count = 0;
         console.log("updating weapon list: " + JSON.stringify(state));
-        $("#weapon_table").empty();
         var results = [];
         $.each(WEAPON_LIST, function(i, weapon_data) {
             if (weapon_predicate(state, weapon_data)) {
                 weapon_data["id"] = i;
                 match_count += 1;
                 set_sharpness_titles(weapon_data);
+                set_bow_values(weapon_data);
                 set_horn_melodies_title(weapon_data);
                 weapon_data["wtype_short"] =
                           WEAPON_TYPE_ABBR[weapon_data["wtype"]];
@@ -251,35 +245,16 @@
             }
         });
         results.sort(function (a, b) {
-            avals = get_sort_values(a[0]);
-            bvals = get_sort_values(b[0]);
-            if (avals > bvals) {
-                return -1;
-            }
-            if (avals < bvals) {
-                return 1;
-            }
-            return 0;
+            avals = get_weapon_sort_values(a[0]);
+            bvals = get_weapon_sort_values(b[0]);
+            return cmp_arrays(bvals, avals);
         });
+        $("#weapon_table").empty();
         $.each(results, function(i, pair) {
             $("#weapon_table").append(pair[1]);
         });
         console.log("match count: " + match_count);
 
-    }
-
-    function get_sort_values(weapon_data) {
-        var sharp_reverse = Array.prototype.slice.call(
-                                        weapon_data["sharpness"]);
-        sharp_reverse.reverse();
-        return [
-            weapon_data["attack"],
-            sharp_reverse,
-            weapon_data["element_attack"],
-            weapon_data["affinity"],
-            weapon_data["num_slots"],
-            weapon_data["defense"]
-        ];
     }
   </script>
 </head>
@@ -303,8 +278,8 @@
         <option value="Switch Axe">Switch Axe</option>
         <option value="Charge Blade">Charge Blade</option>
         <option value="Insect Glaive">Insect Glaive</option>
-        <option value="Light Bowgun">Light Bowgun</option>
-        <option value="Heavy Bowgun">Heavy Bowgun</option>
+        <!--option value="Light Bowgun">Light Bowgun</option-->
+        <!--option value="Heavy Bowgun">Heavy Bowgun</option-->
         <option value="Bow">Bow</option>
     </select></td>
     <td><label for="weapon_element"

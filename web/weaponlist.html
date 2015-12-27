@@ -119,7 +119,7 @@
     });
 
     function init_page() {
-        load_qs();
+        var state = load_qs();
         $(window).on("popstate", function(e) {
             var oe = e.originalEvent;
             if (oe.state !== null) {
@@ -132,12 +132,18 @@
             save_state(state);
             update_weapon_list(state);
         });
+
+        if (state) {
+            update_weapon_list(state);
+        }
     }
 
     function load_qs() {
         if ($.QueryString["weapon_type"]) {
             load_state($.QueryString);
+            return $.QueryString;
         }
+        return null;
     }
 
     function get_ui_state() {
@@ -170,12 +176,6 @@
         var weapon_element = state["weapon_element"];
         var final_only = state["weapon_final"];
         var weapon_names = state["weapon_name_text"].split("|");
-
-        if (weapon_type == "Bow" || weapon_type == "Light Bowgun"
-        || weapon_type == "Heavy Bowgun") {
-            // we only support blademaster weapons for now
-            return false;
-        }
 
         if (final_only && weapon_data["final"] != 1) {
             return false;
@@ -223,42 +223,56 @@
         var cp_setups = [];
         var comps = state["weapon_component_text"].split("|");
         console.log("updating weapon list: " + JSON.stringify(state));
-        $("#weapon_table").empty();
+        var results = [];
         $.each(WEAPON_ID_IDX, function(weapon_id, weapon_list) {
             var weapon_data = weapon_list[0];
             if (weapon_predicate(state, weapon_data)) {
-                match_count += 1;
-                $.getJSON(DATA_PATH + "weapon/" + weapon_id + ".json",
-                          function(data) {
-                              if (comps
-                              && !list_match(comps,
-                                     Object.keys(data["create_components"]))
-                              && !list_match(comps,
-                                     Object.keys(data["upgrade_components"])))
-                              {
-                                    console.log("skipping '"
-                                                + data["name"]
-                                                + "', failed component match");
-                                    return;
-                              }
-                              set_sharpness_titles(data);
-                              set_horn_melodies_title(data);
-                              data["wtype_short"] =
-                                        WEAPON_TYPE_ABBR[data["wtype"]];
-                              data["ELEMENT_ABBR"] = ELEMENT_ABBR;
-                              data["url"] = null;
-                              var html = template_row.render(data);
-                              $("#weapon_table").append(html);
-                              var setup = get_calculating_palico_setup(data);
-                              console.log("setup for " + weapon_id + ": "
-                                          + setup);
-                              if (setup.length) {
-                                  cp_setups.push(setup);
-                              }
-                              update_cp_link(cp_setups);
-                          });
+                $.ajax({
+                    url: DATA_PATH + "weapon/" + weapon_id + ".json",
+                    dataType: "json",
+                    async: false,
+                    success: function(data) {
+                         if (comps
+                         && !list_match(comps,
+                                Object.keys(data["create_components"]))
+                         && !list_match(comps,
+                                Object.keys(data["upgrade_components"])))
+                         {
+                               console.log("skipping '" + data["name"]
+                                           + "', failed component match");
+                               return;
+                         }
+                         match_count += 1;
+                         set_sharpness_titles(data);
+                         data["arc_type"] = null;
+                         set_bow_values(data);
+                         set_horn_melodies_title(data);
+                         data["wtype_short"] = WEAPON_TYPE_ABBR[data["wtype"]];
+                         data["ELEMENT_ABBR"] = ELEMENT_ABBR;
+                         data["url"] = null;
+                         var html = template_row.render(data);
+                         results.push([data, html]);
+                         var setup = get_calculating_palico_setup(data);
+                         //console.log("setup for " + weapon_id + ": " + setup);
+                         if (setup.length) {
+                             cp_setups.push(setup);
+                         }
+                     }
+                });
             }
         });
+        console.log("results len " + results.length);
+        results.sort(function (a, b) {
+            avals = get_weapon_sort_values(a[0]);
+            bvals = get_weapon_sort_values(b[0]);
+            return cmp_arrays(bvals, avals);
+        });
+        $("#weapon_table").empty();
+        $.each(results, function(i, pair) {
+            $("#weapon_table").append(pair[1]);
+        });
+        update_cp_link(cp_setups);
+
         console.log("match count: " + match_count);
 
     }
@@ -296,8 +310,8 @@
         <option value="Switch Axe">Switch Axe</option>
         <option value="Charge Blade">Charge Blade</option>
         <option value="Insect Glaive">Insect Glaive</option>
-        <option value="Light Bowgun">Light Bowgun</option>
-        <option value="Heavy Bowgun">Heavy Bowgun</option>
+        <!--option value="Light Bowgun">Light Bowgun</option-->
+        <!--option value="Heavy Bowgun">Heavy Bowgun</option-->
         <option value="Bow">Bow</option>
     </select></td>
     <td><label for="weapon_element"

@@ -21,7 +21,11 @@ _WEAPON_URLS = {
     "Switch Axe": ["/data/1908.html", "/data/2890.html"],
     "Charge Blade": ["/data/1909.html"],
     "Insect Glaive": ["/data/1910.html"],
+    "Bow": ["/data/1911.html", "/data/2893.html"],
 }
+
+
+_RANGED_TYPES = ["Bow", "Light Bowgun", "Heavy Bowgun"]
 
 
 _ELEMENT_MAP = {
@@ -60,6 +64,36 @@ _CB_PHIAL_TYPES = {
 }
 
 
+_BOW_ARC_TYPES = {
+    u"集中型": "Focus",
+    u"放散型": "Wide",
+    u"爆裂型": "Blast",
+}
+
+
+_BOW_SHOT_TYPES = {
+    u"連射": "Rapid",
+    u"拡散": "Spread",
+    u"貫通": "Pierce",
+    u"重射": "Heavy",
+}
+
+
+_BOW_COATINGS = {
+    u"強1": "Power 1",
+    u"強2": "Power 2",
+    u"属1": "Element 1",
+    u"属2": "Element 2",
+    u"接": "C. Range",
+    u"ペ": "Paint",
+    u"毒": "Poison",
+    u"麻": "Paralysis",
+    u"睡": "Sleep",
+    u"減": "Exhaust",
+    u"爆": "Blast",
+}
+
+
 def extract_weapon_list(wtype, tree):
     weapons = []
     rows = tree.xpath('//*[@id="sorter"]/tbody/tr')
@@ -72,7 +106,13 @@ def extract_weapon_list(wtype, tree):
         name, href, final = _parse_name_td(cells[0])
         attack = int(cells[1].text)
         affinity, defense, element, element_attack = _parse_extra_td(cells[2])
-        sharpness = _parse_sharpness_td(cells[-2])
+        if wtype not in _RANGED_TYPES:
+            sharpness = _parse_sharpness_td(cells[-2])
+            shots, ammo = None, None
+        else:
+            sharpness = [None, None]
+            if wtype == "Bow":
+                shots, ammo = _parse_bow_td(cells[-2])
         slots = _parse_slots_td(cells[-1])
         data = dict(name_jp=name, name=name, wtype=wtype, final=final,
                     sharpness=sharpness[0], sharpness_plus=sharpness[1],
@@ -80,7 +120,8 @@ def extract_weapon_list(wtype, tree):
                     affinity=affinity, defense=defense,
                     element=element, element_attack=element_attack,
                     phial=None, shelling_type=None, horn_notes=None,
-                    awaken=None, element_2=None, element_2_attack=None)
+                    awaken=None, element_2=None, element_2_attack=None,
+                    arc_type=None, ammo=ammo, shot_types=shots)
         if len(cells) == 6:
             _add_phial_or_shot_data(data, cells[-3])
         if href is None or href == parent_href:
@@ -105,8 +146,30 @@ def _add_phial_or_shot_data(data, td_element):
     elif data["wtype"] == "Gunlance":
         shot_type = _GL_SHOT_TYPES[text[:2]]
         data["shelling_type"] = "%s %s" % (shot_type, text[2])
+    elif data["wtype"] == "Bow":
+        data["arc_type"] = _BOW_ARC_TYPES[text]
     else:
         raise ValueError("Unexpected element for wtype '%s'" % data["wtype"])
+
+
+def _parse_bow_td(td_element):
+    shots = []
+    coatings = []
+    shot_type_spans = td_element.xpath("./div/span")
+    for span in shot_type_spans:
+        shot = {}
+        if not span.text:
+            continue
+        text = span.text.strip()
+        shot["type"] = _BOW_SHOT_TYPES[text[:2]]
+        shot["level"] = text[2]
+        shot["requires_loading"] = (span.attrib.get("class") == "b")
+        shots.append(shot)
+    coatings_span = td_element.xpath("./p/span/span")
+    for span in coatings_span:
+        text = span.text.strip()
+        coatings.append(_BOW_COATINGS[text])
+    return shots, coatings
 
 
 def _parse_extra_td(td_element):

@@ -65,6 +65,11 @@
 <td><%= defense ? "+" + defense + " Def" : "" %></td>
 <td style="text-align:right"><%= phial %></td>
 <td style="text-align:right"><%= shelling_type %></td>
+<% if (arc_type) { %>
+ <td style="text-align:right"><%= arc_type %></td>
+ <td style="font-family:mono"
+  title="<%= bow_coatings_text %>"><%= bow_shots_text %></td>
+<% } %>
 <td title="<%= horn_melodies_title %>"
     style="text-align:right"><%= horn_notes %></td>
 </tr>

@@ -236,6 +236,69 @@ function set_sharpness_titles(weapon_data) {
 }
 
 
+function set_bow_values(weapon_data) {
+    if (weapon_data["wtype"] != "Bow") {
+        return;
+    }
+
+    // translate mh4u data to be consistant with mhx data
+    if (weapon_data["charges"]) {
+        var charges = weapon_data["charges"].split("|");
+        var parts;
+        var shot;
+        var shot_types = [];
+        $.each(charges, function(i, charge) {
+            shot = {};
+            parts = charge.split(" ");
+            shot["type"] = parts[0];
+            shot["level"] = parts[1][1];
+            shot["requires_loading"] = parts[1].endsWith("*");
+            shot_types.push(shot);
+        });
+        weapon_data["shot_types"] = shot_types;
+
+        var coatings = weapon_data["coatings"].split("|");
+        var parts;
+        var coating;
+        var ammo_list = [];
+        $.each(coatings, function(i, coating) {
+            if (coating != "-") {
+                ammo_list.push(coating);
+            }
+        });
+        weapon_data["ammo"] = ammo_list;
+
+        weapon_data["arc_type"] = weapon_data["recoil"];
+    }
+
+    var shots_text = [];
+    var shot_text;
+    $.each(weapon_data["shot_types"], function(i, shot) {
+        shot_text = shot["type"].substring(0, 1) + shot["level"];
+        if (shot["requires_loading"]) {
+            shot_text = "(" + shot_text + ")";
+        }
+        shots_text.push(shot_text);
+    });
+    weapon_data["bow_shots_text"] = shots_text.join(" ");
+
+    var coatings_text = [];
+    var coating_text;
+    $.each(weapon_data["ammo"], function(i, coating) {
+        if (coating.startsWith("Power ")) {
+            coating_text = "P" + coating.substring(6, 7);
+        } else if (coating.startsWith("Element ")) {
+            coating_text = "E" + coating.substring(8, 9);
+        } else {
+            coating_text = coating.substring(0, 3);
+        }
+        coatings_text.push(coating_text);
+    });
+
+    weapon_data["bow_coatings_text"] = coatings_text.join(" ");
+}
+
+
 function set_horn_melodies_title(weapon_data) {
     if (! weapon_data["horn_notes"]) {
         weapon_data["horn_melodies_title"] = ""
@@ -309,4 +372,50 @@ function get_calculating_palico_uri(setups) {
     // m=31 is Great Jaggi
     var base = "http://minyoung.ch/calculatingpalico/?m=31&s=";
     return base + encodeURIComponent(JSON.stringify(setups));
+}
+
+
+function get_weapon_sort_values(weapon_data) {
+    // Note: javascript does string coersion when comparing lists,
+    // so this can't be used directly, see cmp_arrays.
+    var sharp_reverse;
+    if (weapon_data["sharpness"]) {
+        sharp_reverse = Array.prototype.slice.call(weapon_data["sharpness"]);
+        sharp_reverse.reverse();
+    } else {
+        sharp_reverse = null;
+    }
+
+    return [
+        weapon_data["attack"],
+        sharp_reverse,
+        weapon_data["element_attack"],
+        weapon_data["affinity"],
+        weapon_data["num_slots"],
+        weapon_data["defense"]
+    ];
+}
+
+
+function cmp_arrays(alist, blist) {
+    var cmp;
+    for (var i=0; i<alist.length; i++) {
+        a = alist[i];
+        b = blist[i];
+        if (a == null && b == null) {
+            // ignore
+        } else if (typeof a == "object") {
+            cmp = cmp_arrays(a, b);
+            if (cmp != 0) {
+                return cmp;
+            }
+        } else {
+            if (a < b) {
+                return -1;
+            } else if (a > b) {
+                return 1;
+            }
+        }
+    }
+    return 0;
 }
