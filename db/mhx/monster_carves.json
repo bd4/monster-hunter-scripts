@@ -1,0 +1,3522 @@
+[
+  {
+    "icon_name": "Shell-Pink.png", 
+    "name_jp": "\u30a8\u30d3\u306e\u5c0f\u6bbb", 
+    "name": "Small Lobstershell"
+  }, 
+  {
+    "icon_name": "Shell-Pink.png", 
+    "name_jp": "\u30a8\u30d3\u306e\u5927\u6bbb", 
+    "name": "Large Lobstershell"
+  }, 
+  {
+    "icon_name": "Liquid-Purple.png", 
+    "name_jp": "\u7370\u731b\u5316\u30a8\u30ad\u30b9", 
+    "name": "Ferocious Extract"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u7259", 
+    "name": "Ferocious Fang"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u92ed\u7259", 
+    "name": "Ferocious Fang+"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u722a", 
+    "name": "Ferocious Claw"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u5c16\u722a", 
+    "name": "Ferocious Claw+"
+  }, 
+  {
+    "icon_name": "Bone-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u7adc\u9aa8", 
+    "name": "Ferocious Wyvern Bone"
+  }, 
+  {
+    "icon_name": "Bone-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u5c16\u89d2", 
+    "name": "Ferocious Horn+"
+  }, 
+  {
+    "icon_name": "Sac-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u706b\u708e\u888b", 
+    "name": "Ferocious Flame Sac"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u708e\u9c57", 
+    "name": "Ferocious Blaze Scale"
+  }, 
+  {
+    "icon_name": "Sac-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u6c34\u888b", 
+    "name": "Ferocious Aqua Sac"
+  }, 
+  {
+    "icon_name": "Liquid-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u4f53\u6db2", 
+    "name": "Ferocious Fluid"
+  }, 
+  {
+    "icon_name": "Sac-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u96fb\u6c17\u888b", 
+    "name": "Ferocious Electro Sac"
+  }, 
+  {
+    "icon_name": "Shell-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u5e2f\u96fb\u6bbb", 
+    "name": "Ferocious Shocker"
+  }, 
+  {
+    "icon_name": "Hide-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u5e2f\u96fb\u6bdb", 
+    "name": "Ferocious Shockfur"
+  }, 
+  {
+    "icon_name": "Ore-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u6c37\u584a", 
+    "name": "Ferocious Ice Lump"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u8755\u9f8d\u9c57", 
+    "name": "Ferocious Dracophage Scale"
+  }, 
+  {
+    "icon_name": "Liquid-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u6bd2\u6db2", 
+    "name": "Ferocious Venom"
+  }, 
+  {
+    "icon_name": "Liquid-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u9ebb\u75fa\u6bd2\u6db2", 
+    "name": "Ferocious Paralyzing Venom"
+  }, 
+  {
+    "icon_name": "Sac-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u7761\u7720\u888b", 
+    "name": "Ferocious Sleep Sac"
+  }, 
+  {
+    "icon_name": "Liquid-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u7761\u7720\u6bd2\u6db2", 
+    "name": "Ferocious Sleep Venom"
+  }, 
+  {
+    "icon_name": "Liquid-Purple.png", 
+    "name_jp": "\u7370\u731b\u306a\u7206\u6db2", 
+    "name": "Ferocious Blast Fluid"
+  }, 
+  {
+    "icon_name": "Fang-YellowGreen.png", 
+    "name_jp": "\u7532\u866b\u306e\u5927\u984e", 
+    "name": "Altaroth Jaw"
+  }, 
+  {
+    "icon_name": "Sac-YellowGreen.png", 
+    "name_jp": "\u7532\u866b\u306e\u8179\u888b", 
+    "name": "Altaroth Stomach"
+  }, 
+  {
+    "icon_name": "Sac-YellowGreen.png", 
+    "name_jp": "\u4e0a\u8cea\u306a\u8179\u888b", 
+    "name": "Quality Stomach"
+  }, 
+  {
+    "icon_name": "Fang-Orange.png", 
+    "name_jp": "\u30ac\u30a6\u30b7\u30ab\u306e\u89d2", 
+    "name": "Anteka Antler"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u30d6\u30e9\u30f3\u30b4\u306e\u6bdb", 
+    "name": "Blango Pelt"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u30d6\u30e9\u30f3\u30b4\u306e\u525b\u6bdb", 
+    "name": "Blango Pelt+"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u98db\u7532\u866b\u306e\u7532\u6bbb", 
+    "name": "Bnahabra Shell"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u98db\u7532\u866b\u306e\u5805\u6bbb", 
+    "name": "Bnahabra Carapace"
+  }, 
+  {
+    "icon_name": "Webbing-Yellow.png", 
+    "name_jp": "\u98db\u7532\u866b\u306e\u7fbd", 
+    "name": "Bnahabra Wing"
+  }, 
+  {
+    "icon_name": "Hide-Orange.png", 
+    "name_jp": "\u30d5\u30a1\u30f3\u30b4\u306e\u6bdb\u76ae", 
+    "name": "Bullfango Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Orange.png", 
+    "name_jp": "\u30d5\u30a1\u30f3\u30b4\u306e\u4e0a\u6bdb\u76ae", 
+    "name": "Bullfango Pelt+"
+  }, 
+  {
+    "icon_name": "Carapace-Orange.png", 
+    "name_jp": "\u30d5\u30a1\u30f3\u30b4\u306e\u982d", 
+    "name": "Bullfango Head"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u3068\u304c\u3063\u305f\u722a", 
+    "name": "Sharp Claw"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u938c\u87f9\u306e\u5c0f\u6bbb", 
+    "name": "Sml Ceanataur Shell"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u938c\u87f9\u306e\u7532\u6bbb", 
+    "name": "Ceanataur Shell"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u9c57", 
+    "name": "Cephalos Scale"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Cephalos Scale+"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u30d2\u30ec", 
+    "name": "Cephalos Fin"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u4e0a\u30d2\u30ec", 
+    "name": "Cephalos Fin+"
+  }, 
+  {
+    "icon_name": "Webbing-Cyan.png", 
+    "name_jp": "\u4e38\u9ce5\u306e\u7fbd", 
+    "name": "Gargwa Feather"
+  }, 
+  {
+    "icon_name": "Fang-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u9ebb\u75fa\u7259", 
+    "name": "Genprey Fang"
+  }, 
+  {
+    "icon_name": "Scale-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u9c57", 
+    "name": "Genprey Scale"
+  }, 
+  {
+    "icon_name": "Scale-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u4e0a\u9c57", 
+    "name": "Genprey Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u76ae", 
+    "name": "Genprey Hide"
+  }, 
+  {
+    "icon_name": "Hide-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u4e0a\u76ae", 
+    "name": "Genprey Hide+"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u30ae\u30a2\u30ce\u30b9\u306e\u9c57", 
+    "name": "Giaprey Scale"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u30ae\u30a2\u30ce\u30b9\u306e\u4e0a\u9c57", 
+    "name": "Giaprey Scale+"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u30ae\u30a2\u30ce\u30b9\u306e\u76ae", 
+    "name": "Giaprey Hide"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u30ae\u30a2\u30ce\u30b9\u306e\u4e0a\u76ae", 
+    "name": "Giaprey Hide+"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u3068\u304c\u3063\u305f\u722a", 
+    "name": "Sharp Claw"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u9ed2\u771f\u73e0", 
+    "name": "Black Pearl"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u76fe\u87f9\u306e\u5c0f\u6bbb", 
+    "name": "Sml Hermitaur Shell"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u30ab\u30f3\u30bf\u30ed\u30b9\u306e\u7532\u6bbb", 
+    "name": "Hornetaur Shell"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u30ab\u30f3\u30bf\u30ed\u30b9\u306e\u5805\u6bbb", 
+    "name": "Hornetaur Carapace"
+  }, 
+  {
+    "icon_name": "Webbing-Grey.png", 
+    "name_jp": "\u30ab\u30f3\u30bf\u30ed\u30b9\u306e\u7fbd", 
+    "name": "Hornetaur Wing"
+  }, 
+  {
+    "icon_name": "Webbing-Grey.png", 
+    "name_jp": "\u30ab\u30f3\u30bf\u30ed\u30b9\u306e\u8584\u7fbd", 
+    "name": "Hornetaur Innerwing"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u30ab\u30f3\u30bf\u30ed\u30b9\u306e\u982d", 
+    "name": "Hornetaur Head"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u6bd2\u7259", 
+    "name": "Ioprey Fang"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u9c57", 
+    "name": "Ioprey Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u4e0a\u9c57", 
+    "name": "Ioprey Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u76ae", 
+    "name": "Ioprey Hide"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u4e0a\u76ae", 
+    "name": "Ioprey Hide+"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u9c57", 
+    "name": "Jaggi Scale"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u4e0a\u9c57", 
+    "name": "Jaggi Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Purple.png", 
+    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u76ae", 
+    "name": "Jaggi Hide"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u9ce5\u7adc\u7a2e\u306e\u7259", 
+    "name": "Bird Wyvern Fang"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u9c57", 
+    "name": "Jaggi Scale"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u4e0a\u9c57", 
+    "name": "Jaggi Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Purple.png", 
+    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u76ae", 
+    "name": "Jaggi Hide"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u9ce5\u7adc\u7a2e\u306e\u7259", 
+    "name": "Bird Wyvern Fang"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u30b1\u30eb\u30d3\u306e\u89d2", 
+    "name": "Kelbi Horn"
+  }, 
+  {
+    "icon_name": "Fang-Green.png", 
+    "name_jp": "\u30b1\u30eb\u30d3\u306e\u84bc\u89d2", 
+    "name": "Blue Kelbi Horn"
+  }, 
+  {
+    "icon_name": "Hide-Green.png", 
+    "name_jp": "\u6696\u304b\u3044\u6bdb\u76ae", 
+    "name": "Warm Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Orange.png", 
+    "name_jp": "\u4e0a\u8cea\u306a\u6bdb\u76ae", 
+    "name": "High-quality Pelt"
+  }, 
+  {
+    "icon_name": "Fang-Orange.png", 
+    "name_jp": "\u3068\u304c\u3063\u305f\u7259", 
+    "name": "Sharp Fang"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u76fe\u866b\u306e\u7532\u6bbb", 
+    "name": "Konchu Shell"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u76fe\u866b\u306e\u5805\u6bbb", 
+    "name": "Konchu Carapace"
+  }, 
+  {
+    "icon_name": "Hide-YellowGreen.png", 
+    "name_jp": "\u6c34\u751f\u7363\u306e\u76ae", 
+    "name": "Hydro Hide"
+  }, 
+  {
+    "icon_name": "Hide-YellowGreen.png", 
+    "name_jp": "\u6c34\u751f\u7363\u306e\u4e0a\u76ae", 
+    "name": "Hydro Hide+"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u672a\u719f\u306a\u6d77\u7dbf\u8cea", 
+    "name": "Immature Sponge"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u30de\u30c3\u30ab\u30a9\u306e\u9c57", 
+    "name": "Maccau Scale"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u30de\u30c3\u30ab\u30a9\u306e\u4e0a\u9c57", 
+    "name": "Maccau Scale+"
+  }, 
+  {
+    "icon_name": "Hide-DarkGreen.png", 
+    "name_jp": "\u30de\u30c3\u30ab\u30a9\u306e\u76ae", 
+    "name": "Maccau Hide"
+  }, 
+  {
+    "icon_name": "Hide-Pink.png", 
+    "name_jp": "\u30e2\u30b9\u306e\u82d4\u76ae", 
+    "name": "Mosswine Hide"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u96f2\u7f8a\u9e7f\u306e\u89d2", 
+    "name": "Mufa Horn"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u96f2\u7f8a\u9e7f\u306e\u6bdb\u7389", 
+    "name": "Mufa Wool"
+  }, 
+  {
+    "icon_name": "Hide-Grey.png", 
+    "name_jp": "\u7ffc\u86c7\u7adc\u306e\u76ae", 
+    "name": "Remobra Hide"
+  }, 
+  {
+    "icon_name": "Hide-Grey.png", 
+    "name_jp": "\u7ffc\u86c7\u7adc\u306e\u4e0a\u76ae", 
+    "name": "Remobra Hide+"
+  }, 
+  {
+    "icon_name": "Hide-Grey.png", 
+    "name_jp": "\u7e1e\u6a21\u69d8\u306e\u76ae", 
+    "name": "Striped Skin"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u7ffc\u86c7\u7adc\u306e\u982d", 
+    "name": "Remobra Head"
+  }, 
+  {
+    "icon_name": "Hide-DarkGreen.png", 
+    "name_jp": "\u9996\u9cf4\u7adc\u306e\u76ae", 
+    "name": "Rimosetosu Hide"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u8349\u98df\u7adc\u306e\u7532\u6bbb", 
+    "name": "Rhenoplos Shell"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u8349\u98df\u7adc\u306e\u5805\u6bbb", 
+    "name": "Rhenoplos Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u8349\u98df\u7adc\u306e\u982d\u6bbb", 
+    "name": "Rhenoplos Scalp"
+  }, 
+  {
+    "icon_name": "Hide-Green.png", 
+    "name_jp": "\u5782\u76ae\u7adc\u306e\u4e0a\u76ae", 
+    "name": "Slagtoth Hide+"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u6eb6\u5ca9\u7363\u306e\u9c57", 
+    "name": "Uroktor Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u6eb6\u5ca9\u7363\u306e\u4e0a\u9c57", 
+    "name": "Uroktor Scale+"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u9ce5\u7adc\u7a2e\u306e\u7259", 
+    "name": "Bird Wyvern Fang"
+  }, 
+  {
+    "icon_name": "Scale-Blue.png", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u9c57", 
+    "name": "Velociprey Scale"
+  }, 
+  {
+    "icon_name": "Scale-Blue.png", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u4e0a\u9c57", 
+    "name": "Velociprey Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u76ae", 
+    "name": "Velociprey Hide"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u4e0a\u76ae", 
+    "name": "Velociprey Hide+"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u30e9\u30f3\u30b4\u30b9\u30bf\u306e\u7532\u6bbb", 
+    "name": "Vespoid Shell"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u30e9\u30f3\u30b4\u30b9\u30bf\u306e\u5805\u6bbb", 
+    "name": "Vespoid Carapace"
+  }, 
+  {
+    "icon_name": "Webbing-Yellow.png", 
+    "name_jp": "\u30e9\u30f3\u30b4\u30b9\u30bf\u306e\u7fbd", 
+    "name": "Vespoid Wing"
+  }, 
+  {
+    "icon_name": "Webbing-Yellow.png", 
+    "name_jp": "\u30e9\u30f3\u30b4\u30b9\u30bf\u306e\u8584\u7fbd", 
+    "name": "Vespoid Innerwing"
+  }, 
+  {
+    "icon_name": "Fang-Orange.png", 
+    "name_jp": "\u3068\u304c\u3063\u305f\u7259", 
+    "name": "Sharp Fang"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u9bab\u808c\u306e\u9c57", 
+    "name": "Sharqskin Scale"
+  }, 
+  {
+    "icon_name": "Hide-Cyan.png", 
+    "name_jp": "\u8089\u539a\u306a\u4e0a\u76ae", 
+    "name": "Meaty Hide+"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u708e\u6208\u7adc\u306e\u71c3\u9c57", 
+    "name": "Agnaktor Scale"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u708e\u6208\u7adc\u306e\u5805\u6bbb", 
+    "name": "Agnaktor Carapace"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u708e\u6208\u7adc\u306e\u4e0a\u76ae", 
+    "name": "Agnaktor Hide+"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u708e\u6208\u7adc\u306e\u92ed\u722a", 
+    "name": "Agnaktor Claw+"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u708e\u6208\u7adc\u306e\u4e0a\u30d2\u30ec", 
+    "name": "Agnaktor Fin+"
+  }, 
+  {
+    "icon_name": "Bone-Red.png", 
+    "name_jp": "\u708e\u6208\u7adc\u306e\u7887\u53e3", 
+    "name": "Agnaktor Beak"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u708e\u6208\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Agnaktor Tail"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u8d64\u71b1\u3057\u305f\u5805\u80f8\u6bbb", 
+    "name": "Scalding Pleura+"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u7370\u731b\u5316\u708e\u6208\u7adc\u6bbb", 
+    "name": "Ferocious Agnaktor Shell"
+  }, 
+  {
+    "icon_name": "Ore-Cyan.png", 
+    "name_jp": "\u5927\u7adc\u7d50\u6676", 
+    "name": "Large Wyvern Crystal"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u8987\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Akantor Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u8987\u7adc\u306e\u5805\u6bbb", 
+    "name": "Akantor Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u8987\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Akantor Tail"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u8987\u7adc\u306e\u525b\u722a", 
+    "name": "Akantor Hardclaw"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u8987\u7adc\u306e\u5927\u7259", 
+    "name": "Akantor Tallfang"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u8987\u7adc\u306e\u5927\u68d8", 
+    "name": "Akantor Spike"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Red.png", 
+    "name_jp": "\u8987\u7adc\u306e\u5b9d\u7389", 
+    "name": "Akantor Gem"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u9752\u718a\u7363\u306e\u6bdb", 
+    "name": "Arzuros Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u9752\u718a\u7363\u306e\u525b\u6bdb", 
+    "name": "Arzuros Pelt+"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u9752\u718a\u7363\u306e\u7532\u6bbb", 
+    "name": "Arzuros Shell"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u9752\u718a\u7363\u306e\u5805\u6bbb", 
+    "name": "Arzuros Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u9752\u718a\u7363\u306e\u8155\u7532", 
+    "name": "Arzuros Brace"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u9752\u718a\u7363\u306e\u5805\u8155\u7532", 
+    "name": "Arzuros Brace+"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u7d05\u515c\u306e\u6bdb", 
+    "name": "Crimson Arzuros Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u7d05\u515c\u306e\u525b\u6bdb", 
+    "name": "Crimson Arzuros Pelt+"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u7d05\u515c\u306e\u7532\u6bbb", 
+    "name": "Crimson Arzuros Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u7d05\u515c\u306e\u5805\u6bbb", 
+    "name": "Crimson Arzuros Carapace"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u7d05\u515c\u306e\u6012\u9aea", 
+    "name": "Crimson Arzuros Ragehair"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u7d05\u515c\u306e\u6fc0\u6012\u9aea", 
+    "name": "Crimson Arzuros Ragehair+"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u96ea\u7345\u5b50\u306e\u6bdb", 
+    "name": "Blangonga Pelt"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u96ea\u7345\u5b50\u306e\u525b\u6bdb", 
+    "name": "Blangonga Pelt+"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u96ea\u7345\u5b50\u306e\u7259", 
+    "name": "Blangonga Fang"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u96ea\u7345\u5b50\u306e\u92ed\u7259", 
+    "name": "Blangonga Fang+"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u96ea\u7345\u5b50\u306e\u9aed", 
+    "name": "Blangonga Whisker"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u96ea\u7345\u5b50\u306e\u5c3b\u5c3e", 
+    "name": "Blangonga Tail"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u7370\u731b\u5316\u96ea\u7345\u5b50\u6bdb", 
+    "name": "Ferocious Blangonga Pelt"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u7532\u6bbb", 
+    "name": "Brach Shell"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u5805\u6bbb", 
+    "name": "Brach Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u9ed2\u66dc\u7532", 
+    "name": "Brach Ebonshell"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u5805\u9ed2\u66dc\u7532", 
+    "name": "Brach Ebonshell+"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u982d\u6bbb", 
+    "name": "Brach Scalp"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u5c16\u982d\u6bbb", 
+    "name": "Brach Scalp+"
+  }, 
+  {
+    "icon_name": "Liquid-YellowGreen.png", 
+    "name_jp": "\u306a\u305e\u306e\u7c98\u83cc", 
+    "name": "Mystery Slime"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u62f3", 
+    "name": "Brach Hammer"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u525b\u62f3", 
+    "name": "Brach Pounder"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Brach Tail"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u9aa8\u9ac4", 
+    "name": "Brach Marrow"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Blue.png", 
+    "name_jp": "\u7815\u7adc\u306e\u5b9d\u7389", 
+    "name": "Brach Gem"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u7370\u731b\u5316\u7815\u7adc\u6bbb", 
+    "name": "Ferocious Brach Shell"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u5927\u732a\u306e\u76ae", 
+    "name": "Bulldrome Hide"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u5927\u732a\u306e\u786c\u3044\u76ae", 
+    "name": "Bulldrome Hide+"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5927\u732a\u306e\u7259", 
+    "name": "Bulldrome Tusk"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5927\u732a\u306e\u5927\u7259", 
+    "name": "Bulldrome Tusk+"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u9c57", 
+    "name": "Cephalos Scale"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Cephalos Scale+"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u30d2\u30ec", 
+    "name": "Cephalos Fin"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u4e0a\u30d2\u30ec", 
+    "name": "Cephalos Fin+"
+  }, 
+  {
+    "icon_name": "Fang-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u7259", 
+    "name": "Cephalos Fang"
+  }, 
+  {
+    "icon_name": "Fang-Cyan.png", 
+    "name_jp": "\u7802\u7adc\u306e\u92ed\u7259", 
+    "name": "Cephalos Fang+"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u7adc\u982d\u6bbb", 
+    "name": "Wyvern Scalp"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u9ed2\u771f\u73e0", 
+    "name": "Black Pearl"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u673d\u3061\u305f\u771f\u7d05\u306e\u89d2", 
+    "name": "Scarlet Horn"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u76fe\u87f9\u306e\u7532\u6bbb", 
+    "name": "Hermitaur Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u76fe\u87f9\u306e\u5805\u6bbb", 
+    "name": "Hermitaur Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u76fe\u87f9\u306e\u722a", 
+    "name": "Hermitaur Claw"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u76fe\u87f9\u306e\u5c16\u722a", 
+    "name": "Hermitaur Claw+"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u7370\u731b\u5316\u76fe\u87f9\u6bbb", 
+    "name": "Ferocious Hermitaur Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u77db\u7815\u306e\u7532\u6bbb", 
+    "name": "Spearbreaker Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u77db\u7815\u306e\u5805\u6bbb", 
+    "name": "Spearbreaker Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u77db\u7815\u306e\u722a", 
+    "name": "Spearbreaker Claw"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u77db\u7815\u306e\u5c16\u722a", 
+    "name": "Spearbreaker Claw+"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u6050\u66b4\u7adc\u306e\u9ed2\u9c57", 
+    "name": "Deviljho Scale"
+  }, 
+  {
+    "icon_name": "Hide-DarkGreen.png", 
+    "name_jp": "\u6050\u66b4\u7adc\u306e\u9ed2\u76ae", 
+    "name": "Deviljho Hide"
+  }, 
+  {
+    "icon_name": "Fang-DarkGreen.png", 
+    "name_jp": "\u6050\u66b4\u7adc\u306e\u5927\u7259", 
+    "name": "Deviljho Tallfang"
+  }, 
+  {
+    "icon_name": "Fang-DarkGreen.png", 
+    "name_jp": "\u6050\u66b4\u7adc\u306e\u9264\u722a", 
+    "name": "Deviljho Talon"
+  }, 
+  {
+    "icon_name": "Carapace-DarkGreen.png", 
+    "name_jp": "\u6050\u66b4\u7adc\u306e\u982d\u6bbb", 
+    "name": "Deviljho Scalp"
+  }, 
+  {
+    "icon_name": "Carapace-DarkGreen.png", 
+    "name_jp": "\u6050\u66b4\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Deviljho Tail"
+  }, 
+  {
+    "icon_name": "Liquid-DarkGreen.png", 
+    "name_jp": "\u6050\u66b4\u7adc\u306e\u553e\u6db2", 
+    "name": "Deviljho Saliva"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-DarkGreen.png", 
+    "name_jp": "\u6050\u66b4\u7adc\u306e\u5b9d\u7389", 
+    "name": "Deviljho Gem"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u7370\u731b\u5316\u6050\u66b4\u7adc\u9c57", 
+    "name": "Ferocious Deviljho Scale"
+  }, 
+  {
+    "icon_name": "Liquid-Red.png", 
+    "name_jp": "\u30c9\u30b9\u9ed2\u3044\u8840", 
+    "name": "Black Blood"
+  }, 
+  {
+    "icon_name": "Hide-Grey.png", 
+    "name_jp": "\u6b74\u6226\u306e\u6f06\u9ed2\u76ae", 
+    "name": "Spattered Hide"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u9c57", 
+    "name": "Dinovaldo Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Dinovaldo Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u7532\u6bbb", 
+    "name": "Dinovaldo Shell"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u5805\u6bbb", 
+    "name": "Dinovaldo Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u7259", 
+    "name": "Dinovaldo Fang"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u92ed\u7259", 
+    "name": "Dinovaldo Fang+"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u708e\u72b6\u6bbb", 
+    "name": "Dinovaldo Blazeshell"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u7114\u72b6\u6bbb", 
+    "name": "Dinovaldo Flameshell"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Dinovaldo Tail"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u5c3e\u5203\u7247", 
+    "name": "Dinovaldo Tailblade"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u8d64\u71b1\u3057\u305f\u706b\u708e\u56a2", 
+    "name": "Red Hot Flame Sac"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u8d64\u71b1\u3057\u305f\u7d05\u7114\u56a2", 
+    "name": "Red Hot Inferno Sac"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u9006\u9c57", 
+    "name": "Dinovaldo Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Red.png", 
+    "name_jp": "\u65ac\u7adc\u306e\u708e\u7389", 
+    "name": "Dinovaldo Flame Gem"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u7370\u731b\u5316\u65ac\u7adc\u9c57", 
+    "name": "Ferocious Dinovaldo Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u71fc\u6ec5\u5203\u306e\u9c57", 
+    "name": "Incinerating Blade Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u71fc\u6ec5\u5203\u306e\u4e0a\u9c57", 
+    "name": "Incinerating Blade Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u71fc\u6ec5\u5203\u306e\u7532\u6bbb", 
+    "name": "Incinerating Blade Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u71fc\u6ec5\u5203\u306e\u5805\u6bbb", 
+    "name": "Incinerating Blade Carapace"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u71fc\u6ec5\u5203\u306e\u5875\u7c89", 
+    "name": "Incinerating Blade Powder"
+  }, 
+  {
+    "icon_name": "Shell-Green.png", 
+    "name_jp": "\u5c3e\u69cc\u7adc\u306e\u5805\u6bbb", 
+    "name": "Duram Carapace"
+  }, 
+  {
+    "icon_name": "Hide-Green.png", 
+    "name_jp": "\u5c3e\u69cc\u7adc\u306e\u5805\u82d4\u7532", 
+    "name": "Hard Mossplate"
+  }, 
+  {
+    "icon_name": "Carapace-Green.png", 
+    "name_jp": "\u5c3e\u69cc\u7adc\u306e\u30b3\u30d6", 
+    "name": "Duramboros Hump"
+  }, 
+  {
+    "icon_name": "Carapace-Green.png", 
+    "name_jp": "\u5c3e\u69cc\u7adc\u306e\u5805\u5c3e\u7532", 
+    "name": "Duram Tailcase+"
+  }, 
+  {
+    "icon_name": "Carapace-Green.png", 
+    "name_jp": "\u5c3e\u69cc\u7adc\u306e\u5c16\u89d2", 
+    "name": "Duramboros Horn+"
+  }, 
+  {
+    "icon_name": "Bone-Green.png", 
+    "name_jp": "\u5c3e\u69cc\u7adc\u306e\u4ed9\u9aa8", 
+    "name": "Duram Sacrum"
+  }, 
+  {
+    "icon_name": "Shell-Green.png", 
+    "name_jp": "\u7370\u731b\u5316\u5c3e\u69cc\u7adc\u6bbb", 
+    "name": "Ferocious Duramboros Shell"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u5de8\u7363\u306e\u6bdb", 
+    "name": "Gamuto Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u5de8\u7363\u306e\u525b\u6bdb", 
+    "name": "Gamuto Pelt+"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u5de8\u7363\u306e\u7532\u6bbb", 
+    "name": "Gamuto Shell"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u5de8\u7363\u306e\u5805\u6bbb", 
+    "name": "Gamuto Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u5de8\u7363\u306e\u7259", 
+    "name": "Gamuto Fang"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u5de8\u7363\u306e\u5805\u7259", 
+    "name": "Gamuto Fang+"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u5de8\u7363\u306e\u9f3b\u68d8", 
+    "name": "Gamuto Trunkspike"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u5de8\u7363\u306e\u8d64\u6bdb", 
+    "name": "Gamuto Redfur"
+  }, 
+  {
+    "icon_name": "Ore-White.png", 
+    "name_jp": "\u96ea\u7532\u584a", 
+    "name": "Snow Lump"
+  }, 
+  {
+    "icon_name": "Ore-White.png", 
+    "name_jp": "\u96ea\u7532\u5927\u584a", 
+    "name": "Large Snow Lump"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u5de8\u7363\u306e\u982d\u6bbb", 
+    "name": "Gamuto Scalp"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-White.png", 
+    "name_jp": "\u5de8\u7363\u306e\u6c37\u7389", 
+    "name": "Gamuto Ice Gem"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u7370\u731b\u5316\u5de8\u7363\u6bdb", 
+    "name": "Ferocious Gamuto Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u5927\u76ae", 
+    "name": "Gendrome Hide"
+  }, 
+  {
+    "icon_name": "Hide-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u5927\u4e0a\u76ae", 
+    "name": "Gendrome Hide+"
+  }, 
+  {
+    "icon_name": "Fang-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u5927\u7259", 
+    "name": "Gendrome Fang"
+  }, 
+  {
+    "icon_name": "Fang-Green.png", 
+    "name_jp": "\u30b2\u30cd\u30dd\u30b9\u306e\u5927\u5c16\u7259", 
+    "name": "Gendrome Fang+"
+  }, 
+  {
+    "icon_name": "Carapace-Green.png", 
+    "name_jp": "\u30c9\u30b9\u30b2\u30cd\u30dd\u30b9\u306e\u982d", 
+    "name": "Gendrome Head"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Blue.png", 
+    "name_jp": "\u9ce5\u7adc\u7389", 
+    "name": "Bird Wyvern Gem"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u9c57", 
+    "name": "Gore Magala Scale"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Gore Magala Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u7532\u6bbb", 
+    "name": "Gore Magala Shell"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u5805\u6bbb", 
+    "name": "Gore Magala Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u6697\u7ffc", 
+    "name": "Gore Magala Wing"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u4e0a\u6697\u7ffc", 
+    "name": "Gore Magala Wing+"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u60e8\u722a", 
+    "name": "Gore Magala Ripclaw"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u92ed\u60e8\u722a", 
+    "name": "Gore Magala Ripclaw+"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Gore Magala Tail"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u9006\u9c57", 
+    "name": "Gore Magala Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u95c7\u7389", 
+    "name": "Gore Magala Nyctgem"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u89e6\u89d2", 
+    "name": "Gore Magala Feeler"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u9ed2\u8755\u7adc\u306e\u5c16\u89e6\u89d2", 
+    "name": "Gore Magala Feeler+"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u7a62\u308c\u305f\u7adc\u9c57", 
+    "name": "Defiled Scale"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u7370\u731b\u5316\u9ed2\u8755\u7adc\u9c57", 
+    "name": "Ferocious Gore Magala Scale"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u8df3\u72d7\u7adc\u306e\u9c57", 
+    "name": "G.Maccau Scale"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u8df3\u72d7\u7adc\u306e\u4e0a\u9c57", 
+    "name": "G.Maccau Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u8df3\u72d7\u7adc\u306e\u8d64\u76ae", 
+    "name": "G.Maccau Hide"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u8df3\u72d7\u7adc\u306e\u4e0a\u8d64\u76ae", 
+    "name": "G.Maccau Hide+"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u738b\u8005\u306e\u51a0\u7fbd", 
+    "name": "King's Feather"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u8df3\u72d7\u7adc\u306e\u5c3e\u68d8", 
+    "name": "G.Maccau Tail"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u30b4\u30e0\u8cea\u306e\u76ae", 
+    "name": "Rubbery Hide"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u30b4\u30e0\u8cea\u306e\u4e0a\u76ae", 
+    "name": "Rubbery Hide+"
+  }, 
+  {
+    "icon_name": "Webbing-Blue.png", 
+    "name_jp": "\u6bd2\u602a\u9ce5\u306e\u7ffc\u819c", 
+    "name": "Gypceros Webbing"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u6bd2\u602a\u9ce5\u306e\u7ffc", 
+    "name": "Gypceros Wing"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u6bd2\u602a\u9ce5\u306e\u982d", 
+    "name": "Gypceros Head"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u7370\u731b\u5316\u6bd2\u602a\u9ce5\u76ae", 
+    "name": "Ferocious Gypceros Hide"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u7fbd\u9c57", 
+    "name": "Hororohoruru Featherscale"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u4e0a\u7fbd\u9c57", 
+    "name": "Hororohoruru Featherscale+"
+  }, 
+  {
+    "icon_name": "Webbing-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u7ffc\u819c", 
+    "name": "Hororohoruru Webbing"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u7ffc", 
+    "name": "Hororohoruru Wing"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u7ffc\u722a", 
+    "name": "Hororohoruru Wingtalon"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u92ed\u7ffc\u722a", 
+    "name": "Hororohoruru Wingtalon+"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u8033", 
+    "name": "Hororohoruru Ear"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u5c3e\u7fbd", 
+    "name": "Hororohoruru Quill"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u591c\u9ce5\u306e\u91d1\u7fbd", 
+    "name": "Hororohoruru Goldfeather"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u7370\u731b\u5316\u591c\u9ce5\u7fbd", 
+    "name": "Ferocious Hororohoruru Feather"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u5927\u76ae", 
+    "name": "Iodrome Hide"
+  }, 
+  {
+    "icon_name": "Hide-Red.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u5927\u4e0a\u76ae", 
+    "name": "Iodrome Hide+"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u7d2b\u9c57", 
+    "name": "Iodrome Scale"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u4e0a\u7d2b\u9c57", 
+    "name": "Iodrome Scale+"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u30c9\u30b9\u30a4\u30fc\u30aa\u30b9\u306e\u982d", 
+    "name": "Iodrome Head"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Blue.png", 
+    "name_jp": "\u9ce5\u7adc\u7389", 
+    "name": "Bird Wyvern Gem"
+  }, 
+  {
+    "icon_name": "Hide-Orange.png", 
+    "name_jp": "\u5947\u733f\u72d0\u306e\u525b\u6bdb", 
+    "name": "Kecha Pelt+"
+  }, 
+  {
+    "icon_name": "Bone-Orange.png", 
+    "name_jp": "\u5947\u733f\u72d0\u306e\u5805\u9577\u9aa8", 
+    "name": "Kecha Grandbone"
+  }, 
+  {
+    "icon_name": "Fang-Orange.png", 
+    "name_jp": "\u5947\u733f\u72d0\u306e\u9264\u722a", 
+    "name": "Kecha Talon"
+  }, 
+  {
+    "icon_name": "Carapace-Orange.png", 
+    "name_jp": "\u5947\u733f\u72d0\u306e\u5927\u8033", 
+    "name": "Kecha Ear+"
+  }, 
+  {
+    "icon_name": "Carapace-Orange.png", 
+    "name_jp": "\u5947\u733f\u72d0\u306e\u5c3b\u5c3e", 
+    "name": "Kecha Tail"
+  }, 
+  {
+    "icon_name": "Hide-Orange.png", 
+    "name_jp": "\u7370\u731b\u5316\u5947\u733f\u72d0\u6bdb", 
+    "name": "Ferocious Kecha Wacha Pelt"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u30d6\u30e8\u30d6\u30e8\u3057\u305f\u76ae", 
+    "name": "Flabby Hide"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u771f\u73e0\u8272\u306e\u67d4\u76ae", 
+    "name": "Pearl Hide"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u30a2\u30eb\u30d3\u30ce\u306e\u4e2d\u843d\u3061", 
+    "name": "Pale Bone"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u30a2\u30eb\u30d3\u30ce\u306e\u971c\u964d\u308a", 
+    "name": "Pale Steak"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Cyan.png", 
+    "name_jp": "\u7adc\u7389", 
+    "name": "Wyvern Gem"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u7370\u731b\u5316\u767d\u67d4\u76ae", 
+    "name": "Ferocious Khezu Hide"
+  }, 
+  {
+    "icon_name": "Hide-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u76ae", 
+    "name": "Lagiacrus Hide"
+  }, 
+  {
+    "icon_name": "Hide-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u4e0a\u76ae", 
+    "name": "Lagiacrus Hide+"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u9c57", 
+    "name": "Lagiacrus Scale"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Lagiacrus Scale+"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u80cc\u96fb\u6bbb", 
+    "name": "Shell Shocker"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u9ad8\u96fb\u6bbb", 
+    "name": "Shell Shocker+"
+  }, 
+  {
+    "icon_name": "Fang-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u89d2", 
+    "name": "Lagiacrus Horn"
+  }, 
+  {
+    "icon_name": "Fang-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u5c16\u89d2", 
+    "name": "Lagiacrus Horn+"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Lagiacrus Tail"
+  }, 
+  {
+    "icon_name": "Fang-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u722a", 
+    "name": "Lagiacrus Claw"
+  }, 
+  {
+    "icon_name": "Fang-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u92ed\u722a", 
+    "name": "Lagiacrus Claw+"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u9006\u9c57", 
+    "name": "Lagiacrus Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Cyan.png", 
+    "name_jp": "\u6d77\u7adc\u306e\u84bc\u7389", 
+    "name": "Lagiacrus Sapphire"
+  }, 
+  {
+    "icon_name": "Hide-Cyan.png", 
+    "name_jp": "\u7370\u731b\u5316\u6d77\u7adc\u76ae", 
+    "name": "Ferocious Lagiacrus Hide"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u767d\u514e\u7363\u306e\u6bdb", 
+    "name": "Lagombi Pelt"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u767d\u514e\u7363\u306e\u525b\u6bdb", 
+    "name": "Lagombi Pelt+"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u767d\u514e\u7363\u306e\u8033", 
+    "name": "Lagombi Ear"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u767d\u514e\u7363\u306e\u5927\u8033", 
+    "name": "Lagombi Ear+"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u767d\u514e\u7363\u306e\u8179\u7532", 
+    "name": "Lagombi Plastron"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u767d\u514e\u7363\u306e\u5805\u8179\u7532", 
+    "name": "Lagombi Plastron+"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u767d\u514e\u7363\u306e\u6c37\u722a", 
+    "name": "Lagombi Iceclaw"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u767d\u514e\u7363\u306e\u51cd\u722a", 
+    "name": "Lagombi Frozenclaw"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u5927\u96ea\u4e3b\u306e\u6bdb", 
+    "name": "Heavy Snow Lord Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u5927\u96ea\u4e3b\u306e\u525b\u6bdb", 
+    "name": "Heavy Snow Lord Pelt+"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u5927\u96ea\u4e3b\u306e\u8179\u7532", 
+    "name": "Heavy Snow Lord Plastron"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u5927\u96ea\u4e3b\u306e\u5805\u8179\u7532", 
+    "name": "Heavy Snow Lord Plastron+"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u6eb6\u5ca9\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Lavasioth Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u6eb6\u5ca9\u7adc\u306e\u5805\u6bbb", 
+    "name": "Lavasioth Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u6eb6\u5ca9\u7adc\u306e\u92ed\u7259", 
+    "name": "Lavasioth Fang+"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u6eb6\u5ca9\u7adc\u306e\u4e0a\u30d2\u30ec", 
+    "name": "Lavasioth Fin+"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u7370\u731b\u5316\u6eb6\u5ca9\u7adc\u9c57", 
+    "name": "Ferocious Lavasioth Scale"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u7532\u6bbb", 
+    "name": "Najarala Shell"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u5805\u6bbb", 
+    "name": "Najarala Carapace"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u76ae", 
+    "name": "Najarala Hide"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u4e0a\u76ae", 
+    "name": "Najarala Hide+"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u9aa8\u9ac4", 
+    "name": "Najarala Marrow"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u5ef6\u9ac4", 
+    "name": "Najarala Medulla"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u9cf4\u7532", 
+    "name": "Najarala Sounder"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u4e0a\u9cf4\u7532", 
+    "name": "Najarala Sounder+"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u7d5e\u86c7\u7adc\u306e\u7259", 
+    "name": "Najarala Fang"
+  }, 
+  {
+    "icon_name": "Bone-Yellow.png", 
+    "name_jp": "\u5bd2\u6c17\u7acb\u3064\u30af\u30c1\u30d0\u30b7", 
+    "name": "Chilling Beak"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Cyan.png", 
+    "name_jp": "\u7adc\u7389", 
+    "name": "Wyvern Gem"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u7370\u731b\u5316\u7d5e\u86c7\u7adc\u6bbb", 
+    "name": "Ferocious Najarala Shell"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u9c57", 
+    "name": "Nargacuga Scale"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Nargacuga Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u9ed2\u6bdb", 
+    "name": "Nargacuga Blackfur"
+  }, 
+  {
+    "icon_name": "Hide-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u4e0a\u9ed2\u6bdb", 
+    "name": "Nargacuga Pelt+"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Nargacuga Tail"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u5c3e\u68d8", 
+    "name": "Narga Tailspike"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u5203\u7ffc", 
+    "name": "Nargacuga Cutwing"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u92ed\u5203\u7ffc", 
+    "name": "Narga Razor"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u7259", 
+    "name": "Nargacuga Fang"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u92ed\u7259", 
+    "name": "Nargacuga Fang+"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u9aa8\u9ac4", 
+    "name": "Nargacuga Marrow"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u8fc5\u7adc\u306e\u5ef6\u9ac4", 
+    "name": "Narga Medulla"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u7370\u731b\u5316\u8fc5\u7adc\u9c57", 
+    "name": "Ferocious Nargacuga Scale"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u767d\u75be\u98a8\u306e\u9c57", 
+    "name": "White Gale Scale"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u767d\u75be\u98a8\u306e\u4e0a\u9c57", 
+    "name": "White Gale Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u767d\u75be\u98a8\u306e\u9ed2\u6bdb", 
+    "name": "White Gale Blackfur"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u767d\u75be\u98a8\u306e\u4e0a\u9ed2\u6bdb", 
+    "name": "White Gale Pelt+"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u6f5c\u53e3\u7adc\u306e\u7532\u6bbb", 
+    "name": "Nibelsnarf Shell"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u6f5c\u53e3\u7adc\u306e\u5805\u6bbb", 
+    "name": "Nibelsnarf Carapace"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u6f5c\u53e3\u7adc\u306e\u76ae", 
+    "name": "Nibelsnarf Hide"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u6f5c\u53e3\u7adc\u306e\u4e0a\u76ae", 
+    "name": "Nibelsnarf Hide+"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u6f5c\u53e3\u7adc\u306e\u722a", 
+    "name": "Nibelsnarf Claw"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u6f5c\u53e3\u7adc\u306e\u5c16\u722a", 
+    "name": "Nibelsnarf Claw+"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u6f5c\u53e3\u7adc\u306e\u982d\u6bbb", 
+    "name": "Nibelsnarf Scalp"
+  }, 
+  {
+    "icon_name": "Liquid-Cyan.png", 
+    "name_jp": "\u9bae\u3084\u304b\u306a\u4f53\u6db2", 
+    "name": "Vivid Fluid"
+  }, 
+  {
+    "icon_name": "Liquid-Cyan.png", 
+    "name_jp": "\u6975\u5f69\u8272\u306e\u4f53\u6db2", 
+    "name": "Brilliant Fluid"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u7370\u731b\u5316\u6f5c\u53e3\u7adc\u6bbb", 
+    "name": "Ferocious Nibelsnarf Shell"
+  }, 
+  {
+    "icon_name": "Scale-Blue.png", 
+    "name_jp": "\u6c34\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Plesioth Scale+"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u6c34\u7adc\u306e\u4e0a\u30d2\u30ec", 
+    "name": "Plesioth Fin+"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u6c34\u7adc\u306e\u7ffc\u819c", 
+    "name": "Plesioth Fang+"
+  }, 
+  {
+    "icon_name": "Webbing-Blue.png", 
+    "name_jp": "\u6c34\u7adc\u306e\u92ed\u7259", 
+    "name": "Plesioth Webbing"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u6c34\u7adc\u306e\u304a\u982d", 
+    "name": "Plesioth Head"
+  }, 
+  {
+    "icon_name": "Scale-Blue.png", 
+    "name_jp": "\u7370\u731b\u5316\u6c34\u7adc\u9c57", 
+    "name": "Ferocious Plesioth Scale"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u9c57", 
+    "name": "Raizekusu Scale"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Raizekusu Scale+"
+  }, 
+  {
+    "icon_name": "Shell-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u68d8\u6bbb", 
+    "name": "Raizekusu Thornshell"
+  }, 
+  {
+    "icon_name": "Shell-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u5805\u68d8\u6bbb", 
+    "name": "Raizekusu Thornshell+"
+  }, 
+  {
+    "icon_name": "Webbing-YellowGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u5e2f\u96fb\u819c", 
+    "name": "Raizekusu Electrowebbing"
+  }, 
+  {
+    "icon_name": "Webbing-YellowGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u9ad8\u96fb\u819c", 
+    "name": "Raizekusu Electrowebbing+"
+  }, 
+  {
+    "icon_name": "Fang-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u7ffc\u722a", 
+    "name": "Raizekusu Wingtalon"
+  }, 
+  {
+    "icon_name": "Fang-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u92ed\u7ffc\u722a", 
+    "name": "Raizekusu Wingtalon+"
+  }, 
+  {
+    "icon_name": "Shell-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u51a0\u7532", 
+    "name": "Raizekusu Crown"
+  }, 
+  {
+    "icon_name": "Shell-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u5805\u51a0\u7532", 
+    "name": "Raizekusu Crown+"
+  }, 
+  {
+    "icon_name": "Carapace-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u92cf\u5c3e", 
+    "name": "Raizekusu Scissortail"
+  }, 
+  {
+    "icon_name": "Shell-YellowGreen.png", 
+    "name_jp": "\u5727\u96fb\u7532", 
+    "name": "Electroshell"
+  }, 
+  {
+    "icon_name": "Shell-YellowGreen.png", 
+    "name_jp": "\u9ad8\u5727\u96fb\u7532", 
+    "name": "Electroshell+"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u9006\u9c57", 
+    "name": "Raizekusu Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-YellowGreen.png", 
+    "name_jp": "\u96fb\u7adc\u306e\u96f7\u7389", 
+    "name": "Raizekusu Thunder Gem"
+  }, 
+  {
+    "icon_name": "Scale-DarkGreen.png", 
+    "name_jp": "\u7370\u731b\u5316\u96fb\u7adc\u9c57", 
+    "name": "Ferocious Raizekusu Scale"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u91d1\u7345\u5b50\u306e\u5c16\u89d2", 
+    "name": "Rajang Horn+"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u91d1\u7345\u5b50\u306e\u92ed\u7259", 
+    "name": "Rajang Fang+"
+  }, 
+  {
+    "icon_name": "Hide-Grey.png", 
+    "name_jp": "\u91d1\u7345\u5b50\u306e\u9ed2\u6bdb", 
+    "name": "Rajang Blackfur"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u91d1\u7345\u5b50\u306e\u5c16\u722a", 
+    "name": "Rajang Claw+"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u91d1\u7345\u5b50\u306e\u5c3b\u5c3e", 
+    "name": "Rajang Tail"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u9ec4\u91d1\u306e\u6bdb", 
+    "name": "Gold Rajang Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Grey.png", 
+    "name_jp": "\u7370\u731b\u5316\u91d1\u7345\u5b50\u6bdb", 
+    "name": "Ferocious Rajang Pelt"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u91d1\u7345\u5b50\u306e\u6012\u9aea", 
+    "name": "Rajang Ragehair"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Yellow.png", 
+    "name_jp": "\u91d1\u7345\u5b50\u306e\u95d8\u9b42", 
+    "name": "Rajang Nerve"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u7f85\u5239\u306e\u91d1\u89d2", 
+    "name": "Ghoulish Gold Horn"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u9c57", 
+    "name": "Rathalos Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Rathalos Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u7532\u6bbb", 
+    "name": "Rathalos Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u5805\u6bbb", 
+    "name": "Rathalos Carapace"
+  }, 
+  {
+    "icon_name": "Webbing-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u7ffc\u819c", 
+    "name": "Rathalos Webbing"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u7ffc", 
+    "name": "Rathalos Wing"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Rathalos Tail"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u9006\u9c57", 
+    "name": "Rathalos Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u7d05\u7389", 
+    "name": "Rathalos Ruby"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u7ffc\u722a", 
+    "name": "Rath Wingtalon"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u9aa8\u9ac4", 
+    "name": "Rath Marrow"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u5ef6\u9ac4", 
+    "name": "Rath Medulla"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u7370\u731b\u5316\u706b\u7adc\u9c57", 
+    "name": "Ferocious Rathalos Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u9ed2\u708e\u738b\u306e\u9c57", 
+    "name": "Black Flame King Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u9ed2\u708e\u738b\u306e\u4e0a\u9c57", 
+    "name": "Black Flame King Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u9ed2\u708e\u738b\u306e\u7532\u6bbb", 
+    "name": "Black Flame King Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u9ed2\u708e\u738b\u306e\u5805\u6bbb", 
+    "name": "Black Flame King Carapace"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u9280\u706b\u7adc\u306e\u4e0a\u9c57", 
+    "name": "S.Rathalos Scale+"
+  }, 
+  {
+    "icon_name": "Shell-White.png", 
+    "name_jp": "\u9280\u706b\u7adc\u306e\u5805\u6bbb", 
+    "name": "S.Rathalos Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u9280\u706b\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "S.Rathalos Tail"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u7ffc\u722a", 
+    "name": "Rath Wingtalon"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u5ef6\u9ac4", 
+    "name": "Rath Medulla"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u706b\u7adc\u306e\u714c\u6db2", 
+    "name": "Rath Gleem"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u7370\u731b\u5316\u9280\u706b\u7adc\u9c57", 
+    "name": "Ferocious S.Rathalos Scale"
+  }, 
+  {
+    "icon_name": "Scale-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u9c57", 
+    "name": "Rathian Scale"
+  }, 
+  {
+    "icon_name": "Scale-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Rathian Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u7532\u6bbb", 
+    "name": "Rathian Shell"
+  }, 
+  {
+    "icon_name": "Shell-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u5805\u6bbb", 
+    "name": "Rathian Carapace"
+  }, 
+  {
+    "icon_name": "Webbing-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u7ffc\u819c", 
+    "name": "Rathian Webbing"
+  }, 
+  {
+    "icon_name": "Carapace-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u68d8", 
+    "name": "Rathian Spike"
+  }, 
+  {
+    "icon_name": "Carapace-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u4e0a\u68d8", 
+    "name": "Rathian Spike+"
+  }, 
+  {
+    "icon_name": "Scale-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u9006\u9c57", 
+    "name": "Rathian Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Green.png", 
+    "name_jp": "\u96cc\u706b\u7adc\u306e\u7d05\u7389", 
+    "name": "Rathian Ruby"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u7ffc\u722a", 
+    "name": "Rath Wingtalon"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u9aa8\u9ac4", 
+    "name": "Rath Marrow"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u5ef6\u9ac4", 
+    "name": "Rath Medulla"
+  }, 
+  {
+    "icon_name": "Scale-Green.png", 
+    "name_jp": "\u7370\u731b\u5316\u96cc\u706b\u7adc\u9c57", 
+    "name": "Ferocious Rathian Scale"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u7d2b\u6bd2\u59eb\u306e\u9c57", 
+    "name": "Violet Poison Princess Scale"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u7d2b\u6bd2\u59eb\u306e\u4e0a\u9c57", 
+    "name": "Violet Poison Princess Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Purple.png", 
+    "name_jp": "\u7d2b\u6bd2\u59eb\u306e\u7532\u6bbb", 
+    "name": "Violet Poison Princess Shell"
+  }, 
+  {
+    "icon_name": "Shell-Purple.png", 
+    "name_jp": "\u7d2b\u6bd2\u59eb\u306e\u5805\u6bbb", 
+    "name": "Violet Poison Princess Carapace"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u91d1\u706b\u7adc\u306e\u4e0a\u9c57", 
+    "name": "G.Rathian Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u91d1\u706b\u7adc\u306e\u5805\u6bbb", 
+    "name": "G.Rathian Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u91d1\u706b\u7adc\u306e\u4e0a\u68d8", 
+    "name": "G.Rathian Spike+"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u7ffc\u722a", 
+    "name": "Rath Wingtalon"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u706b\u7adc\u306e\u5ef6\u9ac4", 
+    "name": "Rath Medulla"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u706b\u7adc\u306e\u714c\u6db2", 
+    "name": "Rath Gleem"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u7370\u731b\u5316\u91d1\u706b\u7adc\u9c57", 
+    "name": "Ferocious G.Rathian Scale"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u6d77\u7dbf\u8cea\u306e\u76ae", 
+    "name": "Spongy Hide"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u6d77\u7dbf\u8cea\u306e\u4e0a\u76ae", 
+    "name": "Spongy Hide+"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u6c34\u7363\u306e\u9c57", 
+    "name": "R.Ludroth Scale"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u6c34\u7363\u306e\u4e0a\u9c57", 
+    "name": "R.Ludroth Scale+"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u6c34\u7363\u306e\u722a", 
+    "name": "R.Ludroth Claw"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u6c34\u7363\u306e\u92ed\u722a", 
+    "name": "R.Ludroth Claw+"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u6c34\u7363\u306e\u30c8\u30b5\u30ab", 
+    "name": "R.Ludroth Crest"
+  }, 
+  {
+    "icon_name": "Hide-Yellow.png", 
+    "name_jp": "\u9ad8\u7d1a\u306a\u30c8\u30b5\u30ab", 
+    "name": "R.Ludroth Crest+"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u6c34\u7363\u306e\u5c3b\u5c3e", 
+    "name": "R.Ludroth Tail"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u7370\u731b\u5316\u6c34\u7363\u9c57", 
+    "name": "Ferocious R.Ludroth Scale"
+  }, 
+  {
+    "icon_name": "Shell-Green.png", 
+    "name_jp": "\u5fb9\u7532\u866b\u306e\u5805\u6bbb", 
+    "name": "Seltas Carapace"
+  }, 
+  {
+    "icon_name": "Webbing-Green.png", 
+    "name_jp": "\u5fb9\u7532\u866b\u306e\u8584\u7fbd", 
+    "name": "Seltas Innerwing"
+  }, 
+  {
+    "icon_name": "Fang-Green.png", 
+    "name_jp": "\u5fb9\u7532\u866b\u306e\u5c16\u89d2", 
+    "name": "Seltas Horn+"
+  }, 
+  {
+    "icon_name": "Shell-DarkGreen.png", 
+    "name_jp": "\u91cd\u7532\u866b\u306e\u5805\u6bbb", 
+    "name": "S.Queen Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-DarkGreen.png", 
+    "name_jp": "\u91cd\u7532\u866b\u306e\u5805\u80f8\u6bbb", 
+    "name": "S.Queen Hardpectus"
+  }, 
+  {
+    "icon_name": "Fang-DarkGreen.png", 
+    "name_jp": "\u91cd\u7532\u866b\u306e\u92ed\u722a", 
+    "name": "S.Queen Sharpclaw"
+  }, 
+  {
+    "icon_name": "Carapace-DarkGreen.png", 
+    "name_jp": "\u91cd\u7532\u866b\u306e\u5927\u984e", 
+    "name": "S.Queen Jaw"
+  }, 
+  {
+    "icon_name": "Carapace-DarkGreen.png", 
+    "name_jp": "\u91cd\u7532\u866b\u306e\u5186\u6708\u5c3e", 
+    "name": "S.Queen Crescent"
+  }, 
+  {
+    "icon_name": "Liquid-DarkGreen.png", 
+    "name_jp": "\u91cd\u7532\u30a8\u30ad\u30b9", 
+    "name": "S.Queen Extract"
+  }, 
+  {
+    "icon_name": "Shell-DarkGreen.png", 
+    "name_jp": "\u7370\u731b\u5316\u91cd\u7532\u866b\u6bbb", 
+    "name": "Ferocious S.Queen Shell"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u5203\u9c57", 
+    "name": "Seregios Scale"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u92ed\u5203\u9c57", 
+    "name": "Seregios Slavescale"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u98db\u5203\u7247", 
+    "name": "Seregios Blade"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u98db\u5203", 
+    "name": "Seregios Airblade"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u722a", 
+    "name": "Seregios Claw"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u523b\u722a", 
+    "name": "Seregios Carver"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u69cd\u5c3e", 
+    "name": "Seregios Impaler"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u5200\u89d2", 
+    "name": "Seregios Horn"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u4f10\u5200\u89d2", 
+    "name": "Seregios Breacher"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u7ffc\u722a", 
+    "name": "Seregios Wingtalon"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u5c16\u7ffc\u722a", 
+    "name": "Seregios Scraper"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u5343\u5203\u7adc\u306e\u53cd\u9006\u9c57", 
+    "name": "Seregios Dissenter"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u7370\u731b\u5316\u5343\u5203\u7adc\u9c57", 
+    "name": "Ferocious Seregios Scale"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u938c\u87f9\u306e\u7532\u6bbb", 
+    "name": "Ceanataur Shell"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u938c\u87f9\u306e\u5805\u6bbb", 
+    "name": "Ceanataur Carapace"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u938c\u87f9\u306e\u811a", 
+    "name": "Ceanataur Leg"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u938c\u87f9\u306e\u5805\u811a", 
+    "name": "Ceanataur Leg+"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u938c\u87f9\u306e\u722a", 
+    "name": "Ceanataur Claw"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u938c\u87f9\u306e\u5c16\u722a", 
+    "name": "Ceanataur Claw+"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u7370\u731b\u5316\u938c\u87f9\u6bbb", 
+    "name": "Ferocious Ceanataur Shell"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u9c57", 
+    "name": "Tamamitsune Scale"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Tamamitsune Scale+"
+  }, 
+  {
+    "icon_name": "Hide-Purple.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u7d2b\u6bdb", 
+    "name": "Tamamitsune Purplefur"
+  }, 
+  {
+    "icon_name": "Hide-Purple.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u7d2b\u4e0a\u6bdb", 
+    "name": "Tamamitsune Pelt+"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u722a", 
+    "name": "Tamamitsune Claw"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u5c16\u722a", 
+    "name": "Tamamitsune Claw+"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u9326\u30d2\u30ec", 
+    "name": "Tamamitsune Fin"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u4e0a\u9326\u30d2\u30ec", 
+    "name": "Tamamitsune Fin+"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Tamamitsune Tail"
+  }, 
+  {
+    "icon_name": "Liquid-Purple.png", 
+    "name_jp": "\u6ce1\u7acb\u3064\u6ed1\u6db2", 
+    "name": "Bubble Fluid"
+  }, 
+  {
+    "icon_name": "Liquid-Purple.png", 
+    "name_jp": "\u6ce1\u7acb\u3064\u4e0a\u6ed1\u6db2", 
+    "name": "Bubble Fluid+"
+  }, 
+  {
+    "icon_name": "Scale-Pink.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u9006\u9c57", 
+    "name": "Tamamitsune Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Purple.png", 
+    "name_jp": "\u6ce1\u72d0\u7adc\u306e\u6c34\u7389", 
+    "name": "Tamamitsune Water Gem"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u7370\u731b\u5316\u6ce1\u72d0\u7adc\u9c57", 
+    "name": "Ferocious Tamamitsune Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u9b3c\u86d9\u306e\u9c57", 
+    "name": "Tetsucabra Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u9b3c\u86d9\u306e\u4e0a\u9c57", 
+    "name": "Tetsucabra Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u9b3c\u86d9\u306e\u7532\u6bbb", 
+    "name": "Tetsucabra Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u9b3c\u86d9\u306e\u5805\u6bbb", 
+    "name": "Tetsucabra Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u9b3c\u86d9\u306e\u722a", 
+    "name": "Tetsucabra Claw"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u9b3c\u86d9\u306e\u5c16\u722a", 
+    "name": "Tetsucabra Claw+"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u9b3c\u86d9\u306e\u5927\u7259", 
+    "name": "Tetsucabra Tusks"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u9b3c\u86d9\u306e\u5de8\u5927\u7259", 
+    "name": "Tetsucabra Tusks+"
+  }, 
+  {
+    "icon_name": "Bone-Red.png", 
+    "name_jp": "\u53b3\u3081\u3057\u3044\u982d\u9aa8", 
+    "name": "Dignified Skull"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u30ab\u30ef\u30ba\u306e\u6cb9", 
+    "name": "Paddock Oil"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u30ab\u30ef\u30ba\u306e\u6bbf\u6cb9", 
+    "name": "Paddock Oil+"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u7370\u731b\u5316\u9b3c\u86d9\u9c57", 
+    "name": "Ferocious Tetsucabra Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u5ca9\u7a7f\u306e\u9c57", 
+    "name": "Rock Piercing Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u5ca9\u7a7f\u306e\u4e0a\u9c57", 
+    "name": "Rock Piercing Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u5ca9\u7a7f\u306e\u7532\u6bbb", 
+    "name": "Rock Piercing Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u5ca9\u7a7f\u306e\u5805\u6bbb", 
+    "name": "Rock Piercing Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u5ca9\u7a7f\u306e\u5de8\u5927\u7259", 
+    "name": "Rock Piercing Tusks"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u5ca9\u7a7f\u306e\u6975\u5927\u7259", 
+    "name": "Rock Piercing Tusks+"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u9c57", 
+    "name": "Tigrex Scale"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Tigrex Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u7532\u6bbb", 
+    "name": "Tigrex Shell"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u5805\u6bbb", 
+    "name": "Tigrex Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Tigrex Tail"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u722a", 
+    "name": "Tigrex Claw"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u5c16\u722a", 
+    "name": "Tigrex Claw+"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u7259", 
+    "name": "Tigrex Fang"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u92ed\u7259", 
+    "name": "Tigrex Fang+"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u982d\u6bbb", 
+    "name": "Tigrex Scalp"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u8f5f\u7adc\u306e\u30a2\u30ae\u30c8", 
+    "name": "Tigrex Maw"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u7370\u731b\u5316\u8f5f\u7adc\u9c57", 
+    "name": "Ferocious Tigrex Scale"
+  }, 
+  {
+    "icon_name": "Scale-Blue.png", 
+    "name_jp": "\u8352\u9264\u722a\u306e\u9c57", 
+    "name": "Ruinous Hook Claw Scale"
+  }, 
+  {
+    "icon_name": "Scale-Blue.png", 
+    "name_jp": "\u8352\u9264\u722a\u306e\u4e0a\u9c57", 
+    "name": "Ruinous Hook Claw Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u8352\u9264\u722a\u306e\u7532\u6bbb", 
+    "name": "Ruinous Hook Claw Shell"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u8352\u9264\u722a\u306e\u5805\u6bbb", 
+    "name": "Ruinous Hook Claw Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u8352\u9264\u722a\u306e\u84bc\u722a", 
+    "name": "Ruinous Hook Claw Blueclaw"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u8352\u9264\u722a\u306e\u5927\u84bc\u722a", 
+    "name": "Ruinous Hook Claw Blueclaw+"
+  }, 
+  {
+    "icon_name": "Ore-Cyan.png", 
+    "name_jp": "\u5927\u7adc\u7d50\u6676", 
+    "name": "Large Wyvern Crystal"
+  }, 
+  {
+    "icon_name": "Shell-White.png", 
+    "name_jp": "\u5d29\u7adc\u306e\u5805\u6bbb", 
+    "name": "Ukanlos Carapace"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u5d29\u7adc\u306e\u8179\u9c57", 
+    "name": "Ukanlos Underscale"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5d29\u7adc\u306e\u7a7f\u722a", 
+    "name": "Ukanlos Digger"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5d29\u7adc\u306e\u4e0a\u30d3\u30ec", 
+    "name": "Ukanlos Fin+"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5d29\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Ukanlos Tail"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5d29\u7adc\u306e\u524a\u984e", 
+    "name": "Ukanlos Shoveljaw"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5d29\u7adc\u306e\u4e0a\u30d2\u30ec", 
+    "name": "Ukanlos Fin"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Cyan.png", 
+    "name_jp": "\u5d29\u7adc\u306e\u5b9d\u7389", 
+    "name": "Ukanlos Gem"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u7206\u939a\u7adc\u306e\u9c57", 
+    "name": "Uragaan Scale"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u7206\u939a\u7adc\u306e\u4e0a\u9c57", 
+    "name": "Uragaan Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u7206\u939a\u7adc\u306e\u7532\u6bbb", 
+    "name": "Uragaan Shell"
+  }, 
+  {
+    "icon_name": "Shell-Yellow.png", 
+    "name_jp": "\u7206\u939a\u7adc\u306e\u5805\u6bbb", 
+    "name": "Uragaan Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u7206\u939a\u7adc\u306e\u984e", 
+    "name": "Uragaan Jaw"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u7206\u939a\u7adc\u306e\u8010\u71b1\u6bbb", 
+    "name": "Uragaan Scute"
+  }, 
+  {
+    "icon_name": "Carapace-Yellow.png", 
+    "name_jp": "\u7206\u939a\u7adc\u306e\u9aa8\u9ac4", 
+    "name": "Uragaan Marrow"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Yellow.png", 
+    "name_jp": "\u7206\u939a\u7adc\u306e\u7d05\u7389", 
+    "name": "Uragaan Ruby"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u7370\u731b\u5316\u7206\u939a\u7adc\u9c57", 
+    "name": "Ferocious Uragaan Scale"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u5b9d\u7e8f\u306e\u9c57", 
+    "name": "Treasure Clad Scale"
+  }, 
+  {
+    "icon_name": "Scale-Yellow.png", 
+    "name_jp": "\u5b9d\u7e8f\u306e\u4e0a\u9c57", 
+    "name": "Treasure Clad Scale+"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u5b9d\u7e8f\u306e\u5b9d\u984e", 
+    "name": "Treasure Clad Jaw"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u5b9d\u7e8f\u306e\u8ca1\u5b9d\u984e", 
+    "name": "Treasure Clad Jaw+"
+  }, 
+  {
+    "icon_name": "Ore-Purple.png", 
+    "name_jp": "\u5b9d\u5ca9\u584a", 
+    "name": "Treasure Lump"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u5927\u76ae", 
+    "name": "Velocidrome Hide"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u5927\u4e0a\u76ae", 
+    "name": "Velocidrome Hide+"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u5927\u722a", 
+    "name": "Velocidrome Claw"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u5927\u5c16\u722a", 
+    "name": "Velocidrome Claw+"
+  }, 
+  {
+    "icon_name": "Carapace-Blue.png", 
+    "name_jp": "\u30c9\u30b9\u30e9\u30f3\u30dd\u30b9\u306e\u982d", 
+    "name": "Velocidrome Head"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Blue.png", 
+    "name_jp": "\u9ce5\u7adc\u7389", 
+    "name": "Bird Wyvern Gem"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u8d64\u7532\u7363\u306e\u7532\u6bbb", 
+    "name": "Volvidon Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u8d64\u7532\u7363\u306e\u5805\u6bbb", 
+    "name": "Volvidon Carapace"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u8d64\u7532\u7363\u306e\u722a", 
+    "name": "Volvidon Claw"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u8d64\u7532\u7363\u306e\u5c16\u722a", 
+    "name": "Volvidon Claw+"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u8d64\u7532\u7363\u306e\u86c7\u8179\u7532", 
+    "name": "Volvi Rickrack"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u9c57", 
+    "name": "Garuga Scale"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u4e0a\u9c57", 
+    "name": "Garuga Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u7532\u6bbb", 
+    "name": "Garuga Shell"
+  }, 
+  {
+    "icon_name": "Shell-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u5805\u6bbb", 
+    "name": "Garuga Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u8033", 
+    "name": "Garuga Ear"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u5730\u7344\u8033", 
+    "name": "Garuga Auricle"
+  }, 
+  {
+    "icon_name": "Bone-Purple.png", 
+    "name_jp": "\u5c16\u3063\u305f\u30af\u30c1\u30d0\u30b7", 
+    "name": "Sharpened Beak"
+  }, 
+  {
+    "icon_name": "Bone-Purple.png", 
+    "name_jp": "\u30a4\u30ab\u3057\u305f\u30af\u30c1\u30d0\u30b7", 
+    "name": "Rejuvenated Beak"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u7ffc", 
+    "name": "Garuga Wing"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u5c3b\u5c3e", 
+    "name": "Garuga Tail"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u9ed2\u72fc\u9ce5\u306e\u305f\u3066\u304c\u307f", 
+    "name": "Garuga Mane"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u7370\u731b\u5316\u9ed2\u72fc\u9ce5\u9c57", 
+    "name": "Ferocious Garuga Scale"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u96bb\u773c\u306e\u9c57", 
+    "name": "One-Eyed Scale"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u96bb\u773c\u306e\u4e0a\u9c57", 
+    "name": "One-Eyed Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Purple.png", 
+    "name_jp": "\u96bb\u773c\u306e\u7532\u6bbb", 
+    "name": "One-Eyed Shell"
+  }, 
+  {
+    "icon_name": "Shell-Purple.png", 
+    "name_jp": "\u96bb\u773c\u306e\u5805\u6bbb", 
+    "name": "One-Eyed Carapace"
+  }, 
+  {
+    "icon_name": "Scale-Pink.png", 
+    "name_jp": "\u602a\u9ce5\u306e\u9c57", 
+    "name": "Kut-Ku Scale"
+  }, 
+  {
+    "icon_name": "Scale-Pink.png", 
+    "name_jp": "\u602a\u9ce5\u306e\u4e0a\u9c57", 
+    "name": "Kut-Ku Scale+"
+  }, 
+  {
+    "icon_name": "Shell-Pink.png", 
+    "name_jp": "\u602a\u9ce5\u306e\u7532\u6bbb", 
+    "name": "Kut-Ku Shell"
+  }, 
+  {
+    "icon_name": "Shell-Pink.png", 
+    "name_jp": "\u602a\u9ce5\u306e\u5805\u6bbb", 
+    "name": "Kut-Ku Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Pink.png", 
+    "name_jp": "\u602a\u9ce5\u306e\u8033", 
+    "name": "Kut-Ku Ear"
+  }, 
+  {
+    "icon_name": "Carapace-Pink.png", 
+    "name_jp": "\u602a\u9ce5\u306e\u5730\u7344\u8033", 
+    "name": "Kut-Ku Auricle"
+  }, 
+  {
+    "icon_name": "Bone-Pink.png", 
+    "name_jp": "\u5de8\u5927\u306a\u30af\u30c1\u30d0\u30b7", 
+    "name": "Giant Beak"
+  }, 
+  {
+    "icon_name": "Bone-Pink.png", 
+    "name_jp": "\u7acb\u6d3e\u306a\u30af\u30c1\u30d0\u30b7", 
+    "name": "Splendid Beak"
+  }, 
+  {
+    "icon_name": "Webbing-Pink.png", 
+    "name_jp": "\u602a\u9ce5\u306e\u7ffc\u819c", 
+    "name": "Kut-Ku Webbing"
+  }, 
+  {
+    "icon_name": "Scale-Pink.png", 
+    "name_jp": "\u7370\u731b\u5316\u602a\u9ce5\u9c57", 
+    "name": "Ferocious Kut-Ku Scale"
+  }, 
+  {
+    "icon_name": "Hide-Cyan.png", 
+    "name_jp": "\u5316\u3051\u9bab\u306e\u4e0a\u76ae", 
+    "name": "Zamtrios Hide+"
+  }, 
+  {
+    "icon_name": "Scale-Cyan.png", 
+    "name_jp": "\u5316\u3051\u9bab\u306e\u4e0a\u9c57", 
+    "name": "Zamtrios Scale+"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u5316\u3051\u9bab\u306e\u4e0a\u30d2\u30ec", 
+    "name": "Zamtrios Fin+"
+  }, 
+  {
+    "icon_name": "Fang-Cyan.png", 
+    "name_jp": "\u5316\u3051\u9bab\u306e\u92f8\u6b6f", 
+    "name": "Zamtrios Sawtooth"
+  }, 
+  {
+    "icon_name": "Carapace-Cyan.png", 
+    "name_jp": "\u5316\u3051\u9bab\u306e\u5203\u5c3e", 
+    "name": "Zamtrios Tailblade"
+  }, 
+  {
+    "icon_name": "Hide-Cyan.png", 
+    "name_jp": "\u7370\u731b\u5316\u5316\u3051\u9bab\u76ae", 
+    "name": "Ferocious Zamtrios Hide"
+  }, 
+  {
+    "icon_name": "Shell-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u7532\u6bbb", 
+    "name": "Zinogre Shell"
+  }, 
+  {
+    "icon_name": "Shell-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u5805\u6bbb", 
+    "name": "Zinogre Carapace"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u5e2f\u96fb\u6bdb", 
+    "name": "Zinogre Shockfur"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u9ad8\u96fb\u6bdb", 
+    "name": "Zinogre Electrofur"
+  }, 
+  {
+    "icon_name": "Fang-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u89d2", 
+    "name": "Zinogre Horn"
+  }, 
+  {
+    "icon_name": "Fang-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u5c16\u89d2", 
+    "name": "Zinogre Horn+"
+  }, 
+  {
+    "icon_name": "Fang-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u722a", 
+    "name": "Zinogre Claw"
+  }, 
+  {
+    "icon_name": "Fang-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u5c16\u722a", 
+    "name": "Zinogre Claw+"
+  }, 
+  {
+    "icon_name": "Carapace-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u5c3b\u5c3e", 
+    "name": "Zinogre Tail"
+  }, 
+  {
+    "icon_name": "Carapace-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u84c4\u96fb\u6bbb", 
+    "name": "Zinogre Shocker"
+  }, 
+  {
+    "icon_name": "Carapace-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u9ad8\u96fb\u6bbb", 
+    "name": "Zinogre Shocker+"
+  }, 
+  {
+    "icon_name": "Scale-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u9006\u9c57", 
+    "name": "Zinogre Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Teal.png", 
+    "name_jp": "\u96f7\u72fc\u7adc\u306e\u78a7\u7389", 
+    "name": "Zinogre Jasper"
+  }, 
+  {
+    "icon_name": "Shell-Teal.png", 
+    "name_jp": "\u7370\u731b\u5316\u96f7\u72fc\u7adc\u6bbb", 
+    "name": "Ferocious Zinogre Shell"
+  }, 
+  {
+    "icon_name": "Shell-YellowGreen.png", 
+    "name_jp": "\u91d1\u96f7\u516c\u306e\u7532\u6bbb", 
+    "name": "Golden Thunder Prince Shell"
+  }, 
+  {
+    "icon_name": "Shell-YellowGreen.png", 
+    "name_jp": "\u91d1\u96f7\u516c\u306e\u5805\u6bbb", 
+    "name": "Golden Thunder Prince Carapace"
+  }, 
+  {
+    "icon_name": "Hide-YellowGreen.png", 
+    "name_jp": "\u91d1\u96f7\u516c\u306e\u5e2f\u96fb\u6bdb", 
+    "name": "Golden Thunder Prince Shocker"
+  }, 
+  {
+    "icon_name": "Hide-YellowGreen.png", 
+    "name_jp": "\u91d1\u96f7\u516c\u306e\u9ad8\u96fb\u6bdb", 
+    "name": "Golden Thunder Prince Shocker+"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u91d1\u96f7\u516c\u306e\u65cb\u89d2", 
+    "name": "Golden Thunder Prince Horn"
+  }, 
+  {
+    "icon_name": "Fang-Yellow.png", 
+    "name_jp": "\u91d1\u96f7\u516c\u306e\u5927\u65cb\u89d2", 
+    "name": "Golden Thunder Prince Horn+"
+  }, 
+  {
+    "icon_name": "Shell-Purple.png", 
+    "name_jp": "\u714c\u9ed2\u9f8d\u306e\u5805\u9006\u6bbb", 
+    "name": "Alatreon Scute"
+  }, 
+  {
+    "icon_name": "Scale-Purple.png", 
+    "name_jp": "\u714c\u9ed2\u9f8d\u306e\u9006\u9c57", 
+    "name": "Alatreon Plate"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u714c\u9ed2\u9f8d\u306e\u5c16\u722a", 
+    "name": "Alatreon Talon"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u714c\u9ed2\u9f8d\u306e\u7ffc\u819c", 
+    "name": "Alatreon Webbing"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u714c\u9ed2\u9f8d\u306e\u5c3b\u5c3e", 
+    "name": "Alatreon Tail"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u7815\u3051\u305f\u5929\u89d2", 
+    "name": "Brkn Skypiercer"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u5929\u3092\u3064\u3089\u306c\u304f\u89d2", 
+    "name": "Skypiercer"
+  }, 
+  {
+    "icon_name": "Mantle-Blue.png", 
+    "name_jp": "\u7460\u7483\u8272\u306e\u9f8d\u7389", 
+    "name": "Azure Dragongem"
+  }, 
+  {
+    "icon_name": "Shell-White.png", 
+    "name_jp": "\u5d50\u9f8d\u306e\u5805\u6bbb", 
+    "name": "Amatsu Carapace"
+  }, 
+  {
+    "icon_name": "Webbing-White.png", 
+    "name_jp": "\u5d50\u9f8d\u306e\u98db\u819c", 
+    "name": "Amatsu Webbing"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5d50\u9f8d\u306e\u89d2", 
+    "name": "Amatsu Horn"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5d50\u9f8d\u306e\u92ed\u722a", 
+    "name": "Amatsu Claw"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5d50\u9f8d\u306e\u5c3b\u5c3e", 
+    "name": "Amatsu Tail"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5d50\u9f8d\u306e\u80f8\u6bbb", 
+    "name": "Amatsu Pectus"
+  }, 
+  {
+    "icon_name": "Sac-White.png", 
+    "name_jp": "\u5d50\u6c17\u80de", 
+    "name": "Storm Vesicle"
+  }, 
+  {
+    "icon_name": "Mantle-Cyan.png", 
+    "name_jp": "\u5929\u7a7a\u306e\u9f8d\u7389", 
+    "name": "Heavenly Dragongem"
+  }, 
+  {
+    "icon_name": "Liquid-Red.png", 
+    "name_jp": "\u53e4\u9f8d\u306e\u8840", 
+    "name": "Elder Dragon Blood"
+  }, 
+  {
+    "icon_name": "Hide-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u76ae", 
+    "name": "Chameleos Hide"
+  }, 
+  {
+    "icon_name": "Hide-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u4e0a\u76ae", 
+    "name": "Chameleos Hide+"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u89d2", 
+    "name": "Chameleos Horn"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u5c16\u89d2", 
+    "name": "Chameleos Spike"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u722a", 
+    "name": "Chameleos Claw"
+  }, 
+  {
+    "icon_name": "Fang-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u5c16\u722a", 
+    "name": "Chameleos Claw+"
+  }, 
+  {
+    "icon_name": "Webbing-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u7ffc\u819c", 
+    "name": "Chameleos Webbing"
+  }, 
+  {
+    "icon_name": "Carapace-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u5c3b\u5c3e", 
+    "name": "Chameleos Tail"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Purple.png", 
+    "name_jp": "\u971e\u9f8d\u306e\u5b9d\u7389", 
+    "name": "Chameleos Gem"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u30ad\u30ea\u30f3\u306e\u76ae", 
+    "name": "Kirin Hide"
+  }, 
+  {
+    "icon_name": "Hide-White.png", 
+    "name_jp": "\u30ad\u30ea\u30f3\u306e\u4e0a\u76ae", 
+    "name": "Kirin Hide+"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u30ad\u30ea\u30f3\u306e\u305f\u3066\u304c\u307f", 
+    "name": "Kirin Mane"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u30ad\u30ea\u30f3\u306e\u96f7\u5c3e", 
+    "name": "Kirin Thundertail"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u30ad\u30ea\u30f3\u306e\u96f7\u89d2", 
+    "name": "Kirin Thunderhorn"
+  }, 
+  {
+    "icon_name": "Fang-Blue.png", 
+    "name_jp": "\u30ad\u30ea\u30f3\u306e\u84bc\u89d2", 
+    "name": "Kirin Azure Horn"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u7532\u6bbb", 
+    "name": "Daora Shell"
+  }, 
+  {
+    "icon_name": "Shell-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u5805\u6bbb", 
+    "name": "Daora Carapace"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u92fc\u306e\u9f8d\u9c57", 
+    "name": "Daora Scale"
+  }, 
+  {
+    "icon_name": "Scale-Grey.png", 
+    "name_jp": "\u92fc\u306e\u4e0a\u9f8d\u9c57", 
+    "name": "Daora Scale+"
+  }, 
+  {
+    "icon_name": "Webbing-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u7ffc\u819c", 
+    "name": "Daora Webbing"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u89d2", 
+    "name": "Daora Horn"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u5c16\u89d2", 
+    "name": "Daora Horn+"
+  }, 
+  {
+    "icon_name": "Carapace-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u5c3b\u5c3e", 
+    "name": "Daora Tail"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u722a", 
+    "name": "Daora Claw"
+  }, 
+  {
+    "icon_name": "Fang-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u5c16\u722a", 
+    "name": "Daora Claw+"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Grey.png", 
+    "name_jp": "\u92fc\u9f8d\u306e\u5b9d\u7389", 
+    "name": "Daora Gem"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u9ab8\u4f53\u6bbb", 
+    "name": "Corpse Shell"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u5805\u9ab8\u4f53\u6bbb", 
+    "name": "Corpse Carapace"
+  }, 
+  {
+    "icon_name": "Shell-White.png", 
+    "name_jp": "\u9ab8\u68d8\u6bbb", 
+    "name": "Corpse Spikeshell"
+  }, 
+  {
+    "icon_name": "Shell-White.png", 
+    "name_jp": "\u5c16\u9ab8\u68d8\u6bbb", 
+    "name": "Corpse Spikeshell+"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u9ab8\u982d\u9aa8", 
+    "name": "Corpse Skull"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u9ab8\u690e\u9aa8", 
+    "name": "Corpse Vertabra"
+  }, 
+  {
+    "icon_name": "Hide-Blue.png", 
+    "name_jp": "\u9ab8\u9f8d\u306e\u9752\u6591\u76ae", 
+    "name": "Osutogaroa Hide"
+  }, 
+  {
+    "icon_name": "Shell-Blue.png", 
+    "name_jp": "\u9ab8\u9f8d\u306e\u53e3\u8155\u7532", 
+    "name": "Osutogaroa Brace"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u9ab8\u9f8d\u306e\u55b0\u7815\u7259", 
+    "name": "Osutogaroa Fang"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u9ab8\u9f8d\u306e\u70cf\u8cca\u9aa8", 
+    "name": "Osutogaroa Cuttlebone"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Blue.png", 
+    "name_jp": "\u9ab8\u9f8d\u306e\u6b8b\u9b44\u7389", 
+    "name": "Osutogaroa Gem"
+  }, 
+  {
+    "icon_name": "Liquid-Blue.png", 
+    "name_jp": "\u767a\u5149\u3059\u308b\u7c98\u6db2", 
+    "name": "Luminous Mucus"
+  }, 
+  {
+    "icon_name": "Liquid-Blue.png", 
+    "name_jp": "\u767a\u5149\u3059\u308b\u4e0a\u7c98\u6db2", 
+    "name": "Luminous Mucus+"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u9c57", 
+    "name": "S.Magala Scale"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u4e0a\u9c57", 
+    "name": "S.Magala Scale+"
+  }, 
+  {
+    "icon_name": "Shell-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u7532\u6bbb", 
+    "name": "S.Magala Shell"
+  }, 
+  {
+    "icon_name": "Shell-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u5805\u6bbb", 
+    "name": "S.Magala Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u8679\u7ffc", 
+    "name": "S.Magala Prismwing"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u4e0a\u8679\u7ffc", 
+    "name": "S.Magala Prismwing+"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u6d44\u722a", 
+    "name": "S.Magala Caress"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u92ed\u6d44\u722a", 
+    "name": "S.Magala Caress+"
+  }, 
+  {
+    "icon_name": "Carapace-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u5c3b\u5c3e", 
+    "name": "S.Magala Tail"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u9006\u9c57", 
+    "name": "S.Magala Plate"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u5149\u7389", 
+    "name": "S.Magala Phosgem"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u89d2", 
+    "name": "S.Magala Horn"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u5929\u5efb\u9f8d\u306e\u5c16\u89d2", 
+    "name": "S.Magala Horn+"
+  }, 
+  {
+    "icon_name": "Scale-White.png", 
+    "name_jp": "\u7d14\u767d\u306e\u9f8d\u9c57", 
+    "name": "Pure Scale"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u708e\u738b\u9f8d\u306e\u7532\u6bbb", 
+    "name": "Teostra Shell"
+  }, 
+  {
+    "icon_name": "Shell-Red.png", 
+    "name_jp": "\u708e\u738b\u9f8d\u306e\u5805\u6bbb", 
+    "name": "Teostra Carapace"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u708e\u738b\u9f8d\u306e\u305f\u3066\u304c\u307f", 
+    "name": "Teostra Mane"
+  }, 
+  {
+    "icon_name": "Carapace-Red.png", 
+    "name_jp": "\u708e\u738b\u9f8d\u306e\u5c3b\u5c3e", 
+    "name": "Teostra Tail"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u708e\u738b\u9f8d\u306e\u89d2", 
+    "name": "Teostra Horn"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u708e\u738b\u9f8d\u306e\u5c16\u89d2", 
+    "name": "Teostra Horn+"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u708e\u306e\u9f8d\u9c57", 
+    "name": "Fire Dragon Scale"
+  }, 
+  {
+    "icon_name": "Scale-Red.png", 
+    "name_jp": "\u7344\u708e\u306e\u9f8d\u9c57", 
+    "name": "Fire Dragon Scale+"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u708e\u9f8d\u306e\u722a", 
+    "name": "Fire Dragon Claw"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u708e\u9f8d\u306e\u5c16\u722a", 
+    "name": "Teostra Claw+"
+  }, 
+  {
+    "icon_name": "Webbing-Red.png", 
+    "name_jp": "\u708e\u9f8d\u306e\u7ffc\u819c", 
+    "name": "Teostra Webbing"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u708e\u9f8d\u306e\u5875\u7c89", 
+    "name": "Teostra Powder"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Red.png", 
+    "name_jp": "\u708e\u9f8d\u306e\u5b9d\u7389", 
+    "name": "Teostra Gem"
+  }
+]

@@ -92,7 +92,7 @@ def _main():
     gather_items = db.get_items(item_types=
                 ("Bone", "Plant", "Ore", "Fish", "Bug", "Sac/Fluid", "Meat"))
 
-    carve_items = db.get_items(item_types=("Flesh",))
+    #carve_items = db.get_items(item_types=("Flesh",))
 
     stree_path = os.path.join(_pathfix.project_path, "db",
                               "mhx_skill_tree_list.json")
@@ -120,9 +120,16 @@ def _main():
                  ("icon_name", "name", "name_jp"), ("icon_name", "name"),
                  divider_fn=item_divider_fn)
 
-    mk_html_list("items-carve.html", "Items: Carve", carve_items,
+    carves_path = os.path.join(_pathfix.project_path, "db", "mhx",
+                                "monster_carves.json")
+    with open(carves_path) as f:
+        carves_list = json.load(f)
+    mk_html_list("items-carve-en.html", "Items: Carve (en)", carves_list,
                  ("icon_name", "name", "name_jp"), ("icon_name", "name"),
                  divider_fn=item_divider_fn)
+    mk_html_list("items-carve-jp.html", "Items: Carve (jp)", carves_list,
+                 ("icon_name", "name_jp", "name"), ("name_jp",),
+                 divider_fn=None)
 
     ha_path = os.path.join(_pathfix.project_path, "db", "hunter_arts.json")
     with open(ha_path) as f:
