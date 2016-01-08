@@ -299,14 +299,41 @@ function set_bow_values(weapon_data) {
 }
 
 
-function set_horn_melodies_title(weapon_data) {
+function set_horn_melodies_title(weapon_data, melody_map) {
     if (! weapon_data["horn_notes"]) {
-        weapon_data["horn_melodies_title"] = ""
+        weapon_data["horn_melodies_title"] = "";
+        return;
+    }
+
+    var notes = weapon_data["horn_notes"];
+
+    var melodies;
+    if (melody_map) {
+        melodies = melody_map[notes];
+        if (! melodies) {
+            // Try flipping second two notes if not found, mhx data is
+            // either wrong or game itself is inconsistant about note
+            // order.
+            notes = notes.substring(0, 1) + notes.substring(2, 3)
+                    + notes.substring(1, 2);
+            melodies = melody_map[notes];
+            if (melodies) {
+                weapon_data["horn_notes"] = notes;
+            }
+        }
+    } else {
+        melodies = weapon_data["horn_melodies"];
+    }
+
+    if (! melodies) {
+        var msg = "Unknown melodies for " + notes;
+        weapon_data["horn_melodies_title"] = msg;
+        console.log(msg);
         return;
     }
 
     var lines = [];
-    $.each(weapon_data["horn_melodies"], function(i, melody) {
+    $.each(melodies, function(i, melody) {
         var space = Array(6 - melody["song"].length).join("&nbsp;");
         lines.push(melody["song"] + space + melody["effect1"]);
     });
@@ -402,7 +429,7 @@ function cmp_arrays(alist, blist) {
     for (var i=0; i<alist.length; i++) {
         a = alist[i];
         b = blist[i];
-        if (a == null && b == null) {
+        if (a == null || b == null) {
             // ignore
         } else if (typeof a == "object") {
             cmp = cmp_arrays(a, b);

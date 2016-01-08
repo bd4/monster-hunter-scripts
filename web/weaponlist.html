@@ -221,7 +221,10 @@
     function update_weapon_list(state) {
         var match_count = 0;
         var cp_setups = [];
-        var comps = state["weapon_component_text"].split("|");
+        var comps = state["weapon_component_text"];
+        if (comps) {
+            comps = comps.split("|");
+        }
         console.log("updating weapon list: " + JSON.stringify(state));
         var results = [];
         $.each(WEAPON_ID_IDX, function(weapon_id, weapon_list) {

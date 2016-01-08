@@ -99,6 +99,7 @@
 
   <script type="text/javascript">
     var WEAPON_LIST = null;
+    var HORN_MELODY_MAP = null;
 
     $.ajax({
         url: "/jsonapi/mhx/weapon_list.json",
@@ -109,6 +110,16 @@
             console.log("weapon count " + WEAPON_LIST.length);
         }
     });
+
+    $.ajax({
+        url: "/jsonapi/horn_melody/_index_notes.json",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            HORN_MELODY_MAP = data;
+        }
+    });
+
 
     var template_row = new EJS({ url: "/templates/weaponrow.ejs" });
 
@@ -236,7 +247,7 @@
                 match_count += 1;
                 set_sharpness_titles(weapon_data);
                 set_bow_values(weapon_data);
-                set_horn_melodies_title(weapon_data);
+                set_horn_melodies_title(weapon_data, HORN_MELODY_MAP);
                 weapon_data["wtype_short"] =
                           WEAPON_TYPE_ABBR[weapon_data["wtype"]];
                 weapon_data["ELEMENT_ABBR"] = ELEMENT_ABBR;

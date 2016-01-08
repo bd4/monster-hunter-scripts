@@ -4,6 +4,7 @@
 import urllib
 import os
 import json
+import sys
 
 from lxml import etree
 
@@ -17,6 +18,7 @@ _WEAPON_URLS = {
     "Sword and Shield": ["/data/1902.html", "/data/2884.html"],
     "Dual Blades": ["/data/1903.html", "/data/2885.html"],
     "Hammer": ["/data/1904.html", "/data/2886.html"],
+    "Hunting Horn": ["/data/1905.html", "/data/2887.html"],
     "Lance": ["/data/1906.html", "/data/2888.html"],
     "Gunlance": ["/data/1907.html", "/data/2889.html"],
     "Switch Axe": ["/data/1908.html", "/data/2890.html"],
@@ -95,6 +97,18 @@ _BOW_COATINGS = {
 }
 
 
+_HORN_NOTES = {
+    "#f3f3f3;": "W",
+    "blue;": "B",
+    "#e0002a;": "R",
+    "#ff00ff;": "P",
+    "#eeee00;": "Y",
+    "#00cc00;": "G",
+    "#00eeee;": "C",
+    "#ef810f;": "O",
+}
+
+
 def extract_weapon_list(wtype, tree):
     weapons = []
     rows = tree.xpath('//*[@id="sorter"]/tbody/tr')
@@ -102,26 +116,36 @@ def extract_weapon_list(wtype, tree):
     parent_href = None
     for row in rows:
         cells = list(row)
-        if len(cells) < 5:
-            continue
-        name, href, final = _parse_name_td(cells[0])
-        attack = int(cells[1].text)
-        affinity, defense, elements = _parse_elements_td(cells[2])
-        if wtype not in _RANGED_TYPES:
-            sharpness = _parse_sharpness_td(cells[-2])
+        if len(cells) == 4:
+            name, href, final = _parse_name_td(cells[0])
+            attack, affinity, defense, elements, slots = \
+                                            _parse_hh_attr_td(cells[1])
+            horn_notes = _parse_horn_notes_td(cells[2])
+            sharpness = _parse_sharpness_td(cells[3])
             shots, ammo = None, None
+        elif len(cells) in (5, 6):
+            name, href, final = _parse_name_td(cells[0])
+            attack = int(cells[1].text)
+            affinity, defense, elements = _parse_elements_td(cells[2])
+            if wtype not in _RANGED_TYPES:
+                sharpness = _parse_sharpness_td(cells[-2])
+                shots, ammo = None, None
+            else:
+                sharpness = [None, None]
+                if wtype == "Bow":
+                    shots, ammo = _parse_bow_td(cells[-2])
+            slots = _parse_slots_td(cells[-1])
+            horn_notes = None
         else:
-            sharpness = [None, None]
-            if wtype == "Bow":
-                shots, ammo = _parse_bow_td(cells[-2])
-        slots = _parse_slots_td(cells[-1])
+            continue
+
         data = dict(name_jp=name, name=name, wtype=wtype, final=final,
                     sharpness=sharpness[0], sharpness_plus=sharpness[1],
                     attack=attack, num_slots=slots,
                     affinity=affinity, defense=defense,
                     element=None, element_attack=None,
                     awaken=None, element_2=None, element_2_attack=None,
-                    phial=None, shelling_type=None, horn_notes=None,
+                    phial=None, shelling_type=None, horn_notes=horn_notes,
                     arc_type=None, ammo=ammo, shot_types=shots)
         if elements:
             data["element"] = elements[0][0]
@@ -177,6 +201,42 @@ def _parse_bow_td(td_element):
         text = span.text.strip()
         coatings.append(_BOW_COATINGS[text])
     return shots, coatings
+
+
+def _parse_horn_notes_td(td_element):
+    notes = []
+    note_spans = td_element.xpath("./div/span")
+    for span in note_spans:
+        style = span.attrib["style"]
+        color = style[len("color:"):]
+        notes.append(_HORN_NOTES[color])
+    return "".join(notes)
+
+
+def _parse_hh_attr_td(td_element):
+    spans = td_element.xpath('./span')
+    affinity = 0
+    defense = 0
+    attack = 0
+    elements = []
+    slots = 0
+    for span in spans:
+        span_class = span.attrib.get("class")
+        if span_class and span_class.startswith("type_"):
+            e = _parse_element(span.text.strip())
+            elements.append(e)
+        elif span_class and span_class == "b":
+            attack = int(span.text.strip())
+        else:
+            affinity = int(span.text.strip())
+    text_lines = td_element.text.strip().split("\n")
+    for line in text_lines:
+        if line.startswith(u"防御+"):
+            defense = int(line[3:])
+
+    if td_element.tail:
+        slots = td_element.tail.count(u"◯")
+    return attack, affinity, defense, elements, slots
 
 
 def _parse_elements_td(td_element):
