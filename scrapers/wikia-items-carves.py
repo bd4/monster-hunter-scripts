@@ -12,13 +12,17 @@ import _pathfix
 
 _BASE_URL = "http://monsterhunter.wikia.com/wiki/"
 
-_PAGE = "MHX:_Monster_Material_List"
+_PAGES = {
+    "monster-carves": "MHX:_Monster_Material_List",
+    "items": "MHX:_Item_List",
+}
 
 _CIRCLE = u"\u26ab"
 
 
 def extract_names_and_icons(tree):
-    carves = []
+    items = []
+    names_jp = set()
     tables = tree.xpath(
         '//*[@id="mw-content-text"]/table[contains(@class, "linetable")]'
     )
@@ -35,12 +39,16 @@ def extract_names_and_icons(tree):
             if icon_name == "Wiki":
                 continue
             name, name_jp = [t.strip() for t in cells[1].xpath("./text()")]
-            carves.append(dict(
+            if name_jp in names_jp:
+                # duplicate
+                continue
+            names_jp.add(name_jp)
+            items.append(dict(
                 name=name,
                 name_jp=name_jp,
                 icon_name=_translate_icon_name(icon_name))
             )
-    return carves
+    return items
 
 
 _SHAPE_MAP = {
@@ -49,6 +57,13 @@ _SHAPE_MAP = {
     "Claw": "Fang",
     "Ball": "Monster-Jewel",
     "Medicine": "Liquid",
+    "BBQ": "BBQSpit",
+    "Armor Sphere": "Sphere",
+    "Blade Oil": "Liquid",
+    "Charm": "Charm-Stone",
+    "Horn": "Flute",
+    "Trap Tool": "Traptool",
+    "Question Mark": "QuestionMark",
 }
 _COLOR_MAP = {
     "Dark Purple": "Purple",
@@ -74,14 +89,18 @@ def _translate_icon_name(s):
 
 def _main():
     tmp_path = os.path.join(_pathfix.project_path, "tmp")
-    fpath = os.path.join(tmp_path, "wikia-monster-carves.html")
-    parser = etree.HTMLParser()
-    urllib.urlretrieve(_BASE_URL + _PAGE, fpath)
-    with open(fpath) as f:
-        tree = etree.parse(f, parser)
-        carves = extract_names_and_icons(tree)
-    #print json.dumps(weapon_list, indent=2)
-    print json.dumps(carves, indent=2)
+    outdir = os.path.join(_pathfix.project_path, "db", "mhx")
+    for name, page in _PAGES.iteritems():
+        fpath = os.path.join(tmp_path, "wikia-%s.html" % name)
+        opath = os.path.join(outdir, name.replace("-", "_") + ".json")
+        parser = etree.HTMLParser()
+        urllib.urlretrieve(_BASE_URL + page, fpath)
+        with open(fpath) as f:
+            tree = etree.parse(f, parser)
+            data = extract_names_and_icons(tree)
+        #print json.dumps(weapon_list, indent=2)
+        with open(opath, "w") as f:
+            json.dump(data, fp=f, indent=2)
 
 
 if __name__ == '__main__':

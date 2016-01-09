@@ -1,0 +1,1157 @@
+[
+  {
+    "icon_name": "Liquid-Green.png", 
+    "name_jp": "\u56de\u5fa9\u85ac", 
+    "name": "Potion"
+  }, 
+  {
+    "icon_name": "Liquid-Green.png", 
+    "name_jp": "\u56de\u5fa9\u85ac\u30b0\u30ec\u30fc\u30c8", 
+    "name": "Mega Potion"
+  }, 
+  {
+    "icon_name": "Liquid-Cyan.png", 
+    "name_jp": "\u6804\u990a\u5264", 
+    "name": "Nutrients"
+  }, 
+  {
+    "icon_name": "Liquid-Cyan.png", 
+    "name_jp": "\u6804\u990a\u5264\u30b0\u30ec\u30fc\u30c8", 
+    "name": "Mega Nutrients"
+  }, 
+  {
+    "icon_name": "Liquid-Blue.png", 
+    "name_jp": "\u89e3\u6bd2\u85ac", 
+    "name": "Antidote"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u6d3b\u529b\u5264", 
+    "name": "Immunizer"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u5f37\u8d70\u85ac", 
+    "name": "Dash Juice"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u5f37\u8d70\u85ac\u30b0\u30ec\u30fc\u30c8", 
+    "name": "Mega Dash Juice"
+  }, 
+  {
+    "icon_name": "Liquid-Red.png", 
+    "name_jp": "\u9b3c\u4eba\u85ac", 
+    "name": "Demondrug"
+  }, 
+  {
+    "icon_name": "Liquid-Red.png", 
+    "name_jp": "\u9b3c\u4eba\u85ac\u30b0\u30ec\u30fc\u30c8", 
+    "name": "Mega Demondrug"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u602a\u529b\u306e\u4e38\u85ac", 
+    "name": "Might Pill"
+  }, 
+  {
+    "icon_name": "Liquid-Orange.png", 
+    "name_jp": "\u786c\u5316\u85ac", 
+    "name": "Armorskin"
+  }, 
+  {
+    "icon_name": "Liquid-Orange.png", 
+    "name_jp": "\u786c\u5316\u85ac\u30b0\u30ec\u30fc\u30c8", 
+    "name": "Mega Armorskin"
+  }, 
+  {
+    "icon_name": "Sac-Orange.png", 
+    "name_jp": "\u5fcd\u8010\u306e\u4e38\u85ac", 
+    "name": "Adamant Pill"
+  }, 
+  {
+    "icon_name": "Liquid-White.png", 
+    "name_jp": "\u30af\u30fc\u30e9\u30fc\u30c9\u30ea\u30f3\u30af", 
+    "name": "Cool Drink"
+  }, 
+  {
+    "icon_name": "Liquid-Red.png", 
+    "name_jp": "\u30db\u30c3\u30c8\u30c9\u30ea\u30f3\u30af", 
+    "name": "Hot Drink"
+  }, 
+  {
+    "icon_name": "Liquid-Cyan.png", 
+    "name_jp": "\u6d88\u6563\u5264", 
+    "name": "Cleanser"
+  }, 
+  {
+    "icon_name": "Liquid-Orange.png", 
+    "name_jp": "\u5343\u91cc\u773c\u306e\u85ac", 
+    "name": "Psychoserum"
+  }, 
+  {
+    "icon_name": "Sac-White.png", 
+    "name_jp": "\u6f22\u65b9\u85ac", 
+    "name": "Herbal Medicine"
+  }, 
+  {
+    "icon_name": "Sac-Yellow.png", 
+    "name_jp": "\u79d8\u85ac", 
+    "name": "Max Potion"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u3044\u306b\u3057\u3048\u306e\u79d8\u85ac", 
+    "name": "Ancient Potion"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u5143\u6c17\u30c9\u30ea\u30f3\u30b3", 
+    "name": "Energy Drink"
+  }, 
+  {
+    "icon_name": "Sac-White.png", 
+    "name_jp": "\u751f\u547d\u306e\u7c89\u5875", 
+    "name": "Lifepowder"
+  }, 
+  {
+    "icon_name": "Liquid-Red.png", 
+    "name_jp": "\u72e9\u6280\u30c9\u30ea\u30f3\u30af", 
+    "name": "Hunter Art Drink"
+  }, 
+  {
+    "icon_name": "Smoke-Cyan.png", 
+    "name_jp": "\u6d88\u81ed\u7389", 
+    "name": "Deodorant"
+  }, 
+  {
+    "icon_name": "Book-Grey.png", 
+    "name_jp": "\u8abf\u5408\u66f8\u2460\u5165\u9580\u7de8", 
+    "name": "Book of Combos 1"
+  }, 
+  {
+    "icon_name": "Book-Grey.png", 
+    "name_jp": "\u8abf\u5408\u66f8\u2461\u521d\u7d1a\u7de8", 
+    "name": "Book of Combos 2"
+  }, 
+  {
+    "icon_name": "Book-White.png", 
+    "name_jp": "\u8abf\u5408\u66f8\u2462\u4e2d\u7d1a\u7de8", 
+    "name": "Book of Combos 3"
+  }, 
+  {
+    "icon_name": "Book-White.png", 
+    "name_jp": "\u8abf\u5408\u66f8\u2463\u4e0a\u7d1a\u7de8", 
+    "name": "Book of Combos 4"
+  }, 
+  {
+    "icon_name": "Book-Yellow.png", 
+    "name_jp": "\u8abf\u5408\u66f8\u2464\u9054\u4eba\u7de8", 
+    "name": "Book of Combos 5"
+  }, 
+  {
+    "icon_name": "Binoculars-White.png", 
+    "name_jp": "\u53cc\u773c\u93e1", 
+    "name": "Binoculars"
+  }, 
+  {
+    "icon_name": "Sac-Grey.png", 
+    "name_jp": "\u5897\u5f37\u5264", 
+    "name": "Catalyst"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u7206\u85ac", 
+    "name": "Gunpowder"
+  }, 
+  {
+    "icon_name": "Sac-White.png", 
+    "name_jp": "\u751f\u547d\u306e\u7c89", 
+    "name": "Lifecrystals"
+  }, 
+  {
+    "icon_name": "Liquid-Red.png", 
+    "name_jp": "\u6355\u7372\u7528\u9ebb\u9154\u85ac", 
+    "name": "Tranquilizer"
+  }, 
+  {
+    "icon_name": "Egg-White.png", 
+    "name_jp": "\u30e6\u30af\u30e2\u6e29\u6cc9\u305f\u307e\u3054", 
+    "name": "Yukumo Egg"
+  }, 
+  {
+    "icon_name": "Sac-Orange.png", 
+    "name_jp": "\u30bf\u30f3\u30b8\u30a2\u30c1\u30c3\u30d7\u30b9", 
+    "name": "Tanzia Chips"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u529b\u306e\u8b77\u7b26", 
+    "name": "Powercharm"
+  }, 
+  {
+    "icon_name": "Fang-Red.png", 
+    "name_jp": "\u529b\u306e\u722a", 
+    "name": "Powertalon"
+  }, 
+  {
+    "icon_name": "Sac-Orange.png", 
+    "name_jp": "\u5b88\u308a\u306e\u8b77\u7b26", 
+    "name": "Armorcharm"
+  }, 
+  {
+    "icon_name": "Fang-Orange.png", 
+    "name_jp": "\u5b88\u308a\u306e\u722a", 
+    "name": "Armortalon"
+  }, 
+  {
+    "icon_name": "BBQSpit-Red.png", 
+    "name_jp": "\u8089\u713c\u304d\u30bb\u30c3\u30c8", 
+    "name": "BBQ Spit"
+  }, 
+  {
+    "icon_name": "Meat-Red.png", 
+    "name_jp": "\u751f\u8089", 
+    "name": "Raw Meat"
+  }, 
+  {
+    "icon_name": "Meat-Purple.png", 
+    "name_jp": "\u6bd2\u751f\u8089", 
+    "name": "Poisoned Meat"
+  }, 
+  {
+    "icon_name": "Meat-Yellow.png", 
+    "name_jp": "\u30b7\u30d3\u30ec\u751f\u8089", 
+    "name": "Tinged Meat"
+  }, 
+  {
+    "icon_name": "Meat-Cyan.png", 
+    "name_jp": "\u7720\u308a\u751f\u8089", 
+    "name": "Drugged Meat"
+  }, 
+  {
+    "icon_name": "Meat-Orange.png", 
+    "name_jp": "\u751f\u713c\u3051\u8089", 
+    "name": "Rare Steak"
+  }, 
+  {
+    "icon_name": "Meat-Orange.png", 
+    "name_jp": "\u3053\u3093\u304c\u308a\u8089", 
+    "name": "Well-done Steak"
+  }, 
+  {
+    "icon_name": "Meat-Grey.png", 
+    "name_jp": "\u30b3\u30b2\u8089", 
+    "name": "Burnt Meat"
+  }, 
+  {
+    "icon_name": "Meat-Cyan.png", 
+    "name_jp": "\u30af\u30fc\u30e9\u30fc\u30df\u30fc\u30c8", 
+    "name": "Chilled Meat"
+  }, 
+  {
+    "icon_name": "Meat-Red.png", 
+    "name_jp": "\u30db\u30c3\u30c8\u30df\u30fc\u30c8", 
+    "name": "Hot Meat"
+  }, 
+  {
+    "icon_name": "Meat-Pink.png", 
+    "name_jp": "\u30e2\u30b9\u30b8\u30e3\u30fc\u30ad\u30fc", 
+    "name": "Mosswine Jerky"
+  }, 
+  {
+    "icon_name": "Meat-Orange.png", 
+    "name_jp": "\u30ad\u30f3\u30b0\u30df\u30fc\u30c8", 
+    "name": "Kingmeat"
+  }, 
+  {
+    "icon_name": "Whetstone-Yellow.png", 
+    "name_jp": "\u7825\u77f3", 
+    "name": "Whetstone"
+  }, 
+  {
+    "icon_name": "Pickaxe-Grey.png", 
+    "name_jp": "\u30dc\u30ed\u30d4\u30c3\u30b1\u30eb", 
+    "name": "Old Pickaxe"
+  }, 
+  {
+    "icon_name": "Pickaxe-White.png", 
+    "name_jp": "\u30d4\u30c3\u30b1\u30eb", 
+    "name": "Iron Pickaxe"
+  }, 
+  {
+    "icon_name": "Pickaxe-Yellow.png", 
+    "name_jp": "\u30d4\u30c3\u30b1\u30eb\u30b0\u30ec\u30fc\u30c8", 
+    "name": "Mega Pickaxe"
+  }, 
+  {
+    "icon_name": "Bugnet-Grey.png", 
+    "name_jp": "\u30dc\u30ed\u866b\u3042\u307f", 
+    "name": "Old Bug Net"
+  }, 
+  {
+    "icon_name": "Bugnet-White.png", 
+    "name_jp": "\u866b\u3042\u307f", 
+    "name": "Bug Net"
+  }, 
+  {
+    "icon_name": "Bugnet-Yellow.png", 
+    "name_jp": "\u866b\u3042\u307f\u30b0\u30ec\u30fc\u30c8", 
+    "name": "Mega Bug Net"
+  }, 
+  {
+    "icon_name": "Boomerang-Yellow.png", 
+    "name_jp": "\u30d6\u30fc\u30e1\u30e9\u30f3", 
+    "name": "Boomerang"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-White.png", 
+    "name_jp": "\u7d20\u6750\u7389", 
+    "name": "Bomb Casing"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Pink.png", 
+    "name_jp": "\u30da\u30a4\u30f3\u30c8\u30dc\u30fc\u30eb", 
+    "name": "Paintball"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Yellow.png", 
+    "name_jp": "\u9583\u5149\u7389", 
+    "name": "Flash Bomb"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Grey.png", 
+    "name_jp": "\u97f3\u7206\u5f3e", 
+    "name": "Sonic Bomb"
+  }, 
+  {
+    "icon_name": "Monster-Jewel-Red.png", 
+    "name_jp": "\u6355\u7372\u7528\u9ebb\u9154\u7389", 
+    "name": "Tranq Bomb"
+  }, 
+  {
+    "icon_name": "Smoke-White.png", 
+    "name_jp": "\u3051\u3080\u308a\u7389", 
+    "name": "Smoke Bomb"
+  }, 
+  {
+    "icon_name": "Smoke-Purple.png", 
+    "name_jp": "\u6bd2\u3051\u3080\u308a\u7389", 
+    "name": "Poison Smoke Bomb"
+  }, 
+  {
+    "icon_name": "Smoke-Green.png", 
+    "name_jp": "\u30e2\u30c9\u30ea\u7389", 
+    "name": "Farcaster"
+  }, 
+  {
+    "icon_name": "Dung-Yellow.png", 
+    "name_jp": "\u3053\u3084\u3057\u7389", 
+    "name": "Dung Bomb"
+  }, 
+  {
+    "icon_name": "Dung-Yellow.png", 
+    "name_jp": "\u30e2\u30f3\u30b9\u30bf\u30fc\u306e\u30d5\u30f3", 
+    "name": "Dung"
+  }, 
+  {
+    "icon_name": "Traptool-Green.png", 
+    "name_jp": "\u30c8\u30e9\u30c3\u30d7\u30c4\u30fc\u30eb", 
+    "name": "Trap Tool"
+  }, 
+  {
+    "icon_name": "Spiderweb-White.png", 
+    "name_jp": "\u30af\u30e2\u306e\u5de3", 
+    "name": "Spider Web"
+  }, 
+  {
+    "icon_name": "Spiderweb-White.png", 
+    "name_jp": "\u30cd\u30c3\u30c8", 
+    "name": "Net"
+  }, 
+  {
+    "icon_name": "Trap-Green.png", 
+    "name_jp": "\u843d\u3068\u3057\u7a74", 
+    "name": "Pitfall Trap"
+  }, 
+  {
+    "icon_name": "Trap-Purple.png", 
+    "name_jp": "\u30b7\u30d3\u30ec\u7f60", 
+    "name": "Shock Trap"
+  }, 
+  {
+    "icon_name": "Barrel-Grey.png", 
+    "name_jp": "\u30bf\u30eb\u306e\u84cb", 
+    "name": "Barrel Lid"
+  }, 
+  {
+    "icon_name": "Barrel-Yellow.png", 
+    "name_jp": "\u5c0f\u30bf\u30eb", 
+    "name": "Small Barrel"
+  }, 
+  {
+    "icon_name": "Barrel-Red.png", 
+    "name_jp": "\u5927\u30bf\u30eb", 
+    "name": "Large Barrel"
+  }, 
+  {
+    "icon_name": "Bomb-Yellow.png", 
+    "name_jp": "\u5c0f\u30bf\u30eb\u7206\u5f3e", 
+    "name": "Barrel Bomb S"
+  }, 
+  {
+    "icon_name": "Bomb-Red.png", 
+    "name_jp": "\u5927\u30bf\u30eb\u7206\u5f3e", 
+    "name": "Barrel Bomb L"
+  }, 
+  {
+    "icon_name": "Bomb-Red.png", 
+    "name_jp": "\u5927\u30bf\u30eb\u7206\u5f3e\uff27", 
+    "name": "Barrel Bomb L+"
+  }, 
+  {
+    "icon_name": "Bomb-Blue.png", 
+    "name_jp": "\u6253\u4e0a\u3052\u30bf\u30eb\u7206\u5f3e", 
+    "name": "Bounce Bomb"
+  }, 
+  {
+    "icon_name": "Bomb-Blue.png", 
+    "name_jp": "\u6253\u4e0a\u3052\u30bf\u30eb\u7206\u5f3e\uff27", 
+    "name": "Bounce Bomb+"
+  }, 
+  {
+    "icon_name": "Liquid-Red.png", 
+    "name_jp": "\u4f1a\u5fc3\u306e\u5203\u85ac", 
+    "name": "Affinity Blade Oil"
+  }, 
+  {
+    "icon_name": "Liquid-Green.png", 
+    "name_jp": "\u91cd\u6483\u306e\u5203\u85ac", 
+    "name": "Destroyer Blade Oil"
+  }, 
+  {
+    "icon_name": "Liquid-Cyan.png", 
+    "name_jp": "\u6e1b\u6c17\u306e\u5203\u85ac", 
+    "name": "Exhaust Blade Oil"
+  }, 
+  {
+    "icon_name": "Liquid-White.png", 
+    "name_jp": "\u5fc3\u773c\u306e\u5203\u85ac", 
+    "name": "Mind's Eye Blade Oil"
+  }, 
+  {
+    "icon_name": "Bait-Grey.png", 
+    "name_jp": "\u91e3\u308a\u30df\u30df\u30ba", 
+    "name": "Worm"
+  }, 
+  {
+    "icon_name": "Bait-Pink.png", 
+    "name_jp": "\u91e3\u308a\u30d5\u30a3\u30fc\u30d0\u30a8", 
+    "name": "Mega Fishing Fly"
+  }, 
+  {
+    "icon_name": "Bait-Blue.png", 
+    "name_jp": "\u91e3\u308a\u30ab\u30a8\u30eb", 
+    "name": "Frog"
+  }, 
+  {
+    "icon_name": "Bait-Orange.png", 
+    "name_jp": "\u30b5\u30b7\u30df\u30c0\u30f3\u30b4", 
+    "name": "Sushifish Bait"
+  }, 
+  {
+    "icon_name": "Bait-Red.png", 
+    "name_jp": "\u30d0\u30af\u30c0\u30f3\u30b4", 
+    "name": "Burst Bait"
+  }, 
+  {
+    "icon_name": "Bait-Yellow.png", 
+    "name_jp": "\u9ec4\u91d1\u30c0\u30f3\u30b4", 
+    "name": "Goldenfish Bait"
+  }, 
+  {
+    "icon_name": "Flute-Yellow.png", 
+    "name_jp": "\u89d2\u7b1b", 
+    "name": "Field Horn"
+  }, 
+  {
+    "icon_name": "Flute-Green.png", 
+    "name_jp": "\u56de\u5fa9\u7b1b", 
+    "name": "Health Horn"
+  }, 
+  {
+    "icon_name": "Flute-Blue.png", 
+    "name_jp": "\u89e3\u6bd2\u7b1b", 
+    "name": "Antidote Horn"
+  }, 
+  {
+    "icon_name": "Flute-Red.png", 
+    "name_jp": "\u9b3c\u4eba\u7b1b", 
+    "name": "Demon Horn"
+  }, 
+  {
+    "icon_name": "Flute-Orange.png", 
+    "name_jp": "\u786c\u5316\u7b1b", 
+    "name": "Armor Horn"
+  }, 
+  {
+    "icon_name": "Pickaxe-Purple.png", 
+    "name_jp": "\u30d5\u30a8\u30fc\u30eb\u30d4\u30c3\u30b1\u30eb", 
+    "name": "Slickaxe"
+  }, 
+  {
+    "icon_name": "Husk-Grey.png", 
+    "name_jp": "\u30ab\u30e9\u306e\u5b9f", 
+    "name": "Huskberry"
+  }, 
+  {
+    "icon_name": "Webbing-Orange.png", 
+    "name_jp": "\u30cf\u30c1\u30df\u30c4", 
+    "name": "Honey"
+  }, 
+  {
+    "icon_name": "Herb-Green.png", 
+    "name_jp": "\u85ac\u8349", 
+    "name": "Herb"
+  }, 
+  {
+    "icon_name": "Herb-Blue.png", 
+    "name_jp": "\u3052\u3069\u304f\u8349", 
+    "name": "Antidote Herb"
+  }, 
+  {
+    "icon_name": "Herb-Red.png", 
+    "name_jp": "\u706b\u85ac\u8349", 
+    "name": "Fire Herb"
+  }, 
+  {
+    "icon_name": "Herb-Green.png", 
+    "name_jp": "\u30c4\u30bf\u306e\u8449", 
+    "name": "Ivy"
+  }, 
+  {
+    "icon_name": "Herb-Cyan.png", 
+    "name_jp": "\u30cd\u30e0\u30ea\u8349", 
+    "name": "Sleep Herb"
+  }, 
+  {
+    "icon_name": "Herb-White.png", 
+    "name_jp": "\u30cd\u30f3\u30c1\u30e3\u30af\u8349", 
+    "name": "Sap Plant"
+  }, 
+  {
+    "icon_name": "Herb-Yellow.png", 
+    "name_jp": "\u30de\u30bf\u30bf\u30d3", 
+    "name": "Felvine"
+  }, 
+  {
+    "icon_name": "Herb-Pink.png", 
+    "name_jp": "\u843d\u967d\u8349\u306e\u6839", 
+    "name": "Gloamgrass Root"
+  }, 
+  {
+    "icon_name": "Herb-Red.png", 
+    "name_jp": "\u30c8\u30a6\u30ac\u30e9\u30b7", 
+    "name": "Hot Pepper"
+  }, 
+  {
+    "icon_name": "Herb-Blue.png", 
+    "name_jp": "\u971c\u3075\u308a\u8349", 
+    "name": "Snow Herb"
+  }, 
+  {
+    "icon_name": "Mushroom-Orange.png", 
+    "name_jp": "\u7279\u7523\u30ad\u30ce\u30b3\u30ad\u30e0\u30c1", 
+    "name": "Mushroom Kimchi"
+  }, 
+  {
+    "icon_name": "Seed-Pink.png", 
+    "name_jp": "\u6c37\u7d50\u6676\u30a4\u30c1\u30b4", 
+    "name": "Frozen Berry"
+  }, 
+  {
+    "icon_name": "Herb-Green.png", 
+    "name_jp": "\u30ad\u30f3\u30b0\u30b5\u30dc\u30c6\u30f3", 
+    "name": "King Cactus"
+  }, 
+  {
+    "icon_name": "Herb-Red.png", 
+    "name_jp": "\u30c9\u30b9\u30d3\u30b9\u30ab\u30b9", 
+    "name": "Dosbiscus"
+  }, 
+  {
+    "icon_name": "Herb-Yellow.png", 
+    "name_jp": "\u30aa\u30aa\u30e2\u30ed\u30b3\u30b7", 
+    "name": "Heftcorn"
+  }, 
+  {
+    "icon_name": "Herb-Red.png", 
+    "name_jp": "\u661f\u898b\u306e\u82b1", 
+    "name": "Shooting Star Flower"
+  }, 
+  {
+    "icon_name": "Herb-Pink.png", 
+    "name_jp": "\u4e03\u8272\u305f\u3093\u307d\u307d", 
+    "name": "Rainbow Dandelion"
+  }, 
+  {
+    "icon_name": "Mushroom-Blue.png", 
+    "name_jp": "\u30a2\u30aa\u30ad\u30ce\u30b3", 
+    "name": "Blue Mushroom"
+  }, 
+  {
+    "icon_name": "Mushroom-Red.png", 
+    "name_jp": "\u30cb\u30c8\u30ed\u30c0\u30b1", 
+    "name": "Nitroshroom"
+  }, 
+  {
+    "icon_name": "Mushroom-Yellow.png", 
+    "name_jp": "\u30de\u30d2\u30c0\u30b1", 
+    "name": "Parashroom"
+  }, 
+  {
+    "icon_name": "Mushroom-Purple.png", 
+    "name_jp": "\u6bd2\u30c6\u30f3\u30b0\u30c0\u30b1", 
+    "name": "Toadstool"
+  }, 
+  {
+    "icon_name": "Mushroom-Cyan.png", 
+    "name_jp": "\u30af\u30bf\u30d3\u30ec\u30bf\u30b1", 
+    "name": "Mopeshroom"
+  }, 
+  {
+    "icon_name": "Mushroom-Purple.png", 
+    "name_jp": "\u30c9\u30ad\u30c9\u30ad\u30ce\u30b3", 
+    "name": "Exciteshroom"
+  }, 
+  {
+    "icon_name": "Mushroom-Red.png", 
+    "name_jp": "\u30de\u30f3\u30c9\u30e9\u30b4\u30e9", 
+    "name": "Dragon Toadstool"
+  }, 
+  {
+    "icon_name": "Mushroom-Purple.png", 
+    "name_jp": "\u6df7\u6c8c\u8338", 
+    "name": "Chaos Mushroom"
+  }, 
+  {
+    "icon_name": "Mushroom-Yellow.png", 
+    "name_jp": "\u30aa\u30aa\u30de\u30d2\u30b7\u30e1\u30b8", 
+    "name": "Bindshroom"
+  }, 
+  {
+    "icon_name": "Mushroom-Red.png", 
+    "name_jp": "\u30b3\u30b7\u30ab\u30b1\u30c0\u30b1", 
+    "name": "Seatshroom"
+  }, 
+  {
+    "icon_name": "Seed-Pink.png", 
+    "name_jp": "\u30da\u30a4\u30f3\u30c8\u306e\u5b9f", 
+    "name": "Paintberry"
+  }, 
+  {
+    "icon_name": "Seed-Red.png", 
+    "name_jp": "\u602a\u529b\u306e\u7a2e", 
+    "name": "Might Seed"
+  }, 
+  {
+    "icon_name": "Seed-Orange.png", 
+    "name_jp": "\u5fcd\u8010\u306e\u7a2e", 
+    "name": "Adamant Seed"
+  }, 
+  {
+    "icon_name": "Seed-Blue.png", 
+    "name_jp": "\u30a6\u30c1\u30b1\u30b7\u306e\u5b9f", 
+    "name": "Nulberry"
+  }, 
+  {
+    "icon_name": "Seed-Red.png", 
+    "name_jp": "\u9f8d\u6bba\u3057\u306e\u5b9f", 
+    "name": "Dragonfell Berry"
+  }, 
+  {
+    "icon_name": "Seed-Grey.png", 
+    "name_jp": "\u306f\u3058\u3051\u30af\u30eb\u30df", 
+    "name": "Scatternut"
+  }, 
+  {
+    "icon_name": "Seed-Grey.png", 
+    "name_jp": "\u30cf\u30ea\u306e\u5b9f", 
+    "name": "Needleberry"
+  }, 
+  {
+    "icon_name": "Seed-Cyan.png", 
+    "name_jp": "\u30c4\u30e9\u30cc\u30ad\u306e\u5b9f", 
+    "name": "Latchberry"
+  }, 
+  {
+    "icon_name": "Seed-Grey.png", 
+    "name_jp": "\u30ab\u30af\u30b5\u30f3\u306e\u5b9f", 
+    "name": "Bomberry"
+  }, 
+  {
+    "icon_name": "Seed-Orange.png", 
+    "name_jp": "\u30da\u30d4\u30dd\u30d1\u30f3\u30d7\u30ad\u30f3", 
+    "name": "Bumblepumpkin"
+  }, 
+  {
+    "icon_name": "Seed-Orange.png", 
+    "name_jp": "\u30aa\u30aa\u7b52\u30c9\u30f3\u30b0\u30ea", 
+    "name": "Giant Round Acorn"
+  }, 
+  {
+    "icon_name": "Seed-Orange.png", 
+    "name_jp": "\u30c8\u30f3\u30ac\u30ea\u30c9\u30f3\u30b0\u30ea", 
+    "name": "Tongari Acorn"
+  }, 
+  {
+    "icon_name": "Wood-Yellow.png", 
+    "name_jp": "\u30e6\u30af\u30e2\u306e\u6728", 
+    "name": "Yukumo Wood"
+  }, 
+  {
+    "icon_name": "Ore-Grey.png", 
+    "name_jp": "\u77f3\u3053\u308d", 
+    "name": "Stone"
+  }, 
+  {
+    "icon_name": "Ore-Grey.png", 
+    "name_jp": "\u9244\u9271\u77f3", 
+    "name": "Iron Ore"
+  }, 
+  {
+    "icon_name": "Ore-White.png", 
+    "name_jp": "\u5927\u5730\u306e\u7d50\u6676", 
+    "name": "Earth Crystal"
+  }, 
+  {
+    "icon_name": "Ore-Blue.png", 
+    "name_jp": "\u30de\u30ab\u30e9\u30a4\u30c8\u9271\u77f3", 
+    "name": "Machalite Ore"
+  }, 
+  {
+    "icon_name": "Ore-Grey.png", 
+    "name_jp": "\u5186\u76e4\u77f3", 
+    "name": "Disk Stone"
+  }, 
+  {
+    "icon_name": "Ore-Cyan.png", 
+    "name_jp": "\u6c37\u7d50\u6676", 
+    "name": "Ice Crystal"
+  }, 
+  {
+    "icon_name": "Ore-Cyan.png", 
+    "name_jp": "\u30d9\u30a2\u30e9\u30a4\u30c8\u77f3", 
+    "name": "Bealite Ore"
+  }, 
+  {
+    "icon_name": "Ore-Grey.png", 
+    "name_jp": "\u30e9\u30a4\u30c8\u30af\u30ea\u30b9\u30bf\u30eb", 
+    "name": "Lightcrystal"
+  }, 
+  {
+    "icon_name": "Ore-Green.png", 
+    "name_jp": "\u30c9\u30e9\u30b0\u30e9\u30a4\u30c8\u9271\u77f3", 
+    "name": "Dragonite Ore"
+  }, 
+  {
+    "icon_name": "Ore-Red.png", 
+    "name_jp": "\u7d05\u84ee\u77f3", 
+    "name": "Firestone"
+  }, 
+  {
+    "icon_name": "Ore-Orange.png", 
+    "name_jp": "\u6eb6\u5ca9\u584a", 
+    "name": "Lava Lump"
+  }, 
+  {
+    "icon_name": "Ore-Purple.png", 
+    "name_jp": "\u30ab\u30d6\u30ec\u30e9\u30a4\u30c8\u9271\u77f3", 
+    "name": "Carbalite Ore"
+  }, 
+  {
+    "icon_name": "Ore-White.png", 
+    "name_jp": "\u30ce\u30f4\u30a1\u30af\u30ea\u30b9\u30bf\u30eb", 
+    "name": "Novacrystal"
+  }, 
+  {
+    "icon_name": "Ore-Pink.png", 
+    "name_jp": "\u30e6\u30cb\u30aa\u30f3\u9271\u77f3", 
+    "name": "Fucium Ore"
+  }, 
+  {
+    "icon_name": "Ore-Orange.png", 
+    "name_jp": "\u7344\u708e\u77f3", 
+    "name": "Firecell Stone"
+  }, 
+  {
+    "icon_name": "Ore-Pink.png", 
+    "name_jp": "\u8679\u8272\u9271\u77f3", 
+    "name": "Rainbow Ore"
+  }, 
+  {
+    "icon_name": "Jewel-Cyan.png", 
+    "name_jp": "\u6c34\u5149\u539f\u73e0", 
+    "name": "Aquaglow Jewel"
+  }, 
+  {
+    "icon_name": "Jewel-White.png", 
+    "name_jp": "\u967d\u7fd4\u539f\u73e0", 
+    "name": "Sunspire Jewel"
+  }, 
+  {
+    "icon_name": "Jewel-Purple.png", 
+    "name_jp": "\u4fee\u7f85\u539f\u73e0", 
+    "name": "Bloodrun Jewel"
+  }, 
+  {
+    "icon_name": "Jewel-Yellow.png", 
+    "name_jp": "\u7460\u7483\u539f\u73e0", 
+    "name": "Lazurite Jewel"
+  }, 
+  {
+    "icon_name": "Ore-White.png", 
+    "name_jp": "\u93a7\u77f3", 
+    "name": "Armor Stone"
+  }, 
+  {
+    "icon_name": "Sphere-Blue.png", 
+    "name_jp": "\u93a7\u7389", 
+    "name": "Armor Sphere"
+  }, 
+  {
+    "icon_name": "Sphere-Green.png", 
+    "name_jp": "\u4e0a\u93a7\u7389", 
+    "name": "Armor Sphere+"
+  }, 
+  {
+    "icon_name": "Sphere-Orange.png", 
+    "name_jp": "\u5c16\u93a7\u7389", 
+    "name": "Adv Armor Sphere"
+  }, 
+  {
+    "icon_name": "Sphere-Purple.png", 
+    "name_jp": "\u5805\u93a7\u7389", 
+    "name": "Hard Armor Sphere"
+  }, 
+  {
+    "icon_name": "Sphere-Red.png", 
+    "name_jp": "\u91cd\u93a7\u7389", 
+    "name": "Heavy Armor Sphere"
+  }, 
+  {
+    "icon_name": "Charm-Stone-White.png", 
+    "name_jp": "\u306a\u305e\u306e\u304a\u5b88\u308a", 
+    "name": "Mystery Charm"
+  }, 
+  {
+    "icon_name": "Charm-Stone-Yellow.png", 
+    "name_jp": "\u5149\u308b\u304a\u5b88\u308a", 
+    "name": "Shining Charm"
+  }, 
+  {
+    "icon_name": "Charm-Stone-Red.png", 
+    "name_jp": "\u53e4\u3073\u305f\u304a\u5b88\u308a", 
+    "name": "Timeworn Charm"
+  }, 
+  {
+    "icon_name": "QuestionMark-Grey.png", 
+    "name_jp": "\u3055\u3073\u305f\u584a", 
+    "name": "Rustshard"
+  }, 
+  {
+    "icon_name": "QuestionMark-Grey.png", 
+    "name_jp": "\u592a\u53e4\u306e\u584a", 
+    "name": "Ancient Shard"
+  }, 
+  {
+    "icon_name": "Bug-Grey.png", 
+    "name_jp": "\u866b\u306e\u6b7b\u9ab8", 
+    "name": "Insect Husk"
+  }, 
+  {
+    "icon_name": "Bug-White.png", 
+    "name_jp": "\u4e0d\u6b7b\u866b", 
+    "name": "Godbug"
+  }, 
+  {
+    "icon_name": "Bug-Blue.png", 
+    "name_jp": "\u306b\u304c\u866b", 
+    "name": "Bitterbug"
+  }, 
+  {
+    "icon_name": "Bug-Yellow.png", 
+    "name_jp": "\u5149\u87f2", 
+    "name": "Flashbug"
+  }, 
+  {
+    "icon_name": "Bug-Yellow.png", 
+    "name_jp": "\u96f7\u5149\u866b", 
+    "name": "Thunderbug"
+  }, 
+  {
+    "icon_name": "Bug-Red.png", 
+    "name_jp": "\u30dc\u30f3\u30d0\u30c3\u30bf", 
+    "name": "Stinkhopper"
+  }, 
+  {
+    "icon_name": "Bug-Orange.png", 
+    "name_jp": "\u30c4\u30c1\u30cf\u30c1\u30ce\u30b3", 
+    "name": "Snakebee Larva"
+  }, 
+  {
+    "icon_name": "Bug-Grey.png", 
+    "name_jp": "\u30bb\u30c3\u30c1\u30e3\u30af\u30ed\u30a2\u30ea", 
+    "name": "Carpenterbug"
+  }, 
+  {
+    "icon_name": "Bug-Green.png", 
+    "name_jp": "\u30ad\u30e9\u30d3\u30fc\u30c8\u30eb", 
+    "name": "Killer Beetle"
+  }, 
+  {
+    "icon_name": "Bug-Red.png", 
+    "name_jp": "\u30c9\u30b9\u30d8\u30e9\u30af\u30ec\u30b9", 
+    "name": "Hercudrome"
+  }, 
+  {
+    "icon_name": "Bug-Blue.png", 
+    "name_jp": "\u8d85\u96fb\u96f7\u5149\u866b", 
+    "name": "Fulgurbug"
+  }, 
+  {
+    "icon_name": "Bug-Purple.png", 
+    "name_jp": "\u738b\u65cf\u30ab\u30ca\u30d6\u30f3", 
+    "name": "King Scarab"
+  }, 
+  {
+    "icon_name": "Bug-Yellow.png", 
+    "name_jp": "\u30de\u30ec\u30b3\u30ac\u30cd", 
+    "name": "Rare Scarab"
+  }, 
+  {
+    "icon_name": "Bug-Pink.png", 
+    "name_jp": "\u30cf\u30ca\u30b9\u30ba\u30e0\u30b7", 
+    "name": "Bell Cricket"
+  }, 
+  {
+    "icon_name": "Bug-Purple.png", 
+    "name_jp": "\u30aa\u30aa\u30c4\u30ce\u30a2\u30b2\u30cf", 
+    "name": "Great Hornfly"
+  }, 
+  {
+    "icon_name": "Bug-Grey.png", 
+    "name_jp": "\u30aa\u30aa\u30af\u30ef\u30a2\u30b2\u30cf", 
+    "name": "Butterfly Beetle"
+  }, 
+  {
+    "icon_name": "Bug-Red.png", 
+    "name_jp": "\u30aa\u30aa\u30ca\u30ca\u30db\u30b7", 
+    "name": "Great Ladybug"
+  }, 
+  {
+    "icon_name": "Bug-Yellow.png", 
+    "name_jp": "\u6bd2\u30af\u30e2\u30ea", 
+    "name": "Poison Cloud"
+  }, 
+  {
+    "icon_name": "Bug-Yellow.png", 
+    "name_jp": "\u30aa\u30aa\u6bd2\u30af\u30e2\u30ea", 
+    "name": "Great Poison Cloud"
+  }, 
+  {
+    "icon_name": "Bug-Grey.png", 
+    "name_jp": "\u8755\u9f8d\u87f2", 
+    "name": "Dracophage Bug"
+  }, 
+  {
+    "icon_name": "Husk-White.png", 
+    "name_jp": "\u30ab\u30e9\u9aa8", 
+    "name": "Bone Husk"
+  }, 
+  {
+    "icon_name": "Bone-Yellow.png", 
+    "name_jp": "\u7adc\u9aa8\u3010\u5c0f\u3011", 
+    "name": "Monster Bone S"
+  }, 
+  {
+    "icon_name": "Bone-Yellow.png", 
+    "name_jp": "\u7adc\u9aa8\u3010\u4e2d\u3011", 
+    "name": "Monster Bone M"
+  }, 
+  {
+    "icon_name": "Bone-Yellow.png", 
+    "name_jp": "\u7adc\u9aa8\u3010\u5927\u3011", 
+    "name": "Monster Bone L"
+  }, 
+  {
+    "icon_name": "Bone-Yellow.png", 
+    "name_jp": "\u306a\u305e\u306e\u9aa8", 
+    "name": "Mystery Bone"
+  }, 
+  {
+    "icon_name": "Bone-Yellow.png", 
+    "name_jp": "\u306a\u305e\u306e\u982d\u9aa8", 
+    "name": "Unknown Skull"
+  }, 
+  {
+    "icon_name": "Bone-Orange.png", 
+    "name_jp": "\u4e0a\u7adc\u9aa8", 
+    "name": "Monster Bone+"
+  }, 
+  {
+    "icon_name": "Bone-Pink.png", 
+    "name_jp": "\u5c16\u7adc\u9aa8", 
+    "name": "Monster Keenbone"
+  }, 
+  {
+    "icon_name": "Bone-Red.png", 
+    "name_jp": "\u5805\u7adc\u9aa8", 
+    "name": "Monster Hardbone"
+  }, 
+  {
+    "icon_name": "Bone-Purple.png", 
+    "name_jp": "\u53e4\u9f8d\u9aa8", 
+    "name": "Elder Dragon Bone"
+  }, 
+  {
+    "icon_name": "Bone-Blue.png", 
+    "name_jp": "\u4e0a\u8cea\u306a\u9ce5\u7adc\u9aa8", 
+    "name": "Avian Finebone"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u7363\u9aa8", 
+    "name": "Brute Bone"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u5927\u304d\u306a\u9aa8", 
+    "name": "Jumbo Bone"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u5805\u7262\u306a\u9aa8", 
+    "name": "Stoutbone"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u3044\u306b\u3057\u3048\u306e\u9f8d\u9aa8", 
+    "name": "Dragonbone Relic"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u7570\u5f62\u306e\u9aa8", 
+    "name": "Variant Bone"
+  }, 
+  {
+    "icon_name": "Bone-White.png", 
+    "name_jp": "\u7570\u5f62\u306e\u5805\u9aa8", 
+    "name": "Variant Hardbone"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u7adc\u306e\u7259", 
+    "name": "Wyvern Fang"
+  }, 
+  {
+    "icon_name": "Fang-White.png", 
+    "name_jp": "\u7adc\u306e\u722a", 
+    "name": "Wyvern Claw"
+  }, 
+  {
+    "icon_name": "Sac-Grey.png", 
+    "name_jp": "\u9cf4\u304d\u888b", 
+    "name": "Screamer Sac"
+  }, 
+  {
+    "icon_name": "Sac-Purple.png", 
+    "name_jp": "\u6bd2\u888b", 
+    "name": "Poison Sac"
+  }, 
+  {
+    "icon_name": "Sac-Purple.png", 
+    "name_jp": "\u731b\u6bd2\u888b", 
+    "name": "Toxin Sac"
+  }, 
+  {
+    "icon_name": "Sac-Yellow.png", 
+    "name_jp": "\u9ebb\u75fa\u888b", 
+    "name": "Paralysis Sac"
+  }, 
+  {
+    "icon_name": "Sac-Yellow.png", 
+    "name_jp": "\u5f37\u529b\u9ebb\u75fa\u888b", 
+    "name": "Omniplegia Sac"
+  }, 
+  {
+    "icon_name": "Sac-Blue.png", 
+    "name_jp": "\u7761\u7720\u888b", 
+    "name": "Sleep Sac"
+  }, 
+  {
+    "icon_name": "Sac-Blue.png", 
+    "name_jp": "\u660f\u7761\u888b", 
+    "name": "Coma Sac"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u706b\u708e\u888b", 
+    "name": "Flame Sac"
+  }, 
+  {
+    "icon_name": "Sac-Red.png", 
+    "name_jp": "\u7206\u708e\u888b", 
+    "name": "Inferno Sac"
+  }, 
+  {
+    "icon_name": "Sac-Yellow.png", 
+    "name_jp": "\u96fb\u6c17\u888b", 
+    "name": "Electro Sac"
+  }, 
+  {
+    "icon_name": "Sac-Yellow.png", 
+    "name_jp": "\u96fb\u6483\u888b", 
+    "name": "Thunder Sac"
+  }, 
+  {
+    "icon_name": "Sac-White.png", 
+    "name_jp": "\u6c37\u7d50\u888b", 
+    "name": "Frost Sac"
+  }, 
+  {
+    "icon_name": "Sac-White.png", 
+    "name_jp": "\u51cd\u7d50\u888b", 
+    "name": "Freezer Sac"
+  }, 
+  {
+    "icon_name": "Sac-Cyan.png", 
+    "name_jp": "\u6c34\u888b", 
+    "name": "Aqua Sac"
+  }, 
+  {
+    "icon_name": "Sac-Cyan.png", 
+    "name_jp": "\u5927\u6c34\u888b", 
+    "name": "Torrent Sac"
+  }, 
+  {
+    "icon_name": "Liquid-Yellow.png", 
+    "name_jp": "\u72c2\u8d70\u30a8\u30ad\u30b9", 
+    "name": "Dash Extract"
+  }, 
+  {
+    "icon_name": "Liquid-White.png", 
+    "name_jp": "\u30a2\u30eb\u30d3\u30ce\u30a8\u30ad\u30b9", 
+    "name": "Pale Extract"
+  }, 
+  {
+    "icon_name": "Liquid-Cyan.png", 
+    "name_jp": "\u30e2\u30f3\u30b9\u30bf\u30fc\u306e\u4f53\u6db2", 
+    "name": "Monster Fluid"
+  }, 
+  {
+    "icon_name": "Liquid-Blue.png", 
+    "name_jp": "\u30e2\u30f3\u30b9\u30bf\u30fc\u306e\u6fc3\u6c41", 
+    "name": "Monster Broth"
+  }
+]

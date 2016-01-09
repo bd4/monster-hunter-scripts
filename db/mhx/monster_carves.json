@@ -260,11 +260,6 @@
     "name": "Giaprey Hide+"
   }, 
   {
-    "icon_name": "Fang-Grey.png", 
-    "name_jp": "\u3068\u304c\u3063\u305f\u722a", 
-    "name": "Sharp Claw"
-  }, 
-  {
     "icon_name": "Scale-Grey.png", 
     "name_jp": "\u9ed2\u771f\u73e0", 
     "name": "Black Pearl"
@@ -323,26 +318,6 @@
     "icon_name": "Hide-Red.png", 
     "name_jp": "\u30a4\u30fc\u30aa\u30b9\u306e\u4e0a\u76ae", 
     "name": "Ioprey Hide+"
-  }, 
-  {
-    "icon_name": "Scale-Purple.png", 
-    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u9c57", 
-    "name": "Jaggi Scale"
-  }, 
-  {
-    "icon_name": "Scale-Purple.png", 
-    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u4e0a\u9c57", 
-    "name": "Jaggi Scale+"
-  }, 
-  {
-    "icon_name": "Hide-Purple.png", 
-    "name_jp": "\u30b8\u30e3\u30ae\u30a3\u306e\u76ae", 
-    "name": "Jaggi Hide"
-  }, 
-  {
-    "icon_name": "Fang-Purple.png", 
-    "name_jp": "\u9ce5\u7adc\u7a2e\u306e\u7259", 
-    "name": "Bird Wyvern Fang"
   }, 
   {
     "icon_name": "Scale-Purple.png", 
@@ -500,11 +475,6 @@
     "name": "Uroktor Scale+"
   }, 
   {
-    "icon_name": "Fang-Purple.png", 
-    "name_jp": "\u9ce5\u7adc\u7a2e\u306e\u7259", 
-    "name": "Bird Wyvern Fang"
-  }, 
-  {
     "icon_name": "Scale-Blue.png", 
     "name_jp": "\u30e9\u30f3\u30dd\u30b9\u306e\u9c57", 
     "name": "Velociprey Scale"
@@ -543,11 +513,6 @@
     "icon_name": "Webbing-Yellow.png", 
     "name_jp": "\u30e9\u30f3\u30b4\u30b9\u30bf\u306e\u8584\u7fbd", 
     "name": "Vespoid Innerwing"
-  }, 
-  {
-    "icon_name": "Fang-Orange.png", 
-    "name_jp": "\u3068\u304c\u3063\u305f\u7259", 
-    "name": "Sharp Fang"
   }, 
   {
     "icon_name": "Scale-Cyan.png", 
@@ -825,26 +790,6 @@
     "name": "Bulldrome Tusk+"
   }, 
   {
-    "icon_name": "Scale-Cyan.png", 
-    "name_jp": "\u7802\u7adc\u306e\u9c57", 
-    "name": "Cephalos Scale"
-  }, 
-  {
-    "icon_name": "Scale-Cyan.png", 
-    "name_jp": "\u7802\u7adc\u306e\u4e0a\u9c57", 
-    "name": "Cephalos Scale+"
-  }, 
-  {
-    "icon_name": "Carapace-Cyan.png", 
-    "name_jp": "\u7802\u7adc\u306e\u30d2\u30ec", 
-    "name": "Cephalos Fin"
-  }, 
-  {
-    "icon_name": "Carapace-Cyan.png", 
-    "name_jp": "\u7802\u7adc\u306e\u4e0a\u30d2\u30ec", 
-    "name": "Cephalos Fin+"
-  }, 
-  {
     "icon_name": "Fang-Cyan.png", 
     "name_jp": "\u7802\u7adc\u306e\u7259", 
     "name": "Cephalos Fang"
@@ -858,11 +803,6 @@
     "icon_name": "Carapace-Grey.png", 
     "name_jp": "\u7adc\u982d\u6bbb", 
     "name": "Wyvern Scalp"
-  }, 
-  {
-    "icon_name": "Scale-Grey.png", 
-    "name_jp": "\u9ed2\u771f\u73e0", 
-    "name": "Black Pearl"
   }, 
   {
     "icon_name": "Fang-Red.png", 
@@ -1410,11 +1350,6 @@
     "name": "Iodrome Head"
   }, 
   {
-    "icon_name": "Monster-Jewel-Blue.png", 
-    "name_jp": "\u9ce5\u7adc\u7389", 
-    "name": "Bird Wyvern Gem"
-  }, 
-  {
     "icon_name": "Hide-Orange.png", 
     "name_jp": "\u5947\u733f\u72d0\u306e\u525b\u6bdb", 
     "name": "Kecha Pelt+"
@@ -1678,11 +1613,6 @@
     "icon_name": "Bone-Yellow.png", 
     "name_jp": "\u5bd2\u6c17\u7acb\u3064\u30af\u30c1\u30d0\u30b7", 
     "name": "Chilling Beak"
-  }, 
-  {
-    "icon_name": "Monster-Jewel-Cyan.png", 
-    "name_jp": "\u7adc\u7389", 
-    "name": "Wyvern Gem"
   }, 
   {
     "icon_name": "Shell-Yellow.png", 
@@ -2085,16 +2015,6 @@
     "name": "S.Rathalos Tail"
   }, 
   {
-    "icon_name": "Fang-Red.png", 
-    "name_jp": "\u706b\u7adc\u306e\u7ffc\u722a", 
-    "name": "Rath Wingtalon"
-  }, 
-  {
-    "icon_name": "Carapace-Red.png", 
-    "name_jp": "\u706b\u7adc\u306e\u5ef6\u9ac4", 
-    "name": "Rath Medulla"
-  }, 
-  {
     "icon_name": "Liquid-Yellow.png", 
     "name_jp": "\u706b\u7adc\u306e\u714c\u6db2", 
     "name": "Rath Gleem"
@@ -2150,21 +2070,6 @@
     "name": "Rathian Ruby"
   }, 
   {
-    "icon_name": "Fang-Red.png", 
-    "name_jp": "\u706b\u7adc\u306e\u7ffc\u722a", 
-    "name": "Rath Wingtalon"
-  }, 
-  {
-    "icon_name": "Carapace-Red.png", 
-    "name_jp": "\u706b\u7adc\u306e\u9aa8\u9ac4", 
-    "name": "Rath Marrow"
-  }, 
-  {
-    "icon_name": "Carapace-Red.png", 
-    "name_jp": "\u706b\u7adc\u306e\u5ef6\u9ac4", 
-    "name": "Rath Medulla"
-  }, 
-  {
     "icon_name": "Scale-Green.png", 
     "name_jp": "\u7370\u731b\u5316\u96cc\u706b\u7adc\u9c57", 
     "name": "Ferocious Rathian Scale"
@@ -2203,21 +2108,6 @@
     "icon_name": "Carapace-Yellow.png", 
     "name_jp": "\u91d1\u706b\u7adc\u306e\u4e0a\u68d8", 
     "name": "G.Rathian Spike+"
-  }, 
-  {
-    "icon_name": "Fang-Red.png", 
-    "name_jp": "\u706b\u7adc\u306e\u7ffc\u722a", 
-    "name": "Rath Wingtalon"
-  }, 
-  {
-    "icon_name": "Carapace-Red.png", 
-    "name_jp": "\u706b\u7adc\u306e\u5ef6\u9ac4", 
-    "name": "Rath Medulla"
-  }, 
-  {
-    "icon_name": "Liquid-Yellow.png", 
-    "name_jp": "\u706b\u7adc\u306e\u714c\u6db2", 
-    "name": "Rath Gleem"
   }, 
   {
     "icon_name": "Scale-Yellow.png", 
@@ -2388,11 +2278,6 @@
     "icon_name": "Scale-Yellow.png", 
     "name_jp": "\u7370\u731b\u5316\u5343\u5203\u7adc\u9c57", 
     "name": "Ferocious Seregios Scale"
-  }, 
-  {
-    "icon_name": "Shell-Blue.png", 
-    "name_jp": "\u938c\u87f9\u306e\u7532\u6bbb", 
-    "name": "Ceanataur Shell"
   }, 
   {
     "icon_name": "Shell-Blue.png", 
@@ -2675,11 +2560,6 @@
     "name": "Ruinous Hook Claw Blueclaw+"
   }, 
   {
-    "icon_name": "Ore-Cyan.png", 
-    "name_jp": "\u5927\u7adc\u7d50\u6676", 
-    "name": "Large Wyvern Crystal"
-  }, 
-  {
     "icon_name": "Shell-White.png", 
     "name_jp": "\u5d29\u7adc\u306e\u5805\u6bbb", 
     "name": "Ukanlos Carapace"
@@ -2813,11 +2693,6 @@
     "icon_name": "Carapace-Blue.png", 
     "name_jp": "\u30c9\u30b9\u30e9\u30f3\u30dd\u30b9\u306e\u982d", 
     "name": "Velocidrome Head"
-  }, 
-  {
-    "icon_name": "Monster-Jewel-Blue.png", 
-    "name_jp": "\u9ce5\u7adc\u7389", 
-    "name": "Bird Wyvern Gem"
   }, 
   {
     "icon_name": "Shell-Red.png", 

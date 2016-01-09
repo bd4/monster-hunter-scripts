@@ -88,14 +88,14 @@ def _main():
 
     db = MHDB()
     #strees = db.get_skill_trees()
-    items = db.get_items(item_types=("Tool", "Book", "Consumable", "Ammo"))
-    gather_items = db.get_items(item_types=
-                ("Bone", "Plant", "Ore", "Fish", "Bug", "Sac/Fluid", "Meat"))
+    #items = db.get_items(item_types=("Tool", "Book", "Consumable", "Ammo"))
+    #gather_items = db.get_items(item_types=
+    #            ("Bone", "Plant", "Ore", "Fish", "Bug", "Sac/Fluid", "Meat"))
 
     #carve_items = db.get_items(item_types=("Flesh",))
 
-    stree_path = os.path.join(_pathfix.project_path, "db",
-                              "mhx_skill_tree_list.json")
+    stree_path = os.path.join(_pathfix.project_path, "db", "mhx",
+                              "skill_tree_list.json")
     with open(stree_path) as f:
         stree_list = json.load(f)
 
@@ -112,16 +112,20 @@ def _main():
         if prefix != prev_prefix:
             return prefix
         return None
-    mk_html_list("items-usable.html", "Items: Usable", items,
-                 ("icon_name", "name", "name_jp"), ("icon_name", "name"),
-                 divider_fn=item_divider_fn)
 
-    mk_html_list("items-gather.html", "Items: Gatherable", gather_items,
+    items_path = os.path.join(_pathfix.project_path, "db", "mhx",
+                              "items.json")
+    with open(items_path) as f:
+        items = json.load(f)
+    mk_html_list("items-en.html", "Items (en)", items,
                  ("icon_name", "name", "name_jp"), ("icon_name", "name"),
                  divider_fn=item_divider_fn)
+    mk_html_list("items-jp.html", "Items (jp)", items,
+                 ("icon_name", "name_jp", "name"), ("name_jp",),
+                 divider_fn=None)
 
     carves_path = os.path.join(_pathfix.project_path, "db", "mhx",
-                                "monster_carves.json")
+                               "monster_carves.json")
     with open(carves_path) as f:
         carves_list = json.load(f)
     mk_html_list("items-carve-en.html", "Items: Carve (en)", carves_list,
@@ -149,8 +153,8 @@ def _main():
     #             ha_list, ("name_jp", "name", "section", "description"),
     #             jplen_sort_fn, divider_fn=jplen_divider_fn)
 
-    monster_path = os.path.join(_pathfix.project_path, "db",
-                                "mhx_monster_list.json")
+    monster_path = os.path.join(_pathfix.project_path, "db", "mhx",
+                                "monster_list.json")
     with open(monster_path) as f:
         monster_list = json.load(f)
 
