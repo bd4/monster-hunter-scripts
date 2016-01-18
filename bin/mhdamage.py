@@ -8,8 +8,8 @@ import copy
 import _pathfix
 
 from mhapi.db import MHDB
-from mhapi.damage import MotionValueDB, WeaponMonsterDamage
-from mhapi.model import SharpnessLevel
+from mhapi.damage import MotionValueDB, WeaponMonsterDamage, WeaponType
+from mhapi.model import SharpnessLevel, Weapon
 from mhapi import skills
 from mhapi.util import ELEMENTS, WEAPON_TYPES, WTYPE_ABBR
 
@@ -28,6 +28,50 @@ def weapon_match_tuple(arg):
     if element is not None:
         element = get_element_match(element)
     return (wtype, element)
+
+
+def _make_db_sharpness_string(level_string):
+    print "level string", level_string
+    level_value = SharpnessLevel.__dict__[level_string.upper()]
+    print "level value", level_value
+    values = []
+    for i in xrange(SharpnessLevel.PURPLE+1):
+        if i <= level_value:
+            values.append("1")
+        else:
+            values.append("0")
+    print "sharp values %r" % values
+    return " ".join([".".join(values)] * 2)
+
+
+def weapon_stats_tuple(arg):
+    parts = arg.split(",")
+    print "parts %r" % parts
+    if len(parts) < 4:
+        print "not enough parts"
+        raise ValueError("Bad arg, use 'name,weapon_type,sharpness,raw'")
+    weapon = {}
+    weapon["name"] = parts[0]
+    weapon["wtype"] = get_wtype_match(parts[1])
+    multiplier = WeaponType.multiplier(weapon["wtype"])
+    weapon["attack"] = multiplier * int(parts[2])
+    weapon["affinity"] = parts[3]
+    weapon["sharpness"] = _make_db_sharpness_string(parts[4])
+    if len(parts) == 5:
+        weapon["element"] = None
+        weapon["element_attack"] = None
+    if len(parts) == 7:
+        weapon["element"] = get_element_match(parts[5])
+        weapon["element_attack"] = int(parts[6])
+    else:
+        print "bad part number"
+        raise ValueError("Bad arg, use 'name,weapon_type,sharpness,raw'")
+    weapon["element_2"] = None
+    weapon["awaken"] = None
+    weapon["element_2_attack"] = None
+    weapon["_id"] = -1
+    print "making model"
+    return Weapon(weapon)
 
 
 def get_wtype_match(term):
@@ -139,6 +183,13 @@ def parse_args(argv):
                         +" 'Sword and Shield,Para'"
                         +" 'HH,Blast' 'Hammer'",
                         type=weapon_match_tuple, default=[])
+    parser.add_argument("-w", "--weapon-custom", nargs="*",
+                    help="NAME,WEAPON_TYPE,TRUE_RAW,AFFINITY,SHARPNESS"
+                        +"ELEMENT_TYPE,ELEMENT_ATTACK"
+                        +" Add weapon based on stats."
+                        +" Examples: 'DinoSnS,SnS,190,0,Blue,Fire,30'"
+                        +" 'AkantorHam,Hammer,240,25,Green'",
+                        type=weapon_stats_tuple, default=[])
     parser.add_argument("monster",
                         help="Full name of monster")
     parser.add_argument("weapon", nargs="*",
@@ -304,6 +355,9 @@ if __name__ == '__main__':
             weapons.append(w)
             names_set.add(w.name)
 
+    if args.weapon_custom:
+        weapons.extend(args.weapon_custom)
+
     if not weapons:
         print "Err: no matching weapons"
         sys.exit(1)
@@ -382,3 +436,4 @@ if __name__ == '__main__':
     else:
         print_sorted_damage(names, damage_map_base,
                             weapon_damage_map, parts)
+
