@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # vim: set fileencoding=utf8 :
 
 import urllib
 import os
 import json
 import sys
+import codecs
 
 from lxml import etree
 
@@ -67,6 +68,12 @@ _CB_PHIAL_TYPES = {
 }
 
 
+_BUG_TYPES = {
+    u"切断": "Cutting",
+    u"打撃": "Impact",
+}
+
+
 _BOW_ARC_TYPES = {
     u"集中型": "Focus",
     u"放散型": "Wide",
@@ -109,43 +116,45 @@ _HORN_NOTES = {
 }
 
 
-def extract_weapon_list(wtype, tree):
+def extract_weapon_list(wtype, tree, parser):
     weapons = []
     rows = tree.xpath('//*[@id="sorter"]/tbody/tr')
     parent_name = None
     parent_href = None
     for row in rows:
         cells = list(row)
-        if len(cells) == 4:
-            name, href, final = _parse_name_td(cells[0])
-            attack, affinity, defense, elements, slots = \
-                                            _parse_hh_attr_td(cells[1])
-            horn_notes = _parse_horn_notes_td(cells[2])
-            sharpness = _parse_sharpness_td(cells[3])
-            shots, ammo = None, None
-        elif len(cells) in (5, 6):
+        if len(cells) in (5, 6):
             name, href, final = _parse_name_td(cells[0])
             attack = int(cells[1].text)
             affinity, defense, elements = _parse_elements_td(cells[2])
             if wtype not in _RANGED_TYPES:
-                sharpness = _parse_sharpness_td(cells[-2])
+                #sharpness = _parse_sharpness_td(cells[-2])
                 shots, ammo = None, None
             else:
-                sharpness = [None, None]
+                #sharpness = [None, None]
                 if wtype == "Bow":
                     shots, ammo = _parse_bow_td(cells[-2])
             slots = _parse_slots_td(cells[-1])
-            horn_notes = None
         else:
             continue
 
+        if wtype in _RANGED_TYPES:
+            sharpness_levels = [None, None, None]
+        else:
+            details_link = href or parent_href
+            sharpness_levels = _get_detailed_sharpness(name, details_link,
+                                                       parser)
+
         data = dict(name_jp=name, name=name, wtype=wtype, final=final,
-                    sharpness=sharpness[0], sharpness_plus=sharpness[1],
+                    sharpness=sharpness_levels[0],
+                    sharpness_plus=sharpness_levels[1],
+                    sharpness_plus2=sharpness_levels[2],
                     attack=attack, num_slots=slots,
                     affinity=affinity, defense=defense,
                     element=None, element_attack=None,
                     awaken=None, element_2=None, element_2_attack=None,
-                    phial=None, shelling_type=None, horn_notes=horn_notes,
+                    phial=None, shelling_type=None, horn_notes=None,
+                    bug_type=None,
                     arc_type=None, ammo=ammo, shot_types=shots)
         if elements:
             data["element"] = elements[0][0]
@@ -154,7 +163,10 @@ def extract_weapon_list(wtype, tree):
                 data["element_2"] = elements[1][0]
                 data["element_2_attack"] = elements[1][1]
         if len(cells) == 6:
-            _add_phial_or_shot_data(data, cells[-3])
+            if wtype == "Hunting Horn":
+                data["horn_notes"] = _parse_horn_notes_td(cells[-3])
+            else:
+                _add_phial_or_shot_data(data, cells[-3])
         if href is None or href == parent_href:
             data["parent"] = parent_name
             data["href"] = parent_href
@@ -177,10 +189,77 @@ def _add_phial_or_shot_data(data, td_element):
     elif data["wtype"] == "Gunlance":
         shot_type = _GL_SHOT_TYPES[text[:2]]
         data["shelling_type"] = "%s %s" % (shot_type, text[2])
+    elif data["wtype"] == "Insect Glaive":
+        data["bug_type"] = _BUG_TYPES[text]
     elif data["wtype"] == "Bow":
         data["arc_type"] = _BOW_ARC_TYPES[text]
     else:
-        raise ValueError("Unexpected element for wtype '%s'" % data["wtype"])
+        msg = u"Unexpected element for wtype '%s'" % data["wtype"]
+        print >>sys.stderr, msg, text
+        raise ValueError(msg)
+
+
+SHARPNESS = {}
+def _get_detailed_sharpness(name, href, parser):
+    """
+    Fetch weapon details page, parse the three levels of sharpness and
+    save to SHARPNESS global.
+
+    Example page: http://wiki.mhxg.org/ida/219225.html
+    """
+    if name in SHARPNESS:
+        return SHARPNESS[name]
+    if not href.startswith("http://"):
+        href = _BASE_URL + href
+    digits = []
+    base_name = name
+    while base_name[-1].isdigit():
+        digits.insert(0, base_name[-1])
+        base_name = base_name[:-1]
+    if digits:
+        weapon_level = int("".join(digits))
+    else:
+        weapon_level = 1
+    tmp_path = os.path.join(_pathfix.project_path, "tmp")
+    fpath = os.path.join(tmp_path, "details-%s.html" % (base_name))
+    urllib.urlretrieve(href, fpath)
+    with open(fpath) as f:
+        tree = etree.parse(f, parser)
+        data1 = tree.xpath('//*/div[@class="data1"]')
+        assert len(data1) == 1, data1
+        tables = data1[0].xpath('./table[@class="t1 th3"]')
+        assert len(tables) == 2, len(tables)
+        comp_table = tables[1]
+        comp_trs = comp_table.xpath('./tr')
+        names = []
+        for tr in comp_trs:
+            cells = tr.xpath('./td')
+            if not cells:
+                # first row has th, we want to ignore anyway
+                continue
+            name_cell = cells[0]
+            # name is tail of weapon icon image
+            name = name_cell[0].tail.strip()
+            names.append(name)
+        attr_table = tables[0]
+        attr_trs = attr_table.xpath('./tr')
+        i = 0
+        for tr in attr_trs:
+            cells = tr.xpath('./td')
+            if not cells:
+                # first row has th, we want to ignore anyway
+                continue
+            sharpness_cell = cells[3]
+            name = names[i]
+            try:
+                sharpness_levels = _parse_sharpness_td(sharpness_cell)
+            except KeyError, ValueError:
+                print >>sys.stderr, "bad sharpness:", href, name
+                raise
+            SHARPNESS[name] = sharpness_levels
+            #print name, sharpness_levels
+            i += 1
+    return SHARPNESS[name]
 
 
 def _parse_bow_td(td_element):
@@ -301,11 +380,13 @@ def _parse_slots_td(td_element):
 def _parse_sharpness_td(td_element):
     div = td_element[0]
     subs = list(div)
-    sharpness, sharpness_plus = [], []
-    current = sharpness
+    sharpness_levels = [[], [], []]
+    level = 0
+    current = sharpness_levels[0]
     for sub in subs:
         if sub.tag == "br":
-            current = sharpness_plus
+            level += 1
+            current = sharpness_levels[level]
             continue
         assert sub.tag == "span", sub.tag
         if sub.attrib["class"] == "kr7":
@@ -313,11 +394,11 @@ def _parse_sharpness_td(td_element):
         if sub.text is None:
             continue
         current.append(sub.text.count("."))
-    for i in xrange(len(sharpness), 6):
-        sharpness.append(0)
-    for i in xrange(len(sharpness_plus), 6):
-        sharpness_plus.append(0)
-    return sharpness, sharpness_plus
+    for level in xrange(3):
+        sharpness = sharpness_levels[level]
+        for i in xrange(len(sharpness), 6):
+            sharpness.append(0)
+    return sharpness_levels
 
 
 def _main():
@@ -330,10 +411,27 @@ def _main():
             urllib.urlretrieve(_BASE_URL + url, fpath)
             with open(fpath) as f:
                 tree = etree.parse(f, parser)
-                wlist = extract_weapon_list(wtype, tree)
+                wlist = extract_weapon_list(wtype, tree, parser)
             weapon_list.extend(wlist)
     print json.dumps(weapon_list, indent=2)
 
 
+def _test_details():
+    parser = etree.HTMLParser()
+    # final level has same name
+    _get_detailed_sharpness(u"ベルダーハンマー",
+                            "http://wiki.mhxg.org/ida/219225.html", parser)
+    # final level has different name
+    _get_detailed_sharpness(u"テッケン",
+                            "http://wiki.mhxg.org/ida/230575.html", parser)
+    # final level >= 10 (two chars)
+    _get_detailed_sharpness(u"ウィルガシェルプレス",
+                            "http://wiki.mhxg.org/ida/228545.html", parser)
+
+
 if __name__ == '__main__':
+    #_test_details()
+    UTF8Writer = codecs.getwriter('utf8')
+    sys.stdout = UTF8Writer(sys.stdout)
+    sys.stderr = UTF8Writer(sys.stderr)
     _main()

@@ -39,32 +39,46 @@
     data-id="<%= id %>">
 <% if (sharpness) { %>
 <div class="sharpness-bar" title="<%= sharpness_all_title %>">
-<span style="width:<%= sharpness[0] %>px" class="red"></span>
-<span style="width:<%= sharpness[1] %>px" class="orange"></span>
-<span style="width:<%= sharpness[2] %>px" class="yellow"></span>
-<span style="width:<%= sharpness[3] %>px" class="green"></span>
-<span style="width:<%= sharpness[4] %>px" class="blue"></span>
-<span style="width:<%= sharpness[5] %>px" class="white"></span>
+<span style="width:<%= sharpness[0] * sharpness_width %>px" class="red"></span>
+<span style="width:<%= sharpness[1] * sharpness_width %>px" class="orange"></span>
+<span style="width:<%= sharpness[2] * sharpness_width %>px" class="yellow"></span>
+<span style="width:<%= sharpness[3] * sharpness_width %>px" class="green"></span>
+<span style="width:<%= sharpness[4] * sharpness_width %>px" class="blue"></span>
+<span style="width:<%= sharpness[5] * sharpness_width %>px" class="white"></span>
 <% if (sharpness.length > 6) { %>
-<span style="width:<%= sharpness[6] %>px" class="purple"></span>
+<span style="width:<%= sharpness[6] * sharpness_width %>px" class="purple"></span>
 <% } %>
 </div>
 <div class="sharpness-bar" title="<%= sharpness_all_title %>">
-<span style="width:<%= sharpness_plus[0] %>px" class="red"></span>
-<span style="width:<%= sharpness_plus[1] %>px" class="orange"></span>
-<span style="width:<%= sharpness_plus[2] %>px" class="yellow"></span>
-<span style="width:<%= sharpness_plus[3] %>px" class="green"></span>
-<span style="width:<%= sharpness_plus[4] %>px" class="blue"></span>
-<span style="width:<%= sharpness_plus[5] %>px" class="white"></span>
+<span style="width:<%= sharpness_plus[0] * sharpness_width %>px" class="red"></span>
+<span style="width:<%= sharpness_plus[1] * sharpness_width %>px" class="orange"></span>
+<span style="width:<%= sharpness_plus[2] * sharpness_width %>px" class="yellow"></span>
+<span style="width:<%= sharpness_plus[3] * sharpness_width %>px" class="green"></span>
+<span style="width:<%= sharpness_plus[4] * sharpness_width %>px" class="blue"></span>
+<span style="width:<%= sharpness_plus[5] * sharpness_width %>px" class="white"></span>
 <% if (sharpness.length > 6) { %>
-<span style="width:<%= sharpness_plus[6] %>px" class="purple"></span>
+<span style="width:<%= sharpness_plus[6] * sharpness_width %>px" class="purple"></span>
 <% } %>
 </div>
+<% if (sharpness_plus2) { %>
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
+<span style="width:<%= sharpness_plus2[0] * sharpness_width %>px" class="red"></span>
+<span style="width:<%= sharpness_plus2[1] * sharpness_width %>px" class="orange"></span>
+<span style="width:<%= sharpness_plus2[2] * sharpness_width %>px" class="yellow"></span>
+<span style="width:<%= sharpness_plus2[3] * sharpness_width %>px" class="green"></span>
+<span style="width:<%= sharpness_plus2[4] * sharpness_width %>px" class="blue"></span>
+<span style="width:<%= sharpness_plus2[5] * sharpness_width %>px" class="white"></span>
+<% if (sharpness.length > 6) { %>
+<span style="width:<%= sharpness_plus2[6] * sharpness_width %>px" class="purple"></span>
+<% } %>
+</div>
+<% } %>
 <% } %>
 </td>
 <td><%= defense ? "+" + defense + " Def" : "" %></td>
 <td style="text-align:right"><%= phial %></td>
 <td style="text-align:right"><%= shelling_type %></td>
+<td style="text-align:right"><%= bug_type %></td>
 <% if (arc_type) { %>
  <td style="text-align:right"><%= arc_type %></td>
  <td style="font-family:mono"

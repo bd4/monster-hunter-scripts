@@ -227,6 +227,14 @@ function set_sharpness_titles(weapon_data) {
         weapon_data["sharpness_all_title"] =
           weapon_data["sharpness_title"] + " ("
           + weapon_data["sharpness_plus_title"] + ")";
+        if (weapon_data["sharpness_plus2"]) {
+            weapon_data["sharpness_plus2_title"] =
+                  weapon_data["sharpness_plus2"].join(",");
+            weapon_data["sharpness_all_title"] =
+              weapon_data["sharpness_title"] + "; "
+              + weapon_data["sharpness_plus_title"] + "; "
+              + weapon_data["sharpness_plus2_title"];
+        }
     } else {
         // gunner weapons have no sharpness
         weapon_data["sharpness_title"] = "";

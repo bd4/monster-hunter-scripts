@@ -40,10 +40,10 @@
       }
 
       .sharpness-bar {
-          border: 1px #d3d3d3 solid;
-          min-width: 92px;
+          border: 1px #a9a9a9 solid;
+          min-width: 82px;
           height: 10px;
-          background-color: #d3d3d3;
+          background-color: #a9a9a9;
           float: left;
           clear: both;
       }
@@ -248,6 +248,9 @@
                          match_count += 1;
                          set_sharpness_titles(data);
                          data["arc_type"] = null;
+                         data["sharpness_plus2"] = null;
+                         data["sharpness_width"] = 1;
+                         data["bug_type"] = null;
                          set_bow_values(data);
                          set_horn_melodies_title(data);
                          data["wtype_short"] = WEAPON_TYPE_ABBR[data["wtype"]];

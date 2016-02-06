@@ -135,7 +135,8 @@ def _main():
                  ("icon_name", "name_jp", "name"), ("name_jp",),
                  divider_fn=None)
 
-    ha_path = os.path.join(_pathfix.project_path, "db", "hunter_arts.json")
+    ha_path = os.path.join(_pathfix.project_path,
+                           "db", "mhx", "hunter_arts.json")
     with open(ha_path) as f:
         ha_list = json.load(f)
 
