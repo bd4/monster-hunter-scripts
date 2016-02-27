@@ -244,12 +244,23 @@ def _get_detailed_sharpness(name, href, parser):
         attr_table = tables[0]
         attr_trs = attr_table.xpath('./tr')
         i = 0
+        sharpness_col = 3
         for tr in attr_trs:
+            # Try to figure out column with sharpness, hunting horn
+            # pages are different.
+            heads = tr.xpath('./th')
+            if heads:
+                for j, th in enumerate(heads):
+                    if u"斬れ味" in th.text:
+                        sharpness_col = j
+                continue
+
             cells = tr.xpath('./td')
             if not cells:
-                # first row has th, we want to ignore anyway
+                # TODO: this should not happens, since header row is
+                # handled above
                 continue
-            sharpness_cell = cells[3]
+            sharpness_cell = cells[sharpness_col]
             name = names[i]
             try:
                 sharpness_levels = _parse_sharpness_td(sharpness_cell)
