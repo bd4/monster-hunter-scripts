@@ -4,6 +4,7 @@ Module for accessing the sqlite monster hunter db from
 
 import os.path
 import sqlite3
+import json
 
 from mhapi import model
 
@@ -528,3 +529,67 @@ class MHDB(object):
             else:
                 ucomps = None
             item_data.set_components(ccomps, ucomps)
+
+
+
+class MHDBX(object):
+    """
+    Wrapper around Monster Hunter Cross (X) JSON data. Attempts limited
+    compatibility with original 4U MHDB class.
+
+    Uses MHDB object, as temporariy hack for MHX data that is not yet
+    available or integrated.
+    """
+    def __init__(self):
+        """
+        Loads JSON data, keeps in memory.
+        """
+        module_path = os.path.dirname(__file__)
+        mhx_db_path = os.path.abspath(os.path.join(module_path, "..",
+                                                   "db", "mhx"))
+
+        self._4udb = MHDB()
+        self._weapon_list = []
+        self._weapons_by_name = {}
+        with open(os.path.join(mhx_db_path, "weapon_list.json")) as f:
+            wlist = json.load(f)
+            for i, wdata in enumerate(wlist):
+                wdata["_id"] = i
+                weapon = model.Weapon(wdata)
+                self._weapon_list.append(weapon)
+                self._weapons_by_name[weapon.name_jp] = weapon
+
+    def get_weapon_by_name(self, name):
+        return self._weapons_by_name.get(name)
+
+    def get_monster_by_name(self, *args, **kwargs):
+        return self._4udb.get_monster_by_name(*args, **kwargs)
+
+    def get_monster_damage(self, *args, **kwargs):
+        return self._4udb.get_monster_damage(*args, **kwargs)
+
+    def get_monster_breaks(self, *args, **kwargs):
+        return self._4udb.get_monster_breaks(*args, **kwargs)
+
+    def get_weapons_by_query(self, wtype=None, element=None,
+                             final=None):
+        """
+        @element can have the special value 'Raw' to search for weapons
+        with no element. Otherwise @element is searched for in both
+        awaken and native, and can be a status or an element.
+
+        @final should be string '1' or '0'
+        """
+        final = int(final)
+        results = []
+        for w in self._weapon_list:
+            if wtype is not None and w.wtype != wtype:
+                continue
+            if (element is not None
+            and element not in (w.element, w.element_2)
+            and not (element == "Raw" and not w.element)):
+                continue
+            if final is not None and w.final != final:
+                continue
+            results.append(w)
+        return results

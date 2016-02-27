@@ -28,13 +28,13 @@ def raw_damage(true_raw, sharpness, affinity, monster_hitbox, motion):
                  * monster_hitbox / 100.0)
 
 
-def element_damage(element, sharpness, monster_ehitbox):
+def element_damage(raw_element, sharpness, monster_ehitbox):
     """
     Calculate elemental damage to a monster part with the given elemental
     attack, the given sharpness, and the given monster elemental weakness.
     Note that this is independent of the motion value of the attack.
     """
-    return floor(element / 10.0
+    return floor(raw_element
                  * SharpnessLevel.element_modifier(sharpness)
                  * monster_ehitbox / 100.0)
 
@@ -171,7 +171,7 @@ class WeaponMonsterDamage(object):
                  critical_eye_skill=skills.CriticalEye.NONE,
                  element_skill=skills.ElementAttackUp.NONE,
                  awaken=False, artillery_level=0, limit_parts=None,
-                 frenzy_bonus=0):
+                 frenzy_bonus=0, blunt_power=False, is_true_attack=False):
         self.weapon = weapon_row
         self.monster = monster_row
         self.monster_damage = monster_damage
@@ -183,6 +183,8 @@ class WeaponMonsterDamage(object):
         self.element_skill = element_skill
         self.awaken = awaken
         self.artillery_level = artillery_level
+        self.blunt_power = blunt_power
+        self.is_true_attack = is_true_attack
         self.limit_parts = limit_parts
         # 15 normaly for overcoming the virus, 30 with frenzy res skill
         assert frenzy_bonus in (0, 15, 30)
@@ -199,15 +201,19 @@ class WeaponMonsterDamage(object):
         self.cb_phial_damage = defaultdict(dict)
 
         self.weapon_type = self.weapon["wtype"]
-        self.true_raw = (self.weapon["attack"]
-                         / WeaponType.multiplier(self.weapon_type))
+        if is_true_attack:
+            self.true_raw = self.weapon["attack"]
+        else:
+            self.true_raw = (self.weapon["attack"]
+                             / WeaponType.multiplier(self.weapon_type))
         if sharp_plus:
             self.sharpness = self.weapon.sharpness_plus.max
         else:
             self.sharpness = self.weapon.sharpness.max
         #print "sharpness=", self.sharpness
         if self.weapon["affinity"]:
-            if "/" in self.weapon["affinity"]:
+            if (isinstance(self.weapon["affinity"], str)
+            and "/" in self.weapon["affinity"]):
                 self.chaotic = True
                 # Handle chaotic gore affinity, e.g. -35/10. This means that
                 # 35% of the time it does a negative critical (75% damage)
@@ -241,6 +247,11 @@ class WeaponMonsterDamage(object):
         else:
             self.eattack2 = 0
 
+        if not self.is_true_attack and self.eattack:
+            self.eattack /= 10
+            if self.eattack2:
+                self.eattack2 /= 10
+
         self.true_raw = skills.AttackUp.modified(attack_skill,
                                                  self.true_raw)
         self.affinity = skills.CriticalEye.modified(critical_eye_skill,
@@ -249,6 +260,14 @@ class WeaponMonsterDamage(object):
                                                         self.eattack)
         self.eattack2 = skills.ElementAttackUp.modified(element_skill,
                                                         self.eattack2)
+
+        if self.blunt_power:
+            if self.sharpness in (SharpnessLevel.RED, SharpnessLevel.ORANGE):
+                self.true_raw += 30
+            elif self.sharpness == SharpnessLevel.YELLOW:
+                self.true_raw += 25
+            elif self.sharpness == SharpnessLevel.GREEN:
+                self.true_raw += 15
 
         self.parts = []
         self.break_count = 0
@@ -266,6 +285,8 @@ class WeaponMonsterDamage(object):
 
     @property
     def attack(self):
+        if self.is_true_attack:
+            return self.true_raw
         return self.true_raw * WeaponType.multiplier(self.weapon_type)
 
     def _calculate_damage(self):

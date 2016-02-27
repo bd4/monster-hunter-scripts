@@ -162,6 +162,16 @@ class SharpnessLevel(EnumBase):
         PURPLE: (1.44, 1.20),
     }
 
+    _modifier_mhx = {
+        RED:    (0.50, 0.25),
+        ORANGE: (0.75, 0.50),
+        YELLOW: (1.00, 0.75),
+        GREEN:  (1.05, 1.00),
+        BLUE:   (1.20, 1.0625),
+        WHITE:  (1.32, 1.125),
+    }
+
+
     @classmethod
     def raw_modifier(cls, sharpness):
         return cls._modifier[sharpness][0]
@@ -177,8 +187,11 @@ class WeaponSharpness(ModelBase):
     points at each level. E.g. the 0th item in the list is the amount of
     RED sharpness, the 1st item is ORANGE, etc.
     """
-    def __init__(self, db_string):
-        self.value_list = [int(s) for s in db_string.split(".")]
+    def __init__(self, db_string_or_list):
+        if isinstance(db_string_or_list, list):
+            self.value_list = db_string_or_list
+        else:
+            self.value_list = [int(s) for s in db_string_or_list.split(".")]
         self._max = None
 
     @property
@@ -364,13 +377,21 @@ class Weapon(ItemCraftable):
         if self.wtype in ("Light Bowgun", "Heavy Bowgun", "Bow"):
             self._data["sharpness"] = self._data["sharpness_plus"] = None
             return
-        parts = self._row["sharpness"].split(" ")
-        if len(parts) != 2:
-            raise ValueError("Bad sharpness value in db: '%s'"
-                             % self._row["sharpness"])
-        normal, plus = parts
-        self._data["sharpness"] = WeaponSharpness(normal)
-        self._data["sharpness_plus"] = WeaponSharpness(plus)
+        if isinstance(self._row["sharpness"], list):
+            # MHX JSON data, already desired format, but doesn't have
+            # purple so we append 0
+            self.sharpness = WeaponSharpness(self._row["sharpness"] + [0])
+            self.sharpness_plus = WeaponSharpness(
+                                        self._row["sharpness_plus"] + [0])
+        else:
+            # 4U data from db
+            parts = self._row["sharpness"].split(" ")
+            if len(parts) != 2:
+                raise ValueError("Bad sharpness value in db: '%s'"
+                                 % self._row["sharpness"])
+            normal, plus = parts
+            self._data["sharpness"] = WeaponSharpness(normal)
+            self._data["sharpness_plus"] = WeaponSharpness(plus)
 
     def is_not_localized(self):
         return (self.name == self.name_jp)

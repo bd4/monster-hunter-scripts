@@ -7,8 +7,8 @@ import copy
 
 import _pathfix
 
-from mhapi.db import MHDB
-from mhapi.damage import MotionValueDB, WeaponMonsterDamage, WeaponType
+from mhapi.db import MHDB, MHDBX
+from mhapi.damage import MotionValueDB, WeaponMonsterDamage
 from mhapi.model import SharpnessLevel, Weapon
 from mhapi import skills
 from mhapi.util import ELEMENTS, WEAPON_TYPES, WTYPE_ABBR
@@ -31,30 +31,29 @@ def weapon_match_tuple(arg):
 
 
 def _make_db_sharpness_string(level_string):
-    print "level string", level_string
+    #print "level string", level_string
     level_value = SharpnessLevel.__dict__[level_string.upper()]
-    print "level value", level_value
+    #print "level value", level_value
     values = []
     for i in xrange(SharpnessLevel.PURPLE+1):
         if i <= level_value:
             values.append("1")
         else:
             values.append("0")
-    print "sharp values %r" % values
+    #print "sharp values %r" % values
     return " ".join([".".join(values)] * 2)
 
 
 def weapon_stats_tuple(arg):
     parts = arg.split(",")
-    print "parts %r" % parts
+    #print "parts %r" % parts
     if len(parts) < 4:
         print "not enough parts"
         raise ValueError("Bad arg, use 'name,weapon_type,sharpness,raw'")
     weapon = {}
     weapon["name"] = parts[0]
     weapon["wtype"] = get_wtype_match(parts[1])
-    multiplier = WeaponType.multiplier(weapon["wtype"])
-    weapon["attack"] = multiplier * int(parts[2])
+    weapon["attack"] = int(parts[2])
     weapon["affinity"] = parts[3]
     weapon["sharpness"] = _make_db_sharpness_string(parts[4])
     if len(parts) == 5:
@@ -64,13 +63,13 @@ def weapon_stats_tuple(arg):
         weapon["element"] = get_element_match(parts[5])
         weapon["element_attack"] = int(parts[6])
     else:
-        print "bad part number"
+        #print "bad part number"
         raise ValueError("Bad arg, use 'name,weapon_type,sharpness,raw'")
     weapon["element_2"] = None
     weapon["awaken"] = None
     weapon["element_2_attack"] = None
     weapon["_id"] = -1
-    print "making model"
+    #print "making model"
     return Weapon(weapon)
 
 
@@ -118,7 +117,8 @@ def get_skill_names(args):
             "Awaken" if args.awaken else "",
             skills.AttackUp.name(args.attack_up),
             skills.CriticalEye.name(args.critical_eye),
-            skills.ElementAttackUp.name(args.element_up)]
+            skills.ElementAttackUp.name(args.element_up),
+            "Blunt Power" if args.blunt_power else ""]
 
 
 def percent_change(a, b):
@@ -151,6 +151,9 @@ def _add_skill_args(parser):
                         help="With virus affinity boost, must be either"
                             +" 15 (normal) or 30 (with Frenzy Res skill)",
                         type=int, choices=[0, 15, 30], default=0)
+    parser.add_argument("-b", "--blunt-power", action="store_true",
+                        default=False,
+                        help="Blunt Power (MHX), default off")
 
 
 def parse_args(argv):
@@ -172,6 +175,9 @@ def parse_args(argv):
     parser.add_argument("-d", "--diff", action="store_true", default=False,
                         help="Show percent difference in damage to each part"
                             +" from first weapon in list.")
+    parser.add_argument("-x", "--monster-hunter-cross", action="store_true",
+                        default=False,
+                        help="Assume weapons are true attack, use MHX values")
     parser.add_argument("-m", "--match", nargs="*",
                     help="WEAPON_TYPE,ELEMENT_OR_STATUS_OR_RAW"
                         +" Include all matching weapons in their final form."
@@ -318,7 +324,10 @@ def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
 if __name__ == '__main__':
     args = parse_args(None)
 
-    db = MHDB(_pathfix.db_path)
+    if args.monster_hunter_cross:
+        db = MHDBX()
+    else:
+        db = MHDB()
     motiondb = MotionValueDB(_pathfix.motion_values_path)
 
     monster = db.get_monster_by_name(args.monster)
@@ -399,7 +408,9 @@ if __name__ == '__main__':
                                      awaken=skill_args.awaken,
                                      artillery_level=skill_args.artillery,
                                      limit_parts=args.parts,
-                                     frenzy_bonus=skill_args.frenzy)
+                                     frenzy_bonus=skill_args.frenzy,
+                                     is_true_attack=args.monster_hunter_cross,
+                                     blunt_power=skill_args.blunt_power)
             print "%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity),
             if wd.etype:
                 if wd.etype2:
