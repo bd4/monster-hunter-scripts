@@ -383,6 +383,8 @@ class Weapon(ItemCraftable):
             self.sharpness = WeaponSharpness(self._row["sharpness"] + [0])
             self.sharpness_plus = WeaponSharpness(
                                         self._row["sharpness_plus"] + [0])
+            self.sharpness_plus2 = WeaponSharpness(
+                                        self._row["sharpness_plus2"] + [0])
         else:
             # 4U data from db
             parts = self._row["sharpness"].split(" ")
@@ -392,6 +394,7 @@ class Weapon(ItemCraftable):
             normal, plus = parts
             self._data["sharpness"] = WeaponSharpness(normal)
             self._data["sharpness_plus"] = WeaponSharpness(plus)
+            self._data["sharpness_plus2"] = WeaponSharpness(plus)
 
     def is_not_localized(self):
         return (self.name == self.name_jp)

@@ -113,7 +113,8 @@ def parse_weapon_arg(arg, base_args):
 
 
 def get_skill_names(args):
-    return ["Sharpness +1" if args.sharpness_plus_one else "",
+    return ["Sharpness +%d" % args.sharpness_plus
+                if args.sharpness_plus else "",
             "Awaken" if args.awaken else "",
             skills.AttackUp.name(args.attack_up),
             skills.CriticalEye.name(args.critical_eye),
@@ -128,9 +129,9 @@ def percent_change(a, b):
 
 
 def _add_skill_args(parser):
-    parser.add_argument("-s", "--sharpness-plus-one", action="store_true",
+    parser.add_argument("-s", "--sharpness-plus", type=int,
                         default=False,
-                        help="add Sharpness +1 skill, default off")
+                        help="add Sharpness +1 or +2 skill, default off")
     parser.add_argument("-f", "--awaken", action="store_true",
                         default=False,
                         help="add Awaken (FreeElemnt), default off")
@@ -400,7 +401,7 @@ if __name__ == '__main__':
             skill_args = skill_args_map.get(name, args)
             wd = WeaponMonsterDamage(row,
                                      monster, monster_damage,
-                                     motion, skill_args.sharpness_plus_one,
+                                     motion, skill_args.sharpness_plus,
                                      monster_breaks,
                                      attack_skill=skill_args.attack_up,
                                      critical_eye_skill=skill_args.critical_eye,

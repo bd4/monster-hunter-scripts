@@ -206,8 +206,10 @@ class WeaponMonsterDamage(object):
         else:
             self.true_raw = (self.weapon["attack"]
                              / WeaponType.multiplier(self.weapon_type))
-        if sharp_plus:
+        if sharp_plus == 1:
             self.sharpness = self.weapon.sharpness_plus.max
+        elif sharp_plus == 2:
+            self.sharpness = self.weapon.sharpness_plus2.max
         else:
             self.sharpness = self.weapon.sharpness.max
         #print "sharpness=", self.sharpness
