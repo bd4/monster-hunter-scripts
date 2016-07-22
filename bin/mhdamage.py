@@ -111,7 +111,6 @@ def parse_weapon_arg(arg, base_args):
         raise ValueError("invalid weapon-skills arg: " + arg)
 
 
-
 def get_skill_names(args):
     return ["Sharpness +%d" % args.sharpness_plus
                 if args.sharpness_plus else "",

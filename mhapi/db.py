@@ -545,13 +545,21 @@ class MHDBX(object):
         Loads JSON data, keeps in memory.
         """
         module_path = os.path.dirname(__file__)
-        mhx_db_path = os.path.abspath(os.path.join(module_path, "..",
-                                                   "db", "mhx"))
-
+        self._mhx_db_path = os.path.abspath(os.path.join(module_path, "..",
+                                            "db", "mhx"))
         self._4udb = MHDB()
         self._weapon_list = []
         self._weapons_by_name = {}
-        with open(os.path.join(mhx_db_path, "weapon_list.json")) as f:
+
+        self._monsters_by_name = {}
+        self._monster_damage = {}
+        self._monster_breaks = {}
+
+        self._load_weapons()
+        self._load_monsters()
+
+    def _load_weapons(self):
+        with open(os.path.join(self._mhx_db_path, "weapon_list.json")) as f:
             wlist = json.load(f)
             for i, wdata in enumerate(wlist):
                 wdata["_id"] = i
@@ -559,17 +567,54 @@ class MHDBX(object):
                 self._weapon_list.append(weapon)
                 self._weapons_by_name[weapon.name_jp] = weapon
 
+    def _load_monsters(self):
+        names_path = os.path.join(self._mhx_db_path,
+                                  "monster_list.json")
+        hitboxes_path = os.path.join(self._mhx_db_path,
+                                     "monster_hitboxes.json")
+        with open(names_path) as f:
+            names = json.load(f)
+            for i, d in enumerate(names):
+                d["_id"] = -i
+                d["class"] = "Large"
+                self._monsters_by_name[d["name"]] = model.Monster(d)
+        with open(hitboxes_path) as f:
+            damage_map = json.load(f)
+            for name, damage in damage_map.iteritems():
+                mid = self._monsters_by_name[name].id
+                damage_rows = []
+                for part, data in damage.iteritems():
+                    if part.startswith("_"):
+                        continue
+                    row = dict((k.lower(), v) for k, v in data.iteritems())
+                    row["body_part"] = part
+                    row["ko"] = 100 if part == "Head" else 0
+                    row["_id"] = 0
+                    row["monster_id"] = mid
+                    damage_rows.append(row)
+                self._monster_damage[mid] = model.MonsterDamage(damage_rows)
+                self._monster_breaks[mid] = damage["_breaks"]
+
     def get_weapon_by_name(self, name):
         return self._weapons_by_name.get(name)
 
-    def get_monster_by_name(self, *args, **kwargs):
-        return self._4udb.get_monster_by_name(*args, **kwargs)
+    def get_monster_by_name(self, name):
+        m = self._monsters_by_name.get(name)
+        if m and m.id in self._monster_damage:
+            return m
+        return self._4udb.get_monster_by_name(name)
 
-    def get_monster_damage(self, *args, **kwargs):
-        return self._4udb.get_monster_damage(*args, **kwargs)
+    def get_monster_damage(self, monster_id):
+        d = self._monster_damage.get(monster_id)
+        if d:
+            return d
+        return self._4udb.get_monster_damage(monster_id)
 
-    def get_monster_breaks(self, *args, **kwargs):
-        return self._4udb.get_monster_breaks(*args, **kwargs)
+    def get_monster_breaks(self, monster_id):
+        b = self._monster_breaks.get(monster_id)
+        if b:
+            return b
+        return self._4udb.get_monster_breaks(monster_id)
 
     def get_weapons_by_query(self, wtype=None, element=None,
                              final=None):
