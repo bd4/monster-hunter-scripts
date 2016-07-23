@@ -178,6 +178,9 @@ def parse_args(argv):
     parser.add_argument("-x", "--monster-hunter-cross", action="store_true",
                         default=False,
                         help="Assume weapons are true attack, use MHX values")
+    parser.add_argument("-g", "--monster-hunter-gen", action="store_true",
+                        default=False,
+                        help="Assume weapons are true attack, use MHGen values")
     parser.add_argument("-m", "--match", nargs="*",
                     help="WEAPON_TYPE,ELEMENT_OR_STATUS_OR_RAW"
                         +" Include all matching weapons in their final form."
@@ -324,10 +327,15 @@ def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
 if __name__ == '__main__':
     args = parse_args(None)
 
+    game_uses_true_raw = False
     if args.monster_hunter_cross:
         db = MHDBX()
+        game_uses_true_raw = True
+    elif args.monster_hunter_gen:
+        db = MHDB(game="gen")
+        game_uses_true_raw = True
     else:
-        db = MHDB()
+        db = MHDB(game="4u")
     motiondb = MotionValueDB(_pathfix.motion_values_path)
 
     monster = db.get_monster_by_name(args.monster)
@@ -409,7 +417,7 @@ if __name__ == '__main__':
                                      artillery_level=skill_args.artillery,
                                      limit_parts=args.parts,
                                      frenzy_bonus=skill_args.frenzy,
-                                     is_true_attack=args.monster_hunter_cross,
+                                     is_true_attack=game_uses_true_raw,
                                      blunt_power=skill_args.blunt_power)
             print "%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity),
             if wd.etype:

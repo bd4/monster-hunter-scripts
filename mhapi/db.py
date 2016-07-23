@@ -2,7 +2,7 @@
 Module for accessing the sqlite monster hunter db from
 """
 
-import os.path
+import os
 import sqlite3
 import json
 
@@ -19,10 +19,10 @@ def field_model(key):
     return model_fn
 
 
-def _db_path():
+def _db_path(game=None):
     module_path = os.path.dirname(__file__)
     project_path = os.path.abspath(os.path.join(module_path, ".."))
-    return os.path.join(project_path, "db", "mh4u.db")
+    return os.path.join(project_path, "db", "mh%s.db" % game)
 
 
 class MHDB(object):
@@ -46,7 +46,7 @@ class MHDB(object):
 
     # sell has the a value, but not used at the moment
     _decoration_select = """
-        SELECT items._id, items.type, items.name, items.name_jp,
+        SELECT items._id, items.type, items.name,
                items.rarity, decorations.*
         FROM decorations
         LEFT JOIN items ON decorations._id = items._id
@@ -54,13 +54,13 @@ class MHDB(object):
 
     # buy has the armor cost, sell is empty
     _armor_select = """
-        SELECT items._id, items.type, items.name, items.name_jp,
+        SELECT items._id, items.type, items.name,
                items.rarity, items.buy, armor.*
         FROM armor
         LEFT JOIN items ON armor._id = items._id
     """
 
-    def __init__(self, path=None, use_cache=False,
+    def __init__(self, game=None, path=None, use_cache=False,
                  include_item_components=False):
         """
         If use_cache=True, a lot of memory could be used. No attempt is
@@ -70,8 +70,12 @@ class MHDB(object):
         database should make in-memory caching unnecessary for most use
         cases.
         """
+        if game is None:
+            game = os.environ.get("MHAPI_GAME")
+        assert game in ("4u", "gen")
+        self.game = game
         if path is None:
-            path = _db_path()
+            path = _db_path(game)
         self.conn = sqlite3.connect(path)
         self.conn.row_factory = sqlite3.Row
         self.use_cache = use_cache
@@ -315,9 +319,10 @@ class MHDB(object):
     def get_weapons(self):
         # Note: weapons only available via JP DLC have no localized
         # name, filter them out.
-        return self._query_all("weapons", MHDB._weapon_select + """
-                               WHERE items.name != items.name_jp""",
-                               model_cls=model.Weapon)
+        q = MHDB._weapon_select
+        if self.game == "4u":
+            q += "\nWHERE items.name != items.name_jp",
+        return self._query_all("weapons", q, model_cls=model.Weapon)
 
     def get_weapons_by_query(self, wtype=None, element=None,
                              final=None):
@@ -329,7 +334,11 @@ class MHDB(object):
         @final should be string '1' or '0'
         """
         q = MHDB._weapon_select
-        where = ["items.name != items.name_jp"]
+        if self.game == "4u":
+            # filter out non-localized japanese DLC
+            where = ["items.name != items.name_jp"]
+        else:
+            where = []
         args = []
         if wtype is not None:
             where.append("wtype = ?")
@@ -365,8 +374,7 @@ class MHDB(object):
         """, (parent_id,), model_cls=model.Weapon)
 
     def get_armors(self):
-        return self._query_all("armors", MHDB._armor_select + """
-                               WHERE items.name != items.name_jp""",
+        return self._query_all("armors", MHDB._armor_select,
                                model_cls=model.Armor)
 
     def get_armor(self, armor_id):
@@ -404,7 +412,7 @@ class MHDB(object):
 
     def get_skill_trees(self):
         return self._query_all("skill_trees", """
-            SELECT _id, name, name_jp FROM skill_trees
+            SELECT _id, name FROM skill_trees
         """, model_cls=model.SkillTree)
 
     def get_skill_tree_id(self, skill_tree_name):
@@ -419,7 +427,7 @@ class MHDB(object):
     def get_skills(self):
         return self._query_all("skills", """
             SELECT _id, skill_tree_id, required_skill_tree_points,
-                   name, name_jp, description
+                   name, description
             FROM skills
         """, model_cls=model.Skill)
 
@@ -456,7 +464,6 @@ class MHDB(object):
               AND item_to_skill_tree.skill_tree_id IN (%s)
               AND item_to_skill_tree.point_value > 0
               AND armor.hunter_type IN ('Both', ?)
-              AND items.name != items.name_jp
             GROUP BY item_to_skill_tree.item_id
         """ % placeholders, tuple(args), model_cls=model.Armor)
 

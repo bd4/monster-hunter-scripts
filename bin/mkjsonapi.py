@@ -174,8 +174,8 @@ def weapon_json(db, path):
     mkdirs_p(path)
     write_list_file(path, weapons)
 
+    all_data = []
     melodies = {}
-
     indexes = {}
     for w in weapons:
         weapon_path = file_path(path, w)
@@ -193,6 +193,8 @@ def weapon_json(db, path):
                 ]
             data["horn_melodies"] = melodies[w.horn_notes]
 
+        all_data.append(data)
+
         with open(weapon_path, "w") as f:
             json.dump(data, f, cls=model.ModelJSONEncoder, indent=2)
 
@@ -205,6 +207,7 @@ def weapon_json(db, path):
             json.dump(costs, f, cls=model.ModelJSONEncoder, indent=2)
 
     write_index_file(path, indexes)
+    write_all_file(path, all_data)
 
 
 def item_json(db, path):

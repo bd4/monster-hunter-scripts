@@ -192,6 +192,10 @@ class WeaponSharpness(ModelBase):
             self.value_list = db_string_or_list
         else:
             self.value_list = [int(s) for s in db_string_or_list.split(".")]
+        # For MHX, Gen, no purple sharpness, but keep model the same for
+        # simplicity
+        if len(self.value_list) < SharpnessLevel.PURPLE + 1:
+            self.value_list.append(0)
         self._max = None
 
     @property
@@ -210,7 +214,7 @@ class WeaponSharpness(ModelBase):
 
 
 class ItemCraftable(RowModel):
-    _list_fields = ["id", "name", "name_jp"]
+    _list_fields = ["id", "name"]
 
     def __init__(self, item_row):
         super(ItemCraftable, self).__init__(item_row)
@@ -320,7 +324,7 @@ class ItemSkill(RowModel):
 
 
 class SkillTree(RowModel):
-    _list_fields = ["id", "name", "name_jp"]
+    _list_fields = ["id", "name"]
 
     def __init__(self, skill_tree_row):
         super(SkillTree, self).__init__(skill_tree_row)
@@ -343,7 +347,7 @@ class SkillTree(RowModel):
 
 
 class Skill(RowModel):
-    _list_fields = ["id", "name", "name_jp"]
+    _list_fields = ["id", "name"]
     _indexes = { "skill_tree_id":
                  ["id", "required_skill_tree_points", "name", "description"] }
 
@@ -386,26 +390,30 @@ class Weapon(ItemCraftable):
             self.sharpness_plus2 = WeaponSharpness(
                                         self._row["sharpness_plus2"] + [0])
         else:
-            # 4U data from db
+            # 4U or gen data from db
             parts = self._row["sharpness"].split(" ")
-            if len(parts) != 2:
+            if len(parts) == 2:
+                normal, plus = parts
+                plus2 = plus
+            elif len(parts) == 3:
+                normal, plus, plus2 = parts
+            else:
                 raise ValueError("Bad sharpness value in db: '%s'"
                                  % self._row["sharpness"])
-            normal, plus = parts
             self._data["sharpness"] = WeaponSharpness(normal)
             self._data["sharpness_plus"] = WeaponSharpness(plus)
-            self._data["sharpness_plus2"] = WeaponSharpness(plus)
+            self._data["sharpness_plus2"] = WeaponSharpness(plus2)
 
     def is_not_localized(self):
         return (self.name == self.name_jp)
 
 
 class Monster(RowModel):
-    _list_fields = ["id", "class", "name", "name_jp"]
+    _list_fields = ["id", "class", "name"]
 
 
 class Item(RowModel):
-    _list_fields = ["id", "type", "name", "name_jp"]
+    _list_fields = ["id", "type", "name"]
     _indexes = { "name": ["id"],
                  "type": ["id", "name"] }
 
