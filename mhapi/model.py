@@ -361,7 +361,7 @@ class Skill(RowModel):
 
 
 class Weapon(ItemCraftable):
-    _list_fields = ["id", "wtype", "name", "name_jp"]
+    _list_fields = ["id", "wtype", "name"]
     _indexes = { "name": "id",
                  "wtype": ["id", "name"],
                  # subset of all data that can be used for searching and
@@ -405,7 +405,9 @@ class Weapon(ItemCraftable):
             self._data["sharpness_plus2"] = WeaponSharpness(plus2)
 
     def is_not_localized(self):
-        return (self.name == self.name_jp)
+        # Check if first char is ascii, should be the case for all
+        # english weapons, and not for Japanese DLC weapons.
+        return ord(self.name[0]) < 128
 
 
 class Monster(RowModel):

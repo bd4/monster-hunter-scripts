@@ -180,6 +180,14 @@
                   function(data) {
                       set_sharpness_titles(data);
                       set_horn_melodies_title(data);
+                      data["sharpness_plus2"] = null;
+                      data["sharpness_width"] = 1;
+                      if (data["parent_id"]) {
+                          var parent_obj = WEAPON_ID_IDX[data["parent_id"]][0];
+                          data["parent_name"] = parent_obj["name"];
+                      } else {
+                          data["parent_name"] = null;
+                      }
                       var html = template_stats.render(data);
                       $("#weapon_stats").html(html);
                   });

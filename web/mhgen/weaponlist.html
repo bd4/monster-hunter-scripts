@@ -246,8 +246,8 @@
             if (weapon_predicate(state, weapon_data)) {
                 weapon_data["id"] = i;
                 weapon_data["sharpness_width"] = 2;
-                // TODO: link to planner
-                weapon_data["url"] = null;
+                weapon_data["url"] = "weaponplanner.html?weapon="
+                                     + encodeURIComponent(weapon_data["name"]);
                 weapon_data["bug_type"] = null;
                 weapon_data["arc_type"] = null;
                 match_count += 1;

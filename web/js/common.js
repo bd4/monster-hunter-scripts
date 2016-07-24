@@ -144,7 +144,9 @@ function setup_item_autocomplete(selector) {
 
 
 function load_weapon_data(ready_fn) {
-    var DATA_PATH = get_base_path() + "/jsonapi/";
+    if (typeof DATA_PATH == "undefined") {
+        DATA_PATH = get_base_path() + "/jsonapi/";
+    }
     $.getJSON(DATA_PATH + "weapon/_index_name.json",
               function(data) {
                   WEAPON_NAME_IDX = data;

@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 
-  <script type="text/javascript" src="js/ejs_production.js"></script>
+  <script type="text/javascript" src="/js/ejs_production.js"></script>
 
-  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript" src="/js/common.js"></script>
 
   <style>
       label {
@@ -85,10 +85,10 @@
   </style>
 
   <script type="text/javascript">
-    var DATA_PATH = get_base_path() + "/jsonapi/";
+    var DATA_PATH = "/jsonapi/mhgen/";
 
-    var template_path = new EJS({ url: "templates/weaponpath.ejs" });
-    var template_stats = new EJS({ url: "templates/weaponstats.ejs" });
+    var template_path = new EJS({ url: "/templates/weaponpath.ejs" });
+    var template_stats = new EJS({ url: "/templates/weaponstats.ejs" });
 
     $(document).ready(function(){
         setup_weapon_autocomplete("#weapon", autocomplete_predicate,
@@ -135,7 +135,7 @@
     }
 
     function save_state(state, replace) {
-        var url = "/weaponplanner.html?" + encode_qs(state);
+        var url = "/mhgen/weaponplanner.html?" + encode_qs(state);
         if (replace) {
             window.history.replaceState(state, "", url);
         } else {
@@ -170,6 +170,7 @@
     }
 
     function show_trees(weapon_name) {
+        console.log("show_trees '" + weapon_name + "'");
         if (!weapon_name) return;
         weapon_id = WEAPON_NAME_IDX[weapon_name][0];
         console.log("show_trees(" + weapon_name + "): " + weapon_id);
@@ -180,6 +181,13 @@
                   function(data) {
                       set_sharpness_titles(data);
                       set_horn_melodies_title(data);
+                      if (data["parent_id"]) {
+                          var parent_obj = WEAPON_ID_IDX[data["parent_id"]][0];
+                          data["parent_name"] = parent_obj["name"];
+                      } else {
+                          data["parent_name"] = null;
+                      }
+                      data["sharpness_width"] = 2;
                       var html = template_stats.render(data);
                       $("#weapon_stats").html(html);
                   });
