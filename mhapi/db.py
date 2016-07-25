@@ -38,7 +38,7 @@ class MHDB(object):
     """
     # buy and sell are empty, uses weapon.create_cost and upgrade_cost
     _weapon_select = """
-        SELECT items._id, items.type, items.name, items.name_jp,
+        SELECT items._id, items.type, items.name,
                items.rarity, weapons.*
         FROM weapons
         LEFT JOIN items ON weapons._id = items._id
@@ -265,10 +265,17 @@ class MHDB(object):
             WHERE quest_id=?
         """, (quest_id,))
 
+    def get_monster_quests(self, monster_id, rank):
+        return self._query_all("monster_quests", """
+            SELECT DISTINCT quests.* FROM quests, monster_to_quest
+            WHERE monster_to_quest.quest_id = quests._id
+              AND monster_to_quest.monster_id=? AND rank=?
+        """, (monster_id, rank), model_cls=model.Quest)
+
     def get_item_quests(self, item_id):
         """
         Get a list of quests that provide the specified item in quest
-        reqards. Returns a list of quest objects, which encapsulate the
+        rewards. Returns a list of quest objects, which encapsulate the
         quest details and the list of rewards.
         """
         cursor = self.conn.execute("""
@@ -310,6 +317,12 @@ class MHDB(object):
             SELECT * FROM locations
         """, model_cls=model.Location)
 
+    def get_location_quests(self, location_id, rank):
+        return self._query_all("location_quests", """
+            SELECT DISTINCT * FROM quests
+            WHERE location_id=? AND rank=?
+        """, (location_id, rank), model_cls=model.Quest)
+
     def get_monster_damage(self, monster_id):
         return self._query_all("monster_damage", """
             SELECT * FROM monster_damage
@@ -320,8 +333,6 @@ class MHDB(object):
         # Note: weapons only available via JP DLC have no localized
         # name, filter them out.
         q = MHDB._weapon_select
-        if self.game == "4u":
-            q += "\nWHERE items.name != items.name_jp",
         return self._query_all("weapons", q, model_cls=model.Weapon)
 
     def get_weapons_by_query(self, wtype=None, element=None,
@@ -334,11 +345,7 @@ class MHDB(object):
         @final should be string '1' or '0'
         """
         q = MHDB._weapon_select
-        if self.game == "4u":
-            # filter out non-localized japanese DLC
-            where = ["items.name != items.name_jp"]
-        else:
-            where = []
+        where = []
         args = []
         if wtype is not None:
             where.append("wtype = ?")
