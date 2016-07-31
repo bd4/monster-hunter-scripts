@@ -187,10 +187,10 @@
         }
         $("#weapon_final").prop("checked", state["weapon_final"]);
         $("#weapon_name_text").val(state["weapon_name_text"]);
-        $("#village_stars").val(state["village_stars"]);
-        $("#guild_stars").val(state["guild_stars"]);
-        $("#permit_stars").val(state["permit_stars"]);
-        $("#arena_stars").val(state["arena_stars"]);
+        $("#village_stars").val(state["village_stars"] || "Any");
+        $("#guild_stars").val(state["guild_stars"] || "Any");
+        $("#permit_stars").val(state["permit_stars"] || "Any");
+        $("#arena_stars").val(state["arena_stars"] || "Any");
     }
 
     function save_state(state, replace) {
@@ -205,7 +205,8 @@
     function match_stars(match_value, weapon_value) {
         // NOTE: a null weapon_value can be not available, or no data
         // available (should probably fix this)
-        if (match_value == "Any") {
+        if (match_value == "Any" || match_value == ""
+                || match_value == undefined || match_value == null) {
             return true;
         }
         if (match_value == "None") {
@@ -237,6 +238,12 @@
         var permit_stars = state["permit_stars"];
         var arena_stars = state["arena_stars"];
 
+        // do this first to simplify debugging specific weapons that aren't
+        // matching when they should via breakpoints
+        if (weapon_names && !list_match(weapon_names, [weapon_data["name"]])) {
+            return false;
+        }
+
         // allow satisfying quest filter with village or guild, since they
         // involve essentially the same quests, rewards, and mosnters,
         // but if permit or arena filters are set, they must be satisfied
@@ -248,7 +255,7 @@
         if (! match_stars(permit_stars, weapon_data["permit_stars"])) {
             return false;
         }
-        if (! match_stars(village_stars, weapon_data["village_stars"])) {
+        if (! match_stars(arena_stars, weapon_data["arena_stars"])) {
             return false;
         }
 
@@ -270,10 +277,6 @@
             || (weapon_data["awaken"] != null && weapon_data["awaken"] != "")) {
                 return false;
             }
-        }
-
-        if (weapon_names && !list_match(weapon_names, [weapon_data["name"]])) {
-            return false;
         }
 
         return true;
