@@ -76,10 +76,11 @@ class GatherLocation(object):
     """
     Track total expected value for an item in one location/rank.
     """
-    def __init__(self, location_row, rank, gathering_rows):
+    def __init__(self, location_row, rank, gathering_rows, amount=1):
         self.location_id = location_row.id
         self.location_name = location_row["name"]
         self.rank = rank
+        self.amount = amount
         self._rewards = []
         self._ev = 0
         self._explorer_ev = 0
@@ -97,9 +98,10 @@ class GatherLocation(object):
 
     def expected_value(self, explorer=False):
         if explorer:
-            return self._explorer_ev
+            ev = self._explorer_ev
         else:
-            return self._ev
+            ev = self._ev
+        return ev * self.amount
 
     def print(self, out, indent=2):
         for gr in self._rewards:
@@ -174,18 +176,19 @@ class QuestItemExpectedValue(object):
     @param quest_rewards: list of rows from quest_rewards table for a single
                           quest
     """
-    def __init__(self, item_id, quest):
+    def __init__(self, item_id, quest, amount=1):
         self.item_id = item_id
         self.quest = quest
+        self.amount = amount
 
-        self.fixed_rewards = dict(A=0, B=0, Sub=0)
-        self.total_reward_p = dict(A=0, B=0, Sub=0)
+        self.fixed_rewards = dict(A=0, B=0, Sub=0, C=0, D=0)
+        self.total_reward_p = dict(A=0, B=0, Sub=0, C=0, D=0)
         # renormalize percentages if total is > 100
-        self.normalize_reward_p = dict(A=1, B=1, Sub=1)
+        self.normalize_reward_p = dict(A=1, B=1, Sub=1, C=1, D=1)
 
         # dict mapping slot name to list of lists
         # of the form (slot, list_of_expected_values).
-        self.slot_rewards = dict(A=[], B=[], Sub=[])
+        self.slot_rewards = dict(A=[], B=[], Sub=[], C=[], D=[])
         self.total_expected_values = [0, 0, 0, 0]
 
         self._set_rewards(quest.rewards)
@@ -201,7 +204,7 @@ class QuestItemExpectedValue(object):
 
     def expected_value(self, luck_skill=LuckSkill.NONE,
                        cap_skill=None, carving_skill=None):
-        return self.total_expected_values[luck_skill]
+        return self.total_expected_values[luck_skill] * self.amount
 
     def _check_totals(self):
         # sanity check values from the db
@@ -216,7 +219,7 @@ class QuestItemExpectedValue(object):
         # preprocessing step - figure out how many fixed rewards there
         # are, which we need to know in order to figure out how many
         # chances there are to get other rewards.
-        fixed_seen = dict(A=set(), B=set(), Sub=set())
+        fixed_seen = dict(A=set(), B=set(), Sub=set(), C=set(), D=set())
         dups = dict()
         for i in xrange(len(rewards)):
             reward = rewards[i]
@@ -337,7 +340,8 @@ class HuntReward(object):
             self.skill = SKILL_CARVING
             self.cap = True
             self.kill = True
-        elif self.condition == "Body Carve (Apparent Death)":
+        elif (self.condition == "Body Carve (Apparent Death)"
+                or self.condition == "Body Carve (Playing Dead)"):
             # Gypceros fake death
             self.cap = True
             self.kill = True
@@ -351,7 +355,9 @@ class HuntReward(object):
             # Head Carve: Dalamadur
             self.cap = True
             self.kill = True
-        elif self.condition == "Capture":
+        elif self.condition.startswith("Capture"):
+            # TODO: what does Capture 2 mean in mhgen db?? For
+            # multi-monster quests?
             self.skill = SKILL_CAP
             self.cap = True
             self.kill = False
@@ -369,6 +375,11 @@ class HuntReward(object):
             # give more rewards or just higher rarity crystals?
             self.cap = True
             self.kill = True
+        elif self.condition == "???":
+            # Nakarkos in mhgen, not sure what this is for, seems like
+            # another during hunt type of carve
+            self.cap = True
+            self.kill = True
         else:
             if self.condition.startswith("Shiny"):
                 # don't include shiny in total, makes it easier to
@@ -377,11 +388,14 @@ class HuntReward(object):
                 self.cap = False
                 self.kill = False
                 self.shiny = True
-            elif self.condition.startswith("Break"):
+            elif (self.condition.startswith("Break")
+                    or self.condition.startswith("Wound")):
                 self.cap = True
                 self.kill = True
             elif self.condition in ("Bug-Catching Back", "Mining Back",
-                                    "Mining Ore", "Mining Scale"):
+                                    "Mining Ore", "Mining Scale",
+                                    "Body Mining", "Wound Tail",
+                                    "Tail Mining", "Catch Back Insect"):
                 # TODO: it's easy to get more than one here, would be nice
                 # to separate these out like shinys.
                 self.cap = True
@@ -606,11 +620,13 @@ class HuntItemExpectedValue(object):
     @param hunt_rewards: list of rows from hunt_rewards table for a single
                          monster and rank
     """
-    def __init__(self, item_id, monster_name, monster_rank, hunt_rewards):
+    def __init__(self, item_id, monster_name, monster_rank, hunt_rewards,
+                 amount=1):
         self.item_id = item_id
         self.monster_name = monster_name
         self.monster_rank = monster_rank
         self.matching_rewards = []
+        self.amount = amount
         self._set_rewards(hunt_rewards)
 
     def expected_value(self, strategy, luck_skill=None,
@@ -622,7 +638,7 @@ class HuntItemExpectedValue(object):
                                         luck_skill=luck_skill,
                                         cap_skill=cap_skill,
                                         carving_skill=carving_skill)
-        return ev
+        return ev * self.amount
 
     def __nonzero__(self):
         return bool(len(self.matching_rewards))
@@ -704,34 +720,45 @@ class ItemRewards(object):
         self._quest_items = OrderedDict()
         self._gather_items = OrderedDict()
 
-        self._find_gather_items()
-        self._find_hunt_items()
-        self._find_quest_items()
+        if self.item_row.type == "Materials":
+            # MHGen only - materials can be satisfied by multiple items,
+            # and each one is worth a different amount. Instead of
+            # querying for the item itself, query for all the items that
+            # satsisfy the material and scale them.
+            rows = self.db.get_material_items(self.item_id)
+            for row in rows:
+                self._find_gather_items(row["item_id"], row["amount"])
+                self._find_hunt_items(row["item_id"], row["amount"])
+                self._find_quest_items(row["item_id"], row["amount"])
+        else:
+            self._find_gather_items(self.item_id)
+            self._find_hunt_items(self.item_id)
+            self._find_quest_items(self.item_id)
 
     def is_empty(self):
         return (not self._hunt_items and not self._quest_items
                 and not self._gather_items)
 
-    def _find_gather_items(self):
-        gathering_rows = self.db.get_item_gathering(self.item_id)
+    def _find_gather_items(self, item_id, amount=1):
+        gathering_rows = self.db.get_item_gathering(item_id)
         locations = self.db.get_locations()
         for loc in locations:
             for rank in "LR HR G".split():
-                gl = GatherLocation(loc, rank, gathering_rows)
+                gl = GatherLocation(loc, rank, gathering_rows, amount)
                 if gl:
                     key = (loc.id, rank)
                     self._gather_items[key] = gl
 
-    def _find_hunt_items(self):
-        monsters = self.db.get_item_monsters(self.item_id)
+    def _find_hunt_items(self, item_id, amount=1):
+        monsters = self.db.get_item_monsters(item_id)
 
         for m in monsters:
             mid = m["monster_id"]
             rank = m["rank"]
             monster = self.db.get_monster(mid)
             reward_rows = self.db.get_monster_rewards(mid, rank)
-            hunt_item = HuntItemExpectedValue(self.item_id, monster["name"],
-                                              rank, reward_rows)
+            hunt_item = HuntItemExpectedValue(item_id, monster["name"],
+                                              rank, reward_rows, amount)
             if not hunt_item:
                 continue
             key = (mid, rank)
@@ -745,16 +772,16 @@ class ItemRewards(object):
         key = (monster_id, monster_rank)
         return self._hunt_items.get(key)
 
-    def _find_quest_items(self):
+    def _find_quest_items(self, item_id, amount=1):
         """
         Get a list of the quests for acquiring a given item and the probability
         of getting the item, depending on cap or kill and luck skills.
         """
-        quests = self.db.get_item_quests(self.item_id)
+        quests = self.db.get_item_quests(item_id)
         if not quests:
             return
         for q in quests:
-            quest_item = QuestItemExpectedValue(self.item_id, q)
+            quest_item = QuestItemExpectedValue(item_id, q, amount)
             self._quest_items[q.id] = quest_item
             quest_monsters = self.db.get_quest_monsters(quest_item.quest.id)
             hunt_items = []
@@ -827,6 +854,9 @@ class ItemRewards(object):
     def print_recommended_hunts(self, out):
         out.write("*** Poogie Recommends ***\n")
         for rank, skill_sets in self.rank_skill_sets.iteritems():
+            if rank == "G" and self.db.game == "gen":
+                # no G rank in mhgen
+                continue
             no_skill_best = skill_sets["No skills"].best
             if no_skill_best is None:
                 # not available at this rank

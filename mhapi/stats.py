@@ -16,6 +16,10 @@ QUEST_A = "A"
 QUEST_B = "B"
 QUEST_SUB = "Sub"
 
+# In mhgen db, I think you get exactly one of each, but not sure
+QUEST_C = "C"
+QUEST_D = "D"
+
 CARVING_SKILL_NONE = 0
 CARVING_SKILL_PRO = 0 # prevent knockbacks but no extra carves
 CARVING_SKILL_FELYNE_LOW = 1
@@ -89,6 +93,10 @@ def quest_reward_expected_c(line=QUEST_A, luck_skill=LUCK_SKILL_NONE):
     reduce the expected count for the desired item. Just subtract the number
     of fixed items from the output to get the actual value.
     """
+    # TODO: verify this
+    if line in (QUEST_C, QUEST_D):
+        return 1.0
+
     if luck_skill == LUCK_SKILL_NONE:
         extend_p = 22 * 100.0 / 32
     elif luck_skill == LUCK_SKILL_GOOD:

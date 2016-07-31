@@ -32,12 +32,13 @@ if __name__ == '__main__':
 
     err_out = get_utf8_writer(sys.stderr)
 
-    # TODO: doesn't work if script is symlinked
-    db_path = os.path.dirname(sys.argv[0])
-    db_path = os.path.join(db_path, "..", "db", "mh4u.db")
-    db = MHDB(db_path)
+    db = MHDB()
 
-    items = db.get_items(rewards.ITEM_TYPES)
+    if db.game == "gen":
+        items = db.get_items(exclude_types=["Weapon", "Palico Weapon",
+                                            "Armor", "Decoration"])
+    else:
+        items = db.get_items(rewards.ITEM_TYPES)
 
     # write all names json to /items.json
     items_file = os.path.join(outdir, "items.json")
