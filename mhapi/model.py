@@ -641,3 +641,140 @@ def get_costs(db, weapon):
             create_cost["components"][item.name] = item.quantity
         costs = [create_cost] + costs
     return costs
+
+
+class ItemStars(object):
+    """
+    Get the game progress (in hub stars) required to make an item. Caches
+    values.
+    """
+
+    def __init__(self, db):
+        self.db = db
+        self._item_stars = {}   # item id -> stars dict
+        self._weapon_stars = {} # weapon id -> stars dict
+
+    def get_weapon_stars(self, weapon):
+        """
+        Get lowest star levels needed to make weapon, among the different
+        paths available.
+        """
+        stars = self._weapon_stars.get(weapon.id)
+        if stars is not None:
+            return stars
+
+        stars = dict(Village=None, Guild=None, Permit=None, Arena=None)
+        costs = get_costs(self.db, weapon)
+        # find least 'expensive' path
+        for c in costs:
+            current_stars = self._get_component_stars(c)
+            for k, v in current_stars.iteritems():
+                if v is None:
+                    continue
+                if stars[k] is None or v < stars[k]:
+                    stars[k] = v
+        self._weapon_stars[weapon.id] = stars
+        return stars
+
+    def _get_component_stars(self, c):
+        # need to track unititialized vs unavailable
+        stars = dict(Village=0, Guild=0, Permit=0, Arena=0)
+        for item_name in c["components"].keys():
+            item = self.db.get_item_by_name(item_name)
+            if item.type == "Materials":
+                current_stars = self.get_material_stars(item.id)
+            else:
+                current_stars = self.get_item_stars(item.id)
+            # keep track of most 'expensive' item
+            for k, v in current_stars.items():
+                if stars[k] is None:
+                    # another item was unavailable from the hub
+                    continue
+                if v is None:
+                    if k == "Village" and current_stars["Guild"] is not None:
+                        # available from guild and not from village,
+                        # e.g. certain HR parts. Mark entire item as
+                        # unavailable from village, don't allow override.
+                        stars[k] = None
+                    continue
+                if v > stars[k]:
+                    stars[k] = v
+
+        # check for hubs that had no candidate item, and null them out
+        for k in list(stars.keys()):
+            if stars[k] == 0:
+                stars[k] = None
+        return stars
+
+    def get_material_stars(self, material_item_id):
+        """
+        Find the level of the cheapest item that satisfies the material
+        that is not a scrap.
+        """
+        stars = self._item_stars.get(material_item_id)
+        if stars is not None:
+            return stars
+
+        stars = dict(Village=None, Guild=None, Permit=None, Arena=None)
+        rows = self.db.get_material_items(material_item_id)
+        for row in rows:
+            item = self.db.get_item(row["item_id"])
+            if "Scrap" in item.name:
+                continue
+            stars = self.get_item_stars(item.id)
+            break
+        self._item_stars[material_item_id] = stars
+        return stars
+
+    def get_item_stars(self, item_id):
+        stars = self._item_stars.get(item_id)
+        if stars is not None:
+            return stars
+
+        stars = dict(Village=None, Guild=None, Permit=None, Arena=None)
+
+        quests = self.db.get_item_quests(item_id)
+
+        gathering = self.db.get_item_gathering(item_id)
+        gather_locations = set()
+        for gather in gathering:
+            gather_locations.add((gather["location_id"], gather["rank"]))
+        for location_id, rank in list(gather_locations):
+            gather_quests = self.db.get_location_quests(location_id, rank)
+            quests.extend(gather_quests)
+
+        monsters = self.db.get_item_monsters(item_id)
+        monster_ranks = set()
+        for monster in monsters:
+            monster_ranks.add((monster["monster_id"], monster["rank"]))
+        for monster_id, rank in list(monster_ranks):
+            monster_quests = self.db.get_monster_quests(monster_id, rank)
+            quests.extend(monster_quests)
+
+        # find least expensive quest for getting the item
+        for quest in quests:
+            if quest.stars == 0:
+                # ignore training quests
+                if "Training" not in quest.name:
+                    print "Error: non training quest has 0 stars", \
+                        quest.id, quest.name
+                continue
+            if quest.hub in stars:
+                current = stars[quest.hub]
+                if current is None or quest.stars < current:
+                    stars[quest.hub] = quest.stars
+            else:
+                print "Error: unknown hub", quest.hub
+
+        # if available guild or village, then null out permit/arena values,
+        # because they are more useful for filtering if limited to items
+        # exclusively available from permit or arena. Allows matching
+        # on based on meeting specified critera for
+        # (guild or village) and permit and arena.
+        if stars["Village"] or stars["Guild"]:
+            stars["Permit"] = None
+            stars["Arena"] = None
+
+        self._item_stars[item_id] = stars
+        return stars
+

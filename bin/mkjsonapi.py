@@ -174,6 +174,8 @@ def weapon_json(db, path):
     mkdirs_p(path)
     write_list_file(path, weapons)
 
+    item_stars = model.ItemStars(db)
+
     all_data = []
     melodies = {}
     indexes = {}
@@ -192,6 +194,12 @@ def weapon_json(db, path):
                     for melody in db.get_horn_melodies_by_notes(w.horn_notes)
                 ]
             data["horn_melodies"] = melodies[w.horn_notes]
+
+        stars = item_stars.get_weapon_stars(w)
+        data["village_stars"] = stars["Village"]
+        data["guild_stars"] = stars["Guild"]
+        data["permit_stars"] = stars["Permit"]
+        data["arena_stars"] = stars["Arena"]
 
         all_data.append(data)
 

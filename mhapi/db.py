@@ -141,19 +141,26 @@ class MHDB(object):
             WHERE type IN (%s)
         """ % placeholders, tuple(args), model_cls=field_model("name"))
 
-    def get_items(self, item_types=None):
+    def get_items(self, item_types=None, exclude_types=None):
         """
         List of item objects.
         """
         q = "SELECT * FROM items"
+        args = []
         if item_types:
             item_types = sorted(item_types)
             placeholders = ", ".join(["?"] * len(item_types))
             q += "\nWHERE type IN (%s)" % placeholders
-            item_types = tuple(item_types)
+            args.extend(item_types)
+        if exclude_types:
+            exclude_types = sorted(exclude_types)
+            placeholders = ", ".join(["?"] * len(exclude_types))
+            q += "\nWHERE type NOT IN (%s)" % placeholders
+            args.extend(exclude_types)
         else:
-            item_types = ()
-        return self._query_all("items", q, item_types, model_cls=model.Item)
+            args = []
+        args = tuple(args)
+        return self._query_all("items", q, args, model_cls=model.Item)
 
     def get_item(self, item_id):
         """
@@ -177,6 +184,8 @@ class MHDB(object):
         """
         Single wyporium row or None.
         """
+        if self.game != "4u":
+            return None
         return self._query_one("wyporium", """
             SELECT * FROM wyporium
             WHERE item_in_id=?
@@ -513,6 +522,18 @@ class MHDB(object):
             FROM horn_melodies
             WHERE notes=?
         """, (notes,), model_cls=model.HornMelody)
+
+    def get_material_items(self, material_item_id):
+        """
+        Get dict rows of items that satisfy the given material, containing
+        item_id and amount keys. MHGen only.
+        """
+        assert self.game == "gen"
+        return self._query_all("material_items", """
+            SELECT item_id, amount FROM item_to_material
+            WHERE item_to_material.material_item_id = ?
+            ORDER BY amount ASC
+        """, (material_item_id,))
 
     def _add_components(self, key, item_results):
         """

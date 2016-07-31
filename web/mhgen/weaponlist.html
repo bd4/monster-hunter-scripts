@@ -170,14 +170,27 @@
         return { "weapon_type": $("#weapon_type").val(),
                  "weapon_element": $("#weapon_element").val(),
                  "weapon_final": $("#weapon_final").is(":checked"),
-                 "weapon_name_text": $("#weapon_name_text").val() };
+                 "weapon_name_text": $("#weapon_name_text").val(),
+                 "village_stars": $("#village_stars").val(),
+                 "guild_stars": $("#guild_stars").val(),
+                 "permit_stars": $("#permit_stars").val(),
+                 "arena_stars": $("#arena_stars").val() };
     }
 
     function load_state(state) {
         $("#weapon_type").val(state["weapon_type"]);
         $("#weapon_element").val(state["weapon_element"]);
+        final = state["weapon_final"];
+        if (typeof final == "string") {
+            final = final.toLowerCase();
+            state["weapon_final"] = (final == "true" || final == "1");
+        }
         $("#weapon_final").prop("checked", state["weapon_final"]);
         $("#weapon_name_text").val(state["weapon_name_text"]);
+        $("#village_stars").val(state["village_stars"]);
+        $("#guild_stars").val(state["guild_stars"]);
+        $("#permit_stars").val(state["permit_stars"]);
+        $("#arena_stars").val(state["arena_stars"]);
     }
 
     function save_state(state, replace) {
@@ -189,11 +202,55 @@
         }
     }
 
+    function match_stars(match_value, weapon_value) {
+        // NOTE: a null weapon_value can be not available, or no data
+        // available (should probably fix this)
+        if (match_value == "Any") {
+            return true;
+        }
+        if (match_value == "None") {
+            // for None, allow null values, because null can be no requirements
+            // or no data available
+            if (weapon_value != null) {
+                return false;
+            }
+            return true;
+        }
+        // if matching a specific value, require a non-null weapon value
+        if (weapon_value == null) {
+            return false;
+        }
+        match_value = parseInt(match_value);
+        if (weapon_value > match_value) {
+            return false;
+        }
+        return true;
+    }
+
     function weapon_predicate(state, weapon_data) {
         var weapon_type = state["weapon_type"];
         var weapon_element = state["weapon_element"];
         var final_only = state["weapon_final"];
         var weapon_names = state["weapon_name_text"].split("|");
+        var village_stars = state["village_stars"];
+        var guild_stars = state["guild_stars"];
+        var permit_stars = state["permit_stars"];
+        var arena_stars = state["arena_stars"];
+
+        // allow satisfying quest filter with village or guild, since they
+        // involve essentially the same quests, rewards, and mosnters,
+        // but if permit or arena filters are set, they must be satisfied
+        // independently
+        if (! match_stars(village_stars, weapon_data["village_stars"])
+                && ! match_stars(guild_stars, weapon_data["guild_stars"])) {
+            return false;
+        }
+        if (! match_stars(permit_stars, weapon_data["permit_stars"])) {
+            return false;
+        }
+        if (! match_stars(village_stars, weapon_data["village_stars"])) {
+            return false;
+        }
 
         if (final_only && weapon_data["final"] != 1) {
             return false;
@@ -320,6 +377,55 @@
         >Final?</label></td>
     <td><input id="weapon_final" type="checkbox" /></td>
     <td><button id="search">Search</button></td>
+  </tr>
+  <tr>
+    <td colspan="7">
+      <label>Quest Level:</label>
+      <select id="village_stars">
+       <option value="Any">Village Any</option>
+       <option value="1">Village 1*</option>
+       <option value="2">Village 2*</option>
+       <option value="3">Village 3*</option>
+       <option value="4">Village 4*</option>
+       <option value="5">Village 5*</option>
+       <option value="6">Village 6*</option>
+      </select>
+      <select id="guild_stars">
+       <option value="Any">Guild Any</option>
+       <option value="1">Guild 1*</option>
+       <option value="2">Guild 2*</option>
+       <option value="3">Guild 3*</option>
+       <option value="4">Guild 4*</option>
+       <option value="5">Guild 5*</option>
+       <option value="6">Guild 6*</option>
+       <option value="7">Guild 7*</option>
+      </select>
+      <select id="permit_stars">
+       <option value="Any">Permit Any</option>
+       <option value="None">Permit None</option>
+       <option value="1">Permit 1*</option>
+       <option value="2">Permit 2*</option>
+       <option value="3">Permit 3*</option>
+       <option value="4">Permit 4*</option>
+       <option value="5">Permit 5*</option>
+       <option value="6">Permit 6*</option>
+       <option value="7">Permit 7*</option>
+       <option value="8">Permit 8*</option>
+       <option value="9">Permit 9*</option>
+       <option value="10">Permit 10*</option>
+      </select>
+      <select id="arena_stars">
+       <option value="Any">Arena Any</option>
+       <option value="None">Arena None</option>
+       <option value="1">Arena 1*</option>
+       <option value="2">Arena 2*</option>
+       <option value="3">Arena 3*</option>
+       <option value="4">Arena 4*</option>
+       <option value="5">Arena 5*</option>
+       <option value="6">Arena 6*</option>
+       <option value="7">Arena 7*</option>
+      </select>
+    </td>
   </tr>
   <tr>
     <td colspan="7">
