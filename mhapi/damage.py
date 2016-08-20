@@ -21,11 +21,19 @@ def raw_damage(true_raw, sharpness, affinity, monster_hitbox, motion):
     Calculate raw damage to a monster part with the given true raw,
     sharpness, monster raw weakness, and weapon motion value.
     """
-    return floor(true_raw
-                 * SharpnessLevel.raw_modifier(sharpness)
-                 * (1 + (affinity / 400.0))
-                 * motion / 100.0
+    return floor(raw_damage_nohitbox(true_raw, sharpness, affinity, motion)
                  * monster_hitbox / 100.0)
+
+
+def raw_damage_nohitbox(true_raw, sharpness, affinity, motion):
+    """
+    Calculate raw damage to a monster part with the given true raw,
+    sharpness, monster raw weakness, and weapon motion value.
+    """
+    return (true_raw
+            * SharpnessLevel.raw_modifier(sharpness)
+            * (1 + (affinity / 400.0))
+            * motion / 100.0)
 
 
 def element_damage(raw_element, sharpness, monster_ehitbox):
@@ -34,9 +42,17 @@ def element_damage(raw_element, sharpness, monster_ehitbox):
     attack, the given sharpness, and the given monster elemental weakness.
     Note that this is independent of the motion value of the attack.
     """
-    return floor(raw_element
-                 * SharpnessLevel.element_modifier(sharpness)
+    return floor(element_damage_nohitbox(raw_element, sharpness)
                  * monster_ehitbox / 100.0)
+
+
+def element_damage_nohitbox(raw_element, sharpness):
+    """
+    Calculate elemental damage to a monster part with the given elemental
+    attack, the given sharpness, and the given monster elemental weakness.
+    Note that this is independent of the motion value of the attack.
+    """
+    return (raw_element * SharpnessLevel.element_modifier(sharpness))
 
 
 class MotionType(object):
@@ -505,6 +521,52 @@ class WeaponMonsterDamage(object):
                 # attack until broken, then move to next break
                 average += damage.total
         return average / self.break_count
+
+    def compare_break_even(self, other_wd, motion=None):
+        """
+        Compare with another weapon damage, to determine the break even
+        point of the raw/element hitbox. Assumes same element.
+
+        Returns (m, ratio), where ratio is the break even for the ratio of
+        raw hitbox to element hitbox. If m is 1, then self is better
+        when the ratio is larger (favors raw). If m is -1, then self is
+        better when the ratio is smaller (favors element).
+        """
+        r1, e1 = self.nohitbox_damage(motion)
+        r2, e2 = other_wd.nohitbox_damage(motion)
+        #print r1, e1
+        #print r2, e2
+        rdiff = r1 - r2
+        ediff = e2 - e1
+        m = 1
+        if rdiff < 0:
+            m = -1
+        return m, (float(ediff) / rdiff)
+
+    def get_raw_element_ratios(self):
+        # TODO: better MIXED handling
+        if self.damage_type in (WeaponType.CUT, WeaponType.MIXED):
+            raw_type = "cut"
+        else:
+            raw_type = "impact"
+        hitboxes = []
+        for row in self.monster_damage._rows:
+            part = row["body_part"]
+            hitbox = int(row[raw_type])
+            ehitbox = int(row[str(self.etype.lower())])
+            hitboxes.append((part, hitbox, ehitbox, float(hitbox) / ehitbox))
+        return hitboxes
+
+    def nohitbox_damage(self, motion=None):
+        """
+        Note: uses first element only, so not good for dual element DB.
+        """
+        if motion is None:
+            motion = self.motion
+        raw = raw_damage_nohitbox(self.true_raw, self.sharpness,
+                                  self.affinity, motion)
+        element = element_damage_nohitbox(self.eattack, self.sharpness)
+        return (raw, element)
 
     def __getitem__(self, key):
         return self.damage_map[key]

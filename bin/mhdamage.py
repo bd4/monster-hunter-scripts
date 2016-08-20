@@ -186,6 +186,9 @@ def parse_args(argv):
     parser.add_argument("-p", "--parts",
                         help="Limit analysis to specified parts"
                             +" (comma separated list)")
+    parser.add_argument("-o", "--motion", type=int,
+                        help="Use specified motion value instead of weapon "
+                            +"average")
     parser.add_argument("-l", "--phial",
                         help="Show CB phial damage at the sepcified level"
                             +" (1, 2, 3, 5=ultra) instead of normal motion"
@@ -289,6 +292,24 @@ def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
             part_damage = damage_map[part]
             print "% 2d" % part_damage.average(),
         print
+
+    if len(names) > 1:
+        w1 = weapon_damage_map[names_sorted[0]]
+        w2 = weapon_damage_map[names_sorted[1]]
+        m, ratio = w1.compare_break_even(w2)
+        print
+        print "Comparison of '%s' and '%s'" % (
+            names_sorted[0], names_sorted[1])
+        print "Hitbox ratio:", m, "%0.2f" % ratio
+
+        for line in w1.get_raw_element_ratios():
+            line = list(line)
+            if m*line[3] > m*ratio:
+                line.append(names_sorted[0])
+            else:
+                line.append(names_sorted[1])
+            # (part, raw, element, ratio)
+            print "%-22s   %02d  %02d  %0.2f  %s" % tuple(line)
 
 
 def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
@@ -432,6 +453,9 @@ def main():
     motion = motiondb[weapon_type].average
     print "Weapon Type: %s" % weapon_type
     print "Average Motion: %0.1f" % motion
+    if args.motion:
+        motion = args.motion
+        print "Specified Motion: %0.1f" % motion
     print "Monster Breaks: %s" % ", ".join(monster_breaks)
     skill_names = get_skill_names(args)
     print "Common Skills:", ", ".join(skill for skill in skill_names if skill)
