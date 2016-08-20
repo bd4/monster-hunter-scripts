@@ -25,6 +25,13 @@ def _db_path(game=None):
     return os.path.join(project_path, "db", "mh%s.db" % game)
 
 
+ARMOR_HUNTER_TYPES = {
+    "Blade": 0,
+    "Gunner": 1,
+    "Both": 2,
+}
+
+
 class MHDB(object):
     """
     Wrapper around the Android App sqlite3 db. The following conventions
@@ -38,8 +45,7 @@ class MHDB(object):
     """
     # buy and sell are empty, uses weapon.create_cost and upgrade_cost
     _weapon_select = """
-        SELECT items._id, items.type, items.name,
-               items.rarity, weapons.*
+        SELECT items.*, weapons.*
         FROM weapons
         LEFT JOIN items ON weapons._id = items._id
     """
@@ -74,6 +80,16 @@ class MHDB(object):
             game = os.environ.get("MHAPI_GAME")
         assert game in ("4u", "gen")
         self.game = game
+
+        if game == "4u":
+            # filter out non-localized DLC
+            self._weapon_select = (MHDB._weapon_select
+                                  + "WHERE items.name != items.name_jp\n")
+        else:
+            # no filter needed, but having where in all cases simplifies
+            # queries below
+            self._weapon_select = (MHDB._weapon_select
+                                  + "WHERE 1=1\n")
         if path is None:
             path = _db_path(game)
         self.conn = sqlite3.connect(path)
@@ -341,7 +357,7 @@ class MHDB(object):
     def get_weapons(self):
         # Note: weapons only available via JP DLC have no localized
         # name, filter them out.
-        q = MHDB._weapon_select
+        q = self._weapon_select
         return self._query_all("weapons", q, model_cls=model.Weapon)
 
     def get_weapons_by_query(self, wtype=None, element=None,
@@ -353,7 +369,7 @@ class MHDB(object):
 
         @final should be string '1' or '0'
         """
-        q = MHDB._weapon_select
+        q = self._weapon_select
         where = []
         args = []
         if wtype is not None:
@@ -369,24 +385,24 @@ class MHDB(object):
             where.append("final = ?")
             args.append(final)
         if where:
-            q += "WHERE " + "\nAND ".join(where)
+            q += "AND " + "\nAND ".join(where)
         results = self._query_all("weapons", q, tuple(args),
                                   model_cls=model.Weapon)
         return results
 
     def get_weapon(self, weapon_id):
-        return self._query_one("weapon", MHDB._weapon_select + """
-            WHERE weapons._id=?
+        return self._query_one("weapon", self._weapon_select + """
+            AND weapons._id=?
         """, (weapon_id,), model_cls=model.Weapon)
 
     def get_weapon_by_name(self, name):
-        return self._query_one("weapon", MHDB._weapon_select + """
-            WHERE items.name=?
+        return self._query_one("weapon", self._weapon_select + """
+            AND items.name=?
         """, (name,), model_cls=model.Weapon)
 
     def get_weapons_by_parent(self, parent_id):
-        return self._query_all("weapon_by_parent", MHDB._weapon_select + """
-            WHERE weapons.parent_id=?
+        return self._query_all("weapon_by_parent", self._weapon_select + """
+            AND weapons.parent_id=?
         """, (parent_id,), model_cls=model.Weapon)
 
     def get_armors(self):
@@ -467,7 +483,11 @@ class MHDB(object):
     def get_armors_by_skills(self, skill_tree_ids, hunter_type):
         args = sorted(skill_tree_ids)
         placeholders = ", ".join(["?"] * len(skill_tree_ids))
-        args += [hunter_type]
+        both_type = "Both"
+        if self.game == "gen":
+            both_type = ARMOR_HUNTER_TYPES[both_type]
+            hunter_type = ARMOR_HUNTER_TYPES[hunter_type]
+        args += [both_type, hunter_type]
         return self._query_all("decorations", """
             SELECT items._id, items.type, items.name, items.rarity, items.buy,
                    armor.*
@@ -479,7 +499,7 @@ class MHDB(object):
             WHERE items.type = 'Armor'
               AND item_to_skill_tree.skill_tree_id IN (%s)
               AND item_to_skill_tree.point_value > 0
-              AND armor.hunter_type IN ('Both', ?)
+              AND armor.hunter_type IN (?, ?)
             GROUP BY item_to_skill_tree.item_id
         """ % placeholders, tuple(args), model_cls=model.Armor)
 

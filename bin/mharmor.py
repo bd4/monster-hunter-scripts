@@ -38,7 +38,7 @@ def parse_args(argv):
 
 
 def find_armors(args):
-    db = MHDB(_pathfix.db_path)
+    db = MHDB()
 
     skills = {}
     skill_ids = [] # preserve arg order
@@ -113,7 +113,7 @@ def find_armors(args):
         if args.type and a.slot != args.type:
             continue
         total = skill_totals[a.id]
-        print a.id, skill_totals[a.id], a.one_line_u(),
+        print skill_totals[a.id], a.one_line_u(),
         if args.resist:
             print args.resist.title(), a[args.resist + "_res"]
         else:

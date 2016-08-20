@@ -9,7 +9,7 @@ import _pathfix
 
 from mhapi.db import MHDB, MHDBX
 from mhapi.damage import MotionValueDB, WeaponMonsterDamage
-from mhapi.model import SharpnessLevel, Weapon
+from mhapi.model import SharpnessLevel, Weapon, ItemStars
 from mhapi import skills
 from mhapi.util import ELEMENTS, WEAPON_TYPES, WTYPE_ABBR
 
@@ -28,6 +28,25 @@ def weapon_match_tuple(arg):
     if element is not None:
         element = get_element_match(element)
     return (wtype, element)
+
+
+ANY = object()
+def parse_stars(arg):
+    if arg is None:
+        return None
+    arg = arg.lower()
+    if arg in ("*", "any"):
+        return ANY
+    if arg in ("none", ""):
+        return None
+    return int(arg)
+
+
+def quest_level_tuple(arg):
+    parts = arg.split(",")
+    while len(parts) < 4:
+        parts.append(None)
+    return [parse_stars(p) for p in parts]
 
 
 def _make_db_sharpness_string(level_string):
@@ -199,6 +218,9 @@ def parse_args(argv):
                         +" Examples: 'DinoSnS,SnS,190,0,Blue,Fire,30'"
                         +" 'AkantorHam,Hammer,240,25,Green'",
                         type=weapon_stats_tuple, default=[])
+    parser.add_argument("-q", "--quest-level",
+                        help="village,guild[,permit[,arena]]",
+                        type=quest_level_tuple)
     parser.add_argument("monster",
                         help="Full name of monster")
     parser.add_argument("weapon", nargs="*",
@@ -324,7 +346,20 @@ def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
         print "%22s %0.2f (%s)" % (avg_type, base, diff_s)
 
 
-if __name__ == '__main__':
+def match_quest_level(match_level, weapon_level):
+    #print match_level, weapon_level
+    if match_level is ANY:
+        return True
+    if match_level is None:
+        if weapon_level is not None:
+            return False
+        return True
+    if weapon_level is None or weapon_level > match_level:
+        return False
+    return True
+
+
+def main():
     args = parse_args(None)
 
     game_uses_true_raw = False
@@ -332,7 +367,11 @@ if __name__ == '__main__':
         db = MHDBX()
         game_uses_true_raw = True
     elif args.monster_hunter_gen:
-        db = MHDB(game="gen")
+        if args.quest_level:
+            comps = True
+        else:
+            comps = False
+        db = MHDB(game="gen", include_item_components=comps)
         game_uses_true_raw = True
     else:
         db = MHDB(game="4u")
@@ -362,8 +401,12 @@ if __name__ == '__main__':
     for match_tuple in args.match:
         # TODO: better validation
         wtype, element = match_tuple
+        if args.quest_level:
+            final=None
+        else:
+            final=1
         match_weapons = db.get_weapons_by_query(wtype=wtype, element=element,
-                                                final=1)
+                                                final=final)
         for w in match_weapons:
             # skip weapons already explicitly names in arg list.
             # Especially useful in diff mode.
@@ -398,12 +441,34 @@ if __name__ == '__main__':
     else:
         limit_parts = None
 
+    if args.quest_level:
+        village, guild, permit, arena = args.quest_level
+        print "Filter by Quest Levels:", args.quest_level
+        weapons2 = dict()
+        for w in weapons:
+            if (not match_quest_level(village, w["village_stars"])
+                    and not match_quest_level(guild, w["guild_stars"])):
+                continue
+            if not match_quest_level(permit, w["permit_stars"]):
+                continue
+            if not match_quest_level(arena, w["arena_stars"]):
+                continue
+            weapons2[w.id] = w
+        parent_ids = set(w.parent_id for w in weapons2.values())
+        for wid in weapons2.keys():
+            if wid in parent_ids:
+                del weapons2[wid]
+        weapons = weapons2.values()
+        names = [w.name for w in weapons]
+
     weapon_damage_map = dict()
     for row in weapons:
         name = row["name"]
         row_type = row["wtype"]
         if row_type != weapon_type:
-            raise ValueError("Weapon '%s' is different type" % name)
+            raise ValueError(
+                    "Weapon '%s' is different type, got '%s' expected '%s'"
+                    % (name, row_type, weapon_type))
         try:
             skill_args = skill_args_map.get(name, args)
             wd = WeaponMonsterDamage(row,
@@ -456,3 +521,6 @@ if __name__ == '__main__':
         print_sorted_damage(names, damage_map_base,
                             weapon_damage_map, parts)
 
+
+if __name__ == '__main__':
+    main()

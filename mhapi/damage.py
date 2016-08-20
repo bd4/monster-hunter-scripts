@@ -214,7 +214,7 @@ class WeaponMonsterDamage(object):
             self.sharpness = self.weapon.sharpness.max
         #print "sharpness=", self.sharpness
         if self.weapon["affinity"]:
-            if (isinstance(self.weapon["affinity"], str)
+            if (isinstance(self.weapon["affinity"], basestring)
             and "/" in self.weapon["affinity"]):
                 self.chaotic = True
                 # Handle chaotic gore affinity, e.g. -35/10. This means that

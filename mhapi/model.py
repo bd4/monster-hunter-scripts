@@ -85,7 +85,7 @@ class RowModel(ModelBase):
         data[key_value].append(item)
 
     def __str__(self):
-        if "name" in self._data:
+        if "name" in self._data and self.name is not None:
             name = urllib.quote(self.name, safe=" ")
         else:
             name = str(self.id)
