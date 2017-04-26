@@ -11,7 +11,7 @@ from mako.runtime import Context
 
 import _pathfix
 
-from mhapi.db import MHDB
+#from mhapi.db import MHDB
 from mhapi.util import get_utf8_writer
 
 tlookup = TemplateLookup(directories=["templates/translate"],
@@ -86,7 +86,7 @@ def _main():
         ctx = Context(f)
         index_template.render_context(ctx)
 
-    db = MHDB()
+    #db = MHDB(game="mhx")
     #strees = db.get_skill_trees()
     #items = db.get_items(item_types=("Tool", "Book", "Consumable", "Ammo"))
     #gather_items = db.get_items(item_types=
@@ -94,7 +94,7 @@ def _main():
 
     #carve_items = db.get_items(item_types=("Flesh",))
 
-    stree_path = os.path.join(_pathfix.project_path, "db", "mhx",
+    stree_path = os.path.join(_pathfix.project_path, "db", "mhxx",
                               "skill_tree_list.json")
     with open(stree_path) as f:
         stree_list = json.load(f)
@@ -154,7 +154,7 @@ def _main():
     #             ha_list, ("name_jp", "name", "section", "description"),
     #             jplen_sort_fn, divider_fn=jplen_divider_fn)
 
-    monster_path = os.path.join(_pathfix.project_path, "db", "mhx",
+    monster_path = os.path.join(_pathfix.project_path, "db", "mhxx",
                                 "monster_list.json")
     with open(monster_path) as f:
         monster_list = json.load(f)

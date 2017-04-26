@@ -57,7 +57,7 @@ def parse_wikia_monsters(f):
             section = m.group(1)
             print >>sys.stderr, "section", section
             continue
-        if section != "Large Monsters":
+        if section not in ["Large Monsters", "Small Monsters"]:
             continue
         for m in MONSTER_LINK_RE.finditer(line):
             monster = dict(href=m.group(1), name=m.group(2))

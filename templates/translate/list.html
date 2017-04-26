@@ -44,6 +44,8 @@
        % elif icon_prev:
     ${value}</div>
        <% icon_prev = False %>
+       % elif k == "name" and item.get("new", False):
+    <div class="pure-u-1-2">${value} <small>[XX]</small></div>
        % else:
     <div class="pure-u-1-2">${value}</div>
        % endif
