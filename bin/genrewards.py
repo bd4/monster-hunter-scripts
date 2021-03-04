@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 Script to generate static rewards files for all items.
 """
@@ -33,11 +33,16 @@ if __name__ == '__main__':
     err_out = get_utf8_writer(sys.stderr)
 
     # TODO: doesn't work if script is symlinked
-    db_path = os.path.dirname(sys.argv[0])
-    db_path = os.path.join(db_path, "..", "db", "mh4u.db")
-    db = MHDB(db_path)
+    #db_path = os.path.dirname(sys.argv[0])
+    #db_path = os.path.join(db_path, "..", "db", "mh4u.db")
+    # Determinen game from MHAPI_GAME and path based on game.
+    db = MHDB()
 
-    items = db.get_items(rewards.ITEM_TYPES)
+    if db.game == "gu":
+        items = db.get_items(exclude_types=[
+            "Palico Armor", "Palico Weapon", "Weapon", "Armor", "Decoration"])
+    else:
+        items = db.get_items(rewards.ITEM_TYPES)
 
     # write all names json to /items.json
     items_file = os.path.join(outdir, "items.json")

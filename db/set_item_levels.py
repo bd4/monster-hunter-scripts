@@ -30,7 +30,7 @@ def _set_stars(cursor, item_id, stars):
 
 
 def main():
-    db = MHDB(game="gen", include_item_components=True)
+    db = MHDB(include_item_components=True)
     item_stars = ItemStars(db)
 
     c = db.cursor()

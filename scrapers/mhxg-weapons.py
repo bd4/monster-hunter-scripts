@@ -6,6 +6,7 @@ import os
 import json
 import sys
 import codecs
+import errno
 
 from lxml import etree
 
@@ -414,6 +415,11 @@ def _parse_sharpness_td(td_element):
 
 def _main():
     tmp_path = os.path.join(_pathfix.project_path, "tmp")
+    try:
+        os.mkdir(tmp_path)
+    except OSError as e:
+        if e.errno != errno.EEXISTS:
+            raise
     weapon_list = []
     parser = etree.HTMLParser()
     for wtype, urls in _WEAPON_URLS.iteritems():

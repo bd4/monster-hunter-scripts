@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import sys
 import argparse
@@ -203,6 +203,9 @@ def parse_args(argv):
     parser.add_argument("-g", "--monster-hunter-gen", action="store_true",
                         default=False,
                         help="Assume weapons are true attack, use MHGen values")
+    parser.add_argument("--mhw", "--monster-hunter-world", action="store_true",
+                        default=False,
+                        help="Adjusted attack, use MHWorld values")
     parser.add_argument("-m", "--match", nargs="*",
                     help="WEAPON_TYPE,ELEMENT_OR_STATUS_OR_RAW"
                         +" Include all matching weapons in their final form."
@@ -392,8 +395,11 @@ def main():
             comps = True
         else:
             comps = False
-        db = MHDB(game="gen", include_item_components=comps)
+        db = MHDB(game="gu", include_item_components=comps)
         game_uses_true_raw = True
+    elif args.monster_hunter_world:
+        db = MHDBX(game="mhw")
+        game_uses_true_raw = False
     else:
         db = MHDB(game="4u")
     motiondb = MotionValueDB(_pathfix.motion_values_path)

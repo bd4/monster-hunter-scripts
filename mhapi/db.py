@@ -78,7 +78,7 @@ class MHDB(object):
         """
         if game is None:
             game = os.environ.get("MHAPI_GAME")
-        assert game in ("4u", "gen")
+        assert game in ("4u", "gen", "gu")
         self.game = game
 
         if game == "4u":
@@ -173,8 +173,6 @@ class MHDB(object):
             placeholders = ", ".join(["?"] * len(exclude_types))
             q += "\nWHERE type NOT IN (%s)" % placeholders
             args.extend(exclude_types)
-        else:
-            args = []
         args = tuple(args)
         return self._query_all("items", q, args, model_cls=model.Item)
 
@@ -484,7 +482,7 @@ class MHDB(object):
         args = sorted(skill_tree_ids)
         placeholders = ", ".join(["?"] * len(skill_tree_ids))
         both_type = "Both"
-        if self.game == "gen":
+        if self.game in ("gen", "gu"):
             both_type = ARMOR_HUNTER_TYPES[both_type]
             hunter_type = ARMOR_HUNTER_TYPES[hunter_type]
         args += [both_type, hunter_type]
@@ -548,7 +546,7 @@ class MHDB(object):
         Get dict rows of items that satisfy the given material, containing
         item_id and amount keys. MHGen only.
         """
-        assert self.game == "gen"
+        assert self.game in ("gen", "gu")
         return self._query_all("material_items", """
             SELECT item_id, amount FROM item_to_material
             WHERE item_to_material.material_item_id = ?
@@ -589,19 +587,19 @@ class MHDB(object):
 
 class MHDBX(object):
     """
-    Wrapper around Monster Hunter Cross (X) JSON data. Attempts limited
+    Wrapper around Monster Hunter JSON data, default to MHX. Attempts limited
     compatibility with original 4U MHDB class.
 
-    Uses MHDB object, as temporariy hack for MHX data that is not yet
+    Uses MHDB object, as temporariy hack for MHX/World data that is not yet
     available or integrated.
     """
-    def __init__(self):
+    def __init__(self, game="mhx"):
         """
         Loads JSON data, keeps in memory.
         """
         module_path = os.path.dirname(__file__)
         self._mhx_db_path = os.path.abspath(os.path.join(module_path, "..",
-                                            "db", "mhx"))
+                                            "db", game))
         self._4udb = MHDB()
         self._weapon_list = []
         self._weapons_by_name = {}

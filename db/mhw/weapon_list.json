@@ -1,0 +1,51 @@
+[
+  {
+    "element_attack": null, 
+    "parent": null, 
+    "sharpness": [
+      8, 
+      7, 
+      4, 
+      14, 
+      2, 
+      0
+    ], 
+    "element_2_attack": null, 
+    "phial": null, 
+    "defense": 0, 
+    "shelling_type": null, 
+    "bug_type": null, 
+    "awaken": null, 
+    "sharpness_plus2": [
+      8, 
+      7, 
+      4, 
+      14, 
+      5, 
+      2
+    ], 
+    "num_slots": 0, 
+    "element_2": null, 
+    "name": "\u30d9\u30eb\u30c0\u30fc\u30e9\u30f3\u30b9", 
+    "url": "http://wiki.mhxg.org/ida/219227.html", 
+    "wtype": "Lance", 
+    "shot_types": null, 
+    "name_jp": "\u30d9\u30eb\u30c0\u30fc\u30e9\u30f3\u30b9", 
+    "sharpness_plus": [
+      8, 
+      7, 
+      4, 
+      14, 
+      5, 
+      0
+    ], 
+    "element": null, 
+    "attack": 60, 
+    "href": "/ida/219227.html", 
+    "affinity": 0, 
+    "arc_type": null, 
+    "final": 0, 
+    "ammo": null, 
+    "horn_notes": null
+  }, 
+]

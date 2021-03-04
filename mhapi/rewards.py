@@ -19,7 +19,7 @@ STRAT_SHINY = "shiny"
 STRAT_CAP_OR_KILL = "cap/kill"
 
 
-ITEM_TYPES = "Bone Bug Coin/Ticket Fish Flesh Meat Ore Plant Sac/Fluid".split()
+ITEM_TYPES = "Materials Bone Bug Coin/Ticket Fish Flesh Meat Ore Plant Sac/Fluid".split()
 
 
 def _format_range(min_v, max_v):

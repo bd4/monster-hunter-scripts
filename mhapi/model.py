@@ -162,6 +162,7 @@ class SharpnessLevel(EnumBase):
         PURPLE: (1.44, 1.20),
     }
 
+    # for mhx, mhgen, mhxx, and likely mhw
     _modifier_mhx = {
         RED:    (0.50, 0.25),
         ORANGE: (0.75, 0.50),
