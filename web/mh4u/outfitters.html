@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 
-  <script type="text/javascript" src="js/ejs_production.js"></script>
+  <script type="text/javascript" src="/js/ejs_production.js"></script>
 
-  <script src="js/common.js"></script>
+  <script src="/js/common.js"></script>
 
   <style>
       label {
@@ -34,7 +34,7 @@
   </style>
 
   <script type="text/javascript">
-    var DATA_PATH = get_base_path() + "/jsonapi/";
+    var DATA_PATH = "/jsonapi/mh4u/";
     var TYPES = ["Head", "Body", "Arms", "Waist", "Legs"];
     var GEAR = ["Weapon", "Head", "Body", "Arms", "Waist", "Legs", "Talisman"];
     var ELEMENTS = ["fire", "water", "thunder", "ice", "dragon"];
@@ -60,9 +60,9 @@
                         "Waist": [], "Legs": [], "Weapon": [] };
     var slots_left = {};
 
-    var template_skills = new EJS({ url: "templates/skills.ejs" });
-    var template_resist = new EJS({ url: "templates/resistance.ejs" });
-    var template_decorations = new EJS({ url: "templates/decorations.ejs" });
+    var template_skills = new EJS({ url: "/templates/skills.ejs" });
+    var template_resist = new EJS({ url: "/templates/resistance.ejs" });
+    var template_decorations = new EJS({ url: "/templates/decorations.ejs" });
 
     $(document).ready(function(){
         $.getJSON(DATA_PATH + "armor/_index_name.json",
