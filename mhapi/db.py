@@ -157,22 +157,30 @@ class MHDB(object):
             WHERE type IN (%s)
         """ % placeholders, tuple(args), model_cls=field_model("name"))
 
-    def get_items(self, item_types=None, exclude_types=None):
+    def get_items(self, item_types=None, exclude_types=None, wyporium=False):
         """
         List of item objects.
         """
-        q = "SELECT * FROM items"
+        fields = ["items.*"]
+        where = []
         args = []
         if item_types:
             item_types = sorted(item_types)
             placeholders = ", ".join(["?"] * len(item_types))
-            q += "\nWHERE type IN (%s)" % placeholders
+            where.append("WHERE type IN (%s)" % placeholders)
             args.extend(item_types)
         if exclude_types:
             exclude_types = sorted(exclude_types)
             placeholders = ", ".join(["?"] * len(exclude_types))
-            q += "\nWHERE type NOT IN (%s)" % placeholders
+            where.append("WHERE type NOT IN (%s)" % placeholders)
             args.extend(exclude_types)
+        if wyporium:
+            where.append("LEFT JOIN wyporium AS w ON w.item_in_id = items._id")
+            where.append(
+              "LEFT JOIN items AS wi ON w.item_out_id = wi._id")
+            fields += ["w.item_out_id AS wyporium_item_id",
+                       "wi.name AS wyporium_item_name"]
+        q = "SELECT " + ", ".join(fields) + " FROM items " + "\n".join(where)
         args = tuple(args)
         return self._query_all("items", q, args, model_cls=model.Item)
 
@@ -204,6 +212,27 @@ class MHDB(object):
             SELECT * FROM wyporium
             WHERE item_in_id=?
         """, (item_id,))
+
+    def get_wyporium_trades(self):
+        """
+        Single wyporium row or None.
+        """
+        if self.game != "4u":
+            return None
+        return self._query_all("wyporium", """
+            SELECT items.*,
+              wyporium.item_out_id AS wyporium_item_id,
+              trade_items.name AS wyporium_item_name,
+              quests._id   AS wyporium_quest_id,
+              quests.name  AS wyporium_quest_name,
+              quests.hub   AS wyporium_quest_hub,
+              quests.stars AS wyporium_quest_stars,
+              quests.rank  AS wyporium_quest_rank
+            FROM wyporium
+            JOIN items ON items._id = wyporium.item_in_id
+            JOIN items AS trade_items ON trade_items._id = wyporium.item_out_id
+            JOIN quests ON wyporium.unlock_quest_id == quests._id
+        """, model_cls=model.Item)
 
     def search_item_name(self, term, item_type=None):
         """

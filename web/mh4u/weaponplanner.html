@@ -86,9 +86,22 @@
 
   <script type="text/javascript">
     var DATA_PATH = "/jsonapi/mh4u/";
+    var WYPORIUM_MAP = {};
 
     var template_path = new EJS({ url: "/templates/weaponpath.ejs" });
     var template_stats = new EJS({ url: "/templates/weaponstats.ejs" });
+
+    $.ajax({
+        url: DATA_PATH + "wyporium/_map.json",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+           $.each(data, function(id, item) {
+             WYPORIUM_MAP[item["name"]] = item["wyporium_item_name"];
+           });
+           console.log("wyporium count " + WYPORIUM_MAP.length);
+        }
+    });
 
     $(document).ready(function(){
         setup_weapon_autocomplete("#weapon", autocomplete_predicate,
@@ -234,6 +247,16 @@
                           }
                           path["delta"] = delta;
                           path["component_list"].sort();
+                          path["trade_names"] = [];
+                          for (j=0; j<all_components.length; j++) {
+                              var name = all_components[j];
+                              if (name in WYPORIUM_MAP) {
+                                  path["trade_names"][j] = WYPORIUM_MAP[name];
+                              } else {
+                                  path["trade_names"][j] = "";
+                              }
+                          }
+ 
                           var html = template_path.render(path);
                           $("#results").append(html);
                       }

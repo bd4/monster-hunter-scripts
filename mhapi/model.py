@@ -654,6 +654,15 @@ class ItemStars(object):
         self.db = db
         self._item_stars = {}   # item id -> stars dict
         self._weapon_stars = {} # weapon id -> stars dict
+        self._wyporium_trades = {}
+
+        if self.db.game == "4u":
+            self.init_wyporium_trades()
+
+    def init_wyporium_trades(self):
+        trades = self.db.get_wyporium_trades()
+        for item in trades:
+            self._wyporium_trades[item.id] = item
 
     def get_weapon_stars(self, weapon):
         """
@@ -724,7 +733,10 @@ class ItemStars(object):
             item = self.db.get_item(row["item_id"])
             if "Scrap" in item.name:
                 continue
-            stars = self.get_item_stars(item.id)
+            istars = self.get_item_stars(item.id)
+            for k, v in stars.items():
+                if istars[k] > v:
+                    stars[k] = istars[k]
             break
         self._item_stars[material_item_id] = stars
         return stars
@@ -736,6 +748,16 @@ class ItemStars(object):
 
         stars = dict(Village=None, Guild=None, Permit=None, Arena=None,
                      Event=None)
+
+        # for 4u wyporium trade items, use the stars from the unlock quest
+        trade = self._wyporium_trades.get(item_id)
+        if trade is not None:
+            hub = trade.wyporium_quest_hub
+            if hub == "Caravan":
+                hub = "Village"
+            stars[hub] = trade.wyporium_quest_stars
+            self._item_stars[item_id] = stars
+            return stars
 
         quests = self.db.get_item_quests(item_id)
 

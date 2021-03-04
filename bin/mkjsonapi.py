@@ -14,7 +14,7 @@ from mhapi import model
 
 ENTITIES = """item weapon monster armor
               skilltree skill decoration
-              horn_melody""".split()
+              horn_melody wyporium""".split()
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=
@@ -23,6 +23,7 @@ def parse_args(argv=None):
     parser.add_argument("-o", "--outpath",
                         help="output base directory, defaults to web/jsonapi/"
                              " in project root")
+    parser.add_argument("-g", "--game", help="game, one of 4u, gu, gen")
     parser.add_argument("entities", nargs="*",
                         help=", ".join(ENTITIES))
     return parser.parse_args(argv)
@@ -66,6 +67,12 @@ def write_all_file(path, all_data):
     all_path = os.path.join(path, "_all.json")
     with open(all_path, "w") as f:
         json.dump(all_data, f, cls=model.ModelJSONEncoder, indent=2)
+
+
+def write_map_file(path, map_data):
+    map_path = os.path.join(path, "_map.json")
+    with open(map_path, "w") as f:
+        json.dump(map_data, f, cls=model.ModelJSONEncoder, indent=2)
 
 
 def monster_json(db, path):
@@ -219,9 +226,13 @@ def weapon_json(db, path):
 
 
 def item_json(db, path):
-    items = db.get_items()
+    if db.game == "4u":
+        items = db.get_items(wyporium=True)
+    else:
+        items = db.get_items()
     mkdirs_p(path)
     write_list_file(path, items)
+
 
     indexes = {}
     for item in items:
@@ -231,6 +242,21 @@ def item_json(db, path):
             item.json_dump(f)
 
     write_index_file(path, indexes)
+
+
+def wyporium_json(db, path):
+    trade_map = {}
+    for item in db.get_wyporium_trades():
+        trade_map[item.id] = dict(id=item.id,
+                                  name=item.name)
+        all_data = item.as_data()
+        for k in all_data.keys():
+            if not k.startswith("wyporium"):
+                continue
+            trade_map[item.id][k] = all_data[k]
+        print trade_map
+    mkdirs_p(path)
+    write_map_file(path, trade_map)
 
 
 def horn_melody_json(db, path):
@@ -246,9 +272,9 @@ def horn_melody_json(db, path):
 
 
 def main():
-    db = MHDB(include_item_components=True)
-
     args = parse_args()
+
+    db = MHDB(game=args.game, include_item_components=True)
 
     if not args.outpath:
         args.outpath = os.path.join(_pathfix.web_path, "jsonapi")
@@ -260,6 +286,9 @@ def main():
                 sys.exit(1)
     else:
         args.entities = ENTITIES
+
+    if db.game != "4u":
+        args.entities.remove("wyporium")
 
     for entity in args.entities:
         fn = globals()["%s_json" % entity]
