@@ -44,20 +44,20 @@
   </style>
 </head>
 <body>
-<form action="recommends.html" method="GET">
+<form action="mh4u/recommends.html" method="GET">
  <fieldset>
   <legend title="Find the best quests and armor skills for farming an item."
-        >Poogie Recommends</legend>
+        >Poogie Recommends (4U)</legend>
   <label for="item">Item:</label>
   <input id="item" name="item" type="text" size="20" />
   <input type="submit" value="Ask Poogie" />
   <p></p>
  </fieldset>
 </form>
-<form action="weaponplanner.html" method="GET">
+<form action="mh4u/weaponplanner.html" method="GET">
  <fieldset>
   <legend title="Compare the cost of making a weapon from different starting points in the tree"
-    >Poogie's Weapon Planner</legend>
+    >Poogie's Weapon Planner (4U)</legend>
   <table>
   <tr>
     <td><label for="type">Type:</label></td>
@@ -84,16 +84,40 @@
     <td><input id="weapon" name="weapon" weapon="text" size="20" />
     <input type="submit" value="Ask Poogie" /></td>
   </tr>
+  <tr><td colspan="2">Weapon Search:
+      (<a href="mh4u/weaponlist.html">MH4U</a>,
+       <a href="mhx/weaponlist.html">MHX</a>,
+       <a href="mhgen/weaponlist.html">MHGen</a>,
+       <a href="mhgu/weaponlist.html">MHGU</a>)</td></tr>
   </table>
  </fieldset>
 </form>
  <fieldset>
-  <legend title="Plan armor sets">Poogie Outfitters</legend>
-  <a href="outfitters.html">Armor set planner</a>
+  <legend title="Plan armor sets">Poogie Outfitters (4U)</legend>
+  <a href="mh4u/outfitters.html">Armor set planner</a>
  </fieldset>
  <br />
  <fieldset>
-  <legend title="Mobile friendly translation guide">Poogie トランスレーター</legend>
-  <a href="translate/">English to Japanese translation guide</a>
+  <legend title="Mobile friendly translation guide">Poogie トランスレーター (MHX)</legend>
+  <a href="translate/">English to Japanese translation guide</a> (mobile friendly)
  </fieldset>
+
+<h2>Acknowledgements</h2>
+Data is primary from the excellent 4U and Gen android apps:
+<ul>
+<li><a href="https://github.com/kamegami13/MonsterHunter4UDatabase">MonsterHunter4UDatabase</a></li>
+<li><a href="https://github.com/gatheringhallstudios/MHGenDatabase">MHGenDatabase</a></li>
+</ul>
+
+Also sourced for MHX translation and weapon data:
+<ul>
+<li><a href="http://monsterhunter.wikia.com/wiki/MHX"
+       >Monster Hunter X Wiki (Wikia)</a></li>
+<li><a href="http://wiki.mhxg.org/"
+       >http://wiki.mhxg.org/</a></li>
+</ul>
+
+<hr />
+If you find errors or have suggestions, email poogie at mhapi.info,
+or contact <a href="https://www.reddit.com/u/bda82">/u/bda82</a> on reddit.
 </body>

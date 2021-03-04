@@ -1,15 +1,15 @@
 <html>
 <head>
-  <title>Poogie's Weapon List</title>
+  <title>Poogie's Weapon List (MH4U)</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 
-  <script type="text/javascript" src="js/ejs_production.js"></script>
+  <script type="text/javascript" src="../js/ejs_production.js"></script>
 
-  <script type="text/javascript" src="js/common.js"></script>
+  <script type="text/javascript" src="../js/common.js"></script>
 
   <style>
       label {
@@ -97,14 +97,32 @@
   </style>
 
   <script type="text/javascript">
-    var DATA_PATH = get_base_path() + "/jsonapi/";
+    var WEAPON_LIST = null;
+    var HORN_MELODY_MAP = null;
 
-    var template_row = new EJS({ url: "templates/weaponrow.ejs" });
+    $.ajax({
+        url: "../jsonapi/mh4u/weapon/_all.json",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            WEAPON_LIST = data;
+            console.log("weapon count " + WEAPON_LIST.length);
+        }
+    });
+
+    $.ajax({
+        url: "../jsonapi/mh4u/horn_melody/_index_notes.json",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            HORN_MELODY_MAP = data;
+        }
+    });
+
+    var template_row = new EJS({ url: "../templates/weaponrow.ejs" });
 
     $(document).ready(function(){
-        load_weapon_data(function() {
-            load_calculating_palico_data(init_page);
-        });
+        init_page();
 
         $("#sharpness_popup").on("click", function(evt) {
             $(this).html("").offset({top:0, left:0}).hide();
@@ -119,7 +137,7 @@
     });
 
     function init_page() {
-        var state = load_qs();
+        var qs = load_qs();
         $(window).on("popstate", function(e) {
             var oe = e.originalEvent;
             if (oe.state !== null) {
@@ -133,8 +151,8 @@
             update_weapon_list(state);
         });
 
-        if (state) {
-            update_weapon_list(state);
+        if (qs) {
+            update_weapon_list(qs);
         }
     }
 
@@ -151,15 +169,26 @@
                  "weapon_element": $("#weapon_element").val(),
                  "weapon_final": $("#weapon_final").is(":checked"),
                  "weapon_name_text": $("#weapon_name_text").val(),
-                 "weapon_component_text": $("#weapon_component_text").val() };
+                 "weapon_component_text": $("#weapon_component_text").val(),
+                 "village_stars": $("#village_stars").val(),
+                 "guild_stars": $("#guild_stars").val(),
+                 "arena_stars": $("#arena_stars").val() };
     }
 
     function load_state(state) {
         $("#weapon_type").val(state["weapon_type"]);
         $("#weapon_element").val(state["weapon_element"]);
+        final = state["weapon_final"];
+        if (typeof final == "string") {
+            final = final.toLowerCase();
+            state["weapon_final"] = (final == "true" || final == "1");
+        }
         $("#weapon_final").prop("checked", state["weapon_final"]);
         $("#weapon_name_text").val(state["weapon_name_text"]);
         $("#weapon_component_text").val(state["weapon_component_text"]);
+        $("#village_stars").val(state["village_stars"] || "Any");
+        $("#guild_stars").val(state["guild_stars"] || "Any");
+        $("#arena_stars").val(state["arena_stars"] || "Any");
     }
 
     function save_state(state, replace) {
@@ -171,11 +200,58 @@
         }
     }
 
+    function match_stars(match_value, weapon_value) {
+        // NOTE: a null weapon_value can be not available, or no data
+        // available (should probably fix this)
+        if (match_value == "Any" || match_value == ""
+                || match_value == undefined || match_value == null) {
+            return true;
+        }
+        if (match_value == "None") {
+            // for None, allow null values, because null can be no requirements
+            // or no data available
+            if (weapon_value != null) {
+                return false;
+            }
+            return true;
+        }
+        // if matching a specific value, require a non-null weapon value
+        if (weapon_value == null) {
+            return false;
+        }
+        match_value = parseInt(match_value);
+        if (weapon_value > match_value) {
+            return false;
+        }
+        return true;
+    }
+
     function weapon_predicate(state, weapon_data) {
         var weapon_type = state["weapon_type"];
         var weapon_element = state["weapon_element"];
         var final_only = state["weapon_final"];
         var weapon_names = state["weapon_name_text"].split("|");
+        var village_stars = state["village_stars"];
+        var guild_stars = state["guild_stars"];
+        var arena_stars = state["arena_stars"];
+
+        // do this first to simplify debugging specific weapons that aren't
+        // matching when they should via breakpoints
+        if (weapon_names && !list_match(weapon_names, [weapon_data["name"]])) {
+            return false;
+        }
+
+        // allow satisfying quest filter with village or guild, since they
+        // involve essentially the same quests, rewards, and monsters,
+        // but if permit or arena filters are set, they must be satisfied
+        // independently
+        if (! match_stars(village_stars, weapon_data["village_stars"])
+                && ! match_stars(guild_stars, weapon_data["guild_stars"])) {
+            return false;
+        }
+        if (! match_stars(arena_stars, weapon_data["arena_stars"])) {
+            return false;
+        }
 
         if (final_only && weapon_data["final"] != 1) {
             return false;
@@ -188,15 +264,13 @@
         if (weapon_element != "All"
         &&  weapon_element != weapon_data["element"]
         &&  weapon_element != weapon_data["element_2"]
-        &&  weapon_element != weapon_data["awaken"]) {
+        &&  weapon_element != weapon_data["awaken"]
+        &&  weapon_element != weapon_data["phial"]) {
             if (weapon_element != "None"
-            ||  weapon_data["element"] != "" || weapon_data["awaken"] != "") {
+            || (weapon_data["element"] != null && weapon_data["element"] != "")
+            || (weapon_data["awaken"] != null && weapon_data["awaken"] != "")) {
                 return false;
             }
-        }
-
-        if (weapon_names && !list_match(weapon_names, [weapon_data["name"]])) {
-            return false;
         }
 
         return true;
@@ -219,55 +293,43 @@
     }
 
     function update_weapon_list(state) {
-        var match_count = 0;
-        var cp_setups = [];
         var comps = state["weapon_component_text"];
         if (comps) {
             comps = comps.split("|");
         }
+        var match_count = 0;
         console.log("updating weapon list: " + JSON.stringify(state));
         var results = [];
-        $.each(WEAPON_ID_IDX, function(weapon_id, weapon_list) {
-            var weapon_data = weapon_list[0];
+        $.each(WEAPON_LIST, function(i, weapon_data) {
             if (weapon_predicate(state, weapon_data)) {
-                $.ajax({
-                    url: DATA_PATH + "weapon/" + weapon_id + ".json",
-                    dataType: "json",
-                    async: false,
-                    success: function(data) {
-                         if (comps
-                         && !list_match(comps,
-                                Object.keys(data["create_components"]))
-                         && !list_match(comps,
-                                Object.keys(data["upgrade_components"])))
-                         {
-                               console.log("skipping '" + data["name"]
-                                           + "', failed component match");
-                               return;
-                         }
-                         match_count += 1;
-                         set_sharpness_titles(data);
-                         data["arc_type"] = null;
-                         data["sharpness_plus2"] = null;
-                         data["sharpness_width"] = 1;
-                         data["bug_type"] = null;
-                         set_bow_values(data);
-                         set_horn_melodies_title(data);
-                         data["wtype_short"] = WEAPON_TYPE_ABBR[data["wtype"]];
-                         data["ELEMENT_ABBR"] = ELEMENT_ABBR;
-                         data["url"] = null;
-                         var html = template_row.render(data);
-                         results.push([data, html]);
-                         var setup = get_calculating_palico_setup(data);
-                         //console.log("setup for " + weapon_id + ": " + setup);
-                         if (setup.length) {
-                             cp_setups.push(setup);
-                         }
-                     }
-                });
+                if (comps
+                && !list_match(comps,
+                       Object.keys(data["create_components"]))
+                && !list_match(comps,
+                       Object.keys(data["upgrade_components"])))
+                {
+                    console.log("skipping '" + data["name"]
+                                + "', failed component match");
+                    return;
+                }
+                weapon_data["id"] = i;
+                weapon_data["sharpness_width"] = 1;
+                weapon_data["sharpness_plus2"] = null;
+                weapon_data["url"] = "weaponplanner.html?weapon="
+                                     + encodeURIComponent(weapon_data["name"]);
+                weapon_data["bug_type"] = null;
+                weapon_data["arc_type"] = null;
+                match_count += 1;
+                set_sharpness_titles(weapon_data);
+                set_bow_values(weapon_data);
+                set_horn_melodies_title(weapon_data, HORN_MELODY_MAP);
+                weapon_data["wtype_short"] =
+                          WEAPON_TYPE_ABBR[weapon_data["wtype"]];
+                weapon_data["ELEMENT_ABBR"] = ELEMENT_ABBR;
+                var html = template_row.render(weapon_data);
+                results.push([weapon_data, html]);
             }
         });
-        console.log("results len " + results.length);
         results.sort(function (a, b) {
             avals = get_weapon_sort_values(a[0]);
             bvals = get_weapon_sort_values(b[0]);
@@ -277,22 +339,8 @@
         $.each(results, function(i, pair) {
             $("#weapon_table").append(pair[1]);
         });
-        update_cp_link(cp_setups);
-
         console.log("match count: " + match_count);
 
-    }
-
-    function update_cp_link(setups) {
-        if (setups.length == 0) {
-            console.log("no matches or no cp setups, hiding cp link");
-            $("#cp_div").hide();
-        } else {
-            var href = get_calculating_palico_uri(setups);
-            console.log("cp link: " + href);
-            $("#cp_link").prop("href", href);
-            $("#cp_div").show();
-        }
     }
   </script>
 </head>
@@ -344,6 +392,48 @@
   </tr>
   <tr>
     <td colspan="7">
+      <label>Quest Level:</label>
+      <select id="village_stars">
+       <option value="Any">Village Any</option>
+       <option value="1">Village 1*</option>
+       <option value="2">Village 2*</option>
+       <option value="3">Village 3*</option>
+       <option value="4">Village 4*</option>
+       <option value="5">Village 5*</option>
+       <option value="6">Village 6*</option>
+       <option value="7">Village 7*</option>
+       <option value="8">Village 8*</option>
+       <option value="9">Village 9*</option>
+       <option value="10">Village 10*</option>
+      </select>
+      <select id="guild_stars">
+       <option value="Any">Guild Any</option>
+       <option value="1">Guild 1*</option>
+       <option value="2">Guild 2*</option>
+       <option value="3">Guild 3*</option>
+       <option value="4">Guild 4*</option>
+       <option value="5">Guild 5*</option>
+       <option value="6">Guild 6*</option>
+       <option value="7">Guild 7*</option>
+       <option value="8">Guild 8*</option>
+       <option value="9">Guild 9*</option>
+       <option value="10">Guild 10*</option>
+      </select>
+      <select id="arena_stars">
+       <option value="Any">Arena Any</option>
+       <option value="None">Arena None</option>
+       <option value="1">Arena 1*</option>
+       <option value="2">Arena 2*</option>
+       <option value="3">Arena 3*</option>
+       <option value="4">Arena 4*</option>
+       <option value="5">Arena 5*</option>
+       <option value="6">Arena 6*</option>
+       <option value="7">Arena 7*</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="7">
       <label for="weapon_name_text"
              title="Show only weapons with a match in the name. List of strings separated by '|' (vertical bar)."
              >Name:</label>
@@ -355,11 +445,6 @@
     </td>
   </tr>
   </table>
-</div>
-<div id="cp_div">
-<a id="cp_link"
-   href="http://minyoung.ch/calculatingpalico/"
- >Compare damage (Calculating Palico)</a>
 </div>
 <table id="weapon_table">
 </table>

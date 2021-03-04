@@ -664,7 +664,8 @@ class ItemStars(object):
         if stars is not None:
             return stars
 
-        stars = dict(Village=None, Guild=None, Permit=None, Arena=None)
+        stars = dict(Village=None, Guild=None, Permit=None, Arena=None,
+                     Event=None)
         costs = get_costs(self.db, weapon)
         # find least 'expensive' path
         for c in costs:
@@ -679,7 +680,7 @@ class ItemStars(object):
 
     def _get_component_stars(self, c):
         # need to track unititialized vs unavailable
-        stars = dict(Village=0, Guild=0, Permit=0, Arena=0)
+        stars = dict(Village=0, Guild=0, Permit=0, Arena=0, Event=0)
         for item_name in c["components"].keys():
             item = self.db.get_item_by_name(item_name)
             if item.type == "Materials":
@@ -716,7 +717,8 @@ class ItemStars(object):
         if stars is not None:
             return stars
 
-        stars = dict(Village=None, Guild=None, Permit=None, Arena=None)
+        stars = dict(Village=None, Guild=None, Permit=None, Arena=None,
+                     Event=None)
         rows = self.db.get_material_items(material_item_id)
         for row in rows:
             item = self.db.get_item(row["item_id"])
@@ -732,7 +734,8 @@ class ItemStars(object):
         if stars is not None:
             return stars
 
-        stars = dict(Village=None, Guild=None, Permit=None, Arena=None)
+        stars = dict(Village=None, Guild=None, Permit=None, Arena=None,
+                     Event=None)
 
         quests = self.db.get_item_quests(item_id)
 
@@ -754,6 +757,9 @@ class ItemStars(object):
 
         # find least expensive quest for getting the item
         for quest in quests:
+            if quest.hub == "Caravan":
+                # For mh4u, map Caravan->Village
+                quest.hub = "Village"
             if quest.stars == 0:
                 # ignore training quests
                 if "Training" not in quest.name:

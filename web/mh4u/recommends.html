@@ -1,13 +1,13 @@
 <html>
 <head>
-  <title>Poogie Recommends</title>
+  <title>Poogie Recommends (4U)</title>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
 
-  <script src="js/common.js"></script>
+  <script src="/js/common.js"></script>
 
   <style>
       .flex {
@@ -46,7 +46,7 @@
               display_item(normalized_name);
               console.log("replaceState: " + normalized_name);
               window.history.replaceState({ "item_name": normalized_name }, "",
-                                          "/recommends.html?item="
+                                          "/mh4u/recommends.html?item="
                                           + encoded_name );
           }
           $(window).on("popstate", function(e) {
@@ -72,7 +72,7 @@
           display_item(normalized_name);
           console.log("pushState: " + normalized_name);
           window.history.pushState({ "item_name": normalized_name }, "",
-                                   "/recommends.html?item=" + encoded_name );
+                                   "/mh4u/recommends.html?item=" + encoded_name );
       }
 
       function display_item(normalized_name) {
