@@ -233,6 +233,7 @@
                           }
                           path["delta"] = delta;
                           path["component_list"].sort();
+                          path["trade_names"] = [];
                           var html = template_path.render(path);
                           $("#results").append(html);
                       }
