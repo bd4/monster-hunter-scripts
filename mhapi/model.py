@@ -641,6 +641,11 @@ def get_costs(db, weapon):
         for item in weapon.create_components:
             create_cost["components"][item.name] = item.quantity
         costs = [create_cost] + costs
+    if weapon.buy:
+        buy_cost = dict(zenny=int(weapon.buy),
+                        path=[weapon],
+                        components={})
+        costs = [buy_cost] + costs
     return costs
 
 
@@ -678,6 +683,10 @@ class ItemStars(object):
         costs = get_costs(self.db, weapon)
         # find least 'expensive' path
         for c in costs:
+            # don't calculate stars from buy cost (buys aren't available
+            # until after item is craftable, sometimes much later)
+            if not c["components"]:
+                continue
             current_stars = self._get_component_stars(c)
             for k, v in current_stars.iteritems():
                 if v is None:
