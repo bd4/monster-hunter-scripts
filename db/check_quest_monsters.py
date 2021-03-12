@@ -123,8 +123,8 @@ def _parse_monster(name):
 
     name = rstrip(name, "'s")
     name = rstrip(name, "'")
-    name = rstrip(name, u"’")
-    name = rstrip(name, u"’s")
+    name = rstrip(name, "’")
+    name = rstrip(name, "’s")
 
     #print "=>", name
 
@@ -202,7 +202,7 @@ def fuzzy_find(name):
 
 
 def check_hunts(db, quest):
-    print ">", quest.id, quest.name,
+    print(">", quest.id, quest.name, end=' ')
 
     monsters_match = False
 
@@ -240,30 +240,30 @@ def check_hunts(db, quest):
 
     if monsters_match and not errors:
         # useful for doing grep -v on output
-        print " *OK*"
+        print(" *OK*")
     elif monsters_match:
-        print " *MISSPELLING*"
-        print " goal:", quest.goal
-        print "  sub:", quest.sub_goal
+        print(" *MISSPELLING*")
+        print(" goal:", quest.goal)
+        print("  sub:", quest.sub_goal)
         for err in errors:
-            print " ", err
+            print(" ", err)
     else:
-        print " *MISMATCH*",
+        print(" *MISMATCH*", end=' ')
         if errors:
-            print " *MISSPELLING*",
-        print
+            print(" *MISSPELLING*", end=' ')
+        print()
         for err in errors:
-            print " ", err
-        print " goal:", quest.goal
-        print "  sub:", quest.sub_goal
-        print "   parsed:", goal_expected
+            print(" ", err)
+        print(" goal:", quest.goal)
+        print("  sub:", quest.sub_goal)
+        print("   parsed:", goal_expected)
         if sub_expected and not sub_expected < goal_expected:
             # print if sub monster looks like it's not one of the
             # main  monsters. This will false positive when main quest
             # is hunt all large monsters.
-            print " sub prsd:", sub_expected
-        print "       db:", db_expected
-        print " db unstb:", db_expected_unstable
+            print(" sub prsd:", sub_expected)
+        print("       db:", db_expected)
+        print(" db unstb:", db_expected_unstable)
 
 
 if __name__ == '__main__':

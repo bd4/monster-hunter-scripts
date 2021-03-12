@@ -10,7 +10,7 @@ from mhapi.db import MHDB
 
 
 def set_upgrade_cost(db, item_id, upgrade_cost):
-    print "upgrade_cost", item_id, upgrade_cost
+    print("upgrade_cost", item_id, upgrade_cost)
     cur = db.cursor()
     cur.execute("""UPDATE weapons SET
                    upgrade_cost=? WHERE _id=?""",
@@ -18,7 +18,7 @@ def set_upgrade_cost(db, item_id, upgrade_cost):
 
 
 def set_creation_cost(db, item_id, creation_cost):
-    print "creation_cost", item_id, creation_cost
+    print("creation_cost", item_id, creation_cost)
     cur = db.cursor()
     cur.execute("""UPDATE weapons SET
                    creation_cost=? WHERE _id=?""",

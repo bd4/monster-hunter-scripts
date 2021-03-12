@@ -19,7 +19,7 @@ def set_carve_counts(db, monster_carves):
     for m in monsters:
         rewards = db.get_monster_rewards(m.id)
         mc = monster_carves.get(m.name)
-        print "===", m.name
+        print("===", m.name)
         for r in rewards:
             condition = r["condition"]
             if "Carve" not in condition:
@@ -34,13 +34,13 @@ def set_carve_counts(db, monster_carves):
                 elif condition == "Tail Carve":
                     stack_size = 1
                 else:
-                    print "WARN: unknown condition %s.%s" \
-                          % (m.name, condition)
+                    print("WARN: unknown condition %s.%s" \
+                          % (m.name, condition))
             else:
                 assert False, "Unknown monster class: %s" % m["class"]
             if r["stack_size"] == stack_size:
                 continue
-            print "   ", condition, r["stack_size"], "=>", stack_size
+            print("   ", condition, r["stack_size"], "=>", stack_size)
             cur = db.cursor()
             cur.execute("""UPDATE hunting_rewards
                            SET stack_size=? WHERE _id=?""",

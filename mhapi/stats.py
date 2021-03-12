@@ -42,7 +42,7 @@ def _reward_count_p(reward_count, min_rewards, max_rewards, extend_percent):
     p = 1.0
     extend_p = extend_percent / 100.0
     stop_p = 1.0 - extend_p
-    for i in xrange(min_rewards+1, reward_count+1):
+    for i in range(min_rewards+1, reward_count+1):
         p *= extend_p
     if reward_count < max_rewards:
         p *= stop_p
@@ -56,7 +56,7 @@ def quest_reward_p(reward_percent, min_rewards, max_rewards, extend_percent=69):
     extra attempt.
     """
     p = 0.0
-    for reward_count in xrange(min_rewards, max_rewards + 1):
+    for reward_count in range(min_rewards, max_rewards + 1):
         p += (_reward_count_p(reward_count, min_rewards, max_rewards,
                               extend_percent)
               * _quest_reward_p(reward_percent, reward_count))
@@ -71,7 +71,7 @@ def reward_expected_c(min_rewards, max_rewards, extend_percent):
     """
     total_p = 0.0
     expected_attempts = 0.0
-    for reward_count in xrange(min_rewards, max_rewards + 1):
+    for reward_count in range(min_rewards, max_rewards + 1):
         p = _reward_count_p(reward_count, min_rewards, max_rewards,
                             extend_percent)
         expected_attempts += p * reward_count

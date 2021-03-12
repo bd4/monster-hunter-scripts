@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import _pathfix
 
@@ -15,4 +15,4 @@ if __name__ == '__main__':
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print "^C"
+        print("^C")

@@ -12,7 +12,7 @@ stdout = get_utf8_writer(sys.stdout)
 
 
 def set_weapon_final(db, weapon, value):
-    print >>stdout, "weapon_final", weapon.id, weapon.name, value
+    print("weapon_final", weapon.id, weapon.name, value, file=stdout)
     cur = db.cursor()
     cur.execute("""UPDATE weapons SET
                    final=? WHERE _id=?""",

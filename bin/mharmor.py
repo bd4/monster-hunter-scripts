@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import argparse
@@ -57,7 +57,7 @@ def find_armors(args):
             matches = difflib.get_close_matches(skill_name, skill_tree_names,
                                                 1, 0.5)
             if matches:
-                print "Fuzzy Match:", matches[0]
+                print("Fuzzy Match:", matches[0])
                 sid = skill_tree_id_map.get(matches[0])
                 skill_name = matches[0]
                 args.skills[i] = skill_name
@@ -71,8 +71,8 @@ def find_armors(args):
             d.set_skills(db.get_item_skills(d.id))
         decoration_values = get_decoration_values(sid, ds)[1]
         decorations[sid] = (ds, decoration_values)
-        print "%s[%s]:" % (skill_name, sid), ", ".join(d.name for d in ds), \
-              decoration_values
+        print("%s[%s]:" % (skill_name, sid), ", ".join(d.name for d in ds), \
+              decoration_values)
 
     htype = "Gunner" if args.gunner else "Blade"
 
@@ -82,7 +82,7 @@ def find_armors(args):
     for a in armors:
         skills = db.get_item_skills(a.id)
         if not skills:
-            print "Error getting skills for '%s' (%d)" % (a.name, a.id)
+            print("Error getting skills for '%s' (%d)" % (a.name, a.id))
             sys.exit(1)
         a.set_skills(skills)
         # calculate total using decorations for first skill only. This
@@ -113,12 +113,12 @@ def find_armors(args):
         if args.type and a.slot != args.type:
             continue
         total = skill_totals[a.id]
-        print skill_totals[a.id], a.one_line_u(),
+        print(skill_totals[a.id], a.one_line_u(), end=' ')
         if args.resist:
-            print args.resist.title(), a[args.resist + "_res"]
+            print(args.resist.title(), a[args.resist + "_res"])
         else:
-            print
-        print "  ", a.one_line_skills_u(args.skills)
+            print()
+        print("  ", a.one_line_skills_u(args.skills))
 
 
 def str_lower(x):

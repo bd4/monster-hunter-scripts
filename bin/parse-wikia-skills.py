@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 """
 Parse skill tree names and jp names for monster hunter X.
@@ -81,7 +81,7 @@ def parse_wikia_skill_trees(f):
 
 def _main():
     if len(sys.argv) != 4:
-        print "Usage: %s infile out_strees.json out_skills.json" % sys.argv[0]
+        print("Usage: %s infile out_strees.json out_skills.json" % sys.argv[0])
         sys.exit(1)
     with open(sys.argv[1]) as f:
         strees, skills = parse_wikia_skill_trees(f)

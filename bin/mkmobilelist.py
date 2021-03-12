@@ -12,11 +12,11 @@ from mhapi.util import get_utf8_writer
 
 
 def print_header_nav(title, pid):
-    print """
+    print("""
   <div data-role="header" data-position="fixed">
     <a href="#page-menu" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-bars">Menu</a>
     <h1>%s</h1>
-""".strip() % title
+""".strip() % title)
 
     alt_pid = None
     if pid.endswith("-en"):
@@ -27,11 +27,11 @@ def print_header_nav(title, pid):
         alt_title = "en"
 
     if alt_pid is not None:
-        print """
+        print("""
     <a href="#%s" class="ui-btn-right ui-btn ui-btn-inline ui-mini">%s</a>
-""".strip() % (alt_pid, alt_title)
+""".strip() % (alt_pid, alt_title))
 
-    print "  </div>"
+    print("  </div>")
 
 
 def mk_html_list(dict_list, keys, sort_keys, divider_fn="auto"):
@@ -39,7 +39,7 @@ def mk_html_list(dict_list, keys, sort_keys, divider_fn="auto"):
         print ('<ul data-role="listview" data-filter="true"'
                ' data-autodividers="true">')
     else:
-        print '<ul data-role="listview" data-filter="true">'
+        print('<ul data-role="listview" data-filter="true">')
 
     if isinstance(sort_keys, types.FunctionType):
         sort_fn = sort_keys
@@ -55,26 +55,26 @@ def mk_html_list(dict_list, keys, sort_keys, divider_fn="auto"):
         if divider_fn not in (None, "auto"):
             divider_text = divider_fn(d, prev_d)
             if divider_text is not None:
-                print '  <li data-role="list-divider">%s</li>' % divider_text
-        print "  <li>"
+                print('  <li data-role="list-divider">%s</li>' % divider_text)
+        print("  <li>")
         for i, k in enumerate(keys):
             value = d[k]
             if k in ("section", "description"):
                 if value:
-                    print '    <p class="ui-li-desc">%s</p>' % value
+                    print('    <p class="ui-li-desc">%s</p>' % value)
                 continue
             elif k == "title_jp" and i != 0:
                 # NB: for monster by title we want it to be a normal column
                 if value:
-                    print '    <p class="ui-li-desc">Title: %s</p>' % value
+                    print('    <p class="ui-li-desc">Title: %s</p>' % value)
                 continue
             if value.endswith(".png"):
                 value = ('<img class="icon" src="../img/icons_items/%s" />'
                          % value)
-            print '    <span class="%s">%s</span>' % (k, value)
-        print "  </li>"
+            print('    <span class="%s">%s</span>' % (k, value))
+        print("  </li>")
         prev_d = d
-    print '</ul>'
+    print('</ul>')
 
 
 def _main():
@@ -87,7 +87,7 @@ def _main():
     carve_items = db.get_items(item_types=("Flesh",))
 
 
-    print """<!DOCTYPE html>
+    print("""<!DOCTYPE html>
 <html>
 <head>
 <title>Poogie Translate</title>
@@ -133,26 +133,26 @@ def _main():
     </ul>
   </div>
 </div>
-"""
+""")
     stree_path = os.path.join(_pathfix.project_path, "db",
                               "mhx_skill_tree_list.json")
     with open(stree_path) as f:
         stree_list = json.load(f)
 
-    print '<div data-role="page" id="page-skilltrees-en">'
+    print('<div data-role="page" id="page-skilltrees-en">')
     print_header_nav("Skill Trees (en)", "page-skilltrees-en")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(stree_list, ("name", "name_jp"), ("name",))
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
-    print '<div data-role="page" id="page-skilltrees-jp">'
+    print('<div data-role="page" id="page-skilltrees-jp">')
     print_header_nav("Skill Trees (jp)", "page-skilltrees-jp")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(stree_list, ("name_jp", "name"), jplen_sort_fn,
                               divider_fn=jplen_divider_fn)
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
     def item_divider_fn(d, prev_d):
         prefix = _icon_prefix(d)
@@ -160,29 +160,29 @@ def _main():
         if prefix != prev_prefix:
             return prefix
         return None
-    print '<div data-role="page" id="page-item-usable">'
+    print('<div data-role="page" id="page-item-usable">')
     print_header_nav("Items: Usable", "page-item-usable")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(items, ("icon_name", "name", "name_jp"),
                  ("icon_name", "name"), divider_fn=item_divider_fn)
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
-    print '<div data-role="page" id="page-item-gather">'
+    print('<div data-role="page" id="page-item-gather">')
     print_header_nav("Items: Gatherable", "page-item-gather")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(gather_items, ("icon_name", "name", "name_jp"),
                  ("icon_name", "name"), divider_fn=item_divider_fn)
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
-    print '<div data-role="page" id="page-item-carve">'
+    print('<div data-role="page" id="page-item-carve">')
     print_header_nav("Items: Carve", "page-item-carve")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(carve_items, ("icon_name", "name", "name_jp"),
                  ("icon_name", "name"), divider_fn=item_divider_fn)
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
     ha_path = os.path.join(_pathfix.project_path, "db", "hunter_arts.json")
     with open(ha_path) as f:
@@ -194,21 +194,21 @@ def _main():
         elif d["section"] != prev_d["section"]:
             return d["section"]
         return None
-    print '<div data-role="page" id="page-hunterarts-en">'
+    print('<div data-role="page" id="page-hunterarts-en">')
     print_header_nav("Hunter Arts (en)", "page-hunterarts-en")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(ha_list, ("name", "name_jp", "description"), None,
                  divider_fn=ha_divider_fn)
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
-    print '<div data-role="page" id="page-hunterarts-jp">'
+    print('<div data-role="page" id="page-hunterarts-jp">')
     print_header_nav("Hunter Arts (jp)", "page-hunterarts-jp")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(ha_list, ("name_jp", "name", "section", "description"),
                  jplen_sort_fn, divider_fn=jplen_divider_fn)
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
 
     monster_path = os.path.join(_pathfix.project_path, "db",
@@ -216,35 +216,35 @@ def _main():
     with open(monster_path) as f:
         monster_list = json.load(f)
 
-    print '<div data-role="page" id="page-monsters-en">'
+    print('<div data-role="page" id="page-monsters-en">')
     print_header_nav("Monsters (en)", "page-monsters-en")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(monster_list, ("name", "name_jp", "title_jp"), ("name",))
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
-    print '<div data-role="page" id="page-monsters-jp">'
+    print('<div data-role="page" id="page-monsters-jp">')
     print_header_nav("Monsters (jp)", "page-monsters-jp")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(monster_list, ("name_jp", "name", "title_jp"), ("name_jp",))
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
     titled_monster_list = [m for m in monster_list if m["title_jp"]]
-    print '<div data-role="page" id="page-monsters-title">'
+    print('<div data-role="page" id="page-monsters-title">')
     print_header_nav("Monster Titles", "page-monsters-title")
-    print '<div data-role="main" class="ui-content">'
+    print('<div data-role="main" class="ui-content">')
     mk_html_list(titled_monster_list, ("title_jp", "name"), ("title_jp",),
                  divider_fn=None)
-    print '</div>'
-    print '</div>'
+    print('</div>')
+    print('</div>')
 
 
 
 
-    print """
+    print("""
 </body>
-"""
+""")
 
 def _icon_prefix(d):
     if d is None:

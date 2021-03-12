@@ -10,7 +10,7 @@ from mhapi.db import MHDB
 
 
 def set_buy(db, item_id, buy):
-    print "buy", item_id, buy
+    print("buy", item_id, buy)
     cur = db.cursor()
     cur.execute("""UPDATE items SET
                    buy=? WHERE _id=?""",
@@ -22,7 +22,7 @@ def set_buy_by_name(db, name, buy):
                    buy=? WHERE name=?""",
                 (buy, name))
     rowid = cur.lastrowid
-    print "buy", rowid, name, buy
+    print("buy", rowid, name, buy)
 
 if __name__ == '__main__':
     db = MHDB(game="4u")

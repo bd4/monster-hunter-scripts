@@ -23,7 +23,7 @@ def _add_column(cursor, table, column_spec):
 
 
 def _set_stars(cursor, item_id, stars):
-    for k in stars.keys():
+    for k in list(stars.keys()):
         col = k.lower() + "_stars"
         q = "UPDATE items SET %s=? WHERE _id=?" % col
         cursor.execute(q, (stars[k], item_id))
@@ -45,7 +45,7 @@ def main():
     items = db.get_items(exclude_types=["", "Armor", "Palico Weapon",
                                         "Decoration"])
     for item in items:
-        print item.id, item.type, item.name
+        print(item.id, item.type, item.name)
         if item.type == "Materials":
             stars = item_stars.get_material_stars(item.id)
         elif item.type == "Weapon":

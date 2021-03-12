@@ -78,14 +78,14 @@ class WeaponTypeMotionValues(object):
             self.motion_values[name] = MotionValue(name, d["type"], d["power"])
 
         self.average = (sum(mv.average
-                            for mv in self.motion_values.itervalues())
+                            for mv in self.motion_values.values())
                         / len(self))
 
     def __len__(self):
         return len(self.motion_values)
 
     def keys(self):
-        return self.motion_values.keys()
+        return list(self.motion_values.keys())
 
     def __getitem__(self, key):
         return self.motion_values[key]
@@ -109,7 +109,7 @@ class MotionValueDB(object):
         return self.motion_values_map[weapon_type]
 
     def keys(self):
-        return self.motion_values_map.keys()
+        return list(self.motion_values_map.keys())
 
     def __len__(self):
         return len(self.motion_values_map)
@@ -158,7 +158,7 @@ class WeaponType(object):
 
     @classmethod
     def all(cls):
-        return cls._multiplier.keys()
+        return list(cls._multiplier.keys())
 
     @classmethod
     def damage_type(cls, weapon_type):
@@ -230,7 +230,7 @@ class WeaponMonsterDamage(object):
             self.sharpness = self.weapon.sharpness.max
         #print "sharpness=", self.sharpness
         if self.weapon["affinity"]:
-            if (isinstance(self.weapon["affinity"], basestring)
+            if (isinstance(self.weapon["affinity"], str)
             and "/" in self.weapon["affinity"]):
                 self.chaotic = True
                 # Handle chaotic gore affinity, e.g. -35/10. This means that
@@ -358,7 +358,7 @@ class WeaponMonsterDamage(object):
                 part_damage.part = part
             if alt is None:
                 if (self.breakable_parts
-                and _break_find(part, self.monster_damage.parts.keys(),
+                and _break_find(part, list(self.monster_damage.parts.keys()),
                                 self.breakable_parts)):
                     part_damage.breakable = True
                 if hitbox > self.max_raw_part[1]:
@@ -366,15 +366,15 @@ class WeaponMonsterDamage(object):
                 if ehitbox > self.max_element_part[1]:
                     self.max_element_part = (part, ehitbox)
 
-        for part in self.damage_map.keys():
+        for part in list(self.damage_map.keys()):
             if None not in self.damage_map[part].states:
                 #print "Failed to parse part:", part
                 del self.damage_map[part]
 
-        for part, d in self.damage_map.iteritems():
+        for part, d in self.damage_map.items():
             if d.is_breakable():
                 self.break_count += 1
-        self.parts = self.damage_map.keys()
+        self.parts = list(self.damage_map.keys())
         self.averages["uniform"] = self.uniform()
         self.averages["raw"] = self.weighted_raw()
         self.averages["element"] = self.weighted_element()
@@ -405,7 +405,7 @@ class WeaponMonsterDamage(object):
 
     def uniform(self):
         average = 0.0
-        for part, damage in self.damage_map.iteritems():
+        for part, damage in self.damage_map.items():
             average += damage.average()
         return average / len(self.damage_map)
 
@@ -417,7 +417,7 @@ class WeaponMonsterDamage(object):
         """
         average = 0.0
         total_hitbox = 0.0
-        for part, damage in self.damage_map.iteritems():
+        for part, damage in self.damage_map.items():
             average += damage.average() * damage.hitbox
             total_hitbox += damage.hitbox
         if total_hitbox == 0:
@@ -430,7 +430,7 @@ class WeaponMonsterDamage(object):
         """
         average = 0.0
         total_ehitbox = 0.0
-        for part, damage in self.damage_map.iteritems():
+        for part, damage in self.damage_map.items():
             average += damage.average() * damage.ehitbox
             total_ehitbox += damage.ehitbox
         if total_ehitbox == 0:
@@ -444,7 +444,7 @@ class WeaponMonsterDamage(object):
         else:
             other_weight = (1 - weak_weight) / (len(self.parts) - 1)
         average = 0
-        for part, damage in self.damage_map.iteritems():
+        for part, damage in self.damage_map.items():
             if part == self.max_raw_part[0]:
                 weight = weak_weight
             else:
@@ -459,7 +459,7 @@ class WeaponMonsterDamage(object):
         else:
             other_weight = (1 - weak_weight) / (len(self.parts) - 1)
         average = 0
-        for part, damage in self.damage_map.iteritems():
+        for part, damage in self.damage_map.items():
             if part == self.max_element_part[0]:
                 weight = weak_weight
             else:
@@ -475,7 +475,7 @@ class WeaponMonsterDamage(object):
             return 0
         average = 0.0
         count = self.break_count + 1
-        for part, damage in self.damage_map.iteritems():
+        for part, damage in self.damage_map.items():
             if part == self.max_raw_part[0]:
                 average += damage.average()
                 if damage.is_breakable():
@@ -494,7 +494,7 @@ class WeaponMonsterDamage(object):
             return 0
         average = 0.0
         count = self.break_count + 1
-        for part, damage in self.damage_map.iteritems():
+        for part, damage in self.damage_map.items():
             if part == self.max_element_part[0]:
                 # If weakpart is also a break, assume continue attacking
                 # even after broken
@@ -516,7 +516,7 @@ class WeaponMonsterDamage(object):
         if not self.break_count:
             return 0
         average = 0.0
-        for part, damage in self.damage_map.iteritems():
+        for part, damage in self.damage_map.items():
             if damage.is_breakable():
                 # attack until broken, then move to next break
                 average += damage.total

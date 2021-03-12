@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # vim: set fileencoding=utf8 :
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import os
 import json
 import sys
@@ -14,7 +14,7 @@ _BASE_URL = "http://monsterhunter.wikia.com/wiki/"
 
 _PAGE = "MHX:_Palico_Skills"
 
-_CIRCLE = u"\u26ab"
+_CIRCLE = "\u26ab"
 
 
 def extract_arts_and_skills(tree):
@@ -29,7 +29,7 @@ def extract_arts_and_skills(tree):
         rows = list(table)
         for row in rows:
             cols, is_header = _get_column_cells_texts(row)
-            print is_header, cols
+            print(is_header, cols)
             continue
             if is_header:
                 if len(cols) == 1:
@@ -100,13 +100,13 @@ def _main():
     tmp_path = os.path.join(_pathfix.project_path, "tmp")
     fpath = os.path.join(tmp_path, "wikia-palico-skills.html")
     parser = etree.HTMLParser()
-    urllib.urlretrieve(_BASE_URL + _PAGE, fpath)
+    urllib.request.urlretrieve(_BASE_URL + _PAGE, fpath)
     with open(fpath) as f:
         tree = etree.parse(f, parser)
         arts, skills = extract_arts_and_skills(tree)
     #print json.dumps(weapon_list, indent=2)
-    print json.dumps(arts, indent=2)
-    print json.dumps(skills, indent=2)
+    print(json.dumps(arts, indent=2))
+    print(json.dumps(skills, indent=2))
 
 
 if __name__ == '__main__':

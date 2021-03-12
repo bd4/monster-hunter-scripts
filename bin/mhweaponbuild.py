@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import argparse
@@ -40,8 +40,8 @@ if __name__ == '__main__':
     else:
         for cost in costs:
             components = cost["components"]
-            print "=", ", ".join([w.name for w in cost["path"]])
-            print "  Zenny", cost["zenny"]
-            for item_name in sorted(components.iterkeys()):
-                print "%20s %2d" % (item_name, components[item_name])
-            print
+            print("=", ", ".join([w.name for w in cost["path"]]))
+            print("  Zenny", cost["zenny"])
+            for item_name in sorted(components.keys()):
+                print("%20s %2d" % (item_name, components[item_name]))
+            print()

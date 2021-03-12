@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys
 import argparse
@@ -54,7 +54,7 @@ def _make_db_sharpness_string(level_string):
     level_value = SharpnessLevel.__dict__[level_string.upper()]
     #print "level value", level_value
     values = []
-    for i in xrange(SharpnessLevel.PURPLE+1):
+    for i in range(SharpnessLevel.PURPLE+1):
         if i <= level_value:
             values.append("1")
         else:
@@ -67,7 +67,7 @@ def weapon_stats_tuple(arg):
     parts = arg.split(",")
     #print "parts %r" % parts
     if len(parts) < 4:
-        print "not enough parts"
+        print("not enough parts")
         raise ValueError("Bad arg, use 'name,weapon_type,sharpness,raw'")
     weapon = {}
     weapon["name"] = parts[0]
@@ -154,13 +154,13 @@ def _add_skill_args(parser):
                         default=False,
                         help="add Awaken (FreeElemnt), default off")
     parser.add_argument("-a", "--attack-up",
-                        type=int, choices=range(0, 5), default=0,
+                        type=int, choices=list(range(0, 5)), default=0,
                         help="1-4 for AuS, M, L, XL")
     parser.add_argument("-c", "--critical-eye",
-                        type=int, choices=range(0, 5), default=0,
+                        type=int, choices=list(range(0, 5)), default=0,
                         help="1-4 for CE+1, +2, +3 and Critical God")
     parser.add_argument("-e", "--element-up",
-                        type=int, choices=range(0, 5), default=0,
+                        type=int, choices=list(range(0, 5)), default=0,
                         help="1-4 for (element) Atk +1, +2, +3 and"
                              " Element Attack Up")
     parser.add_argument("-t", "--artillery",
@@ -253,24 +253,24 @@ def print_sorted_phial_damage(names, damage_map_base, weapon_damage_map, parts,
     _print_headers(parts, damage_map_base)
 
     for name in names_sorted:
-        print "%-20s:" % name,
+        print("%-20s:" % name, end=' ')
         damage_map = weapon_damage_map[name]
-        print "%0.2f" % avg_phial(damage_map, level=level),
+        print("%0.2f" % avg_phial(damage_map, level=level), end=' ')
         for part in parts:
             part_damage = damage_map[part]
             #print "%0.2f" % sum(damage_map.cb_phial_damage[part][level]),
-            print "%0.2f:%0.2f:%0.2f" % damage_map.cb_phial_damage[part][level],
-        print
+            print("%0.2f:%0.2f:%0.2f" % damage_map.cb_phial_damage[part][level], end=' ')
+        print()
 
 
 def _print_headers(parts, damage_map_base):
-    print
+    print()
     avg_hitbox = (sum(damage_map_base[part].hitbox for part in parts)
                   / float(len(parts)))
     cols = ["%s (%d)" % (part, damage_map_base[part].hitbox)
             for part in parts]
     cols = ["%s (%d)" % ("Avg", avg_hitbox)] + cols
-    print " | ".join(cols)
+    print(" | ".join(cols))
 
 
 def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
@@ -288,22 +288,22 @@ def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
     #                            for part in parts])
 
     for name in names_sorted:
-        print "%-20s:" % name,
+        print("%-20s:" % name, end=' ')
         damage_map = weapon_damage_map[name]
-        print "%0.2f" % damage_map.averages["uniform"],
+        print("%0.2f" % damage_map.averages["uniform"], end=' ')
         for part in parts:
             part_damage = damage_map[part]
-            print "% 2d" % part_damage.average(),
-        print
+            print("% 2d" % part_damage.average(), end=' ')
+        print()
 
     if len(names) > 1:
         w1 = weapon_damage_map[names_sorted[0]]
         w2 = weapon_damage_map[names_sorted[1]]
         m, ratio = w1.compare_break_even(w2)
-        print
-        print "Comparison of '%s' and '%s'" % (
-            names_sorted[0], names_sorted[1])
-        print "Hitbox ratio:", m, "%0.2f" % ratio
+        print()
+        print("Comparison of '%s' and '%s'" % (
+            names_sorted[0], names_sorted[1]))
+        print("Hitbox ratio:", m, "%0.2f" % ratio)
 
         if w1.etype:
             re_ratios = w1.get_raw_element_ratios()
@@ -316,7 +316,7 @@ def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
             else:
                 line.append(names_sorted[1])
             # (part, raw, element, ratio)
-            print "%-22s   %02d  %02d  %0.2f  %s" % tuple(line)
+            print("%-22s   %02d  %02d  %0.2f  %s" % tuple(line))
 
 
 def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
@@ -340,7 +340,7 @@ def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
         ediff_s = ",".join("%+0.1f%%" % i for i in ediffs)
         bdiff_s = ",".join("%+0.1f%%" % i for i in bdiffs)
         damage = damage_map_base[part]
-        print "%22s%s h%02d %0.2f (%s) h%02d %0.2f (%s) %+0.2f (%s)" \
+        print("%22s%s h%02d %0.2f (%s) h%02d %0.2f (%s) %+0.2f (%s)" \
             % (part, "*" if damage.is_breakable() else " ",
                damage.hitbox,
                damage.total,
@@ -349,17 +349,17 @@ def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
                damage.element,
                ediff_s,
                damage.break_diff(),
-               bdiff_s)
+               bdiff_s))
         if weapon_type == "Charge Blade":
             for level in (0, 1, 2, 3, 5):
-                print " " * 20, level,
+                print(" " * 20, level, end=' ')
                 for wname in names:
                     wd = weapon_damage_map[wname]
                     damage = wd.cb_phial_damage[part][level]
-                    print "(%0.f, %0.f, %0.f);" % damage,
-                print
+                    print("(%0.f, %0.f, %0.f);" % damage, end=' ')
+                print()
 
-    print "            --------------------"
+    print("            --------------------")
 
     for avg_type in "uniform raw weakpart_raw element weakpart_element break_raw break_element break_only".split():
         base = damage_map_base.averages[avg_type]
@@ -371,7 +371,7 @@ def print_damage_percent_diff(names, damage_map_base, weapon_damage_map, parts):
 
         diff_s = ",".join("%+0.1f%%" % i for i in diffs)
 
-        print "%22s %0.2f (%s)" % (avg_type, base, diff_s)
+        print("%22s %0.2f (%s)" % (avg_type, base, diff_s))
 
 
 def match_quest_level(match_level, weapon_level):
@@ -451,7 +451,7 @@ def main():
         weapons.extend(args.weapon_custom)
 
     if not weapons:
-        print "Err: no matching weapons"
+        print("Err: no matching weapons")
         sys.exit(1)
 
     names = [w.name for w in weapons]
@@ -459,17 +459,17 @@ def main():
     monster_breaks = db.get_monster_breaks(monster.id)
     weapon_type = weapons[0]["wtype"]
     if args.phial and weapon_type != "Charge Blade":
-        print "ERROR: phial option is only supported for Charge Blade"
+        print("ERROR: phial option is only supported for Charge Blade")
         sys.exit(1)
     motion = motiondb[weapon_type].average
-    print "Weapon Type: %s" % weapon_type
-    print "Average Motion: %0.1f" % motion
+    print("Weapon Type: %s" % weapon_type)
+    print("Average Motion: %0.1f" % motion)
     if args.motion:
         motion = args.motion
-        print "Specified Motion: %0.1f" % motion
-    print "Monster Breaks: %s" % ", ".join(monster_breaks)
+        print("Specified Motion: %0.1f" % motion)
+    print("Monster Breaks: %s" % ", ".join(monster_breaks))
     skill_names = get_skill_names(args)
-    print "Common Skills:", ", ".join(skill for skill in skill_names if skill)
+    print("Common Skills:", ", ".join(skill for skill in skill_names if skill))
 
     if args.parts:
         limit_parts = args.parts.split(",")
@@ -479,7 +479,7 @@ def main():
     if args.quest_level:
         item_stars = ItemStars(db)
         village, guild, permit, arena = args.quest_level
-        print "Filter by Quest Levels:", args.quest_level
+        print("Filter by Quest Levels:", args.quest_level)
         weapons2 = dict()
         for w in weapons:
             if "village_stars" in w:
@@ -498,10 +498,10 @@ def main():
                 continue
             weapons2[w.id] = w
         parent_ids = set(w.parent_id for w in weapons2.values())
-        for wid in weapons2.keys():
+        for wid in list(weapons2.keys()):
             if wid in parent_ids:
                 del weapons2[wid]
-        weapons = weapons2.values()
+        weapons = list(weapons2.values())
         names = [w.name for w in weapons]
 
     weapon_damage_map = dict()
@@ -527,23 +527,23 @@ def main():
                                      frenzy_bonus=skill_args.frenzy,
                                      is_true_attack=game_uses_true_raw,
                                      blunt_power=skill_args.blunt_power)
-            print "%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity),
+            print("%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity), end=' ')
             if wd.etype:
                 if wd.etype2:
-                    print "(%4.0f %s, %4.0f %s)" \
-                        % (wd.eattack, wd.etype, wd.eattack2, wd.etype2),
+                    print("(%4.0f %s, %4.0f %s)" \
+                        % (wd.eattack, wd.etype, wd.eattack2, wd.etype2), end=' ')
                 else:
-                    print "(%4.0f %s)" % (wd.eattack, wd.etype),
-            print SharpnessLevel.name(wd.sharpness),
+                    print("(%4.0f %s)" % (wd.eattack, wd.etype), end=' ')
+            print(SharpnessLevel.name(wd.sharpness), end=' ')
             if skill_args != args:
-                print "{%s}" % ",".join(sn
+                print("{%s}" % ",".join(sn
                                         for sn in get_skill_names(skill_args)
-                                        if sn)
+                                        if sn))
             else:
-                print
+                print()
             weapon_damage_map[name] = wd
         except ValueError as e:
-            print str(e)
+            print(str(e))
             sys.exit(1)
 
     damage_map_base = weapon_damage_map[names[0]]

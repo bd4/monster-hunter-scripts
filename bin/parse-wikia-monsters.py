@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 """
 Parse monster names and jp names for monster hunter X.
@@ -55,7 +55,7 @@ def parse_wikia_monsters(f):
         m = SECTION_RE.match(line)
         if m:
             section = m.group(1)
-            print >>sys.stderr, "section", section
+            print("section", section, file=sys.stderr)
             continue
         if section not in ["Large Monsters", "Small Monsters"]:
             continue
@@ -108,16 +108,16 @@ def _main():
         name = m["name"]
         names = get_jp_names(m["href"])
         if len(names) == 0:
-            print >>sys.stderr, "ERROR: no names for %s" % name
+            print("ERROR: no names for %s" % name, file=sys.stderr)
             names = ["", ""]
         if len(names) == 1:
-            print >>sys.stderr, "ERROR: no title for %s" % name
+            print("ERROR: no title for %s" % name, file=sys.stderr)
             names.append("")
         m["name_jp"] = names[0]
         m["title_jp"] = names[1]
         if m["title_jp"] in ("None", "N/A", "(?)"):
             m["title_jp"] = ""
-    print json.dumps(monster_list, indent=2)
+    print(json.dumps(monster_list, indent=2))
 
 
 if __name__ == '__main__':

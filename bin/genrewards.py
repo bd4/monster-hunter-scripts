@@ -1,10 +1,10 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 """
 Script to generate static rewards files for all items.
 """
 
 import codecs
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import os.path
 
 import _pathfix
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     elif len(sys.argv) == 2:
         outdir = sys.argv[1]
     else:
-        print("Usage: %s [outdir]" % sys.argv[0])
+        print(("Usage: %s [outdir]" % sys.argv[0]))
         sys.exit(os.EX_USAGE)
 
     err_out = get_utf8_writer(sys.stderr)
@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     # write all names json to /items.json
     items_file = os.path.join(outdir, "items.json")
-    print "Writing", items_file
+    print("Writing", items_file)
     with open(items_file, "w") as f:
         out = get_utf8_writer(f)
         out.write("[")
@@ -66,7 +66,7 @@ if __name__ == '__main__':
         item_id = item.id
         encoded_name = name.encode("utf8")
         item_file = os.path.join(outdir, encoded_name + ".txt")
-        print "Writing", item_id, item_file
+        print("Writing", item_id, item_file)
         with open(item_file, "w") as f:
             out = get_utf8_writer(f)
             item_row = rewards.find_item(db, name, err_out)

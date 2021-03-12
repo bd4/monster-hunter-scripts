@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import _pathfix
 
@@ -75,7 +75,7 @@ if __name__ == '__main__':
     import os.path
 
     if len(sys.argv) != 2:
-        print("Usage: %s 'item name'" % sys.argv[0])
+        print(("Usage: %s 'item name'" % sys.argv[0]))
         sys.exit(os.EX_USAGE)
 
     item_name = canonical_item_name(sys.argv[1])

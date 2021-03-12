@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # vim: set fileencoding=utf8 :
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import os
 import json
 import sys
@@ -34,74 +34,74 @@ _RANGED_TYPES = ["Bow", "Light Bowgun", "Heavy Bowgun"]
 
 
 _ELEMENT_MAP = {
-    u"火": "Fire",
-    u"水": "Water",
-    u"雷": "Thunder",
-    u"氷": "Ice",
-    u"龍": "Dragon",
-    u"毒": "Poison",
-    u"麻痺": "Paralysis",
-    u"睡眠": "Sleep",
-    u"爆破": "Blast",
+    "火": "Fire",
+    "水": "Water",
+    "雷": "Thunder",
+    "氷": "Ice",
+    "龍": "Dragon",
+    "毒": "Poison",
+    "麻痺": "Paralysis",
+    "睡眠": "Sleep",
+    "爆破": "Blast",
 }
 
 
 _GL_SHOT_TYPES = {
-    u"通常": "Normal",
-    u"放射": "Long",
-    u"拡散": "Wide",
+    "通常": "Normal",
+    "放射": "Long",
+    "拡散": "Wide",
 }
 
 
 _SA_PHIAL_TYPES = {
-    u"強撃ビン": "Power",
-    u"減気ビン": "Exhaust",
-    u"滅龍ビン": "Dragon",
-    u"強属性ビン": "Element",
-    u"毒ビン": "Poison",
-    u"麻痺ビン": "Paralysis",
+    "強撃ビン": "Power",
+    "減気ビン": "Exhaust",
+    "滅龍ビン": "Dragon",
+    "強属性ビン": "Element",
+    "毒ビン": "Poison",
+    "麻痺ビン": "Paralysis",
 }
 
 
 _CB_PHIAL_TYPES = {
-    u"榴弾ビン": "Impact",
-    u"強属性ビン": "Element",
+    "榴弾ビン": "Impact",
+    "強属性ビン": "Element",
 }
 
 
 _BUG_TYPES = {
-    u"切断": "Cutting",
-    u"打撃": "Impact",
+    "切断": "Cutting",
+    "打撃": "Impact",
 }
 
 
 _BOW_ARC_TYPES = {
-    u"集中型": "Focus",
-    u"放散型": "Wide",
-    u"爆裂型": "Blast",
+    "集中型": "Focus",
+    "放散型": "Wide",
+    "爆裂型": "Blast",
 }
 
 
 _BOW_SHOT_TYPES = {
-    u"連射": "Rapid",
-    u"拡散": "Spread",
-    u"貫通": "Pierce",
-    u"重射": "Heavy",
+    "連射": "Rapid",
+    "拡散": "Spread",
+    "貫通": "Pierce",
+    "重射": "Heavy",
 }
 
 
 _BOW_COATINGS = {
-    u"強1": "Power 1",
-    u"強2": "Power 2",
-    u"属1": "Element 1",
-    u"属2": "Element 2",
-    u"接": "C. Range",
-    u"ペ": "Paint",
-    u"毒": "Poison",
-    u"麻": "Paralysis",
-    u"睡": "Sleep",
-    u"減": "Exhaust",
-    u"爆": "Blast",
+    "強1": "Power 1",
+    "強2": "Power 2",
+    "属1": "Element 1",
+    "属2": "Element 2",
+    "接": "C. Range",
+    "ペ": "Paint",
+    "毒": "Poison",
+    "麻": "Paralysis",
+    "睡": "Sleep",
+    "減": "Exhaust",
+    "爆": "Blast",
 }
 
 
@@ -195,8 +195,8 @@ def _add_phial_or_shot_data(data, td_element):
     elif data["wtype"] == "Bow":
         data["arc_type"] = _BOW_ARC_TYPES[text]
     else:
-        msg = u"Unexpected element for wtype '%s'" % data["wtype"]
-        print >>sys.stderr, msg, text
+        msg = "Unexpected element for wtype '%s'" % data["wtype"]
+        print(msg, text, file=sys.stderr)
         raise ValueError(msg)
 
 
@@ -223,7 +223,7 @@ def _get_detailed_sharpness(name, href, parser):
         weapon_level = 1
     tmp_path = os.path.join(_pathfix.project_path, "tmp")
     fpath = os.path.join(tmp_path, "details-%s.html" % (base_name))
-    urllib.urlretrieve(href, fpath)
+    urllib.request.urlretrieve(href, fpath)
     with open(fpath) as f:
         tree = etree.parse(f, parser)
         data1 = tree.xpath('//*/div[@class="data1"]')
@@ -252,7 +252,7 @@ def _get_detailed_sharpness(name, href, parser):
             heads = tr.xpath('./th')
             if heads:
                 for j, th in enumerate(heads):
-                    if u"斬れ味" in th.text:
+                    if "斬れ味" in th.text:
                         sharpness_col = j
                 continue
 
@@ -265,8 +265,8 @@ def _get_detailed_sharpness(name, href, parser):
             name = names[i]
             try:
                 sharpness_levels = _parse_sharpness_td(sharpness_cell)
-            except KeyError, ValueError:
-                print >>sys.stderr, "bad sharpness:", href, name
+            except KeyError as ValueError:
+                print("bad sharpness:", href, name, file=sys.stderr)
                 raise
             SHARPNESS[name] = sharpness_levels
             #print name, sharpness_levels
@@ -322,11 +322,11 @@ def _parse_hh_attr_td(td_element):
             affinity = int(span.text.strip())
     text_lines = td_element.text.strip().split("\n")
     for line in text_lines:
-        if line.startswith(u"防御+"):
+        if line.startswith("防御+"):
             defense = int(line[3:])
 
     if td_element.tail:
-        slots = td_element.tail.count(u"◯")
+        slots = td_element.tail.count("◯")
     return attack, affinity, defense, elements, slots
 
 
@@ -347,13 +347,13 @@ def _parse_elements_td(td_element):
             affinity = int(span.text.strip())
     text_lines = td_element.text.strip().split("\n")
     for line in text_lines:
-        if line.startswith(u"防御+"):
+        if line.startswith("防御+"):
             defense = int(line[3:])
     return affinity, defense, elements
 
 
 def _parse_element(text):
-    for jp_element in sorted(_ELEMENT_MAP.keys(), key=lambda s: len(s),
+    for jp_element in sorted(list(_ELEMENT_MAP.keys()), key=lambda s: len(s),
                              reverse=True):
         if text.startswith(jp_element):
             value = int(text[len(jp_element):])
@@ -385,7 +385,7 @@ def _parse_name_td(td_element):
 def _parse_slots_td(td_element):
     text = td_element.text
     if text:
-        return text.count(u"◯")
+        return text.count("◯")
     return 0
 
 
@@ -406,9 +406,9 @@ def _parse_sharpness_td(td_element):
         if sub.text is None:
             continue
         current.append(sub.text.count("."))
-    for level in xrange(3):
+    for level in range(3):
         sharpness = sharpness_levels[level]
-        for i in xrange(len(sharpness), 6):
+        for i in range(len(sharpness), 6):
             sharpness.append(0)
     return sharpness_levels
 
@@ -422,27 +422,27 @@ def _main():
             raise
     weapon_list = []
     parser = etree.HTMLParser()
-    for wtype, urls in _WEAPON_URLS.iteritems():
+    for wtype, urls in _WEAPON_URLS.items():
         for i, url in enumerate(urls):
             fpath = os.path.join(tmp_path, "%s-%d.html" % (wtype, i))
-            urllib.urlretrieve(_BASE_URL + url, fpath)
+            urllib.request.urlretrieve(_BASE_URL + url, fpath)
             with open(fpath) as f:
                 tree = etree.parse(f, parser)
                 wlist = extract_weapon_list(wtype, tree, parser)
             weapon_list.extend(wlist)
-    print json.dumps(weapon_list, indent=2)
+    print(json.dumps(weapon_list, indent=2))
 
 
 def _test_details():
     parser = etree.HTMLParser()
     # final level has same name
-    _get_detailed_sharpness(u"ベルダーハンマー",
+    _get_detailed_sharpness("ベルダーハンマー",
                             "http://wiki.mhxg.org/ida/219225.html", parser)
     # final level has different name
-    _get_detailed_sharpness(u"テッケン",
+    _get_detailed_sharpness("テッケン",
                             "http://wiki.mhxg.org/ida/230575.html", parser)
     # final level >= 10 (two chars)
-    _get_detailed_sharpness(u"ウィルガシェルプレス",
+    _get_detailed_sharpness("ウィルガシェルプレス",
                             "http://wiki.mhxg.org/ida/228545.html", parser)
 
 

@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Script to find the most lucrative monster parts to farm for money.
 """
 
 import codecs
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import os.path
 import sys
 
@@ -55,8 +55,8 @@ def print_top_items(db, rank="G"):
         value = item_value(item)
         if value < min_value:
             break
-        print "    %-20s % 7.f % 6d (% 5.f)" % \
-            (item.name, value, int(item.sell), ev[item.id])
+        print("    %-20s % 7.f % 6d (% 5.f)" % \
+            (item.name, value, int(item.sell), ev[item.id]))
 
 
 if __name__ == '__main__':

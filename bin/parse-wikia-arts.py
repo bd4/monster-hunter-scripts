@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf8 -*-
 """
 Parse hunter arts name, name_jp, and description from wikia:
@@ -10,7 +10,7 @@ Returns list of dict, e.g.:
     "section": "Heavy Bowgun",
     "description": "",
     "name": "Acceleration Shower I",
-    "name_jp": "\u30a2\u30af\u30bb\u30eb\u30b7\u30e3\u30ef\u30fc I"
+    "name_jp": "\\u30a2\\u30af\\u30bb\\u30eb\\u30b7\\u30e3\\u30ef\\u30fc I"
   },
   ...
 ]
@@ -62,7 +62,7 @@ def parse_wikia_hunter_arts(f):
 def _main():
     with open(sys.argv[1]) as f:
         data = parse_wikia_hunter_arts(f)
-    print json.dumps(data, indent=2)
+    print(json.dumps(data, indent=2))
 
 
 if __name__ == '__main__':

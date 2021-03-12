@@ -3,7 +3,7 @@ Calculate expected values for monster hunter items and find the best quests
 and hunts for getting an item with specified skills.
 """
 
-from __future__ import print_function
+
 from collections import OrderedDict
 
 from mhapi import stats
@@ -105,7 +105,7 @@ class GatherLocation(object):
         for gr in self._rewards:
             gr.print(out, indent)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(len(self._rewards))
 
     def __len__(self):
@@ -146,7 +146,7 @@ class QuestReward(object):
                           * (LuckSkill.AMAZING - LuckSkill.NONE + 1))
             else:
                 counts = [stats.quest_reward_expected_c(self.slot, skill)
-                          for skill in xrange(LuckSkill.NONE,
+                          for skill in range(LuckSkill.NONE,
                                               LuckSkill.AMAZING+1)]
 
 
@@ -218,7 +218,7 @@ class QuestItemExpectedValue(object):
         # chances there are to get other rewards.
         fixed_seen = dict(A=set(), B=set(), Sub=set())
         dups = dict()
-        for i in xrange(len(rewards)):
+        for i in range(len(rewards)):
             reward = rewards[i]
             slot = reward["reward_slot"]
             if reward["percentage"] == 100:
@@ -251,7 +251,7 @@ class QuestItemExpectedValue(object):
 
         self.slot_rewards[reward.slot].append(reward)
         evs = reward.expected_values()
-        for i in xrange(len(evs)):
+        for i in range(len(evs)):
             self.total_expected_values[i] += evs[i]
 
     def print(self, out, indent=2):
@@ -320,10 +320,10 @@ class HuntReward(object):
                  shiny=self.shiny)
         kill_ev = dict()
         cap_ev = dict()
-        for skill in xrange(CarvingSkill.NONE, CarvingSkill.GOD+1):
+        for skill in range(CarvingSkill.NONE, CarvingSkill.GOD+1):
             kill_ev[CarvingSkill.name(skill)] = \
                 self.expected_value(STRAT_CAP, carving_skill=skill)
-        for skill in xrange(CapSkill.NONE, CapSkill.GOD+1):
+        for skill in range(CapSkill.NONE, CapSkill.GOD+1):
             cap_ev[CapSkill.name(skill)] = self.expected_value(STRAT_CAP,
                                                          cap_skill=skill)
 
@@ -357,7 +357,7 @@ class HuntReward(object):
             self.kill = False
             counts = [
                 stats.capture_reward_expected_c(skill)
-                for skill in xrange(CapSkill.NONE,
+                for skill in range(CapSkill.NONE,
                                     CapSkill.GOD+1)
             ]
         elif self.condition == "Virus Reward":
@@ -393,7 +393,7 @@ class HuntReward(object):
         if self.skill == SKILL_CARVING:
             counts = [
                 self.stack_size + stats.carve_delta_expected_c(skill)
-                for skill in xrange(CarvingSkill.NONE,
+                for skill in range(CarvingSkill.NONE,
                                     CarvingSkill.GOD+1)
             ]
 
@@ -624,7 +624,7 @@ class HuntItemExpectedValue(object):
                                         carving_skill=carving_skill)
         return ev
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(len(self.matching_rewards))
 
     def __len__(self):
@@ -640,10 +640,10 @@ class HuntItemExpectedValue(object):
                  rewards=[r.as_data() for r in self.matching_rewards])
         kill_ev = dict()
         cap_ev = dict()
-        for skill in xrange(CarvingSkill.NONE, CarvingSkill.GOD+1):
+        for skill in range(CarvingSkill.NONE, CarvingSkill.GOD+1):
             kill_ev[CarvingSkill.name(skill)] = \
                 self.expected_value(STRAT_CAP, carving_skill=skill)
-        for skill in xrange(CapSkill.NONE, CapSkill.GOD+1):
+        for skill in range(CapSkill.NONE, CapSkill.GOD+1):
             cap_ev[CapSkill.name(skill)] = self.expected_value(STRAT_CAP,
                                                          cap_skill=skill)
 
@@ -737,8 +737,8 @@ class ItemRewards(object):
             key = (mid, rank)
             self._hunt_items[key] = hunt_item
 
-            for rank, skill_sets in self.rank_skill_sets.iteritems():
-                for s in skill_sets.itervalues():
+            for rank, skill_sets in self.rank_skill_sets.items():
+                for s in skill_sets.values():
                     s.add_hunt_option(hunt_item)
 
     def get_hunt_item(self, monster_id, monster_rank):
@@ -777,15 +777,15 @@ class ItemRewards(object):
             gather_key = (quest_item.quest.location_id, quest_item.quest.rank)
             gather_location = self._gather_items.get(gather_key)
 
-            for rank, skill_sets in self.rank_skill_sets.iteritems():
-                for s in skill_sets.itervalues():
+            for rank, skill_sets in self.rank_skill_sets.items():
+                for s in skill_sets.values():
                     s.add_quest_option(quest_item, hunt_items, gather_location)
 
     def print_gather_locations(self, out):
         if not self._gather_items:
             return
 
-        for gl in self._gather_items.itervalues():
+        for gl in self._gather_items.values():
             out.write("(GATHER)  %s %s\n"
                       % (gl.location_name, gl.rank))
             gl.print(out, indent=2)
@@ -798,7 +798,7 @@ class ItemRewards(object):
         if not self._hunt_items:
             return
 
-        for hunt_item in self._hunt_items.itervalues():
+        for hunt_item in self._hunt_items.values():
             out.write("(HUNT)  %s %s\n"
                       % (hunt_item.monster_name, hunt_item.monster_rank))
             hunt_item.print(out, indent=2)
@@ -826,13 +826,13 @@ class ItemRewards(object):
 
     def print_recommended_hunts(self, out):
         out.write("*** Poogie Recommends ***\n")
-        for rank, skill_sets in self.rank_skill_sets.iteritems():
+        for rank, skill_sets in self.rank_skill_sets.items():
             no_skill_best = skill_sets["No skills"].best
             if no_skill_best is None:
                 # not available at this rank
                 continue
             out.write("> " + rank + "\n")
-            for name, skill_set in skill_sets.iteritems():
+            for name, skill_set in skill_sets.items():
                 if skill_set.best is None:
                     # Don't print out a rank with no options
                     continue
@@ -850,8 +850,8 @@ class ItemRewards(object):
         Get a list of the quests for acquiring a given item and the probability
         of getting the item, depending on cap or kill and luck skills.
         """
-        for quest_item in self._quest_items.itervalues():
-            out.write("(QUEST) " + unicode(quest_item.quest) + "\n")
+        for quest_item in self._quest_items.values():
+            out.write("(QUEST) " + str(quest_item.quest) + "\n")
             out.write("  %20s" % "= Quest\n")
 
             quest_item.print(out, indent=2)
@@ -921,7 +921,7 @@ class ItemRewards(object):
             item_name = self.item_row["name"]
             out.write("*** Wyporium trade for '%s'\n" % item_name)
             out.write("    Unlocked by quest '%s'\n"
-                      % unicode(self.trade_unlock_quest).split("\n")[0])
+                      % str(self.trade_unlock_quest).split("\n")[0])
             out.write("\n")
 
         self.print_recommended_hunts(out)

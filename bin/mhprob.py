@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """
 Calculate probability of getting at least one of a monster part from one
@@ -71,22 +71,22 @@ if __name__ == '__main__':
     max_rewards = 8 - fixed_rewards
 
     if min_rewards < 0:
-        print "Error: fixed_rewards (%d) must be less than or equal to " \
-              "guaranteeed_rewards (%d)" % (fixed_rewards, guarenteed_rewards)
+        print("Error: fixed_rewards (%d) must be less than or equal to " \
+              "guaranteeed_rewards (%d)" % (fixed_rewards, guarenteed_rewards))
         sys.exit(1)
 
     total_p = 0.0
     expected_attempts = 0.0
-    for reward_count in xrange(min_rewards, max_rewards + 1):
+    for reward_count in range(min_rewards, max_rewards + 1):
         p = stats._reward_count_p(reward_count, min_rewards, max_rewards,
                                   extend_percent)
         expected_attempts += p * reward_count
         # probability of getting @reward_count rewards that could be the
         # desired item
-        print "P(C = %d) = %0.4f" % (reward_count, p)
+        print("P(C = %d) = %0.4f" % (reward_count, p))
         total_p += p
     # expected value for number of rewards that could be the desired item
-    print "E(C)     = %0.2f" % expected_attempts
+    print("E(C)     = %0.2f" % expected_attempts)
 
     # math check, make sure all possibilities add up to 1, allowing for
     # some floating point precision loss.
@@ -96,5 +96,5 @@ if __name__ == '__main__':
                                           max_rewards, extend_percent)
     expected = expected_attempts * reward_percent / 100.0
 
-    print "P(N > 0) = %0.2f%%" % p_at_least_one
-    print "E(N)     = %0.4f" % expected
+    print("P(N > 0) = %0.2f%%" % p_at_least_one)
+    print("E(N)     = %0.4f" % expected)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import sys
 import argparse
@@ -21,7 +21,7 @@ def main():
     if args.item:
         item = db.get_item_by_name(args.item)
         if item is None:
-            print "Item '%s' not found" % args.item
+            print("Item '%s' not found" % args.item)
             sys.exit(1)
         if item.type == "Materials":
             stars = item_stars.get_material_stars(item.id)
@@ -30,15 +30,15 @@ def main():
     elif args.weapon:
         weapon = db.get_weapon_by_name(args.weapon)
         if weapon is None:
-            print "Weapon '%s' not found" % args.weapon
+            print("Weapon '%s' not found" % args.weapon)
             sys.exit(1)
         stars = item_stars.get_weapon_stars(weapon)
     else:
-        print "Specify -w or -i"
+        print("Specify -w or -i")
         sys.exit(1)
 
-    for k, v in stars.iteritems():
-        print k, v
+    for k, v in stars.items():
+        print(k, v)
 
 
 if __name__ == '__main__':

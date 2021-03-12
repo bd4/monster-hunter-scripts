@@ -662,13 +662,13 @@ class MHDBX(object):
                 self._monsters_by_name[d["name"]] = model.Monster(d)
         with open(hitboxes_path) as f:
             damage_map = json.load(f)
-            for name, damage in damage_map.iteritems():
+            for name, damage in damage_map.items():
                 mid = self._monsters_by_name[name].id
                 damage_rows = []
-                for part, data in damage.iteritems():
+                for part, data in damage.items():
                     if part.startswith("_"):
                         continue
-                    row = dict((k.lower(), v) for k, v in data.iteritems())
+                    row = dict((k.lower(), v) for k, v in data.items())
                     row["body_part"] = part
                     row["ko"] = 100 if part == "Head" else 0
                     row["_id"] = 0

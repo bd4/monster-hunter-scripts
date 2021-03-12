@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # vim: set fileencoding=utf8 :
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import os
 import json
 import sys
@@ -17,7 +17,7 @@ _PAGES = {
     "items": "MHX:_Item_List",
 }
 
-_CIRCLE = u"\u26ab"
+_CIRCLE = "\u26ab"
 
 
 def extract_names_and_icons(tree):
@@ -90,11 +90,11 @@ def _translate_icon_name(s):
 def _main():
     tmp_path = os.path.join(_pathfix.project_path, "tmp")
     outdir = os.path.join(_pathfix.project_path, "db", "mhx")
-    for name, page in _PAGES.iteritems():
+    for name, page in _PAGES.items():
         fpath = os.path.join(tmp_path, "wikia-%s.html" % name)
         opath = os.path.join(outdir, name.replace("-", "_") + ".json")
         parser = etree.HTMLParser()
-        urllib.urlretrieve(_BASE_URL + page, fpath)
+        urllib.request.urlretrieve(_BASE_URL + page, fpath)
         with open(fpath) as f:
             tree = etree.parse(f, parser)
             data = extract_names_and_icons(tree)

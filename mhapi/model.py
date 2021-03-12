@@ -1,6 +1,6 @@
 import string
 import json
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import re
 import difflib
 
@@ -57,7 +57,7 @@ class RowModel(ModelBase):
         return key in self._data
 
     def fields(self):
-        return self._data.keys()
+        return list(self._data.keys())
 
     def as_data(self):
         return self._data
@@ -69,7 +69,7 @@ class RowModel(ModelBase):
         return list_data
 
     def update_indexes(self, data):
-        for key_field, value_fields in self._indexes.iteritems():
+        for key_field, value_fields in self._indexes.items():
             if key_field not in data:
                 data[key_field] = {}
             self.update_index(key_field, value_fields, data[key_field])
@@ -86,7 +86,7 @@ class RowModel(ModelBase):
 
     def __str__(self):
         if "name" in self._data and self.name is not None:
-            name = urllib.quote(self.name, safe=" ")
+            name = urllib.parse.quote(self.name, safe=" ")
         else:
             name = str(self.id)
         return "%s '%s'" % (self.__class__.__name__, name)
@@ -139,7 +139,7 @@ class SharpnessLevel(EnumBase):
     WHITE = 5
     PURPLE = 6
 
-    ALL = range(0, PURPLE + 1)
+    ALL = list(range(0, PURPLE + 1))
 
     _names = {
         RED: "Red",
@@ -203,7 +203,7 @@ class WeaponSharpness(ModelBase):
     def max(self):
         if self._max is None:
             self._max = SharpnessLevel.RED
-            for i in xrange(SharpnessLevel.PURPLE+1):
+            for i in range(SharpnessLevel.PURPLE+1):
                 if self.value_list[i] == 0:
                     break
                 else:
@@ -304,7 +304,7 @@ class Armor(ItemWithSkills):
         assert self.skills is not None
         total = self.skills.get(skill_id_or_name, 0)
         slots_left = self.num_slots
-        for slots in xrange(len(decoration_values), 0, -1):
+        for slots in range(len(decoration_values), 0, -1):
             if slots_left == 0:
                 break
             decoration_value = decoration_values[slots-1]
@@ -529,7 +529,7 @@ class MonsterDamage(ModelBase):
         Set breakable flag on parts based on the breakable list from
         rewards (use MHDB.get_monster_breaks).
         """
-        for name, part_damage in self.parts.iteritems():
+        for name, part_damage in self.parts.items():
             if _break_find(name, self.parts, breakable_list):
                 #print "part %s is breakable [by rewards]" % name
                 part_damage.breakable = True
@@ -610,13 +610,13 @@ def get_costs(db, weapon):
             upgrade_cost = int(weapon.upgrade_cost)
         except ValueError:
             upgrade_cost = 0
-            print "WARN: bad upgrade cost for '%s' (%s): '%s'" \
-                  % (weapon.name, weapon.id, weapon.upgrade_cost)
+            print("WARN: bad upgrade cost for '%s' (%s): '%s'" \
+                  % (weapon.name, weapon.id, weapon.upgrade_cost))
         except UnicodeError:
             upgrade_cost = 0
-            cost_display = urllib.quote(weapon.upgrade_cost)
-            print "WARN: bad upgrade cost for '%s' (%s): '%s'" \
-                % (weapon.name, weapon.id, cost_display)
+            cost_display = urllib.parse.quote(weapon.upgrade_cost)
+            print("WARN: bad upgrade cost for '%s' (%s): '%s'" \
+                % (weapon.name, weapon.id, cost_display))
         parent_weapon = db.get_weapon(weapon.parent_id)
         costs = get_costs(db, parent_weapon)
         for cost in costs:
@@ -632,8 +632,8 @@ def get_costs(db, weapon):
         try:
             zenny = int(weapon.creation_cost)
         except ValueError:
-            print "WARN: bad creation cost for '%s': '%s'" \
-                % (weapon.name, weapon.creation_cost)
+            print("WARN: bad creation cost for '%s': '%s'" \
+                % (weapon.name, weapon.creation_cost))
             zenny = weapon.upgrade_cost or 0
         create_cost = dict(zenny=zenny,
                            path=[weapon],
@@ -688,7 +688,7 @@ class ItemStars(object):
             if not c["components"]:
                 continue
             current_stars = self._get_component_stars(c)
-            for k, v in current_stars.iteritems():
+            for k, v in current_stars.items():
                 if v is None:
                     continue
                 if stars[k] is None or v < stars[k]:
@@ -743,7 +743,7 @@ class ItemStars(object):
             if "Scrap" in item.name:
                 continue
             istars = self.get_item_stars(item.id)
-            for k, v in stars.items():
+            for k, v in list(stars.items()):
                 if istars[k] > v:
                     stars[k] = istars[k]
             break
@@ -774,7 +774,7 @@ class ItemStars(object):
         gather_locations = set()
         for gather in gathering:
             gather_locations.add((gather["location_id"], gather["rank"]))
-        for location_id, rank in list(gather_locations):
+        for location_id, rank in gather_locations:
             gather_quests = self.db.get_location_quests(location_id, rank)
             quests.extend(gather_quests)
 
@@ -782,7 +782,7 @@ class ItemStars(object):
         monster_ranks = set()
         for monster in monsters:
             monster_ranks.add((monster["monster_id"], monster["rank"]))
-        for monster_id, rank in list(monster_ranks):
+        for monster_id, rank in monster_ranks:
             monster_quests = self.db.get_monster_quests(monster_id, rank)
             quests.extend(monster_quests)
 
@@ -794,15 +794,15 @@ class ItemStars(object):
             if quest.stars == 0:
                 # ignore training quests
                 if "Training" not in quest.name:
-                    print "Error: non training quest has 0 stars", \
-                        quest.id, quest.name
+                    print("Error: non training quest has 0 stars", \
+                        quest.id, quest.name)
                 continue
             if quest.hub in stars:
                 current = stars[quest.hub]
                 if current is None or quest.stars < current:
                     stars[quest.hub] = quest.stars
             else:
-                print "Error: unknown hub", quest.hub
+                print("Error: unknown hub", quest.hub)
 
         # if available guild or village, then null out permit/arena values,
         # because they are more useful for filtering if limited to items

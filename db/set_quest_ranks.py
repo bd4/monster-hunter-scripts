@@ -21,7 +21,7 @@ def set_quest_ranks(db):
     for quest in quests:
         if not quest["name"]:
             assert quest["hub"] == "Event"
-            print "WARN: skipping non localized event quest: %d" % quest.id
+            print("WARN: skipping non localized event quest: %d" % quest.id)
             continue
         set_quest_rank(db, quest)
 
@@ -35,19 +35,19 @@ def set_quest_rank(db, quest):
         rewards = db.get_quest_rewards(quest_id)
         rank = guess_quest_rank_from_rewards(db, rewards)
         if rank is None:
-            print "WARN: quest '%s' has no flesh rewards, assuming lower rank"\
-                % (quest.name.encode("utf8"),)
+            print("WARN: quest '%s' has no flesh rewards, assuming lower rank"\
+                % (quest.name.encode("utf8"),))
             rank = rank_stars_guess[0]
         elif rank not in rank_stars_guess:
-            print "ERROR: quest '%s' reward guess '%s' not in stars guess '%s'"\
-             % (quest.name, rank, rank_stars_guess)
+            print("ERROR: quest '%s' reward guess '%s' not in stars guess '%s'"\
+             % (quest.name, rank, rank_stars_guess))
     else:
         rank = rank_stars_guess
 
     assert rank in "LR HR G".split()
 
     quest.rank = rank
-    print quest.one_line_u()
+    print(quest.one_line_u())
     cur = db.cursor()
     cur.execute("UPDATE quests SET rank=? WHERE _id=?", (rank, quest_id))
 

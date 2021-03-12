@@ -1,10 +1,10 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 import os
 import json
 import sys
 import errno
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import argparse
 
 import _pathfix
@@ -42,7 +42,7 @@ SAFE_CHARS = " &'+\""
 
 def file_path(path, model_object, alt_name_field=None):
     if alt_name_field:
-        key = urllib.quote(model_object[alt_name_field].encode("utf8"),
+        key = urllib.parse.quote(model_object[alt_name_field].encode("utf8"),
                            SAFE_CHARS)
     else:
         key = str(model_object.id)
@@ -57,7 +57,7 @@ def write_list_file(path, model_list):
 
 
 def write_index_file(path, indexes):
-    for key, data in indexes.iteritems():
+    for key, data in indexes.items():
         index_path = os.path.join(path, "_index_%s.json" % key)
         with open(index_path, "w") as f:
             json.dump(data, f, cls=model.ModelJSONEncoder, indent=2)
@@ -106,7 +106,7 @@ def armor_json(db, path):
         a.update_indexes(indexes)
         skills = db.get_item_skills(a.id)
         if not skills:
-            print "WARN: armor '%s' (%d) has no skills" % (a.name, a.id)
+            print("WARN: armor '%s' (%d) has no skills" % (a.name, a.id))
         a.set_skills(skills)
 
         all_data.append(a.as_data())
@@ -130,7 +130,7 @@ def decoration_json(db, path):
         a.update_indexes(indexes)
         skills = db.get_item_skills(a.id)
         if not skills:
-            print "WARN: decoration '%s' (%d) has no skills" % (a.name, a.id)
+            print("WARN: decoration '%s' (%d) has no skills" % (a.name, a.id))
         a.set_skills(skills)
 
         all_data.append(a.as_data())
@@ -254,7 +254,7 @@ def wyporium_json(db, path):
             if not k.startswith("wyporium"):
                 continue
             trade_map[item.id][k] = all_data[k]
-        print trade_map
+        print(trade_map)
     mkdirs_p(path)
     write_map_file(path, trade_map)
 
@@ -282,7 +282,7 @@ def main():
     if args.entities:
         for entity in args.entities:
             if entity not in ENTITIES:
-                print "Unknown entity: %s" % entity
+                print("Unknown entity: %s" % entity)
                 sys.exit(1)
     else:
         args.entities = ENTITIES
