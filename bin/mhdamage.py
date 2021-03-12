@@ -305,7 +305,11 @@ def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
             names_sorted[0], names_sorted[1])
         print "Hitbox ratio:", m, "%0.2f" % ratio
 
-        for line in w1.get_raw_element_ratios():
+        if w1.etype:
+            re_ratios = w1.get_raw_element_ratios()
+        else:
+            re_ratios = w2.get_raw_element_ratios()
+        for line in re_ratios:
             line = list(line)
             if m*line[3] > m*ratio:
                 line.append(names_sorted[0])
@@ -387,21 +391,22 @@ def main():
     args = parse_args(None)
 
     game_uses_true_raw = False
+    if args.quest_level:
+        comps = True
+    else:
+        comps = False
+
     if args.monster_hunter_cross:
         db = MHDBX()
         game_uses_true_raw = True
     elif args.monster_hunter_gen:
-        if args.quest_level:
-            comps = True
-        else:
-            comps = False
         db = MHDB(game="gu", include_item_components=comps)
         game_uses_true_raw = True
-    elif args.monster_hunter_world:
+    elif args.mhw:
         db = MHDBX(game="mhw")
         game_uses_true_raw = False
     else:
-        db = MHDB(game="4u")
+        db = MHDB(game="4u", include_item_components=comps)
     motiondb = MotionValueDB(_pathfix.motion_values_path)
 
     monster = db.get_monster_by_name(args.monster)
@@ -472,16 +477,24 @@ def main():
         limit_parts = None
 
     if args.quest_level:
+        item_stars = ItemStars(db)
         village, guild, permit, arena = args.quest_level
         print "Filter by Quest Levels:", args.quest_level
         weapons2 = dict()
         for w in weapons:
-            if (not match_quest_level(village, w["village_stars"])
-                    and not match_quest_level(guild, w["guild_stars"])):
+            if "village_stars" in w:
+                stars = dict(Village=w["village_stars"],
+                             Guild=w["guild_stars"],
+                             Permit=w["permit_stars"],
+                             Arena=w["arena_stars"])
+            else:
+                stars = item_stars.get_weapon_stars(w)
+            if (not match_quest_level(village, stars["Village"])
+                    and not match_quest_level(guild, stars["Guild"])):
                 continue
-            if not match_quest_level(permit, w["permit_stars"]):
+            if not match_quest_level(permit, stars["Permit"]):
                 continue
-            if not match_quest_level(arena, w["arena_stars"]):
+            if not match_quest_level(arena, stars["Arena"]):
                 continue
             weapons2[w.id] = w
         parent_ids = set(w.parent_id for w in weapons2.values())

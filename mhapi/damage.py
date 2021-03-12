@@ -553,8 +553,16 @@ class WeaponMonsterDamage(object):
         for row in self.monster_damage._rows:
             part = row["body_part"]
             hitbox = int(row[raw_type])
-            ehitbox = int(row[str(self.etype.lower())])
-            hitboxes.append((part, hitbox, ehitbox, float(hitbox) / ehitbox))
+            if self.etype:
+                ehitbox = int(row[str(self.etype.lower())])
+            else:
+                ehitbox = 0
+
+            if ehitbox > 0:
+                ratio = float(hitbox) / ehitbox
+            else:
+                ratio = 0
+            hitboxes.append((part, hitbox, ehitbox, ratio))
         return hitboxes
 
     def nohitbox_damage(self, motion=None):
