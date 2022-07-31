@@ -18,6 +18,8 @@ link:https://github.com/kamegami13/MonsterHunter4UDatabase[MonsterHunter4UDataba
 Android app by DavianCorp, which is also MIT licensed. See
 link:db/COPYING.mh4udb[] for license details.
 
+Rise data is from link:https://mhrise.mhrice.info/about.html[MHRice].
+
 == Example usage
 
 For a list of quests and hunts providing the specified monster part:
