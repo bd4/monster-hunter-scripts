@@ -1,0 +1,254 @@
+[
+  {
+    "name": "Rathian",
+    "link": "/monster/001_00.html"
+  },
+  {
+    "name": "Apex Rathian",
+    "link": "/monster/001_07.html"
+  },
+  {
+    "name": "Rathalos",
+    "link": "/monster/002_00.html"
+  },
+  {
+    "name": "Apex Rathalos",
+    "link": "/monster/002_07.html"
+  },
+  {
+    "name": "Khezu",
+    "link": "/monster/003_00.html"
+  },
+  {
+    "name": "Basarios",
+    "link": "/monster/004_00.html"
+  },
+  {
+    "name": "Diablos",
+    "link": "/monster/007_00.html"
+  },
+  {
+    "name": "Apex Diablos",
+    "link": "/monster/007_07.html"
+  },
+  {
+    "name": "Daimyo Hermitaur",
+    "link": "/monster/019_00.html"
+  },
+  {
+    "name": "Shogun Ceanataur",
+    "link": "/monster/020_00.html"
+  },
+  {
+    "name": "Rajang",
+    "link": "/monster/023_00.html"
+  },
+  {
+    "name": "Furious Rajang",
+    "link": "/monster/023_05.html"
+  },
+  {
+    "name": "Kushala Daora",
+    "link": "/monster/024_00.html"
+  },
+  {
+    "name": "Chameleos",
+    "link": "/monster/025_00.html"
+  },
+  {
+    "name": "Teostra",
+    "link": "/monster/027_00.html"
+  },
+  {
+    "name": "Tigrex",
+    "link": "/monster/032_00.html"
+  },
+  {
+    "name": "Nargacuga",
+    "link": "/monster/037_00.html"
+  },
+  {
+    "name": "Barioth",
+    "link": "/monster/042_00.html"
+  },
+  {
+    "name": "Barroth",
+    "link": "/monster/044_00.html"
+  },
+  {
+    "name": "Royal Ludroth",
+    "link": "/monster/047_00.html"
+  },
+  {
+    "name": "Great Baggi",
+    "link": "/monster/054_00.html"
+  },
+  {
+    "name": "Zinogre",
+    "link": "/monster/057_00.html"
+  },
+  {
+    "name": "Apex Zinogre",
+    "link": "/monster/057_07.html"
+  },
+  {
+    "name": "Great Wroggi",
+    "link": "/monster/059_00.html"
+  },
+  {
+    "name": "Arzuros",
+    "link": "/monster/060_00.html"
+  },
+  {
+    "name": "Apex Arzuros",
+    "link": "/monster/060_07.html"
+  },
+  {
+    "name": "Lagombi",
+    "link": "/monster/061_00.html"
+  },
+  {
+    "name": "Volvidon",
+    "link": "/monster/062_00.html"
+  },
+  {
+    "name": "Gore Magala",
+    "link": "/monster/071_00.html"
+  },
+  {
+    "name": "Shagaru Magala",
+    "link": "/monster/072_00.html"
+  },
+  {
+    "name": "Seregios",
+    "link": "/monster/077_00.html"
+  },
+  {
+    "name": "Astalos",
+    "link": "/monster/081_00.html"
+  },
+  {
+    "name": "Mizutsune",
+    "link": "/monster/082_00.html"
+  },
+  {
+    "name": "Apex Mizutsune",
+    "link": "/monster/082_07.html"
+  },
+  {
+    "name": "Crimson Glow Valstrax",
+    "link": "/monster/086_05.html"
+  },
+  {
+    "name": "Magnamalo",
+    "link": "/monster/089_00.html"
+  },
+  {
+    "name": "Scorned Magnamalo",
+    "link": "/monster/089_05.html"
+  },
+  {
+    "name": "Bishaten",
+    "link": "/monster/090_00.html"
+  },
+  {
+    "name": "Blood Orange Bishaten",
+    "link": "/monster/090_01.html"
+  },
+  {
+    "name": "Aknosom",
+    "link": "/monster/091_00.html"
+  },
+  {
+    "name": "Tetranadon",
+    "link": "/monster/092_00.html"
+  },
+  {
+    "name": "Somnacanth",
+    "link": "/monster/093_00.html"
+  },
+  {
+    "name": "Aurora Somnacanth",
+    "link": "/monster/093_01.html"
+  },
+  {
+    "name": "Rakna-Kadaki",
+    "link": "/monster/094_00.html"
+  },
+  {
+    "name": "Pyre Rakna-Kadaki",
+    "link": "/monster/094_01.html"
+  },
+  {
+    "name": "Almudron",
+    "link": "/monster/095_00.html"
+  },
+  {
+    "name": "Magma Almudron",
+    "link": "/monster/095_01.html"
+  },
+  {
+    "name": "Wind Serpent Ibushi",
+    "link": "/monster/096_00.html"
+  },
+  {
+    "name": "Goss Harag",
+    "link": "/monster/097_00.html"
+  },
+  {
+    "name": "Great Izuchi",
+    "link": "/monster/098_00.html"
+  },
+  {
+    "name": "Thunder Serpent Narwa",
+    "link": "/monster/099_00.html"
+  },
+  {
+    "name": "Narwa the Allmother",
+    "link": "/monster/099_05.html"
+  },
+  {
+    "name": "Anjanath",
+    "link": "/monster/100_00.html"
+  },
+  {
+    "name": "Pukei-Pukei",
+    "link": "/monster/102_00.html"
+  },
+  {
+    "name": "Kulu-Ya-Ku",
+    "link": "/monster/107_00.html"
+  },
+  {
+    "name": "Jyuratodus",
+    "link": "/monster/108_00.html"
+  },
+  {
+    "name": "Tobi-Kadachi",
+    "link": "/monster/109_00.html"
+  },
+  {
+    "name": "Bazelgeuse",
+    "link": "/monster/118_00.html"
+  },
+  {
+    "name": "Malzeno",
+    "link": "/monster/132_00.html"
+  },
+  {
+    "name": "Lunagaron",
+    "link": "/monster/133_00.html"
+  },
+  {
+    "name": "Garangolm",
+    "link": "/monster/134_00.html"
+  },
+  {
+    "name": "Gaismagorm",
+    "link": "/monster/135_00.html"
+  },
+  {
+    "name": "Espinas",
+    "link": "/monster/136_00.html"
+  }
+]

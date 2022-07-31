@@ -7,6 +7,7 @@ import sqlite3
 import json
 
 from mhapi import model
+from mhapi.util import WEAPON_TYPES
 
 
 def field_model(key):
@@ -257,10 +258,15 @@ class MHDB(object):
         return self._query_all("search_item", query, tuple(args),
                                no_cache=True, model_cls=model.Item)
 
-    def get_monsters(self):
-        return self._query_all("monsters", """
-            SELECT * FROM monsters
-        """, model_cls=model.Monster)
+    def get_monsters(self, monster_class=None):
+        args = []
+        where = []
+        if monster_class is not None:
+            where.append("WHERE class = ?")
+            args.append(monster_class)
+        args = tuple(args)
+        q = "SELECT * FROM monsters " + "\n".join(where)
+        return self._query_all("monsters", q, args, model_cls=model.Monster)
 
     def get_monster_names(self):
         """
@@ -317,12 +323,17 @@ class MHDB(object):
             WHERE quest_id=?
         """, (quest_id,))
 
-    def get_monster_quests(self, monster_id, rank):
-        return self._query_all("monster_quests", """
-            SELECT DISTINCT quests.* FROM quests, monster_to_quest
-            WHERE monster_to_quest.quest_id = quests._id
-              AND monster_to_quest.monster_id=? AND rank=?
-        """, (monster_id, rank), model_cls=model.Quest)
+    def get_monster_quests(self, monster_id, rank=None):
+
+        query = """SELECT DISTINCT quests.* FROM quests, monster_to_quest
+                   WHERE monster_to_quest.quest_id = quests._id
+                   AND monster_to_quest.monster_id=?"""
+        args = [monster_id]
+        if rank is not None:
+            query += " AND rank=?"
+            args += [rank]
+        return self._query_all("monster_quests", query,
+                               tuple(args), model_cls=model.Quest)
 
     def get_item_quests(self, item_id):
         """
@@ -380,6 +391,14 @@ class MHDB(object):
             SELECT * FROM monster_damage
             WHERE monster_id=?
         """, (monster_id,), collection_cls=model.MonsterDamage)
+
+    def get_weapon_types(self):
+        """
+        List of strings.
+        """
+        return self._query_all("weapon_types", """
+            SELECT DISTINCT wtype FROM weapons
+        """, model_cls=field_model("wtype"))
 
     def get_weapons(self):
         # Note: weapons only available via JP DLC have no localized
@@ -613,6 +632,13 @@ class MHDB(object):
             item_data.set_components(ccomps, ucomps)
 
 
+def _get_rise_num_slots(slot_list):
+    num_slots = 0
+    nslots = len(slot_list)
+    for i in range(nslots - 1, -1, -1):
+        num_slots +=  10**(nslots - i - 1) * slot_list[i]
+    return num_slots
+
 
 class MHDBX(object):
     """
@@ -626,12 +652,14 @@ class MHDBX(object):
         """
         Loads JSON data, keeps in memory.
         """
+        self.game = game
         module_path = os.path.dirname(__file__)
         self._mhx_db_path = os.path.abspath(os.path.join(module_path, "..",
                                             "db", game))
-        self._4udb = MHDB()
+        self._4udb = MHDB(game="gu")
         self._weapon_list = []
         self._weapons_by_name = {}
+        self._weapons_by_id = {}
 
         self._monsters_by_name = {}
         self._monster_damage = {}
@@ -644,10 +672,23 @@ class MHDBX(object):
         with open(os.path.join(self._mhx_db_path, "weapon_list.json")) as f:
             wlist = json.load(f)
             for i, wdata in enumerate(wlist):
-                wdata["_id"] = i
+                if "_id" not in wdata:
+                    wdata["_id"] = i
+                keys = ["awaken", "horn_notes",
+                        "element", "element_attack",
+                        "element_2", "element_2_attack",
+                        "bug_level", "phial", "phial_value",
+                        "shelling_type", "shelling_level",
+                        "buy"]
+                for k in keys:
+                    if k not in wdata:
+                        wdata[k] = None
+                if self.game == "mhr":
+                    wdata["num_slots"] = _get_rise_num_slots(wdata["slots"])
                 weapon = model.Weapon(wdata)
                 self._weapon_list.append(weapon)
                 self._weapons_by_name[weapon.name_jp] = weapon
+                self._weapons_by_id[weapon.id] = weapon
 
     def _load_monsters(self):
         names_path = os.path.join(self._mhx_db_path,
@@ -675,7 +716,26 @@ class MHDBX(object):
                     row["monster_id"] = mid
                     damage_rows.append(row)
                 self._monster_damage[mid] = model.MonsterDamage(damage_rows)
-                self._monster_breaks[mid] = damage["_breaks"]
+                self._monster_breaks[mid] = damage.get("_breaks", [])
+
+    def get_monsters(self):
+        return list(self._monsters_by_name.values())
+
+    def get_weapons(self):
+        return list(self._weapon_list)
+
+    def get_weapon(self, weapon_id):
+        return self._weapons_by_id[weapon_id]
+
+    def get_weapons_by_parent(self, parent_id):
+        result = []
+        for w in self._weapon_list:
+            if w.parent_id == parent_id:
+                result.append(w)
+        return result
+
+    def get_weapon_types(self):
+        return WEAPON_TYPES
 
     def get_weapon_by_name(self, name):
         return self._weapons_by_name.get(name)
@@ -705,9 +765,10 @@ class MHDBX(object):
         with no element. Otherwise @element is searched for in both
         awaken and native, and can be a status or an element.
 
-        @final should be string '1' or '0'
+        @final None or string '1' or '0'
         """
-        final = int(final)
+        if final is not None:
+            final = int(final)
         results = []
         for w in self._weapon_list:
             if wtype is not None and w.wtype != wtype:

@@ -1,8 +1,11 @@
+import os
 import string
 import json
+from typing import NamedTuple
 import urllib.request, urllib.parse, urllib.error
 import re
 import difflib
+from collections import namedtuple
 
 from mhapi.util import EnumBase
 
@@ -162,7 +165,7 @@ class SharpnessLevel(EnumBase):
         PURPLE: (1.44, 1.20),
     }
 
-    # for mhx, mhgen, mhxx, and likely mhw
+    # for mhx, mhgen, mhxx
     _modifier_mhx = {
         RED:    (0.50, 0.25),
         ORANGE: (0.75, 0.50),
@@ -172,14 +175,48 @@ class SharpnessLevel(EnumBase):
         WHITE:  (1.32, 1.125),
     }
 
+    # world, rise
+    # https://twitter.com/AsteriskAmpers1/status/1372886666940137479
+    # https://monsterhunterworld.wiki.fextralife.com/Sharpness
+    # https://monsterhunterrise.wiki.fextralife.com/Sharpness
+    _modifier_mhw = {
+        RED:    (0.50, 0.25),
+        ORANGE: (0.75, 0.50),
+        YELLOW: (1.00, 0.75),
+        GREEN:  (1.05, 1.00),
+        BLUE:   (1.20, 1.0625),
+        WHITE:  (1.32, 1.15),
+        PURPLE:  (1.39, 1.25),
+    }
 
     @classmethod
     def raw_modifier(cls, sharpness):
-        return cls._modifier[sharpness][0]
+        if _game() == "4u":
+            d = cls._modifier
+        elif _game() in ["gen", "gu", "mhx"]:
+            d = cls._modifier_mhx
+        else:
+            d = cls._modifier_mhw
+        return d[sharpness][0]
 
     @classmethod
     def element_modifier(cls, sharpness):
-        return cls._modifier[sharpness][1]
+        if _game() == "4u":
+            d = cls._modifier
+        elif _game() in ["gen", "gu", "mhx"]:
+            d = cls._modifier_mhx
+        else:
+            d = cls._modifier_mhw
+        return d[sharpness][1]
+
+_GAME = None
+
+def _game():
+    global _GAME
+    if _GAME is None:
+        _GAME = os.environ.get("MHAPI_GAME", "4u")
+    assert _GAME in ("4u", "gen", "gu", "mhx", "mhw", "mhr")
+    return _GAME
 
 
 class WeaponSharpness(ModelBase):
@@ -195,23 +232,43 @@ class WeaponSharpness(ModelBase):
             self.value_list = [int(s) for s in db_string_or_list.split(".")]
         # For MHX, Gen, no purple sharpness, but keep model the same for
         # simplicity
-        if len(self.value_list) < SharpnessLevel.PURPLE + 1:
+        while len(self.value_list) < SharpnessLevel.PURPLE + 1:
             self.value_list.append(0)
         self._max = None
 
     @property
     def max(self):
         if self._max is None:
-            self._max = SharpnessLevel.RED
-            for i in range(SharpnessLevel.PURPLE+1):
-                if self.value_list[i] == 0:
-                    break
-                else:
+            for i in range(SharpnessLevel.PURPLE, -1, -1):
+                if self.value_list[i] > 0:
                     self._max = i
+                    break
         return self._max
+
+    def get_max_points(self):
+        return (self.max, self.value_list[self.max])
+
+    def get_rise_handicraft(self, n):
+        """In Rise, there are 5 levels of Handicraft, each give 5 extra points; this
+        can be used to subtract off from sharpness_plus row"""
+        alt_values = list(self.value_list)
+        assert n >= 0 and n <= 5
+        minus_points = 25 - n * 5
+        for i in range(SharpnessLevel.PURPLE, -1, -1):
+            val = alt_values[i]
+            if minus_points <= val:
+                alt_values[i] -= minus_points
+                break
+            else:
+                alt_values[i] = 0
+                minus_points -= val
+        return WeaponSharpness(alt_values)
 
     def as_data(self):
         return self.value_list
+
+    def __str__(self):
+        return ",".join(str(v) for v in self.value_list)
 
 
 class ItemCraftable(RowModel):
@@ -219,8 +276,10 @@ class ItemCraftable(RowModel):
 
     def __init__(self, item_row):
         super(ItemCraftable, self).__init__(item_row)
-        self.create_components = None
-        self.upgrade_components = None
+        if "create_components" not in item_row:
+            self.create_components = None
+        if "upgrade_components" not in item_row:
+            self.upgrade_components = None
 
     def set_components(self, create_components, upgrade_components):
         self.create_components = create_components
@@ -230,10 +289,10 @@ class ItemCraftable(RowModel):
         data = super(ItemCraftable, self).as_data()
         if self.create_components is not None:
             data["create_components"] = dict((item.name, item.quantity)
-                                             for item in self.create_components)
+                                             for item in _item_list(self.create_components))
         if self.upgrade_components is not None:
             data["upgrade_components"] = dict((item.name, item.quantity)
-                                         for item in self.upgrade_components)
+                                         for item in _item_list(self.upgrade_components))
         return data
 
 
@@ -373,6 +432,8 @@ class Weapon(ItemCraftable):
     def __init__(self, weapon_item_row):
         super(Weapon, self).__init__(weapon_item_row)
         self._parse_sharpness()
+        if "name_jp" not in self._data:
+            self._data["name_jp"] = self._data["name"]
 
     def _parse_sharpness(self):
         """
@@ -385,11 +446,12 @@ class Weapon(ItemCraftable):
         if isinstance(self._row["sharpness"], list):
             # MHX JSON data, already desired format, but doesn't have
             # purple so we append 0
-            self.sharpness = WeaponSharpness(self._row["sharpness"] + [0])
-            self.sharpness_plus = WeaponSharpness(
-                                        self._row["sharpness_plus"] + [0])
-            self.sharpness_plus2 = WeaponSharpness(
-                                        self._row["sharpness_plus2"] + [0])
+            row_sharpness = self._row["sharpness"]
+            row_sharpness_plus = self._row.get("sharpness_plus", row_sharpness)
+            row_sharpness_plus2 = self._row.get("sharpness_plus2", row_sharpness)
+            self.sharpness = WeaponSharpness(row_sharpness)
+            self.sharpness_plus = WeaponSharpness(row_sharpness_plus)
+            self.sharpness_plus2 = WeaponSharpness(row_sharpness_plus2)
         else:
             # 4U or gen data from db
             parts = self._row["sharpness"].split(" ")
@@ -409,6 +471,10 @@ class Weapon(ItemCraftable):
         # Check if first char is ascii, should be the case for all
         # english weapons, and not for Japanese DLC weapons.
         return ord(self.name[0]) < 128
+
+    @property
+    def sharpness_name(self):
+        return SharpnessLevel.name(self.sharpness)
 
 
 class Monster(RowModel):
@@ -459,6 +525,12 @@ class MonsterPartStateDamage(RowModel):
     def __ne__(self, other):
         return not self.__eq__(other)
 
+    def __str__(self):
+        return str(self.as_data())
+
+    def __repr__(self):
+        return repr(self.as_data())
+
 
 class MonsterPartDamage(ModelBase):
     """
@@ -493,6 +565,49 @@ class MonsterPartDamage(ModelBase):
             damage=self.states
         )
 
+    def __str__(self):
+        return str(self.as_data())
+
+    def __repr__(self):
+        return repr(self.as_data())
+
+    def state_names(self):
+        return list(self.states.keys())
+
+    def get(self, damage_type):
+        return self.get_state(damage_type)
+
+    def get_break(self, damage_type):
+        self.get_state(damage_type, "Break Part")
+
+    def get_alt_state(self, damage_type):
+        return self.get_state(damage_type, self.alt_state)
+
+    def get_state(self, damage_type, state="Default"):
+        if state not in self.states:
+            state = "Default"
+        return self.states[state][damage_type]
+
+    def __getitem__(self, damage_type):
+        return self.get(damage_type)
+
+    @property
+    def alt_state(self):
+        if "Break Part" in self.states:
+            return "Break Part"
+        elif len(self.states) > 1:
+            alt_states = list(self.states.keys())
+            if "Default" in alt_states:
+                alt_states.remove("Default")
+            return alt_states[0]
+        else:
+            return "Default"
+
+    def state_diff(self, damage_type, state=None):
+        if state is None:
+            state = self.alt_state
+        return self.get_state(damage_type, state) - self.get(damage_type)
+
 
 class MonsterDamage(ModelBase):
     """
@@ -518,6 +633,10 @@ class MonsterDamage(ModelBase):
                 self.parts[part] = MonsterPartDamage(part)
             self.parts[part].add_state(state, row)
 
+    def is_valid(self):
+        # TODO: more validation
+        return (len(self.states) > 0 and len(self.parts) > 0)
+
     def as_data(self):
         return dict(
             states=list(self.states),
@@ -533,6 +652,49 @@ class MonsterDamage(ModelBase):
             if _break_find(name, self.parts, breakable_list):
                 #print "part %s is breakable [by rewards]" % name
                 part_damage.breakable = True
+
+    def state_names(self):
+        names = list(self.states)
+        names.sort()
+        if "Default" in names:
+            names.remove("Default")
+            names.insert(0, "Default")
+        return names
+
+    def keys(self):
+        return self.parts.keys()
+
+    def values(self):
+        return self.parts.values()
+
+    def items(self):
+        return self.parts.items()
+
+    def __len__(self):
+        return len(self.parts)
+
+    def __iter__(self):
+        return iter(self.parts)
+
+    @property
+    def alt_state(self):
+        alt_states = set(self.states)
+        alt_states.remove("Default")
+        if alt_states:
+            return alt_states.pop()
+        return "Default"
+
+    def avg(self, damage_type, state="Default"):
+        return sum(part.get_state(damage_type, state)
+                   for part in self.values()) / len(self)
+
+    def alt_avg(self, damage_type):
+        return sum(part.get_alt_state(damage_type)
+                   for part in self.values()) / len(self)
+
+    def max(self, damage_type, state="Default"):
+        return max(part.get_state(damage_type, state)
+                   for part in self.values())
 
 
 def get_decoration_values(skill_id, decorations):
@@ -622,7 +784,7 @@ def get_costs(db, weapon):
         for cost in costs:
             cost["zenny"] += upgrade_cost
             cost["path"] += [weapon]
-            for item in weapon.upgrade_components:
+            for item in _item_list(weapon.upgrade_components):
                 if item.type == "Weapon":
                     continue
                 if item.name not in cost["components"]:
@@ -638,7 +800,7 @@ def get_costs(db, weapon):
         create_cost = dict(zenny=zenny,
                            path=[weapon],
                            components={})
-        for item in weapon.create_components:
+        for item in _item_list(weapon.create_components):
             create_cost["components"][item.name] = item.quantity
         costs = [create_cost] + costs
     if weapon.buy:
@@ -649,16 +811,48 @@ def get_costs(db, weapon):
     return costs
 
 
+CompItem = namedtuple("CompItem", "name quantity type")
+def _item_list(comps):
+    if comps is None or isinstance(comps, list):
+        return comps
+    elif isinstance(comps, dict):
+        items = []
+        for k, v in comps.items():
+            items.append(CompItem(k, v, "material"))
+        return items
+    else:
+        raise ValueError("Unknown component type")
+
+
+def rank_quest_level(game, hub, rank):
+    if game != "4u":
+        raise NotImplementedError()
+    if hub == "Village":
+        if rank == "G":
+            return 10
+        elif rank == "HR":
+            return 7
+        else:
+            return 1
+    elif hub == "Guild":
+        if rank == "G":
+            return 8
+        elif rank == "HR":
+            return 4
+        else:
+            return 1
+
+
 class ItemStars(object):
     """
     Get the game progress (in hub stars) required to make an item. Caches
     values.
     """
-
     def __init__(self, db):
         self.db = db
         self._item_stars = {}   # item id -> stars dict
         self._weapon_stars = {} # weapon id -> stars dict
+        self._monster_stars = {} # monster id -> stars dict
         self._wyporium_trades = {}
 
         if self.db.game == "4u":
@@ -804,7 +998,26 @@ class ItemStars(object):
             else:
                 print("Error: unknown hub", quest.hub)
 
-        # if available guild or village, then null out permit/arena values,
+        if stars["Village"] is None and stars["Guild"] is None:
+            # not available from quests or gathering, may be an
+            # Everwood only monster (4u). Set stars based on rank. Note
+            # that this is imperfect, because some monsters have special
+            # quests and unlock them appearing in the Everwood, but at least
+            # will prevent totally broken G-rank weapons showing up in
+            # low rank comparisons.
+            min_village = 10
+            min_guild = 10
+            for _, rank in monster_ranks:
+                v = rank_quest_level(self.db.game, "Village", rank)
+                if v < min_village:
+                    min_village = v
+                g = rank_quest_level(self.db.game, "Guild", rank)
+                if g < min_guild:
+                    min_guild = g
+            stars["Village"] = min_village
+            stars["Guild"] = min_guild
+
+        # If available guild or village, then null out permit/arena values,
         # because they are more useful for filtering if limited to items
         # exclusively available from permit or arena. Allows matching
         # on based on meeting specified critera for
@@ -816,3 +1029,21 @@ class ItemStars(object):
         self._item_stars[item_id] = stars
         return stars
 
+    def get_monster_stars(self, monster_id):
+        stars = self._monster_stars.get(monster_id)
+        if stars is not None:
+            return stars
+
+        stars = dict(Village=None, Guild=None, Permit=None, Arena=None,
+                     Event=None)
+
+        quests = self.db.get_monster_quests(monster_id)
+
+        for quest in quests:
+            if quest.hub == "Caravan":
+                quest.hub = "Village"
+            if stars[quest.hub] is None or quest.stars < stars[quest.hub]:
+                stars[quest.hub] = quest.stars
+
+        self._monster_stars[monster_id] = stars
+        return stars

@@ -9,7 +9,7 @@ import argparse
 
 import _pathfix
 
-from mhapi.db import MHDB
+from mhapi.db import MHDB, MHDBX
 from mhapi import model
 
 ENTITIES = """item weapon monster armor
@@ -202,11 +202,12 @@ def weapon_json(db, path):
                 ]
             data["horn_melodies"] = melodies[w.horn_notes]
 
-        stars = item_stars.get_weapon_stars(w)
-        data["village_stars"] = stars["Village"]
-        data["guild_stars"] = stars["Guild"]
-        data["permit_stars"] = stars["Permit"]
-        data["arena_stars"] = stars["Arena"]
+        if db.game == "4u":
+            stars = item_stars.get_weapon_stars(w)
+            data["village_stars"] = stars["Village"]
+            data["guild_stars"] = stars["Guild"]
+            data["permit_stars"] = stars["Permit"]
+            data["arena_stars"] = stars["Arena"]
 
         all_data.append(data)
 
@@ -274,10 +275,13 @@ def horn_melody_json(db, path):
 def main():
     args = parse_args()
 
-    db = MHDB(game=args.game, include_item_components=True)
+    if args.game in ("mhx", "mhr"):
+        db = MHDBX(game=args.game)
+    else:
+        db = MHDB(game=args.game, include_item_components=True)
 
     if not args.outpath:
-        args.outpath = os.path.join(_pathfix.web_path, "jsonapi")
+        args.outpath = os.path.join(_pathfix.web_path, "jsonapi", args.game)
 
     if args.entities:
         for entity in args.entities:
@@ -288,7 +292,10 @@ def main():
         args.entities = ENTITIES
 
     if db.game != "4u":
-        args.entities.remove("wyporium")
+        try:
+            args.entities.remove("wyporium")
+        except:
+            pass
 
     for entity in args.entities:
         fn = globals()["%s_json" % entity]

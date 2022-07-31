@@ -81,14 +81,22 @@
        title="<%= parent_name %>">(parent)</a>
 <% } %>
 </td>
+
 <% if (village_stars) { %>
 <td>
 Village <%= village_stars %>
 </td>
 <% } %>
+
 <% if (guild_stars) { %>
 <td>
 Guild <%= guild_stars %>
+</td>
+<% } %>
+
+<% if (rarity) { %>
+<td>
+Rarity <%= rarity %>
 </td>
 <% } %>
 

@@ -53,6 +53,18 @@ WTYPE_ABBR = dict(
 )
 
 
+DAMAGE_TYPES = """
+    cut
+    impact
+    shot
+    fire
+    water
+    thunder
+    ice
+    dragon
+""".split()
+
+
 class EnumBase(object):
     _names = dict()
 

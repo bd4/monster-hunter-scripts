@@ -1,0 +1,63 @@
+<tr title="id: <%= id %>">
+<td><% if (final == 1) { %>
+      <strong>*</strong>
+    <% } else { %>
+      &nbsp;
+    <% } %>
+</td>
+<td>
+<a href="weaponplanner.html?weapon=<%= encodeURIComponent(name) %>"><%= name %></a>
+</td>
+<td><%= wtype_short %></td>
+<td style="text-align:right"><%= attack %></td>
+<td style="text-align:right"><% if (affinity) { %><%= affinity %>%<% } %></td>
+<td>
+<% if (element) { %>
+  <img style="height:.8em" title="<%= element %>"
+            src="/img/<%= element %>.png" /> <%= element_attack %>
+            <%= ELEMENT_ABBR[element] %>
+  <% if (element_2) { %>
+    <img style="height:.8em" title="<%= element_2 %>"
+            src="/img/<%= element_2 %>.png" /> <%= element_2_attack %>
+            <%= ELEMENT_ABBR[element_2] %>
+  <% } %>
+<% } %>
+</td>
+<td id="sharpness_td"
+    data-sharpness="<%= sharpness_all_title %>"
+    data-id="<%= id %>">
+<% if (sharpness) { %>
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
+<span style="width:<%= sharpness[0] * sharpness_width %>px" class="red"></span>
+<span style="width:<%= sharpness[1] * sharpness_width %>px" class="orange"></span>
+<span style="width:<%= sharpness[2] * sharpness_width %>px" class="yellow"></span>
+<span style="width:<%= sharpness[3] * sharpness_width %>px" class="green"></span>
+<span style="width:<%= sharpness[4] * sharpness_width %>px" class="blue"></span>
+<span style="width:<%= sharpness[5] * sharpness_width %>px" class="white"></span>
+<% if (sharpness.length > 6) { %>
+<span style="width:<%= sharpness[6] * sharpness_width %>px" class="purple"></span>
+<% } %>
+</div>
+<% } %>
+<% if (sharpness_plus) { %>
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
+<span style="width:<%= sharpness_plus[0] * sharpness_width %>px" class="red"></span>
+<span style="width:<%= sharpness_plus[1] * sharpness_width %>px" class="orange"></span>
+<span style="width:<%= sharpness_plus[2] * sharpness_width %>px" class="yellow"></span>
+<span style="width:<%= sharpness_plus[3] * sharpness_width %>px" class="green"></span>
+<span style="width:<%= sharpness_plus[4] * sharpness_width %>px" class="blue"></span>
+<span style="width:<%= sharpness_plus[5] * sharpness_width %>px" class="white"></span>
+<% if (sharpness_plus.length > 6) { %>
+<span style="width:<%= sharpness_plus[6] * sharpness_width %>px" class="purple"></span>
+<% } %>
+</div>
+<% } %>
+</td>
+<td style="text-align:right"><%= phial %>
+  <% if (phial_value) { %><%= phial_value %><% } %>
+</td>
+<td style="text-align:right"><%= shelling_type %>
+  <% if (shelling_level) { %><%= shelling_level %><% } %>
+</td>
+<td style="text-align:right"><%= bug_level %></td>
+<td><%= defense ? "+" + defense + " Def" : "" %></td>

@@ -187,7 +187,8 @@ class WeaponMonsterDamage(object):
                  critical_eye_skill=skills.CriticalEye.NONE,
                  element_skill=skills.ElementAttackUp.NONE,
                  awaken=False, artillery_level=0, limit_parts=None,
-                 frenzy_bonus=0, blunt_power=False, is_true_attack=False):
+                 frenzy_bonus=0, blunt_power=False, is_true_attack=False,
+                 game="4u"):
         self.weapon = weapon_row
         self.monster = monster_row
         self.monster_damage = monster_damage
@@ -222,13 +223,21 @@ class WeaponMonsterDamage(object):
         else:
             self.true_raw = (self.weapon["attack"]
                              / WeaponType.multiplier(self.weapon_type))
-        if sharp_plus == 1:
-            self.sharpness = self.weapon.sharpness_plus.max
-        elif sharp_plus == 2:
-            self.sharpness = self.weapon.sharpness_plus2.max
+
+        if sharp_plus:
+            if game == "mhr":
+                sharp_n = self.weapon.sharpness_plus.get_rise_handicraft(sharp_plus)
+                self.sharpness, self.sharpness_points = sharp_n.get_max_points()
+            else:
+                if sharp_plus == 1:
+                    self.sharpness, self.sharpness_points = self.weapon.sharpness_plus.get_max_points()
+                elif sharp_plus == 2:
+                    self.sharpness, self.sharpness_points = self.weapon.sharpness_plus2.get_max_points()
         else:
-            self.sharpness = self.weapon.sharpness.max
-        #print "sharpness=", self.sharpness
+            self.sharpness, self.sharpness_points = self.weapon.sharpness.get_max_points()
+
+        self.sharpness_name = SharpnessLevel.name(self.sharpness)
+
         if self.weapon["affinity"]:
             if (isinstance(self.weapon["affinity"], str)
             and "/" in self.weapon["affinity"]):
@@ -403,10 +412,10 @@ class WeaponMonsterDamage(object):
                                   artillery_level=self.artillery_level)
                 self.cb_phial_damage[part][level] = damage_tuple
 
-    def uniform(self):
+    def uniform(self, break_weight=0.25):
         average = 0.0
         for part, damage in self.damage_map.items():
-            average += damage.average()
+            average += damage.average(break_weight)
         return average / len(self.damage_map)
 
     def weighted_raw(self):
@@ -554,7 +563,12 @@ class WeaponMonsterDamage(object):
             part = row["body_part"]
             hitbox = int(row[raw_type])
             if self.etype:
-                ehitbox = int(row[str(self.etype.lower())])
+                try:
+                    ehitbox = int(row[str(self.etype.lower())])
+                except IndexError:
+                    ehitbox = 0
+                    print("WARN: bad etype {}, row = {}".format(
+                                                        self.etype, row))
             else:
                 ehitbox = 0
 
@@ -619,6 +633,20 @@ class PartDamage(object):
         return self.states[None].ehitbox
 
     @property
+    def break_hitbox(self):
+        if "Break Part" in self.states:
+            return self.states["Break Part"].hitbox
+        else:
+            return self.hitbox
+
+    @property
+    def break_ehitbox(self):
+        if "Break Part" in self.states:
+            return self.states["Break Part"].ehitbox
+        else:
+            return self.ehitbox
+
+    @property
     def break_raw(self):
         if "Break Part" in self.states:
             return self.states["Break Part"].raw
@@ -668,7 +696,8 @@ class PartDamage(object):
         # If the part has a hitbox with different damage in the break
         # rows from the db, or if it's explicitly marked as breakable
         # (done by checking hunt rewards for breaks).
-        return self.break_diff() > 0 or self.breakable
+        return (self.breakable or self.raw != self.break_raw
+                or self.element != self.break_element)
 
     def average(self, break_weight=0.25, rage_weight=0.5):
         if self.break_diff():
@@ -688,7 +717,8 @@ class PartDamage(object):
                 + self.total * (1 - rage_weight))
 
     def set_damage(self, raw, element, hitbox, ehitbox, state=None):
-        if state == "Without Hide":
+        if state in ("Without Hide", "Charged", "Tail Inflated", "Savaged",
+                     "Enraged", "Ice Shield"):
             state = "Break Part"
         self.states[state] = PartDamageState(raw, element,
                                              hitbox, ehitbox, state)

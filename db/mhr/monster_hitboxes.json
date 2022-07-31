@@ -1,0 +1,4408 @@
+{
+  "Rathian": {
+    "Head": {
+      "Cut": 70,
+      "Impact": 75,
+      "Shot": 65,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 15,
+      "Thunder": 20,
+      "Dragon": 30
+    },
+    "Neck": {
+      "Cut": 40,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 15
+    },
+    "Torso": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Back": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Wing": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 25
+    },
+    "Leg": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 15
+    },
+    "Tail": {
+      "Cut": 45,
+      "Impact": 40,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    }
+  },
+  "Apex Rathian": {
+    "Head": {
+      "Cut": 60,
+      "Impact": 65,
+      "Shot": 50,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Neck": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Torso": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Back": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 15,
+      "Fire": 5,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 25
+    },
+    "Wing": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 25
+    },
+    "Leg": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Tail": {
+      "Cut": 40,
+      "Impact": 35,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 15
+    }
+  },
+  "Rathalos": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 70,
+      "Shot": 60,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 15,
+      "Thunder": 20,
+      "Dragon": 30
+    },
+    "Neck": {
+      "Cut": 35,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Abdomen": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Tail": {
+      "Cut": 45,
+      "Impact": 40,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Wing": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 25
+    },
+    "Leg": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 15
+    }
+  },
+  "Apex Rathalos": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 55,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Neck": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Back": {
+      "Cut": 21,
+      "Impact": 21,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 8,
+      "Dragon": 10
+    },
+    "Abdomen": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 8,
+      "Dragon": 10
+    },
+    "Tail": {
+      "Cut": 45,
+      "Impact": 35,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Wing": {
+      "Cut": 30,
+      "Impact": 45,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 25
+    },
+    "Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 15
+    }
+  },
+  "Khezu": {
+    "Head": {
+      "Cut": 75,
+      "Impact": 70,
+      "Shot": 80,
+      "Fire": 30,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Neck": {
+      "Cut": 75,
+      "Impact": 50,
+      "Shot": 50,
+      "Fire": 25,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 25,
+      "Fire": 25,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 30,
+      "Fire": 20,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 25,
+      "Fire": 20,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Left Leg": {
+      "Cut": 36,
+      "Impact": 20,
+      "Shot": 35,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Right Leg": {
+      "Cut": 36,
+      "Impact": 20,
+      "Shot": 35,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    }
+  },
+  "Basarios": {
+    "Head": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 18
+    },
+    "Lower Neck": {
+      "Cut": 15,
+      "Impact": 20,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 18
+    },
+    "Back": {
+      "Cut": 15,
+      "Impact": 20,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 18
+    },
+    "Abdomen": {
+      "Cut": 24,
+      "Impact": 25,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Lower Tail": {
+      "Cut": 15,
+      "Impact": 15,
+      "Shot": 15,
+      "Fire": 10,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 18
+    },
+    "Wing": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 18
+    },
+    "Leg": {
+      "Cut": 25,
+      "Impact": 26,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Tail Tip": {
+      "Cut": 28,
+      "Impact": 15,
+      "Shot": 15,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 15
+    }
+  },
+  "Diablos": {
+    "Horn": {
+      "Cut": 21,
+      "Impact": 42,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 25,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Head": {
+      "Cut": 45,
+      "Impact": 60,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 25,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Neck": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 20,
+      "Thunder": 5,
+      "Dragon": 15
+    },
+    "Abdomen": {
+      "Cut": 65,
+      "Impact": 70,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 30,
+      "Thunder": 10,
+      "Dragon": 25
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 42,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 25,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Wing": {
+      "Cut": 40,
+      "Impact": 30,
+      "Shot": 60,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 30,
+      "Thunder": 10,
+      "Dragon": 25
+    },
+    "Leg": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Tail": {
+      "Cut": 50,
+      "Impact": 24,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Tail Tip": {
+      "Cut": 23,
+      "Impact": 26,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 25,
+      "Thunder": 10,
+      "Dragon": 20
+    }
+  },
+  "Apex Diablos": {
+    "Horn": {
+      "Cut": 35,
+      "Impact": 45,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 25,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Head": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 25,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Neck": {
+      "Cut": 40,
+      "Impact": 45,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 8,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Leg": {
+      "Cut": 28,
+      "Impact": 28,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Tail": {
+      "Cut": 50,
+      "Impact": 24,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Tail Tip": {
+      "Cut": 45,
+      "Impact": 24,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 30,
+      "Thunder": 10,
+      "Dragon": 20
+    }
+  },
+  "Daimyo Hermitaur": {
+    "Head": {
+      "Cut": 50,
+      "Impact": 60,
+      "Shot": 45,
+      "Fire": 30,
+      "Water": 10,
+      "Ice": 20,
+      "Thunder": 35,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 40,
+      "Impact": 50,
+      "Shot": 30,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Right Leg": {
+      "Cut": 35,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Right Claw": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 35,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Left Claw": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 35,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Left Leg": {
+      "Cut": 35,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Arm": {
+      "Cut": 40,
+      "Impact": 45,
+      "Shot": 30,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    }
+  },
+  "Shogun Ceanataur": {
+    "Head": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 20,
+      "Thunder": 35,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 25,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Right Leg": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 30,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Right Claw": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 35,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Arm": {
+      "Cut": 25,
+      "Impact": 35,
+      "Shot": 25,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    }
+  },
+  "Rajang": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 67,
+      "Shot": 55,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 30,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 35,
+      "Impact": 32,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    }
+  },
+  "Furious Rajang": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 67,
+      "Shot": 55,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 30,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 35,
+      "Impact": 32,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    }
+  },
+  "Kushala Daora": {
+    "Head": {
+      "Cut": 60,
+      "Impact": 55,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Neck": {
+      "Cut": 40,
+      "Impact": 35,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 35,
+      "Impact": 50,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Back": {
+      "Cut": 23,
+      "Impact": 25,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Tail": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 15
+    },
+    "Foreleg": {
+      "Cut": 45,
+      "Impact": 50,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 10
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 23,
+      "Impact": 23,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 15
+    }
+  },
+  "Chameleos": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 50,
+      "Shot": 45,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Wing": {
+      "Cut": 22,
+      "Impact": 22,
+      "Shot": 20,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 22,
+      "Shot": 25,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Abdomen": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 22,
+      "Fire": 20,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Foreleg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 20,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Tail": {
+      "Cut": 35,
+      "Impact": 22,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 5
+    }
+  },
+  "Teostra": {
+    "Head": {
+      "Cut": 50,
+      "Impact": 55,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Neck": {
+      "Cut": 33,
+      "Impact": 38,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 20,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 40,
+      "Impact": 35,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 43,
+      "Impact": 33,
+      "Shot": 38,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 5
+    }
+  },
+  "Tigrex": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 70,
+      "Shot": 55,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 25,
+      "Dragon": 15
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Abdomen": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Foreleg": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Tail Base": {
+      "Cut": 40,
+      "Impact": 35,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 45,
+      "Impact": 35,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 15
+    }
+  },
+  "Nargacuga": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 70,
+      "Shot": 40,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 25,
+      "Dragon": 10
+    },
+    "Neck/Back": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Cutwing": {
+      "Cut": 21,
+      "Impact": 24,
+      "Shot": 21,
+      "Fire": 25,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 35,
+      "Dragon": 15
+    },
+    "Foreleg": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 46,
+      "Impact": 40,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 25,
+      "Dragon": 5
+    },
+    "Tail Tip": {
+      "Cut": 40,
+      "Impact": 35,
+      "Shot": 40,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 20,
+      "Dragon": 5
+    }
+  },
+  "Barioth": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 70,
+      "Shot": 55,
+      "Fire": 20,
+      "Water": 10,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Neck/Back": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Thorns": {
+      "Cut": 25,
+      "Impact": 35,
+      "Shot": 25,
+      "Fire": 30,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 25,
+      "Dragon": 10
+    },
+    "Wing": {
+      "Cut": 30,
+      "Impact": 45,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 40,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 45,
+      "Impact": 23,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Tail Tip": {
+      "Cut": 60,
+      "Impact": 40,
+      "Shot": 40,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 5
+    }
+  },
+  "Barroth": {
+    "Head": {
+      "Cut": 22,
+      "Impact": 25,
+      "Shot": 15,
+      "Fire": 40,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 0,
+      "Dragon": 10
+    },
+    "Torso": {
+      "Cut": 36,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 50,
+      "Impact": 55,
+      "Shot": 50,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 36,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 47,
+      "Impact": 47,
+      "Shot": 50,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 0,
+      "Dragon": 10
+    }
+  },
+  "Royal Ludroth": {
+    "Head": {
+      "Cut": 50,
+      "Impact": 55,
+      "Shot": 65,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 50,
+      "Impact": 40,
+      "Shot": 35,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Mane": {
+      "Cut": 65,
+      "Impact": 50,
+      "Shot": 35,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 30,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 24,
+      "Impact": 40,
+      "Shot": 25,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 24,
+      "Shot": 30,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 40,
+      "Impact": 30,
+      "Shot": 40,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 0
+    }
+  },
+  "Great Baggi": {
+    "Head": {
+      "Cut": 75,
+      "Impact": 65,
+      "Shot": 60,
+      "Fire": 40,
+      "Water": 20,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Body": {
+      "Cut": 50,
+      "Impact": 50,
+      "Shot": 40,
+      "Fire": 40,
+      "Water": 20,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 0
+    }
+  },
+  "Zinogre": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 65,
+      "Shot": 70,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Back": {
+      "Cut": 45,
+      "Impact": 40,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 20,
+      "Ice": 25,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Hip": {
+      "Cut": 44,
+      "Impact": 44,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 30,
+      "Impact": 25,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail Tip": {
+      "Cut": 21,
+      "Impact": 19,
+      "Shot": 10,
+      "Fire": 10,
+      "Water": 15,
+      "Ice": 20,
+      "Thunder": 0,
+      "Dragon": 5
+    }
+  },
+  "Apex Zinogre": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 65,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Back": {
+      "Cut": 45,
+      "Impact": 40,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 20,
+      "Ice": 25,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Hip": {
+      "Cut": 44,
+      "Impact": 44,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 15,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 30,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail Tip": {
+      "Cut": 21,
+      "Impact": 19,
+      "Shot": 10,
+      "Fire": 10,
+      "Water": 15,
+      "Ice": 20,
+      "Thunder": 0,
+      "Dragon": 5
+    }
+  },
+  "Great Wroggi": {
+    "Head": {
+      "Cut": 75,
+      "Impact": 60,
+      "Shot": 60,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 40,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Body": {
+      "Cut": 50,
+      "Impact": 50,
+      "Shot": 50,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 40,
+      "Thunder": 5,
+      "Dragon": 0
+    }
+  },
+  "Arzuros": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 55,
+      "Shot": 55,
+      "Fire": 20,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Upper Half": {
+      "Cut": 50,
+      "Impact": 50,
+      "Shot": 62,
+      "Fire": 25,
+      "Water": 5,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 33,
+      "Impact": 35,
+      "Shot": 28,
+      "Fire": 30,
+      "Water": 5,
+      "Ice": 20,
+      "Thunder": 30,
+      "Dragon": 0
+    },
+    "Rear": {
+      "Cut": 66,
+      "Impact": 66,
+      "Shot": 43,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 20,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Abdomen/Hind Leg": {
+      "Cut": 55,
+      "Impact": 55,
+      "Shot": 38,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 20,
+      "Thunder": 10,
+      "Dragon": 0
+    }
+  },
+  "Apex Arzuros": {
+    "Head": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Upper Half": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 35,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 30,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Rear": {
+      "Cut": 30,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 12,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 38,
+      "Impact": 24,
+      "Shot": 26,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 16,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Abdomen": {
+      "Cut": 38,
+      "Impact": 24,
+      "Shot": 26,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 16,
+      "Thunder": 5,
+      "Dragon": 0
+    }
+  },
+  "Lagombi": {
+    "Head": {
+      "Cut": 45,
+      "Impact": 63,
+      "Shot": 50,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Upper Half": {
+      "Cut": 44,
+      "Impact": 44,
+      "Shot": 40,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Rear": {
+      "Cut": 63,
+      "Impact": 50,
+      "Shot": 35,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Abdomen/Hind Leg": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    }
+  },
+  "Volvidon": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 50,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 30,
+      "Ice": 20,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Upper Half": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 38,
+      "Impact": 30,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Rear": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Abdomen/Hind Leg": {
+      "Cut": 36,
+      "Impact": 36,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 0
+    }
+  },
+  "Gore Magala": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 55,
+      "Shot": 45,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Neck": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 25,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Wingarm": {
+      "Cut": 27,
+      "Impact": 27,
+      "Shot": 20,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Foreleg": {
+      "Cut": 42,
+      "Impact": 42,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 26,
+      "Impact": 26,
+      "Shot": 15,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    }
+  },
+  "Shagaru Magala": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 60,
+      "Shot": 45,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 25
+    },
+    "Neck": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 20,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 15,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Wingarm": {
+      "Cut": 22,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 30
+    },
+    "Foreleg": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Hind Leg": {
+      "Cut": 36,
+      "Impact": 36,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Wing": {
+      "Cut": 26,
+      "Impact": 26,
+      "Shot": 10,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Tail": {
+      "Cut": 36,
+      "Impact": 36,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 15
+    }
+  },
+  "Seregios": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 60,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Neck": {
+      "Cut": 35,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Back": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Wingarm": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 25,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Leg": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 40,
+      "Impact": 35,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 5
+    }
+  },
+  "Astalos": {
+    "Crest": {
+      "Cut": 55,
+      "Impact": 55,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 15,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Neck": {
+      "Cut": 55,
+      "Impact": 55,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Leg": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 15,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail Tip": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 5
+    }
+  },
+  "Mizutsune": {
+    "Head": {
+      "Cut": 63,
+      "Impact": 63,
+      "Shot": 45,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 8
+    },
+    "Neck": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 40,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 8
+    },
+    "Left Claw": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 10,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 30,
+      "Dragon": 30
+    },
+    "Foreleg": {
+      "Cut": 28,
+      "Impact": 28,
+      "Shot": 10,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 25,
+      "Dragon": 30
+    },
+    "Hind Leg": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 43,
+      "Impact": 33,
+      "Shot": 40,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Dorsal Fin": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 45,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Right Claw": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 10,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 30,
+      "Dragon": 30
+    }
+  },
+  "Apex Mizutsune": {
+    "Head": {
+      "Cut": 60,
+      "Impact": 60,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 8
+    },
+    "Neck": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 15,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 8
+    },
+    "Left Claw": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 10,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 30,
+      "Dragon": 30
+    },
+    "Foreleg": {
+      "Cut": 28,
+      "Impact": 28,
+      "Shot": 10,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 25,
+      "Dragon": 30
+    },
+    "Hind Leg": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 15,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 43,
+      "Impact": 33,
+      "Shot": 10,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Dorsal Fin": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 45,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Right Claw": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 10,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 30,
+      "Dragon": 30
+    }
+  },
+  "Crimson Glow Valstrax": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 60,
+      "Shot": 35,
+      "Fire": 25,
+      "Water": 25,
+      "Ice": 25,
+      "Thunder": 25,
+      "Dragon": 0
+    },
+    "Neck": {
+      "Cut": 40,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 25,
+      "Water": 25,
+      "Ice": 25,
+      "Thunder": 25,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 30,
+      "Impact": 25,
+      "Shot": 10,
+      "Fire": 20,
+      "Water": 20,
+      "Ice": 20,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Wingarm": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 45,
+      "Fire": 15,
+      "Water": 15,
+      "Ice": 15,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 25,
+      "Impact": 24,
+      "Shot": 25,
+      "Fire": 25,
+      "Water": 25,
+      "Ice": 25,
+      "Thunder": 25,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 25,
+      "Impact": 24,
+      "Shot": 20,
+      "Fire": 15,
+      "Water": 15,
+      "Ice": 15,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Wing": {
+      "Cut": 22,
+      "Impact": 45,
+      "Shot": 10,
+      "Fire": 25,
+      "Water": 25,
+      "Ice": 25,
+      "Thunder": 25,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 45,
+      "Impact": 24,
+      "Shot": 20,
+      "Fire": 20,
+      "Water": 20,
+      "Ice": 20,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Chest": {
+      "Cut": 30,
+      "Impact": 25,
+      "Shot": 10,
+      "Fire": 20,
+      "Water": 20,
+      "Ice": 20,
+      "Thunder": 20,
+      "Dragon": 0
+    }
+  },
+  "Magnamalo": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 55,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 5,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 43,
+      "Impact": 30,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 30,
+      "Impact": 43,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Armblade": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Tailblade": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    }
+  },
+  "Scorned Magnamalo": {
+    "Head": {
+      "Cut": 50,
+      "Impact": 55,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Upper Half": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 5,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 43,
+      "Impact": 30,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Armblade": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    }
+  },
+  "Bishaten": {
+    "Head": {
+      "Cut": 70,
+      "Impact": 70,
+      "Shot": 60,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 25,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Wing": {
+      "Cut": 40,
+      "Impact": 30,
+      "Shot": 40,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 60,
+      "Impact": 40,
+      "Shot": 40,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 5,
+      "Dragon": 0
+    }
+  },
+  "Blood Orange Bishaten": {
+    "Head": {
+      "Cut": 70,
+      "Impact": 70,
+      "Shot": 60,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Wing": {
+      "Cut": 40,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 60,
+      "Impact": 40,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    }
+  },
+  "Aknosom": {
+    "Head": {
+      "Cut": 63,
+      "Impact": 80,
+      "Shot": 50,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Neck": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Wing": {
+      "Cut": 63,
+      "Impact": 50,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Leg": {
+      "Cut": 36,
+      "Impact": 36,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 35,
+      "Ice": 25,
+      "Thunder": 30,
+      "Dragon": 0
+    },
+    "Crest": {
+      "Cut": 63,
+      "Impact": 50,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Tail Tip": {
+      "Cut": 36,
+      "Impact": 36,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 30,
+      "Ice": 5,
+      "Thunder": 20,
+      "Dragon": 0
+    }
+  },
+  "Tetranadon": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 70,
+      "Shot": 60,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 30,
+      "Dragon": 10
+    },
+    "Neck": {
+      "Cut": 50,
+      "Impact": 55,
+      "Shot": 40,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 20,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 35,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 25,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    }
+  },
+  "Somnacanth": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 55,
+      "Shot": 45,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 25,
+      "Dragon": 0
+    },
+    "Neck": {
+      "Cut": 70,
+      "Impact": 70,
+      "Shot": 60,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 25,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 15,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Abdomen": {
+      "Cut": 30,
+      "Impact": 40,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 60,
+      "Impact": 55,
+      "Shot": 35,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 30,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 25,
+      "Dragon": 0
+    },
+    "Head Fin": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    }
+  },
+  "Aurora Somnacanth": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 65,
+      "Shot": 45,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Neck": {
+      "Cut": 70,
+      "Impact": 70,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Abdomen": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 38,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Head Fin": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 45,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    }
+  },
+  "Rakna-Kadaki": {
+    "Head": {
+      "Cut": 60,
+      "Impact": 70,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 20,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Claw": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 30,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Chest": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Leg": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Abdomen": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 0
+    }
+  },
+  "Pyre Rakna-Kadaki": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 65,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Claw": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 30,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Chest": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Leg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Abdomen": {
+      "Cut": 38,
+      "Impact": 43,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    }
+  },
+  "Almudron": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 64,
+      "Shot": 55,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 40,
+      "Impact": 55,
+      "Shot": 35,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 23,
+      "Impact": 24,
+      "Shot": 20,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 25,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 55,
+      "Impact": 30,
+      "Shot": 35,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Tail Tip": {
+      "Cut": 65,
+      "Impact": 55,
+      "Shot": 40,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 15,
+      "Dragon": 15
+    }
+  },
+  "Magma Almudron": {
+    "Head": {
+      "Cut": 55,
+      "Impact": 60,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 20,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 21,
+      "Impact": 23,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 20,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Tail Tip": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 20,
+      "Thunder": 15,
+      "Dragon": 15
+    }
+  },
+  "Wind Serpent Ibushi": {
+    "Head": {
+      "Cut": 65,
+      "Impact": 70,
+      "Shot": 45,
+      "Fire": 20,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 25
+    },
+    "Neck": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 15,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 20
+    },
+    "Back Windsac": {
+      "Cut": 60,
+      "Impact": 55,
+      "Shot": 45,
+      "Fire": 20,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 25
+    },
+    "Torso": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Wingarm": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 35,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Wingarm Windsac": {
+      "Cut": 65,
+      "Impact": 60,
+      "Shot": 40,
+      "Fire": 25,
+      "Water": 10,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 25
+    },
+    "Leg Fin": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 15,
+      "Fire": 10,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Tail": {
+      "Cut": 30,
+      "Impact": 25,
+      "Shot": 10,
+      "Fire": 5,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Tail Tip Windsac": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 25,
+      "Water": 15,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 35
+    },
+    "Chest Windsac": {
+      "Cut": 80,
+      "Impact": 80,
+      "Shot": 75,
+      "Fire": 15,
+      "Water": 15,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 25
+    }
+  },
+  "Goss Harag": {
+    "Head": {
+      "Cut": 56,
+      "Impact": 56,
+      "Shot": 50,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 25,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 51,
+      "Impact": 51,
+      "Shot": 35,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Ice Clump": {
+      "Cut": 66,
+      "Impact": 66,
+      "Shot": 45,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 15,
+      "Fire": 30,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 24,
+      "Impact": 24,
+      "Shot": 20,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 0
+    }
+  },
+  "Great Izuchi": {
+    "Head": {
+      "Cut": 80,
+      "Impact": 80,
+      "Shot": 75,
+      "Fire": 10,
+      "Water": 20,
+      "Ice": 10,
+      "Thunder": 25,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 50,
+      "Impact": 50,
+      "Shot": 55,
+      "Fire": 10,
+      "Water": 10,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 55,
+      "Impact": 50,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Tail Tip": {
+      "Cut": 75,
+      "Impact": 80,
+      "Shot": 75,
+      "Fire": 15,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 25,
+      "Dragon": 10
+    }
+  },
+  "Thunder Serpent Narwa": {
+    "Neck": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 20,
+      "Impact": 25,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Wingarm": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 10
+    },
+    "Leg Fin": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 10
+    }
+  },
+  "Narwa the Allmother": {
+    "Neck": {
+      "Cut": 40,
+      "Impact": 42,
+      "Shot": 3,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 40,
+      "Impact": 42,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Wingarm": {
+      "Cut": 35,
+      "Impact": 30,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 10
+    },
+    "Leg Fin": {
+      "Cut": 30,
+      "Impact": 35,
+      "Shot": 1,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 40,
+      "Impact": 35,
+      "Shot": 5,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 10
+    }
+  },
+  "Anjanath": {
+    "Snout": {
+      "Cut": 80,
+      "Impact": 75,
+      "Shot": 65,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Head": {
+      "Cut": 70,
+      "Impact": 70,
+      "Shot": 60,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Neck": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 55,
+      "Fire": 0,
+      "Water": 25,
+      "Ice": 20,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 15,
+      "Ice": 10,
+      "Thunder": 5,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 60,
+      "Impact": 60,
+      "Shot": 55,
+      "Fire": 0,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 10,
+      "Dragon": 5
+    }
+  },
+  "Pukei-Pukei": {
+    "Tongue": {
+      "Cut": 95,
+      "Impact": 90,
+      "Shot": 85,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 30,
+      "Dragon": 10
+    },
+    "Head": {
+      "Cut": 75,
+      "Impact": 80,
+      "Shot": 70,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 20,
+      "Thunder": 30,
+      "Dragon": 10
+    },
+    "Neck": {
+      "Cut": 40,
+      "Impact": 35,
+      "Shot": 30,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 10,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 30,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 25,
+      "Dragon": 5
+    },
+    "Leg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 55,
+      "Impact": 50,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 25,
+      "Dragon": 5
+    }
+  },
+  "Kulu-Ya-Ku": {
+    "Head": {
+      "Cut": 68,
+      "Impact": 68,
+      "Shot": 60,
+      "Fire": 15,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Foreleg": {
+      "Cut": 52,
+      "Impact": 56,
+      "Shot": 45,
+      "Fire": 15,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Torso": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 15,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 15,
+      "Dragon": 15
+    },
+    "Tail": {
+      "Cut": 55,
+      "Impact": 50,
+      "Shot": 35,
+      "Fire": 15,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 15,
+      "Dragon": 15
+    }
+  },
+  "Jyuratodus": {
+    "Head": {
+      "Cut": 63,
+      "Impact": 63,
+      "Shot": 53,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Neck": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 43,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 35,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 25,
+      "Dragon": 5
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 25,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 15,
+      "Dragon": 5
+    },
+    "Fin": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 20,
+      "Dragon": 5
+    },
+    "Leg": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 40,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 30,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 55,
+      "Impact": 50,
+      "Shot": 45,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 5
+    }
+  },
+  "Tobi-Kadachi": {
+    "Head": {
+      "Cut": 48,
+      "Impact": 48,
+      "Shot": 45,
+      "Fire": 20,
+      "Water": 30,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Neck": {
+      "Cut": 48,
+      "Impact": 48,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 20,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Torso": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 5,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Back": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 48,
+      "Fire": 5,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Foreleg": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 15,
+      "Fire": 5,
+      "Water": 15,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 10,
+      "Fire": 20,
+      "Water": 30,
+      "Ice": 20,
+      "Thunder": 0,
+      "Dragon": 15
+    },
+    "Tail": {
+      "Cut": 65,
+      "Impact": 65,
+      "Shot": 55,
+      "Fire": 15,
+      "Water": 20,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 10
+    }
+  },
+  "Bazelgeuse": {
+    "Head": {
+      "Cut": 60,
+      "Impact": 65,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Abdomen": {
+      "Cut": 45,
+      "Impact": 45,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Back": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 10,
+      "Fire": 0,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 10
+    },
+    "Wing": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 45,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Tail": {
+      "Cut": 60,
+      "Impact": 55,
+      "Shot": 35,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 15,
+      "Dragon": 10
+    }
+  },
+  "Malzeno": {
+    "Head": {
+      "Cut": 46,
+      "Impact": 48,
+      "Shot": 45,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 15,
+      "Thunder": 0,
+      "Dragon": 25
+    },
+    "Torso": {
+      "Cut": 32,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 15
+    },
+    "Foreleg": {
+      "Cut": 45,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 20
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 28,
+      "Shot": 5,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 15
+    },
+    "Wing": {
+      "Cut": 28,
+      "Impact": 28,
+      "Shot": 5,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 15
+    },
+    "Tail": {
+      "Cut": 35,
+      "Impact": 32,
+      "Shot": 10,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 15
+    },
+    "Tail Tip": {
+      "Cut": 26,
+      "Impact": 22,
+      "Shot": 10,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 0,
+      "Dragon": 15
+    }
+  },
+  "Lunagaron": {
+    "Head": {
+      "Cut": 45,
+      "Impact": 50,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 10
+    },
+    "Torso": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 10,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Foreleg": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 15,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Hind Leg": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 5
+    },
+    "Tail": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Abdomen": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 15,
+      "Fire": 20,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 5
+    },
+    "Back": {
+      "Cut": 25,
+      "Impact": 30,
+      "Shot": 15,
+      "Fire": 15,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 5
+    }
+  },
+  "Garangolm": {
+    "Head": {
+      "Cut": 50,
+      "Impact": 45,
+      "Shot": 35,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Torso": {
+      "Cut": 35,
+      "Impact": 35,
+      "Shot": 15,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Left Arm": {
+      "Cut": 45,
+      "Impact": 50,
+      "Shot": 45,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Right Arm": {
+      "Cut": 45,
+      "Impact": 50,
+      "Shot": 45,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Hind Leg": {
+      "Cut": 25,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    },
+    "Tail": {
+      "Cut": 40,
+      "Impact": 40,
+      "Shot": 30,
+      "Fire": 8,
+      "Water": 0,
+      "Ice": 5,
+      "Thunder": 10,
+      "Dragon": 0
+    }
+  },
+  "Gaismagorm": {
+    "Head": {
+      "Cut": 70,
+      "Impact": 72,
+      "Shot": 45,
+      "Fire": 10,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 20,
+      "Dragon": 30
+    },
+    "Neck": {
+      "Cut": 40,
+      "Impact": 42,
+      "Shot": 24,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 25
+    },
+    "Back": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 14,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Abdomen": {
+      "Cut": 32,
+      "Impact": 34,
+      "Shot": 16,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 25
+    },
+    "Wingarm": {
+      "Cut": 43,
+      "Impact": 43,
+      "Shot": 28,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 25
+    },
+    "Foreleg": {
+      "Cut": 32,
+      "Impact": 32,
+      "Shot": 20,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 20
+    },
+    "Hind Leg": {
+      "Cut": 26,
+      "Impact": 26,
+      "Shot": 18,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Tail": {
+      "Cut": 32,
+      "Impact": 30,
+      "Shot": 16,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 10,
+      "Dragon": 15
+    },
+    "Tail Tip": {
+      "Cut": 45,
+      "Impact": 38,
+      "Shot": 22,
+      "Fire": 5,
+      "Water": 0,
+      "Ice": 0,
+      "Thunder": 15,
+      "Dragon": 25
+    }
+  },
+  "Espinas": {
+    "Head": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Abdomen": {
+      "Cut": 30,
+      "Impact": 30,
+      "Shot": 25,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Back": {
+      "Cut": 20,
+      "Impact": 20,
+      "Shot": 15,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Wing": {
+      "Cut": 23,
+      "Impact": 23,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    },
+    "Leg": {
+      "Cut": 38,
+      "Impact": 38,
+      "Shot": 40,
+      "Fire": 0,
+      "Water": 10,
+      "Ice": 15,
+      "Thunder": 5,
+      "Dragon": 10
+    },
+    "Tail": {
+      "Cut": 28,
+      "Impact": 25,
+      "Shot": 20,
+      "Fire": 0,
+      "Water": 5,
+      "Ice": 10,
+      "Thunder": 0,
+      "Dragon": 5
+    }
+  }
+}

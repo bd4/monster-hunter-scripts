@@ -135,13 +135,23 @@ function normalize_name(s) {
 
 
 function setup_item_autocomplete(selector) {
-  var DATA_PATH = get_base_path() + "/rewards/";
+  var DATA_PATH = get_base_path() + "/mh4u/rewards/";
   $.getJSON(DATA_PATH + "items.json",
             function(data) {
                 $(selector).autocomplete({ source: data });
             });
 }
 
+
+function setup_monster_autocomplete(game, selector) {
+  var DATA_PATH = "/jsonapi/" + game + "/";
+  $.getJSON(DATA_PATH + "monster/_list.json",
+            function(data) {
+                var boss = data.filter(a => (a["class"] == "Boss" || a["class"] == "Large"));
+                var boss_names = boss.map(a => a["name"]);
+                $(selector).autocomplete({ source: boss_names });
+            });
+}
 
 function load_weapon_data(ready_fn) {
     if (typeof DATA_PATH == "undefined") {

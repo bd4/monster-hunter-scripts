@@ -4,14 +4,18 @@ import sys
 import argparse
 import shlex
 import copy
+import codecs
+import os
+import os.path
+from collections import defaultdict
 
 import _pathfix
 
 from mhapi.db import MHDB, MHDBX
-from mhapi.damage import MotionValueDB, WeaponMonsterDamage
+from mhapi.damage import MotionValueDB, WeaponMonsterDamage, WeaponType
 from mhapi.model import SharpnessLevel, Weapon, ItemStars
 from mhapi import skills
-from mhapi.util import ELEMENTS, WEAPON_TYPES, WTYPE_ABBR
+from mhapi.util import ELEMENTS, WEAPON_TYPES, WTYPE_ABBR, DAMAGE_TYPES
 
 
 def weapon_match_tuple(arg):
@@ -65,7 +69,7 @@ def _make_db_sharpness_string(level_string):
 
 def weapon_stats_tuple(arg):
     parts = arg.split(",")
-    #print "parts %r" % parts
+    #print("parts %r" % parts)
     if len(parts) < 4:
         print("not enough parts")
         raise ValueError("Bad arg, use 'name,weapon_type,sharpness,raw'")
@@ -160,8 +164,8 @@ def _add_skill_args(parser):
                         type=int, choices=list(range(0, 5)), default=0,
                         help="1-4 for CE+1, +2, +3 and Critical God")
     parser.add_argument("-e", "--element-up",
-                        type=int, choices=list(range(0, 5)), default=0,
-                        help="1-4 for (element) Atk +1, +2, +3 and"
+                        type=int, choices=list(range(0, 6)), default=0,
+                        help="1-5 for (element) Atk +1, +2, +3 and"
                              " Element Attack Up")
     parser.add_argument("-t", "--artillery",
                         type=int, choices=[0,1,2], default=0,
@@ -206,6 +210,9 @@ def parse_args(argv):
     parser.add_argument("--mhw", "--monster-hunter-world", action="store_true",
                         default=False,
                         help="Adjusted attack, use MHWorld values")
+    parser.add_argument("--mhr", "--monster-hunter-rise", action="store_true",
+                        default=False,
+                        help="True attack, use MHRise values")
     parser.add_argument("-m", "--match", nargs="*",
                     help="WEAPON_TYPE,ELEMENT_OR_STATUS_OR_RAW"
                         +" Include all matching weapons in their final form."
@@ -216,19 +223,27 @@ def parse_args(argv):
                         +" Examples: 'Great Sword,Raw'"
                         +" 'Sword and Shield,Para'"
                         +" 'HH,Blast' 'Hammer'",
-                        type=weapon_match_tuple, default=[])
+                        type=weapon_match_tuple, default=[],
+                        action="append")
     parser.add_argument("-w", "--weapon-custom", nargs="*",
                     help="NAME,WEAPON_TYPE,TRUE_RAW,AFFINITY,SHARPNESS"
                         +"ELEMENT_TYPE,ELEMENT_ATTACK"
                         +" Add weapon based on stats."
                         +" Examples: 'DinoSnS,SnS,190,0,Blue,Fire,30'"
                         +" 'AkantorHam,Hammer,240,25,Green'",
-                        type=weapon_stats_tuple, default=[])
+                        type=weapon_stats_tuple, default=[],
+                        action="append")
     parser.add_argument("-q", "--quest-level",
                         help="village,guild[,permit[,arena]]",
                         type=quest_level_tuple)
-    parser.add_argument("monster",
-                        help="Full name of monster")
+    parser.add_argument("-r", "--rarity",
+                        help="include weapons of given type with max rarity",
+                        type=int, nargs="?")
+    parser.add_argument("--html-out",
+                        help="Write table of values as HTML and save to path")
+    parser.add_argument("--html-site",
+                        help="Write entire site of all monster & quest levels")
+    parser.add_argument("-n", "--monster", help="Full name of monster")
     parser.add_argument("weapon", nargs="*",
                         help="One or more weapons of same class to compare,"
                              " full names")
@@ -273,6 +288,99 @@ def _print_headers(parts, damage_map_base):
     print(" | ".join(cols))
 
 
+def write_damage_html(path, monster, monster_damage, quest_level, names,
+                      damage_map_base, weapon_damage_map, parts,
+                      part_max_damage, monster_breaks, monster_stars):
+    print(path)
+    def uniform_average(weapon):
+        return weapon_damage_map[weapon].averages["uniform"]
+
+    names_sorted = list(names)
+    names_sorted.sort(key=uniform_average, reverse=True)
+
+    from mako.lookup import TemplateLookup
+    from mako.runtime import Context
+
+    tlookup = TemplateLookup(directories=["templates/damage"],
+                             output_encoding="utf-8",
+                             input_encoding="utf-8")
+    damage_template = tlookup.get_template("/monster_damage.html")
+
+    wtype = damage_map_base.weapon.wtype
+    weapon_damage_type = WeaponType.damage_type(wtype)
+    damage_types = list(DAMAGE_TYPES)
+
+    weapon_types = list(WEAPON_TYPES)
+    weapon_types.remove("Bow")
+    weapon_types.remove("Light Bowgun")
+    weapon_types.remove("Heavy Bowgun")
+
+    with codecs.open(path, "w", "utf8") as f:
+        template_args = dict(
+            monster=monster.name,
+            monster_damage=monster_damage,
+            damage_types=DAMAGE_TYPES,
+            weapon_types=weapon_types,
+            weapon_type=wtype,
+            weapon_damage_type=weapon_damage_type,
+            village_stars=quest_level[0],
+            guild_stars=quest_level[1],
+            part_names=parts,
+            part_max_damage=part_max_damage,
+            weapon_names=names_sorted,
+            weapon_damage_map=weapon_damage_map,
+            monster_breaks=set(monster_breaks),
+            monster_stars=monster_stars
+        )
+        ctx = Context(f, **template_args)
+        damage_template.render_context(ctx)
+
+
+def write_damage_html_by_rarity(path, rarity, monster, monster_damage, names,
+                                damage_map_base, weapon_damage_map, parts,
+                                part_max_damage):
+    print(path)
+    def uniform_average(weapon):
+        return weapon_damage_map[weapon].averages["uniform"]
+
+    names_sorted = list(names)
+    names_sorted.sort(key=uniform_average, reverse=True)
+
+    from mako.lookup import TemplateLookup
+    from mako.runtime import Context
+
+    tlookup = TemplateLookup(directories=["templates/damage"],
+                             output_encoding="utf-8",
+                             input_encoding="utf-8")
+    damage_template = tlookup.get_template("/monster_damage_by_rarity.html")
+
+    wtype = damage_map_base.weapon.wtype
+    weapon_damage_type = WeaponType.damage_type(wtype)
+    damage_types = list(DAMAGE_TYPES)
+
+    weapon_types = list(WEAPON_TYPES)
+    weapon_types.remove("Bow")
+    weapon_types.remove("Light Bowgun")
+    weapon_types.remove("Heavy Bowgun")
+
+    with codecs.open(path, "w", "utf8") as f:
+        template_args = dict(
+            monster=monster.name,
+            monster_damage=monster_damage,
+            rarity=rarity,
+            damage_types=DAMAGE_TYPES,
+            weapon_types=weapon_types,
+            weapon_type=wtype,
+            weapon_damage_type=weapon_damage_type,
+            part_names=parts,
+            part_max_damage=part_max_damage,
+            weapon_names=names_sorted,
+            weapon_damage_map=weapon_damage_map,
+        )
+        ctx = Context(f, **template_args)
+        damage_template.render_context(ctx)
+
+
 def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
     def uniform_average(weapon):
         return weapon_damage_map[weapon].averages["uniform"]
@@ -296,7 +404,8 @@ def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
             print("% 2d" % part_damage.average(), end=' ')
         print()
 
-    if len(names) > 1:
+    # this is super buggy
+    if False and len(names) > 1:
         w1 = weapon_damage_map[names_sorted[0]]
         w2 = weapon_damage_map[names_sorted[1]]
         m, ratio = w1.compare_break_even(w2)
@@ -387,32 +496,18 @@ def match_quest_level(match_level, weapon_level):
     return True
 
 
-def main():
-    args = parse_args(None)
-
-    game_uses_true_raw = False
-    if args.quest_level:
-        comps = True
-    else:
-        comps = False
-
-    if args.monster_hunter_cross:
-        db = MHDBX()
-        game_uses_true_raw = True
-    elif args.monster_hunter_gen:
-        db = MHDB(game="gu", include_item_components=comps)
-        game_uses_true_raw = True
-    elif args.mhw:
-        db = MHDBX(game="mhw")
-        game_uses_true_raw = False
-    else:
-        db = MHDB(game="4u", include_item_components=comps)
-    motiondb = MotionValueDB(_pathfix.motion_values_path)
-
+def run_comparison(args, db, motiondb, game_uses_true_raw, item_stars=None):
     monster = db.get_monster_by_name(args.monster)
     if not monster:
         raise ValueError("Monster '%s' not found" % args.monster)
     monster_damage = db.get_monster_damage(monster.id)
+
+    if not monster_damage.is_valid():
+        print("WARN: invalid damage data for monster '%s'" % args.monster)
+        return
+
+    if item_stars is None:
+        item_stars = ItemStars(db)
 
     weapons = []
     weapon_type = None
@@ -430,10 +525,14 @@ def main():
         if skill_args:
             skill_args_map[name] = skill_args
 
+    #print("args match", args.match)
     for match_tuple in args.match:
         # TODO: better validation
+        if isinstance(match_tuple, list):
+            # TODO: is this a bug in argparse!!!????
+            match_tuple = match_tuple[0]
         wtype, element = match_tuple
-        if args.quest_level:
+        if args.quest_level or args.rarity:
             final=None
         else:
             final=1
@@ -448,7 +547,7 @@ def main():
             names_set.add(w.name)
 
     if args.weapon_custom:
-        weapons.extend(args.weapon_custom)
+        weapons.extend([w[0] for w in args.weapon_custom])
 
     if not weapons:
         print("Err: no matching weapons")
@@ -457,6 +556,29 @@ def main():
     names = [w.name for w in weapons]
 
     monster_breaks = db.get_monster_breaks(monster.id)
+    part_names = monster_damage.keys()
+
+    for i in range(len(monster_breaks)):
+        if monster_breaks[i] not in monster_damage:
+            plural = monster_breaks[i] + "s"
+            if plural in monster_damage:
+                monster_breaks[i] = plural
+
+    states = monster_damage.state_names()
+    print("States:", states)
+    print("%-20s" % monster.name, " | ".join(monster_damage.keys()))
+    for dtype in DAMAGE_TYPES:
+        print(dtype[:2], ":", end=" ")
+        for part_name, part_damage in monster_damage.items():
+            if part_damage.state_diff(dtype):
+                print("% 2d (% 2d)"
+                      % (part_damage[dtype],
+                         part_damage.get_alt_state(dtype)),
+                      end=" ")
+            else:
+                print("% 2d" % part_damage[dtype], end=" ")
+        print()
+
     weapon_type = weapons[0]["wtype"]
     if args.phial and weapon_type != "Charge Blade":
         print("ERROR: phial option is only supported for Charge Blade")
@@ -477,7 +599,6 @@ def main():
         limit_parts = None
 
     if args.quest_level:
-        item_stars = ItemStars(db)
         village, guild, permit, arena = args.quest_level
         print("Filter by Quest Levels:", args.quest_level)
         weapons2 = dict()
@@ -504,6 +625,48 @@ def main():
         weapons = list(weapons2.values())
         names = [w.name for w in weapons]
 
+    if args.rarity:
+        print("Filter by max rarity:", args.rarity)
+        weapons2 = dict()
+        by_name = dict()
+        for w in weapons:
+            if w.rarity <= args.rarity:
+                weapons2[w.id] = w
+                by_name[w.name] = w
+        # TODO: don't have parent ids for mhrise yet
+        if False and args.mhr:
+            # hack to remove most common dups
+            for wname in list(by_name.keys()):
+                if wname.endswith("+"):
+                    base = wname[:-1]
+                    suffix = "+"
+                else:
+                    parts = wname.rsplit(" ", maxsplit=1)
+                    if len(parts) == 1:
+                        continue
+                    base, suffix = parts
+                parent_name = None
+                if suffix == "+" or base.endswith("+"):
+                    parent_name = base.rstrip("+")
+                elif suffix in ("II", "III", "VI", "VII"):
+                    parent_name = wname[:-1]
+                elif suffix == "IV":
+                    parent_name = base + " III"
+                elif suffix == "V":
+                    parent_name = base + " IV"
+                if parent_name:
+                    print("parent", parent_name)
+                    if parent_name in by_name:
+                        del weapons2[by_name[parent_name].id]
+        else:
+            parent_ids = set(w.parent_id for w in weapons2.values())
+            for wid in list(weapons2.keys()):
+                if wid in parent_ids:
+                    del weapons2[wid]
+        weapons = list(weapons2.values())
+        names = [w.name for w in weapons]
+
+    part_max_damage = defaultdict(int)
     weapon_damage_map = dict()
     for row in weapons:
         name = row["name"]
@@ -512,6 +675,7 @@ def main():
             raise ValueError(
                     "Weapon '%s' is different type, got '%s' expected '%s'"
                     % (name, row_type, weapon_type))
+        #print(name, row)
         try:
             skill_args = skill_args_map.get(name, args)
             wd = WeaponMonsterDamage(row,
@@ -526,7 +690,8 @@ def main():
                                      limit_parts=args.parts,
                                      frenzy_bonus=skill_args.frenzy,
                                      is_true_attack=game_uses_true_raw,
-                                     blunt_power=skill_args.blunt_power)
+                                     blunt_power=skill_args.blunt_power,
+                                     game=db.game)
             print("%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity), end=' ')
             if wd.etype:
                 if wd.etype2:
@@ -534,13 +699,16 @@ def main():
                         % (wd.eattack, wd.etype, wd.eattack2, wd.etype2), end=' ')
                 else:
                     print("(%4.0f %s)" % (wd.eattack, wd.etype), end=' ')
-            print(SharpnessLevel.name(wd.sharpness), end=' ')
+            print(SharpnessLevel.name(wd.sharpness), wd.sharpness_points, end=' ')
             if skill_args != args:
                 print("{%s}" % ",".join(sn
                                         for sn in get_skill_names(skill_args)
                                         if sn))
             else:
                 print()
+            for part in wd.parts:
+                if wd[part].average() > part_max_damage[part]:
+                    part_max_damage[part] = wd[part].average()
             weapon_damage_map[name] = wd
         except ValueError as e:
             print(str(e))
@@ -563,6 +731,162 @@ def main():
     else:
         print_sorted_damage(names, damage_map_base,
                             weapon_damage_map, parts)
+
+    if args.html_out:
+        if args.mhr:
+            if not args.rarity:
+                print("Error: --html-out with --mrh requires --rarity")
+                sys.exit(1)
+            write_damage_html_by_rarity(args.html_out, args.rarity,
+                                        monster, monster_damage,
+                                        names, damage_map_base,
+                                        weapon_damage_map, parts,
+                                        part_max_damage)
+        else:
+            if not args.quest_level:
+                print("Error: --html-out requires quest level (-q)")
+                sys.exit(1)
+            monster_stars = item_stars.get_monster_stars(monster.id)
+            write_damage_html(args.html_out, monster, monster_damage,
+                              args.quest_level, names,
+                              damage_map_base, weapon_damage_map, parts,
+                              part_max_damage, monster_breaks,
+                              monster_stars)
+
+
+def write_html_site(args, db, motiondb, game_uses_true_raw):
+    if db.game == "4u":
+        village_max = 5
+        guild_max = 2
+    else:
+        raise ValueError("Not implemented")
+
+    monsters = db.get_monsters("Boss")
+    monster_names = [monster.name for monster in monsters]
+    weapon_types = db.get_weapon_types()
+
+    item_stars = ItemStars(db)
+    monster_stars = {}
+    for monster in monsters:
+        monster_stars[monster.id] = item_stars.get_monster_stars(monster.id)
+
+    n = 0
+    base_dir = args.html_site
+    for monster in monsters:
+        stars = monster_stars[monster.id]
+        if stars["Village"] is None:
+            vrange = [0]
+        else:
+            if stars["Village"] > 2:
+                start = stars["Village"] - 1
+            else:
+                start = stars["Village"]
+            vrange = list(range(start, 11))
+            if start > 2:
+                vrange = [0] + vrange
+        if stars["Guild"] is None:
+            grange = [0]
+        else:
+            if stars["Guild"] > 1:
+                start = stars["Guild"] - 1
+            else:
+                start = stars["Guild"]
+            grange = list(range(start, 11))
+            if start > 1:
+                grange = [0] + grange
+        for v in vrange:
+            for g in grange:
+                if v == 0:
+                    if g == 0:
+                        continue
+                    v = 1
+                if g == 0:
+                    g = 1
+                quest_dir = "v{}g{}".format(v, g)
+                quest_path = os.path.join(base_dir, monster.name, quest_dir)
+                if not os.path.isdir(quest_path):
+                    os.makedirs(quest_path)
+                for wtype in weapon_types:
+                    if "Bowgun" in wtype or wtype == "Bow":
+                        continue
+                    args.html_out = os.path.join(quest_path, wtype + ".html")
+                    if os.path.isfile(args.html_out):
+                        print(args.html_out, " exists, skipping")
+                        continue
+                    args.html_site = None
+                    n += 1
+                    args.monster = monster.name
+                    args.quest_level = (v if v else 1, g if g else 1,
+                                        None, None)
+                    args.match = [(wtype, None)]
+                    run_comparison(args, db, motiondb, game_uses_true_raw,
+                                   item_stars=item_stars)
+    print("n =", n)
+
+
+def write_html_site_rise(args, db, motiondb, game_uses_true_raw=True):
+    monsters = db.get_monsters()
+    weapon_types = db.get_weapon_types()
+
+    n = 0
+    base_dir = args.html_site
+    for monster in monsters:
+        for rarity in range(1, 11):
+            args.rarity = rarity
+            rarity_dir = "r{}".format(rarity)
+            mpath = os.path.join(base_dir, monster.name, rarity_dir)
+            if not os.path.isdir(mpath):
+                os.makedirs(mpath)
+            for wtype in weapon_types:
+                if "Bowgun" in wtype or wtype == "Bow":
+                    continue
+                args.html_out = os.path.join(mpath, wtype + ".html")
+                if os.path.isfile(args.html_out):
+                    print(args.html_out, " exists, skipping")
+                    continue
+                args.html_site = None
+                n += 1
+                args.monster = monster.name
+                args.match = [(wtype, None)]
+                print(rarity, wtype)
+                run_comparison(args, db, motiondb, game_uses_true_raw)
+    print("n =", n)
+
+
+def main():
+    args = parse_args(None)
+
+    game_uses_true_raw = False
+    if args.quest_level or args.html_site:
+        comps = True
+    else:
+        comps = False
+
+    if args.monster_hunter_cross:
+        db = MHDBX()
+        game_uses_true_raw = True
+    elif args.monster_hunter_gen:
+        db = MHDB(game="gu", include_item_components=comps)
+        game_uses_true_raw = True
+    elif args.mhw:
+        db = MHDBX(game="mhw")
+        game_uses_true_raw = False
+        SharpnessLevel._modifier = SharpnessLevel._modifier_mhw
+    elif args.mhr:
+        db = MHDBX(game="mhr")
+        game_uses_true_raw = True
+        SharpnessLevel._modifier = SharpnessLevel._modifier_mhw
+    else:
+        db = MHDB(game="4u", include_item_components=comps)
+    motiondb = MotionValueDB(_pathfix.motion_values_path)
+
+    if args.html_site:
+        if args.mhr:
+            write_html_site_rise(args, db, motiondb, game_uses_true_raw)
+        else:
+            write_html_site(args, db, motiondb, game_uses_true_raw)
+    else:
+        run_comparison(args, db, motiondb, game_uses_true_raw)
 
 
 if __name__ == '__main__':
