@@ -172,7 +172,218 @@
         "power": [
           48
         ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Falling Slash I",
+        "power": [
+          48
+        ],
+        "ele_mod": [
+          1.0
+        ],
+        "part_mod": [
+          1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Falling Slash II",
+        "power": [
+          86
+        ],
+        "ele_mod": [
+          1.05
+        ],
+        "part_mod": [
+          1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Falling Slash III",
+        "power": [
+          110
+        ],
+        "ele_mod": [
+          1.2
+        ],
+        "part_mod": [
+          1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Vortex Slash I",
+        "power": [
+          28
+        ],
+        "ele_mod": [
+          1.2
+        ],
+        "part_mod": [
+          1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Vortex Slash II",
+        "power": [
+          55, 20
+        ],
+        "ele_mod": [
+          1.6, 1.1
+        ],
+        "part_mod": [
+          1.0, 1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Vortex Slash III",
+        "power": [
+          55, 60
+        ],
+        "ele_mod": [
+          2.0, 2.0
+        ],
+        "part_mod": [
+          1.0, 1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Rising Slash I",
+        "power": [
+          35
+        ],
+        "ele_mod": [
+          1.0
+        ],
+        "part_mod": [
+          1.5
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Rising Slash II",
+        "power": [
+          65
+        ],
+        "ele_mod": [
+          1.0
+        ],
+        "part_mod": [
+          1.6
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Surge Rising Slash III",
+        "power": [
+          48, 80
+        ],
+        "ele_mod": [
+          1.0, 1.0
+        ],
+        "part_mod": [
+          1.8, 2.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Rage Slash Lvl3",
+        "power": [
+          179
+        ],
+        "ele_mod": [
+          3.0
+        ],
+        "part_mod": [
+          1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Charged Slash Lvl3",
+        "power": [
+          105
+        ],
+        "ele_mod": [
+          3.0
+        ],
+        "part_mod": [
+          1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Strong Charged Slash Lvl3",
+        "power": [
+          128
+        ],
+        "ele_mod": [
+          2.25
+        ],
+        "part_mod": [
+          1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "Strong Wide Slash Lvl3",
+        "power": [
+          90
+        ],
+        "ele_mod": [
+          2.25
+        ],
+        "part_mod": [
+          1.0
+        ]
+      },
+      {
+        "type": [
+          0
+        ],
+        "name": "True Charged Slash Lvl3",
+        "power": [
+          22, 225
+        ],
+        "ele_mod": [
+          1.0, 1.7
+        ],
+        "part_mod": [
+          1.0, 1.0
+        ]
       }
+
     ],
     "name": "Great Sword"
   },
