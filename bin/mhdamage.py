@@ -11,8 +11,14 @@ from collections import defaultdict
 
 import _pathfix
 
+
+from prettytable import prettytable
+import colorama
+from colorama import Fore
+
 from mhapi.db import MHDB, MHDBX
-from mhapi.damage import MotionValueDB, WeaponMonsterDamage, WeaponType
+from mhapi.damage import MotionValueDB, WeaponMonsterDamage
+from mhapi.damage import WeaponType, WeaponTypeMotionValues
 from mhapi.model import SharpnessLevel, Weapon, ItemStars
 from mhapi import skills
 from mhapi.util import ELEMENTS, WEAPON_TYPES, WTYPE_ABBR, DAMAGE_TYPES
@@ -51,6 +57,23 @@ def quest_level_tuple(arg):
     while len(parts) < 4:
         parts.append(None)
     return [parse_stars(p) for p in parts]
+
+
+def crit_boost(level):
+    assert(level >= 0 and level <= 3)
+    return 25 + 5 * level
+
+
+def wex_affinity(level):
+    if level == 0:
+        return 0
+    elif level == 1:
+        return 15
+    elif level == 2:
+        return 30
+    elif level == 3:
+        return 50
+    assert(False)
 
 
 def _make_db_sharpness_string(level_string):
@@ -141,7 +164,9 @@ def get_skill_names(args):
             skills.AttackUp.name(args.attack_up),
             skills.CriticalEye.name(args.critical_eye),
             skills.ElementAttackUp.name(args.element_up),
-            "Blunt Power" if args.blunt_power else ""]
+            "Blunt Power" if args.blunt_power else "",
+            "CritBoost +%d" % args.crit_boost
+                if args.crit_boost else ""]
 
 
 def percent_change(a, b):
@@ -161,8 +186,8 @@ def _add_skill_args(parser):
                         type=int, choices=list(range(0, 5)), default=0,
                         help="1-4 for AuS, M, L, XL")
     parser.add_argument("-c", "--critical-eye",
-                        type=int, choices=list(range(0, 5)), default=0,
-                        help="1-4 for CE+1, +2, +3 and Critical God")
+                        type=int, choices=list(range(0, 8)), default=0,
+                        help="1-4(7) for CE+1, +2, +3 and Critical God")
     parser.add_argument("-e", "--element-up",
                         type=int, choices=list(range(0, 6)), default=0,
                         help="1-5 for (element) Atk +1, +2, +3 and"
@@ -193,6 +218,8 @@ def parse_args(argv):
     parser.add_argument("-o", "--motion", type=int,
                         help="Use specified motion value instead of weapon "
                             +"average")
+    parser.add_argument("--match-motion", type=str,
+                        help="Use average of matching motion names")
     parser.add_argument("-l", "--phial",
                         help="Show CB phial damage at the sepcified level"
                             +" (1, 2, 3, 5=ultra) instead of normal motion"
@@ -213,6 +240,13 @@ def parse_args(argv):
     parser.add_argument("--mhr", "--monster-hunter-rise", action="store_true",
                         default=False,
                         help="True attack, use MHRise values")
+    parser.add_argument("--anti-species", action="store_true",
+                        default=False,
+                        help="Add 5% anti-species true raw boost for rampage 2+ slots")
+    parser.add_argument("--crit-boost", "--cb", type=int, default=0,
+                        help="critical boost skill level", choices=[0, 1, 2, 3])
+    parser.add_argument("--weakness-exploit", "--wex", type=int, default=0,
+                        help="weakness exploit skill level", choices=[0, 1, 2, 3])
     parser.add_argument("-m", "--match", nargs="*",
                     help="WEAPON_TYPE,ELEMENT_OR_STATUS_OR_RAW"
                         +" Include all matching weapons in their final form."
@@ -278,14 +312,19 @@ def print_sorted_phial_damage(names, damage_map_base, weapon_damage_map, parts,
         print()
 
 
-def _print_headers(parts, damage_map_base):
+def _print_headers(parts, damage_map_base, maxlen=4):
     print()
+    cols = _get_part_headers(parts, damage_map_base, maxlen=maxlen)
+    print(" | ".join(cols))
+
+
+def _get_part_headers(parts, damage_map_base, maxlen=4):
     avg_hitbox = (sum(damage_map_base[part].hitbox for part in parts)
                   / float(len(parts)))
-    cols = ["%s (%d)" % (part, damage_map_base[part].hitbox)
+    cols = ["%s (%d)" % (part[:maxlen], damage_map_base[part].hitbox)
             for part in parts]
     cols = ["%s (%d)" % ("Avg", avg_hitbox)] + cols
-    print(" | ".join(cols))
+    return cols
 
 
 def write_damage_html(path, monster, monster_damage, quest_level, names,
@@ -383,26 +422,63 @@ def write_damage_html_by_rarity(path, rarity, monster, monster_damage, names,
 
 def print_sorted_damage(names, damage_map_base, weapon_damage_map, parts):
     def uniform_average(weapon):
-        return weapon_damage_map[weapon].averages["uniform"]
+        wd_list = weapon_damage_map[weapon]
+        return sum(wd.averages["uniform"] for wd in wd_list) / len(wd_list)
 
     names_sorted = list(names)
     names_sorted.sort(key=uniform_average, reverse=True)
 
-    _print_headers(parts, damage_map_base)
+    maxlen = 4
+    headers = ["Name", "Avg"] + [p[:maxlen] for p in parts]
+    avg_hitbox = (sum(damage_map_base[part].hitbox for part in parts)
+                  / float(len(parts)))
+    first_row = (["", avg_hitbox] +
+                 [damage_map_base[part].hitbox for part in parts])
+
+    t = prettytable.PrettyTable(border=True,
+                                field_names=headers,
+                                hrules=prettytable.HEADER,
+                                vrules=prettytable.NONE,
+                                float_format="5.1",
+                                padding_width=1)
+    t.align["Name"] = "l"
+    for c in headers[1:]:
+        t.align[c] = "r"
+
+    t.add_row(first_row)
+
+    #_print_headers(parts, damage_map_base)
 
     #print
     #print " | ".join(["%-15s" % "Avg"] + parts)
     #print " | ".join(["   "] + [str(damage_map_base[part].hitbox)
     #                            for part in parts])
 
+    """
     for name in names_sorted:
         print("%-20s:" % name, end=' ')
-        damage_map = weapon_damage_map[name]
-        print("%0.2f" % damage_map.averages["uniform"], end=' ')
+        average = uniform_average(name)
+        damage_maps = weapon_damage_map[name]
+        print("%0.2f" % average, end=' ')
         for part in parts:
-            part_damage = damage_map[part]
-            print("% 2d" % part_damage.average(), end=' ')
+            # for wd in damage_maps:
+            #    print(name, wd.motion.name, part, wd[part].average())
+            part_avg = sum(wd[part].average() for wd in damage_maps) / len(damage_maps)
+            print("% 2d" % part_avg, end=' ')
         print()
+    """
+    for name in names_sorted:
+        average = uniform_average(name)
+        damage_maps = weapon_damage_map[name]
+        row = [name, average]
+        for part in parts:
+            # for wd in damage_maps:
+            #    print(name, wd.motion.name, part, wd[part].average())
+            part_avg = sum(wd[part].average() for wd in damage_maps) / len(damage_maps)
+            row.append(round(part_avg))
+        t.add_row(row)
+
+    print(t)
 
     # this is super buggy
     if False and len(names) > 1:
@@ -556,7 +632,7 @@ def run_comparison(args, db, motiondb, game_uses_true_raw, item_stars=None):
     names = [w.name for w in weapons]
 
     monster_breaks = db.get_monster_breaks(monster.id)
-    part_names = monster_damage.keys()
+    part_names = list(monster_damage.keys())
 
     for i in range(len(monster_breaks)):
         if monster_breaks[i] not in monster_damage:
@@ -566,29 +642,51 @@ def run_comparison(args, db, motiondb, game_uses_true_raw, item_stars=None):
 
     states = monster_damage.state_names()
     print("States:", states)
-    print("%-20s" % monster.name, " | ".join(monster_damage.keys()))
+    print("Parts: ", part_names)
+    print()
+
+    hitbox_table_fields = [monster.name] + [p[:4] for p in part_names]
+    t = prettytable.PrettyTable(border=True,
+                                field_names=hitbox_table_fields,
+                                hrules=prettytable.HEADER,
+                                vrules=prettytable.NONE,
+                                padding_width=0)
+    t.align[monster.name] = "r"
+    for c in hitbox_table_fields[1:]:
+        t.align[c] = "r"
+
     for dtype in DAMAGE_TYPES:
-        print(dtype[:2], ":", end=" ")
-        for part_name, part_damage in monster_damage.items():
-            if part_damage.state_diff(dtype):
-                print("% 2d (% 2d)"
-                      % (part_damage[dtype],
-                         part_damage.get_alt_state(dtype)),
-                      end=" ")
-            else:
-                print("% 2d" % part_damage[dtype], end=" ")
-        print()
+        row = [dtype] + [d[dtype] for d in monster_damage.values()]
+        t.add_row(row)
+    print(t)
+    print()
 
     weapon_type = weapons[0]["wtype"]
     if args.phial and weapon_type != "Charge Blade":
         print("ERROR: phial option is only supported for Charge Blade")
         sys.exit(1)
-    motion = motiondb[weapon_type].average
+    motions = motiondb[weapon_type]
     print("Weapon Type: %s" % weapon_type)
-    print("Average Motion: %0.1f" % motion)
+    print("Average Motion: %0.1f" % motions.average)
     if args.motion:
-        motion = args.motion
-        print("Specified Motion: %0.1f" % motion)
+        motions = WeaponTypeMotionValues(weapon_type, [
+            dict(type=[0], name="Custom", power=[args.motion]),
+        ])
+        print("Specified Motion: %0.1f" % motions.average)
+    if args.match_motion:
+        motion_list = motions.get_matching_motions(args.match_motion)
+        print("Matching Motions:")
+        total_raw = 0
+        total_ele_mod = 0
+        for motion in motion_list:
+            total_raw += motion.total
+            total_ele_mod += sum(motion.ele_mod) / len(motion.ele_mod)
+            print(" ", motion.name,
+                  ",".join([str(pair) for pair in zip(motion.powers, motion.ele_mod)]))
+        print(" ", "Average", "(" + str(total_raw/len(motion_list)) + ", "
+              + str(total_ele_mod/len(motion_list)) + ")")
+    else:
+        motion_list = [motions.get_average_mv()]
     print("Monster Breaks: %s" % ", ".join(monster_breaks))
     skill_names = get_skill_names(args)
     print("Common Skills:", ", ".join(skill for skill in skill_names if skill))
@@ -668,6 +766,9 @@ def run_comparison(args, db, motiondb, game_uses_true_raw, item_stars=None):
 
     part_max_damage = defaultdict(int)
     weapon_damage_map = dict()
+    weapon_table = []
+    col_names = ["Name", "EFR", "Atk", "Aff", "Ele",
+                 "Shp", "Skills"]
     for row in weapons:
         name = row["name"]
         row_type = row["wtype"]
@@ -678,43 +779,74 @@ def run_comparison(args, db, motiondb, game_uses_true_raw, item_stars=None):
         #print(name, row)
         try:
             skill_args = skill_args_map.get(name, args)
-            wd = WeaponMonsterDamage(row,
-                                     monster, monster_damage,
-                                     motion, skill_args.sharpness_plus,
-                                     monster_breaks,
-                                     attack_skill=skill_args.attack_up,
-                                     critical_eye_skill=skill_args.critical_eye,
-                                     element_skill=skill_args.element_up,
-                                     awaken=skill_args.awaken,
-                                     artillery_level=skill_args.artillery,
-                                     limit_parts=args.parts,
-                                     frenzy_bonus=skill_args.frenzy,
-                                     is_true_attack=game_uses_true_raw,
-                                     blunt_power=skill_args.blunt_power,
-                                     game=db.game)
-            print("%-20s: %4.0f %2.0f%%" % (name, wd.attack, wd.affinity), end=' ')
+            wd_list = []
+            for motion in motion_list:
+                wd = WeaponMonsterDamage(row,
+                                         monster, monster_damage, motion,
+                                         skill_args.sharpness_plus,
+                                         monster_breaks,
+                                         attack_skill=skill_args.attack_up,
+                                         critical_eye_skill=skill_args.critical_eye,
+                                         element_skill=skill_args.element_up,
+                                         awaken=skill_args.awaken,
+                                         artillery_level=skill_args.artillery,
+                                         limit_parts=args.parts,
+                                         frenzy_bonus=skill_args.frenzy,
+                                         is_true_attack=game_uses_true_raw,
+                                         blunt_power=skill_args.blunt_power,
+                                         anti_species=args.anti_species,
+                                         crit_boost=crit_boost(args.crit_boost),
+                                         wex_affinity=wex_affinity(args.weakness_exploit),
+                                         game=db.game)
+                wd_list.append(wd)
+            wd = wd_list[0]
+            estring = ""
             if wd.etype:
                 if wd.etype2:
-                    print("(%4.0f %s, %4.0f %s)" \
-                        % (wd.eattack, wd.etype, wd.eattack2, wd.etype2), end=' ')
+                    estring = ("% 4.0f %s, %4.0f %s" 
+                        % (wd.eattack, wd.etype[:3], wd.eattack2, wd.etype2[:3]))
                 else:
-                    print("(%4.0f %s)" % (wd.eattack, wd.etype), end=' ')
-            print(SharpnessLevel.name(wd.sharpness), wd.sharpness_points, end=' ')
+                    estring = ("% 4.0f %s" % (wd.eattack, wd.etype[:3]))
+            sstring = "%s %2d" % (SharpnessLevel.name(wd.sharpness)[:3],
+                                   wd.sharpness_points)
+            data = dict(Name=name,
+                        EFR=wd.efr,
+                        Atk=wd.attack,
+                        Aff=wd.affinity,
+                        Ele=estring,
+                        Shp=sstring,
+                        Skills="")
+            skill_names = []
+            if wd.species_boost:
+                skill_names.append("Anti-Species")
             if skill_args != args:
-                print("{%s}" % ",".join(sn
-                                        for sn in get_skill_names(skill_args)
-                                        if sn))
-            else:
-                print()
+                skill_names.extend([sn for sn in get_skill_names(skill_args) if sn])
+            if skill_names:
+                data["Skills"] = ",".join(skill_names)
+            weapon_table.append(data)
             for part in wd.parts:
                 if wd[part].average() > part_max_damage[part]:
                     part_max_damage[part] = wd[part].average()
-            weapon_damage_map[name] = wd
+            weapon_damage_map[name] = wd_list
         except ValueError as e:
             print(str(e))
             sys.exit(1)
 
-    damage_map_base = weapon_damage_map[names[0]]
+    weapon_table.sort(key=lambda d: d["EFR"], reverse=True)
+    #print(tabulate(weapon_table, headers="keys"))
+    t = prettytable.PrettyTable(border=True,
+                                field_names=col_names,
+                                hrules=prettytable.HEADER,
+                                vrules=prettytable.NONE)
+    t.align["Name"] = "l"
+    t.align["Aff"] = "r"
+    for d in weapon_table:
+        t.add_row([d[k] for k in col_names])
+    print()
+    print(t)
+    print()
+
+    damage_map_base = weapon_damage_map[names[0]][0]
 
     if limit_parts:
         parts = limit_parts
@@ -855,6 +987,7 @@ def write_html_site_rise(args, db, motiondb, game_uses_true_raw=True):
 
 def main():
     args = parse_args(None)
+    game = "4u"
 
     game_uses_true_raw = False
     if args.quest_level or args.html_site:
@@ -872,13 +1005,22 @@ def main():
         db = MHDBX(game="mhw")
         game_uses_true_raw = False
         SharpnessLevel._modifier = SharpnessLevel._modifier_mhw
+        skills.CriticalEye._modifier = skills.CriticalEye._modifier_mhw
+        game = "mhw"
     elif args.mhr:
         db = MHDBX(game="mhr")
         game_uses_true_raw = True
         SharpnessLevel._modifier = SharpnessLevel._modifier_mhw
+        skills.CriticalEye._modifier = skills.CriticalEye._modifier_mhw
+        game = "mhr"
     else:
         db = MHDB(game="4u", include_item_components=comps)
-    motiondb = MotionValueDB(_pathfix.motion_values_path)
+
+    game_motion_db_path = os.path.join(_pathfix.project_path, "db", game,
+                                       "motion_values.json")
+    if not os.path.exists(game_motion_db_path):
+        game_motion_db_path = _pathfix.motion_values_path
+    motiondb = MotionValueDB(game_motion_db_path)
 
     if args.html_site:
         if args.mhr:

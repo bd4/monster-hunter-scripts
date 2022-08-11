@@ -16,24 +16,29 @@ def floor(x):
     return int(math.floor(x))
 
 
-def raw_damage(true_raw, sharpness, affinity, monster_hitbox, motion):
+def raw_damage(true_raw, sharpness, affinity, monster_hitbox, motion,
+               crit_boost=25):
     """
     Calculate raw damage to a monster part with the given true raw,
     sharpness, monster raw weakness, and weapon motion value.
     """
-    return floor(raw_damage_nohitbox(true_raw, sharpness, affinity, motion)
+    return floor(raw_damage_nohitbox(true_raw, sharpness, affinity, motion, crit_boost)
                  * monster_hitbox / 100.0)
 
 
-def raw_damage_nohitbox(true_raw, sharpness, affinity, motion):
+def raw_damage_nohitbox(true_raw, sharpness, affinity, motion, crit_boost=25):
     """
     Calculate raw damage to a monster part with the given true raw,
     sharpness, monster raw weakness, and weapon motion value.
     """
+    return (effective_raw(true_raw, sharpness, affinity, crit_boost)
+            * motion / 100.0)
+
+
+def effective_raw(true_raw, sharpness, affinity, crit_boost=25):
     return (true_raw
             * SharpnessLevel.raw_modifier(sharpness)
-            * (1 + (affinity / 400.0))
-            * motion / 100.0)
+            * (1 + (affinity / 100.0 * crit_boost / 100.0)))
 
 
 def element_damage(raw_element, sharpness, monster_ehitbox):
@@ -62,11 +67,17 @@ class MotionType(object):
 
 
 class MotionValue(object):
-    def __init__(self, name, types, powers):
+    def __init__(self, name, types, powers, ele_mod=None, part_mod=None):
         self.name = name
         self.types = types
         self.powers = powers
-        self.average = sum(self.powers) / len(self.powers)
+        if ele_mod is None:
+            ele_mod = [1.0] * len(powers)
+        self.ele_mod = ele_mod
+        if part_mod is None:
+            part_mod = [1.0] * len(powers)
+        self.part_mod = part_mod
+        self.total = sum(self.powers)
 
 
 class WeaponTypeMotionValues(object):
@@ -75,11 +86,22 @@ class WeaponTypeMotionValues(object):
         self.motion_values = dict()
         for d in motion_data:
             name = d["name"]
-            self.motion_values[name] = MotionValue(name, d["type"], d["power"])
+            ele_mod = d.get("ele_mod")
+            part_mod = d.get("part_mod")
+            self.motion_values[name] = MotionValue(name, d["type"], d["power"],
+                                                   ele_mod, part_mod)
 
-        self.average = (sum(mv.average
+        self.average = (sum(mv.total
                             for mv in self.motion_values.values())
                         / len(self))
+
+    def get_average_mv(self):
+        return MotionValue("Average", types=[0], powers=[self.average])
+
+    def get_matching_motions(self, pattern):
+        return [self.motion_values[name]
+                for name in self.keys()
+                if pattern in name]
 
     def __len__(self):
         return len(self.motion_values)
@@ -188,6 +210,7 @@ class WeaponMonsterDamage(object):
                  element_skill=skills.ElementAttackUp.NONE,
                  awaken=False, artillery_level=0, limit_parts=None,
                  frenzy_bonus=0, blunt_power=False, is_true_attack=False,
+                 anti_species=False, crit_boost=25, wex_affinity=0,
                  game="4u"):
         self.weapon = weapon_row
         self.monster = monster_row
@@ -214,6 +237,9 @@ class WeaponMonsterDamage(object):
         self.best_weighted = 0
         self.break_weighted = 0
 
+        self.species_boost = False
+        self.crit_boost = crit_boost
+
         # map of part -> (map of burst_level -> (raw, ele, burst))
         self.cb_phial_damage = defaultdict(dict)
 
@@ -224,9 +250,18 @@ class WeaponMonsterDamage(object):
             self.true_raw = (self.weapon["attack"]
                              / WeaponType.multiplier(self.weapon_type))
 
+        if game == "mhr" and anti_species:
+            rslots = self.weapon["rampage_slots"]
+            if rslots and max(rslots) > 1:
+                # anti-species gem available with 2-slot, give the weapon a raw boost
+                self.true_raw = floor(self.true_raw * 1.05)
+                self.species_boost = True
         if sharp_plus:
             if game == "mhr":
-                sharp_n = self.weapon.sharpness_plus.get_rise_handicraft(sharp_plus)
+                if self.weapon.sharpness_has_plus:
+                    sharp_n = self.weapon.sharpness_plus.get_rise_handicraft(sharp_plus)
+                else:
+                    sharp_n = self.weapon.sharpness
                 self.sharpness, self.sharpness_points = sharp_n.get_max_points()
             else:
                 if sharp_plus == 1:
@@ -288,6 +323,8 @@ class WeaponMonsterDamage(object):
         self.eattack2 = skills.ElementAttackUp.modified(element_skill,
                                                         self.eattack2)
 
+        self.affinity = min(self.affinity + wex_affinity, 100)
+
         if self.blunt_power:
             if self.sharpness in (SharpnessLevel.RED, SharpnessLevel.ORANGE):
                 self.true_raw += 30
@@ -309,6 +346,9 @@ class WeaponMonsterDamage(object):
         self.max_raw_part = (None, -1)
         self.max_element_part = (None, -1)
         self._calculate_damage()
+        self.efr = floor(effective_raw(self.true_raw, self.sharpness,
+                                       self.affinity,
+                                       crit_boost=self.crit_boost))
 
     @property
     def attack(self):
@@ -344,25 +384,32 @@ class WeaponMonsterDamage(object):
                 # https://www.reddit.com/r/MonsterHunter/comments/3fr2u0/124th_weekly_stupid_question_thread/cts3hz8?context=3
                 hitbox = max(hitbox_cut, hitbox_impact * .72)
 
-            raw = raw_damage(self.true_raw, self.sharpness, self.affinity,
-                             hitbox, self.motion)
+            raw_total = 0
+            element_total = 0
+            for i, motion_raw in enumerate(self.motion.powers):
+                raw = raw_damage(self.true_raw, self.sharpness, self.affinity,
+                                 hitbox, motion_raw, crit_boost=self.crit_boost)
 
-            element = 0
-            ehitbox = 0
-            if self.etype in "Fire Water Ice Thunder Dragon".split():
-                ehitbox = int(row[str(self.etype.lower())])
-                element = element_damage(self.eattack, self.sharpness, ehitbox)
-                if self.etype2:
-                    # handle dual blades double element/status
-                    element = element / 2.0
-                    if self.etype2 in "Fire Water Ice Thunder Dragon".split():
-                        ehitbox2 = int(row[str(self.etype2.lower())])
-                        element2 = element_damage(self.eattack2,
-                                                  self.sharpness, ehitbox2)
-                        element += element2 / 2.0
+                element = 0
+                ehitbox = 0
+                if self.etype in "Fire Water Ice Thunder Dragon".split():
+                    ehitbox = int(row[str(self.etype.lower())])
+                    eattack_mod = self.eattack * self.motion.ele_mod[i]
+                    element = element_damage(eattack_mod, self.sharpness, ehitbox)
+                    if self.etype2:
+                        # handle dual blades double element/status
+                        element = element / 2.0
+                        if self.etype2 in "Fire Water Ice Thunder Dragon".split():
+                            ehitbox2 = int(row[str(self.etype2.lower())])
+                            eattack2_mod = self.eattack2 * self.motion.ele_mod[i]
+                            element2 = element_damage(eattack2_mod,
+                                                      self.sharpness, ehitbox2)
+                            element += element2 / 2.0
+                raw_total += raw
+                element_total += element
 
             part_damage = self.damage_map[part]
-            part_damage.set_damage(raw, element, hitbox, ehitbox, state=alt)
+            part_damage.set_damage(raw_total, element_total, hitbox, ehitbox, state=alt)
             if not part_damage.part:
                 part_damage.part = part
             if alt is None:

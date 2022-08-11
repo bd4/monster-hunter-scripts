@@ -270,6 +270,15 @@ class WeaponSharpness(ModelBase):
     def __str__(self):
         return ",".join(str(v) for v in self.value_list)
 
+    def __eq__(self, o):
+        for i in range(SharpnessLevel.PURPLE + 1):
+            if self.value_list[i] != o.value_list[i]:
+                return False
+        return True
+
+    def __ne__(self, o):
+        return not self.__eq__(o)
+
 
 class ItemCraftable(RowModel):
     _list_fields = ["id", "name"]
@@ -449,6 +458,8 @@ class Weapon(ItemCraftable):
             row_sharpness = self._row["sharpness"]
             row_sharpness_plus = self._row.get("sharpness_plus", row_sharpness)
             row_sharpness_plus2 = self._row.get("sharpness_plus2", row_sharpness)
+            if len(row_sharpness_plus) == 0:
+                row_sharpness_plus = row_sharpness
             self.sharpness = WeaponSharpness(row_sharpness)
             self.sharpness_plus = WeaponSharpness(row_sharpness_plus)
             self.sharpness_plus2 = WeaponSharpness(row_sharpness_plus2)
@@ -475,6 +486,10 @@ class Weapon(ItemCraftable):
     @property
     def sharpness_name(self):
         return SharpnessLevel.name(self.sharpness)
+
+    @property
+    def sharpness_has_plus(self):
+        return (self.sharpness != self.sharpness_plus)
 
 
 class Monster(RowModel):

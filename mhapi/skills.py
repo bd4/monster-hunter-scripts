@@ -65,6 +65,15 @@ class CriticalEye(EnumBase):
                   THREE: 20,
                   GOD: 30 }
 
+    _modifier_mhw = { 0: 0,
+                      1: 5,
+                      2: 10,
+                      3: 15,
+                      4: 20,
+                      5: 25,
+                      6: 30,
+                      7: 40 }
+
     @classmethod
     def affinity_modifier(cls, skill):
         return cls._modifier[skill]
@@ -72,6 +81,10 @@ class CriticalEye(EnumBase):
     @classmethod
     def modified(cls, skill, affinity):
         return affinity + cls.affinity_modifier(skill)
+
+    @classmethod
+    def name(cls, enum_value):
+        return cls._names.get(enum_value, "CE +" + str(enum_value))
 
 
 class AttackUp(EnumBase):
