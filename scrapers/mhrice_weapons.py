@@ -8,6 +8,7 @@ import json
 from pprint import pprint
 from collections import defaultdict
 import lxml.etree
+import urllib.parse
 
 import requests
 
@@ -79,6 +80,35 @@ def _map_element(e):
     if e == "Paralyze":
         return "Paralysis"
     return e
+
+
+def get_rampage_slots(name):
+    names = [name]
+    if name.endswith("+"):
+        names.append(name[:-1] + " +")
+    if '"' in name:
+        names.append(name.replace('"', ''))
+    for name in names:
+        url = ("https://monsterhunterrise.wiki.fextralife.com/"
+               + urllib.parse.quote(name))
+        result = requests.get(url)
+        if result.status_code == 200:
+            break
+    if result.status_code == 404:
+        print("WARN: failed to get rampage slots", name)
+        return []
+    root = lxml.etree.HTML(result.content)
+
+    slot_imgs = root.xpath('//div[@class="infobox"]//tbody//img')
+    for img in slot_imgs:
+        title = img.attrib.get("title")
+        if title is None:
+            title = img.attrib.get("alt")
+        if title and "rampage" in title and "icon" in title:
+            parts = re.split(r"[_ ]", title)
+            level = int(parts[2])
+            return [level]
+    return []
 
 
 def get_weapon_details(wtype, name, link):
@@ -207,11 +237,13 @@ def get_weapon_details(wtype, name, link):
                 data["upgrade_cost"] = zenny
                 data["upgrade_components"] = comps
 
+    data["rampage_slots"] = get_rampage_slots(name)
+
     return data
 
 
 def get_components(cells):
-    zenny = int(cells[1].text)
+    zenny = int(cells[1].text.rstrip("z"))
     cmat_text = cells[2].text
     components = {}
     if cmat_text != "-":
@@ -316,6 +348,12 @@ def _main():
                     print("Removing duplicate ", d["wtype"], d["name"])
                     continue
                 wtype_name_map[d["name"]] = d
+                old_slots = d["rampage_slots"]
+                new_slots = get_rampage_slots(d["name"])
+                if new_slots != old_slots:
+                    print(d["name"], old_slots, "=>", new_slots)
+                    d["rampage_slots"] = new_slots
+                    time.sleep(0.1)
 
     for itype, wtype in enumerate(WEAPON_TYPES):
         wtype_name_map = weapons_type_name_map[wtype]
