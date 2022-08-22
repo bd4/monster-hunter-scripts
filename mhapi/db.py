@@ -79,7 +79,7 @@ class MHDB(object):
         """
         if game is None:
             game = os.environ.get("MHAPI_GAME")
-        assert game in ("4u", "gen", "gu")
+        assert game in ("3u", "4u", "gen", "gu")
         self.game = game
 
         if game == "4u":

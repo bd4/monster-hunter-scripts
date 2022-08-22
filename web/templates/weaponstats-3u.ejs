@@ -1,0 +1,104 @@
+<table>
+<tr title="<%= id %>">
+<td><%= name %></td>
+<td>(<%= wtype %>)</td>
+<td><% if (phial) {
+       %>&lt;<%= phial %> Phial&gt;<%
+     } else if (shelling_type) {
+       %>&lt;<%= shelling_type %>&gt;<%
+     } else if (horn_notes) {
+       %><span title="<%= horn_melodies_title %>"
+          >[<%= horn_notes %>]<%
+     } %></td>
+<td><%= Array(num_slots + 1).join("o")
+     %><%= Array(3 - num_slots + 1).join("-") %></td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td>Atk: <%= attack %></td>
+<td style="text-align:right"><% if (affinity) { %><%= affinity %>%<% } %></td>
+<td>
+<% if (awaken) { %>
+  (<img style="height:.8em" title="Awaken <%= awaken %>"
+            src="/img/<%= awaken %>.png" /><%= awaken_attack %> <%= awaken %>)
+<% } else if (element) { %>
+  <img style="height:.8em" title="<%= element %>"
+            src="/img/<%= element %>.png" /> <%= element_attack %>
+            <%= element %>
+  <% if (element_2) { %>
+    <img style="height:.8em" title="<%= element_2 %>"
+            src="/img/<%= element_2 %>.png" /> <%= element_2_attack %>
+            <%= element_2 %>
+  <% } %>
+<% } %>
+</td>
+<td id="sharpness_td"
+    data-sharpness="<%= sharpness_all_title %>"
+    data-id="<%= id %>">
+<% if (sharpness) { %>
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
+<span style="width:<%= sharpness[0] * sharpness_width %>px" class="red"></span>
+<span style="width:<%= sharpness[1] * sharpness_width %>px" class="orange"></span>
+<span style="width:<%= sharpness[2] * sharpness_width %>px" class="yellow"></span>
+<span style="width:<%= sharpness[3] * sharpness_width %>px" class="green"></span>
+<span style="width:<%= sharpness[4] * sharpness_width %>px" class="blue"></span>
+<span style="width:<%= sharpness[5] * sharpness_width %>px" class="white"></span>
+<% if (sharpness.length > 6) { %>
+<span style="width:<%= sharpness[6] * sharpness_width %>px" class="purple"></span>
+<% } %>
+</div>
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
+<span style="width:<%= sharpness_plus[0] * sharpness_width %>px" class="red"></span>
+<span style="width:<%= sharpness_plus[1] * sharpness_width %>px" class="orange"></span>
+<span style="width:<%= sharpness_plus[2] * sharpness_width %>px" class="yellow"></span>
+<span style="width:<%= sharpness_plus[3] * sharpness_width %>px" class="green"></span>
+<span style="width:<%= sharpness_plus[4] * sharpness_width %>px" class="blue"></span>
+<span style="width:<%= sharpness_plus[5] * sharpness_width %>px" class="white"></span>
+<% if (sharpness.length > 6) { %>
+<span style="width:<%= sharpness_plus[6] * sharpness_width %>px" class="purple"></span>
+<% } %>
+</div>
+<% if (sharpness_plus2) { %>
+<div class="sharpness-bar" title="<%= sharpness_all_title %>">
+<span style="width:<%= sharpness_plus2[0] * sharpness_width %>px" class="red"></span>
+<span style="width:<%= sharpness_plus2[1] * sharpness_width %>px" class="orange"></span>
+<span style="width:<%= sharpness_plus2[2] * sharpness_width %>px" class="yellow"></span>
+<span style="width:<%= sharpness_plus2[3] * sharpness_width %>px" class="green"></span>
+<span style="width:<%= sharpness_plus2[4] * sharpness_width %>px" class="blue"></span>
+<span style="width:<%= sharpness_plus2[5] * sharpness_width %>px" class="white"></span>
+<% if (sharpness.length > 6) { %>
+<span style="width:<%= sharpness_plus2[6] * sharpness_width %>px" class="purple"></span>
+<% } %>
+</div>
+<% } %>
+<% } %>
+</td>
+<td style="text-align:right"><% if (defense) { %>+<%= defense %> Def<% } %>
+<% if (parent_name) { %>
+    <a href="weaponplanner.html?weapon=<%= encodeURIComponent(parent_name) %>"
+       title="<%= parent_name %>">(parent)</a>
+<% } %>
+</td>
+
+<% if (rarity) { %>
+<td>
+Rarity <%= rarity %>
+</td>
+<% } %>
+
+</tr>
+</table>
+<% if (children.length) { %>
+  <table>
+  <tr><td colspan="5"> -&gt;
+  <% for(var i=0; i<children.length; i++) { %>
+    <a href="weaponplanner.html?weapon=<%= encodeURIComponent(children[i]['name']) %>"
+        ><%= children[i]["name"] %></a>
+    <% if (i != children.length - 1) { %>|<% } %>
+  <% } %>
+  </td></tr>
+  </table>
+<% } %>
+

@@ -237,6 +237,9 @@ def parse_args(argv):
     parser.add_argument("--mhw", "--monster-hunter-world", action="store_true",
                         default=False,
                         help="Adjusted attack, use MHWorld values")
+    parser.add_argument("--mh3u", "--monster-hunter-3u", action="store_true",
+                        default=False,
+                        help="Monster hunter 3 Ultimate")
     parser.add_argument("--mhr", "--monster-hunter-rise", action="store_true",
                         default=False,
                         help="True attack, use MHRise values")
@@ -836,6 +839,7 @@ def run_comparison(args, db, motiondb, game_uses_true_raw, item_stars=None):
     #print(tabulate(weapon_table, headers="keys"))
     t = prettytable.PrettyTable(border=True,
                                 field_names=col_names,
+                                float_format="5.1",
                                 hrules=prettytable.HEADER,
                                 vrules=prettytable.NONE)
     t.align["Name"] = "l"
@@ -1013,6 +1017,10 @@ def main():
         SharpnessLevel._modifier = SharpnessLevel._modifier_mhw
         skills.CriticalEye._modifier = skills.CriticalEye._modifier_mhw
         game = "mhr"
+    elif args.mh3u:
+        db = MHDB(game="3u", include_item_components=comps)
+        game_uses_true_raw = False
+        game = "3u"
     else:
         db = MHDB(game="4u", include_item_components=comps)
 

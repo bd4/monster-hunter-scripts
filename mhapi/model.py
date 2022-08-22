@@ -191,7 +191,7 @@ class SharpnessLevel(EnumBase):
 
     @classmethod
     def raw_modifier(cls, sharpness):
-        if _game() == "4u":
+        if _game() in ("4u", "3u"):
             d = cls._modifier
         elif _game() in ["gen", "gu", "mhx"]:
             d = cls._modifier_mhx
@@ -201,7 +201,7 @@ class SharpnessLevel(EnumBase):
 
     @classmethod
     def element_modifier(cls, sharpness):
-        if _game() == "4u":
+        if _game() in ("4u", "3u"):
             d = cls._modifier
         elif _game() in ["gen", "gu", "mhx"]:
             d = cls._modifier_mhx
@@ -215,7 +215,7 @@ def _game():
     global _GAME
     if _GAME is None:
         _GAME = os.environ.get("MHAPI_GAME", "4u")
-    assert _GAME in ("4u", "gen", "gu", "mhx", "mhw", "mhr")
+    assert _GAME in ("3u", "4u", "gen", "gu", "mhx", "mhw", "mhr")
     return _GAME
 
 
@@ -229,6 +229,7 @@ class WeaponSharpness(ModelBase):
         if isinstance(db_string_or_list, list):
             self.value_list = db_string_or_list
         else:
+            db_string_or_list = db_string_or_list.rstrip(".")
             self.value_list = [int(s) for s in db_string_or_list.split(".")]
         # For MHX, Gen, no purple sharpness, but keep model the same for
         # simplicity
@@ -474,9 +475,13 @@ class Weapon(ItemCraftable):
             else:
                 raise ValueError("Bad sharpness value in db: '%s'"
                                  % self._row["sharpness"])
-            self._data["sharpness"] = WeaponSharpness(normal)
-            self._data["sharpness_plus"] = WeaponSharpness(plus)
-            self._data["sharpness_plus2"] = WeaponSharpness(plus2)
+            try:
+                self._data["sharpness"] = WeaponSharpness(normal)
+                self._data["sharpness_plus"] = WeaponSharpness(plus)
+                self._data["sharpness_plus2"] = WeaponSharpness(plus2)
+            except:
+                raise ValueError("Bad sharpness value in db: '%s'"
+                                 % self._row["sharpness"])
 
     def is_not_localized(self):
         # Check if first char is ascii, should be the case for all
@@ -808,9 +813,9 @@ def get_costs(db, weapon):
     if weapon.create_components:
         try:
             zenny = int(weapon.creation_cost)
-        except ValueError:
+        except (ValueError, TypeError) as e:
             print("WARN: bad creation cost for '%s': '%s'" \
-                % (weapon.name, weapon.creation_cost))
+                % (weapon.name, weapon.creation_cost), str(e))
             zenny = weapon.upgrade_cost or 0
         create_cost = dict(zenny=zenny,
                            path=[weapon],

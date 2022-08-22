@@ -1,0 +1,299 @@
+<html>
+<head>
+  <title>Poogie's Weapon Planner</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/ejs_production.js"></script>
+
+  <script type="text/javascript" src="/js/common.js"></script>
+
+  <style>
+      label {
+          font-weight: bold;
+      }
+
+      body {
+          font-family: sans, sans-serif;
+      }
+
+      td.plus {
+          background-color: LightCyan;
+      }
+
+      td.minus {
+          background-color: LightPink;
+      }
+
+      td.num {
+          text-align: right;
+      }
+
+      /*@media (max-width: 600) {*/
+      .flexbox {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+      }
+
+      .sharpness-bar {
+          border: 1px #d3d3d3 solid;
+          min-width: 92px;
+          height: 10px;
+          background-color: #d3d3d3;
+          float: left;
+          clear: both;
+      }
+
+      .sharpness-bar span {
+          display: inline-block;
+          height: 100%;
+          float: left;
+      }
+
+      .sharpness-bar .red {
+          background-color: #C00C38 !important;
+      }
+
+      .sharpness-bar .orange {
+          background-color: #E85018 !important;
+      }
+
+      .sharpness-bar .yellow {
+          background-color: #F0C830 !important;
+      }
+
+      .sharpness-bar .green {
+          background-color: #58D000 !important;
+      }
+
+      .sharpness-bar .blue {
+          background-color: #3068E8 !important;
+      }
+
+      .sharpness-bar .white {
+          background-color: #F0F0F0 !important;
+      }
+
+      .sharpness-bar .purple {
+          background-color: #c3c !important;
+      }
+
+  </style>
+
+  <script type="text/javascript">
+    var DATA_PATH = "/jsonapi/mh3u/";
+    var WYPORIUM_MAP = {};
+
+    var template_path = new EJS({ url: "/templates/weaponpath.ejs" });
+    var template_stats = new EJS({ url: "/templates/weaponstats-3u.ejs" });
+
+    $.ajax({
+        url: DATA_PATH + "wyporium/_map.json",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+           $.each(data, function(id, item) {
+             WYPORIUM_MAP[item["name"]] = item["wyporium_item_name"];
+           });
+           console.log("wyporium count " + WYPORIUM_MAP.length);
+        }
+    });
+
+    $(document).ready(function(){
+        setup_weapon_autocomplete("#weapon", autocomplete_predicate,
+                                  init_page, update_search);
+    });
+
+    function init_page() {
+        load_qs();
+        $("#search").click(update_search);
+        $(window).on("popstate", function(e) {
+            var oe = e.originalEvent;
+            if (oe.state !== null) {
+                console.log("popState:" + JSON.stringify(oe.state));
+                $("#weapon_type").val(oe.state["weapon_type"]);
+                $("#weapon_type").change();
+                show_trees(oe.state["weapon"]);
+            }
+        });
+        $("#weapon_type").change(function(evt) {
+            update_weapon_autocomplete("#weapon", autocomplete_predicate,
+                                       update_search);
+            $("#weapon").val("");
+        });
+    }
+
+    function load_qs() {
+        var wtype = $.QueryString["weapon_type"];
+        var weapon = $.QueryString["weapon"];
+        if (!wtype) {
+            wtype = "All";
+        }
+        $("#weapon_type").val(wtype);
+        $("#weapon_type").change();
+        if (weapon) {
+            show_trees(weapon);
+            console.log("replaceState: " + weapon);
+            save_state(get_state(), true);
+        }
+    }
+
+    function get_state() {
+        return { "weapon": $("#weapon").val(),
+                 "weapon_type": $("#weapon_type").val() };
+    }
+
+    function save_state(state, replace) {
+        var url = "/mh3u/weaponplanner.html?" + encode_qs(state);
+        if (replace) {
+            window.history.replaceState(state, "", url);
+        } else {
+            window.history.pushState(state, "", url);
+        }
+    }
+
+    function autocomplete_predicate(weapon_data) {
+        var weapon_type = $("#weapon_type").val();
+
+        if (weapon_type != "All" && weapon_type != weapon_data["wtype"]) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function update_search() {
+        var weapon_name = $("#weapon").val();
+
+        if (!weapon_name) return;
+
+        if (window.history.state
+            && window.history.state["weapon"] == weapon_name) {
+            console.log("weapon not changed, skipping update");
+            return;
+        }
+
+        show_trees(weapon_name);
+        console.log("pushState: " + weapon_name);
+        save_state(get_state(), false);
+    }
+
+    function show_trees(weapon_name) {
+        console.log("show_trees '" + weapon_name + "'");
+        if (!weapon_name) return;
+        weapon_id = WEAPON_NAME_IDX[weapon_name][0];
+        console.log("show_trees(" + weapon_name + "): " + weapon_id);
+        $("#weapon").val(weapon_name);
+        $("#results").html("");
+        $("#weapon_stats").html("");
+        $.getJSON(DATA_PATH + "weapon/" + weapon_id + ".json",
+                  function(data) {
+                      set_sharpness_titles(data);
+                      set_horn_melodies_title(data);
+                      if (data["parent_id"]) {
+                          var parent_obj = WEAPON_ID_IDX[data["parent_id"]][0];
+                          data["parent_name"] = parent_obj["name"];
+                      } else {
+                          data["parent_name"] = null;
+                      }
+                      data["sharpness_width"] = 1.8;
+                      data["sharpness_plus2"] = null;
+                      var html = template_stats.render(data);
+                      $("#weapon_stats").html(html);
+                  });
+
+        $.getJSON(DATA_PATH + "weapon/" + weapon_id + "_tree.json",
+                  function(data) {
+                      // first pass: collect all components and sort them
+                      var all_dict = {};
+                      for (i=0; i<data.length; i++) {
+                          var components = Object.keys(data[i]["components"]);
+                          for (j=0; j<components.length; j++) {
+                              all_dict[components[j]] = 0;
+                          }
+                      }
+                      var all_components = Object.keys(all_dict);
+                      all_components.sort();
+                      // second pass: generate the fieldset for each weapon
+                      //  path. Note that the template uses all components
+                      //  to order the components and make them line up
+                      for (i=0; i<data.length; i++) {
+                          delta = {};
+                          path = data[i];
+                          components = path["components"]
+                          path_string = "";
+                          for (j=0; j<path["path"].length; j++) {
+                              if (j != 0) {
+                                  path_string += " -&gt; ";
+                              }
+                              path_string += path["path"][j]["name"];
+                          }
+                          path["path_string"] = path_string.replace(/"/g,
+                                                                    '&quot;');
+                          path["all_components"] = all_components;
+                          path["component_list"] = Object.keys(components);
+                          if (i > 0) {
+                              prev_comps = data[i-1]["components"];
+                              $.each(components, function(name, quantity) {
+                                   if (name in prev_comps) {
+                                       delta[name] = components[name]
+                                                     - prev_comps[name];
+                                   }
+                              });
+                          }
+                          path["delta"] = delta;
+                          path["component_list"].sort();
+                          path["trade_names"] = [];
+                          for (j=0; j<all_components.length; j++) {
+                              var name = all_components[j];
+                              if (name in WYPORIUM_MAP) {
+                                  path["trade_names"][j] = WYPORIUM_MAP[name];
+                              } else {
+                                  path["trade_names"][j] = "";
+                              }
+                          }
+ 
+                          var html = template_path.render(path);
+                          $("#results").append(html);
+                      }
+                  });
+    }
+  </script>
+</head>
+<body>
+<div>
+  <table>
+  <tr>
+    <td><label for="weapon_type">Type:</label></td>
+    <td><select id="weapon_type">
+        <option value="All">All</option>
+        <option value="Great Sword">Great Sword</option>
+        <option value="Long Sword">Long Sword</option>
+        <option value="Sword and Shield">Sword and Shield</option>
+        <option value="Dual Blades">Dual Blades</option>
+        <option value="Hammer">Hammer</option>
+        <option value="Hunting Horn">Hunting Horn</option>
+        <option value="Lance">Lance</option>
+        <option value="Gunlance">Gunlance</option>
+        <option value="Switch Axe">Switch Axe</option>
+        <option value="Charge Blade">Charge Blade</option>
+        <option value="Insect Glaive">Insect Glaive</option>
+        <option value="Light Bowgun">Light Bowgun</option>
+        <option value="Heavy Bowgun">Heavy Bowgun</option>
+        <option value="Bow">Bow</option>
+    </select></td>
+  </tr>
+  <tr>
+    <td><label for="weapon">Weapon:</label></td>
+    <td><input id="weapon" name="weapon" size="20" />
+    <button id="search">Ask Poogie</button></td>
+  </tr>
+  </table>
+</div>
+<div id="weapon_stats"></div>
+<div id="results" class="flexbox"></div>
+</body>

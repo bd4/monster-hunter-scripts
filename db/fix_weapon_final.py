@@ -8,11 +8,12 @@ from mhapi.db import MHDB
 from mhapi.util import get_utf8_writer
 
 
-stdout = get_utf8_writer(sys.stdout)
+#stdout = get_utf8_writer(sys.stdout)
 
 
 def set_weapon_final(db, weapon, value):
-    print("weapon_final", weapon.id, weapon.name, value, file=stdout)
+    #print("weapon_final", weapon.id, weapon.name, value, file=stdout)
+    print("weapon_final", weapon.id, weapon.name, value)
     cur = db.cursor()
     cur.execute("""UPDATE weapons SET
                    final=? WHERE _id=?""",
@@ -20,7 +21,11 @@ def set_weapon_final(db, weapon, value):
 
 
 if __name__ == '__main__':
-    db = MHDB()
+    if len(sys.argv) > 1:
+        game = sys.argv[1]
+    else:
+        game = "4u"
+    db = MHDB(game=game)
 
     weapons = db.get_weapons()
     for weapon in weapons:

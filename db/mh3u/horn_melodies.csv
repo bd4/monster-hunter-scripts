@@ -1,0 +1,144 @@
+_id,notes,song,effect1,effect2,duration,extension
+1,WBR,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+2,WBR,WRR,Attack Boost (S),Attack Boost Bonus,120(150),+90(+120)
+3,WBR,WBB,Defense Boost (S),Defense Boost Bonus,120(150),+90(+120)
+4,WBR,RBW,Health Boost (S),N/A,180(240),N/A
+5,WBR,BBR,Wind Pressure Negated,All Wind Pressure Negated,180(240),+120(+180)
+6,WGR,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+7,WGR,WRR,Attack Boost (S),Attack Boost Bonus,120(150),+90(+120)
+8,WGR,WGW,Health Recovery (S),N/A,N/A,N/A
+9,WGR,GGRW,Recovery Speed Up (S),N/A,120(150),N/A
+10,WCR,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+11,WCR,WRR,Attack Boost (S),Attack Boost Bonus,120(150),+90(+120)
+12,WCR,RRC,Heat Cancel,N/A,240(300),N/A
+13,WCR,CRC,Cold Cancel,N/A,240(300),N/A
+14,WCR,CCC,Snow/Mud Negated,N/A,180(240),N/A
+15,WCR,CCRW,Hearing Protection (S),Hearing Protection (L),180(240),N/A
+16,WRY,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+17,WRY,WRR,Attack Boost (S),Attack Boost Bonus,120(150),+90(+120)
+18,WRY,YRW,Fire Resistance Boost (S),Fire Resistance Boost Bonus,120(150),N/A
+19,WRY,YYY,Sonic Waves,N/A,N/A,N/A
+20,WYR,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+21,WYR,WRR,Attack Boost (S),Attack Boost Bonus,120(150),+90(+120)
+22,WYR,YRW,Fire Resistance Boost (S),Fire Resistance Boost Bonus,120(150),N/A
+23,WYR,YYY,Sonic Waves,N/A,N/A,N/A
+24,WGB,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+25,WGB,WBB,Defense Boost (S),Defense Boost Bonus,120(150),+90(+120)
+26,WGB,WGW,Health Recovery (S),N/A,N/A,N/A
+27,WGB,WGB,Negate Stamina Use (S),Negate Stamina Duration Bonus,90(120),+60(+90)
+28,WGB,BBG,Wind Pressure Negated,All Wind Pressure Negated,180(240),+120(+180)
+29,WGB,GBWB,Health Rec (S) & Antidote,N/A,N/A,N/A
+30,WCB,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+31,WCB,WBB,Defense Boost (S),Defense Boost Bonus,120(150),+90(+120)
+32,WCB,WBC,Psychic,N/A,30(60),N/A
+33,WCB,WCB,Negate Stamina Use (S),Negate Stamina Duration Bonus,90(120),+60(+90)
+34,WCB,BBC,Wind Pressure Negated,All Wind Pressure Negated,180(240),+120(+180)
+35,WCB,CCC,Snow/Mud Negated,N/A,180(240),N/A
+36,WBY,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+37,WBY,WBB,Defense Boost (S),Defense Boost Bonus,120(150),+90(+120)
+38,WBY,WYB,Negate Stamina Use (S),Negate Stamina Duration Bonus,90(120),+60(+90)
+39,WBY,YBW,Ice Resistance Boost (S),Ice Resistance Boost Bonus,120(150),N/A
+40,WBY,YYY,Sonic Waves,N/A,N/A,N/A
+41,WCG,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+42,WCG,WGW,Health Recovery (S),N/A,N/A,N/A
+43,WCG,GWCG,Health Rec (M) & Deodorant,N/A,N/A,N/A
+44,WCG,CCC,Snow/Mud Negated,N/A,180(240),N/A
+45,WCG,CCGW,Hearing Protection (S),Hearing Protection (L),180(240),N/A
+46,WYG,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+47,WYG,WGW,Health Recovery (S),N/A,N/A,N/A
+48,WYG,GGYW,Recovery Speed Up (S),N/A,120(150),N/A
+49,WYG,YGW,Thunder Resistance Boost (S),Thunder Resistance Boost Bonus,120(150),N/A
+50,WYG,YYY,Sonic Waves,N/A,N/A,N/A
+51,WYC,WW,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+52,WYC,WYC,Dragon Resistance Boost (S),Dragon Resistance Boost Bonus,120(150),N/A
+53,WYC,CCC,Snow/Mud Negated,N/A,180(240),N/A
+54,WYC,CCY,Tremor Resistance,N/A,180(240),N/A
+55,WYC,CYW,Negate Paralysis,N/A,180(240),N/A
+56,WYC,YCW,Water Resistance Boost (S),Water Resistance Boost Bonus,120(150),N/A
+57,WYC,YCYC,Elemental Attack Boost,Elemental Attack Boost Bonus,90(120),+60(+90)
+58,WYC,YYY,Sonic Waves,N/A,N/A,N/A
+59,PBR,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+60,PBR,PRBP,Attack Boost (L),Attack Boost Bonus,90(120),+60(+90)
+61,PBR,PBBP,Defense Boost (L),Defense Boost Bonus,90(120),+60(+90)
+62,PBR,RBRP,Health Boost (L),N/A,180(240),N/A
+63,PBR,BBR,Wind Pressure Negated,All Wind Pressure Negated,180(240),+120(+180)
+64,PGR,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+65,PGR,PRGP,Attack Boost (L),Attack Boost Bonus,90(120),+60(+90)
+66,PGR,PGP,Health Recovery (S),N/A,N/A,N/A
+67,PGR,GGRP,Recovery Speed Up (L),N/A,120(150),N/A
+68,PCR,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+69,PCR,PRCP,Attack Boost (L),Attack Boost Bonus,90(120),+60(+90)
+70,PCR,RRC,Heat Cancel,N/A,240(300),N/A
+71,PCR,CRC,Cold Cancel,N/A,240(300),N/A
+72,PCR,CCRP,Hearing Protection (S),Hearing Protection (L),180(240),N/A
+73,PCR,CCC,Snow/Mud Negated,N/A,180(240),N/A
+74,PYR,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+75,PYR,PRY,Attack Boost (S),Attack Boost Bonus,120(150),+90(+120)
+76,PYR,RYP,Attack Boost (S),Attack Boost Bonus,120(150),+90(+120)
+77,PYR,YPR,Attack Boost (S),Attack Boost Bonus,120(150),+90(+120)
+78,PYR,YRP,Fire Resistance Boost (L),Fire Resistance Boost Bonus,120(150),N/A
+79,PYR,YYY,Sonic Waves,N/A,N/A,N/A
+80,PGB,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+81,PGB,PBBP,Defense Boost (L),Defense Boost Bonus,90(120),+60(+90)
+82,PGB,PGP,Health Recovery (S),N/A,N/A,N/A
+83,PGB,PGBG,Negate Stamina Use (L),Negate Stamina Duration Bonus,120(150),+90(+120)
+84,PGB,BBG,Wind Pressure Negated,All Wind Pressure Negated,180(240),+120(+180)
+85,PGB,GBPB,Health Rec (M) & Antidote,N/A,N/A,N/A
+86,PCB,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+87,PCB,PBBP,Defense Boost (L),Defense Boost Bonus,90(120),+60(+90)
+88,PCB,PBC,Psychic,N/A,30(60),N/A
+89,PCB,PCBC,Negate Stamina Use (L),Negate Stamina Duration Bonus,120(150),+90(+120)
+90,PCB,BBC,Wind Pressure Negated,All Wind Pressure Negated,180(240),+120(+180)
+91,PCB,CBP,Negate Stun,N/A,180(240),N/A
+92,PCB,CCC,Snow/Mud Negated,N/A,180(240),N/A
+93,PBY,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+94,PBY,PBBP,Defense Boost (L),Defense Boost Bonus,90(120),+60(+90)
+95,PBY,PYB,Negate Stamina Use (L),Negate Stamina Duration Bonus,120(150),+90(+120)
+96,PBY,BBYP,All Wind Pressure Negated,N/A,180(240),N/A
+97,PBY,YBP,Ice Resistance Boost (L),Ice Resistance Boost Bonus,120(150),N/A
+98,PBY,YYY,Sonic Waves,N/A,N/A,N/A
+99,PCG,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+100,PCG,PGP,Health Recovery (S),N/A,N/A,N/A
+101,PCG,GGPC,Health Recovery (L),N/A,N/A,N/A
+102,PCG,CCGP,Hearing Protection (L),N/A,180(240),N/A
+103,PCG,CCC,Snow/Mud Negated,N/A,180(240),N/A
+104,PYG,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+105,PYG,PGP,Health Recovery (S),N/A,N/A,N/A
+106,PYG,PGYG,Elemental Attack Boost,Elemental Attack Boost Bonus,90(120),+60(+90)
+107,PYG,GYPY,Divine Protection,N/A,120(150),N/A
+108,PYG,GGY,Recovery Speed Up (S),N/A,120(150),N/A
+109,PYG,YGP,Thunder Resistance Boost (L),Thunder Resistance Boost Bonus,120(150),N/A
+110,PYG,YYY,Sonic Waves,N/A,N/A,N/A
+111,PYC,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+112,PYC,PYC,Dragon Resistance Boost (L),Dragon Resistance Boost Bonus,120(150),N/A
+113,PYC,YCP,Water Resistance Boost (L),Water Resistance Boost Bonus,120(150),N/A
+114,PYC,YCYC,Elemental Attack Boost,Elemental Attack Boost Bonus,90(120),+60(+90)
+115,PYC,YYY,Sonic Waves,N/A,N/A,N/A
+116,PYC,CCC,Snow/Mud Negated,N/A,180(240),N/A
+117,PYC,CCY,Tremor Resistance,N/A,180(240),N/A
+118,PYC,CYP,Negate Paralysis,N/A,180(240),N/A
+119,POR,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+120,POR,POOR,Attack Boost (L),Attack Boost Bonus,90(120),+60(+90)
+121,POR,RORP,Knockback Protection,N/A,45 (60),N/A
+122,POR,ORO,Melody Durations Extended,N/A,N/A,+30(+40)
+123,POB,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+124,POB,OBPB,Attack & Defense Boost (S),Attack and Defense Boost Bonus,120(150),+90(+120)
+125,POB,PBOO,Attack & Defense Boost (S),Attack and Defense Boost Bonus,120(150),+90(+120)
+126,POB,PBBP,Defense Boost (L),Defense Boost Bonus,90(120),+60(+90)
+127,POB,POBO,Negate Stamina Use (L),Negate Stamina Duration Bonus,120(150),+90(+120)
+128,POB,BBO,Wind Pressure Negated,All Wind Pressure Negated,180(240),+120(+180)
+129,POC,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+130,POC,POPC,Divine Protection,N/A,120(150),N/A
+131,POC,CPOO,Abnormal Status Negated,Abnormal Status Negated Duration Bonus,120(150),+60(+90)
+132,POC,CCC,Snow/Mud Negated,N/A,180(240),N/A
+133,POC,COOP,Status Attack Boost,Status Attack Boost Bonus,90(120),+60(+90)
+134,POG,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+135,POG,PGP,Health Recovery (S),N/A,N/A,N/A
+136,POG,GOPO,Health Rec (S) & Affinity Boost,Health Rec (S) & Affinity Boost Bonus,120(150),+90(+120)
+137,POG,OOGP,Hearing Protection (L),N/A,180(240),N/A
+138,POY,PP,Movement Speed Up,Attack Deflection Prevention,180(240),+90(+120)
+139,POY,PYOY,Hearing Protection (S) & Wind Pressure Negated,Hearing Protection (L) & All Wind Pressure Negated,180(240),N/A
+140,POY,POYO,Elemental Attack Boost,Elemental Attack Boost Bonus,90(120),+60(+90)
+141,POY,YYY,Sonic Waves,N/A,N/A,N/A
+142,POY,YOP,Blight Resistance Boost,Blight Resistance Boost Bonus,90(120),+60(+90)
+143,POY,OYYO,Blights Negated,N/A,120(150),N/A
